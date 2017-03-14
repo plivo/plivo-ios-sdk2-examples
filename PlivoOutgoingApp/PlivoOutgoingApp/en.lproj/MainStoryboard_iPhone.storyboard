@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" colorMatched="YES" initialViewController="2">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Plivo View Controller-->
+        <scene sceneID="5">
+            <objects>
+                <viewController id="2" customClass="PlivoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="IOI-Y5-PSe"/>
+                        <viewControllerLayoutGuide type="bottom" id="s5B-bO-IN7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="center" id="3">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x3I-Bc-QV3">
+                                <rect key="frame" x="16" y="247" width="127" height="39"/>
+                                <color key="backgroundColor" red="0.25882352941176467" green="0.62745098039215685" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Call">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="makeCall:" destination="2" eventType="touchUpInside" id="Uvm-jv-RC8"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6i3-zp-Ang">
+                                <rect key="frame" x="177" y="247" width="127" height="39"/>
+                                <color key="backgroundColor" red="1" green="0.29835427165735173" blue="0.29245956935508877" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Hangup">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="hangupCall:" destination="2" eventType="touchUpInside" id="gwS-MX-vdO"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="e8v-CB-c1g">
+                                <rect key="frame" x="68" y="12" width="185" height="120"/>
+                            </imageView>
+                            <textView clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BZf-8y-2fp">
+                                <rect key="frame" x="16" y="328" width="288" height="132"/>
+                                <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone Number / SIP URI" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7Je-gE-LC1">
+                                <rect key="frame" x="16" y="140" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="2" id="5BY-g3-tFs"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="e8v-CB-c1g" secondAttribute="trailing" constant="51" id="07c-m1-3bV"/>
+                            <constraint firstItem="6i3-zp-Ang" firstAttribute="top" secondItem="7Je-gE-LC1" secondAttribute="bottom" constant="77" id="0Rs-2e-oIO"/>
+                            <constraint firstItem="s5B-bO-IN7" firstAttribute="top" secondItem="BZf-8y-2fp" secondAttribute="bottom" constant="20" id="AGL-w1-H0P"/>
+                            <constraint firstItem="e8v-CB-c1g" firstAttribute="leading" secondItem="3" secondAttribute="leadingMargin" constant="52" id="DXB-46-sMf"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6i3-zp-Ang" secondAttribute="trailing" id="ErR-JP-jOd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6i3-zp-Ang" secondAttribute="trailing" id="FbL-27-cfe"/>
+                            <constraint firstItem="x3I-Bc-QV3" firstAttribute="width" secondItem="6i3-zp-Ang" secondAttribute="width" id="Gph-Eq-8BO"/>
+                            <constraint firstItem="BZf-8y-2fp" firstAttribute="top" secondItem="x3I-Bc-QV3" secondAttribute="bottom" constant="42" id="Maf-Hq-zVy"/>
+                            <constraint firstItem="BZf-8y-2fp" firstAttribute="top" secondItem="6i3-zp-Ang" secondAttribute="bottom" constant="42" id="N8P-fr-YfO"/>
+                            <constraint firstItem="x3I-Bc-QV3" firstAttribute="top" secondItem="7Je-gE-LC1" secondAttribute="bottom" constant="77" id="SaB-Tj-5tu"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7Je-gE-LC1" secondAttribute="trailing" id="bVa-hJ-bIR"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="BZf-8y-2fp" secondAttribute="leading" id="lUQ-YX-46S"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="7Je-gE-LC1" secondAttribute="leading" id="o61-1w-cXj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BZf-8y-2fp" secondAttribute="trailing" id="oYf-JB-bfM"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="x3I-Bc-QV3" secondAttribute="leading" id="po3-nf-psH"/>
+                            <constraint firstItem="e8v-CB-c1g" firstAttribute="top" secondItem="IOI-Y5-PSe" secondAttribute="bottom" constant="-8" id="vT1-YW-W89"/>
+                            <constraint firstItem="6i3-zp-Ang" firstAttribute="leading" secondItem="x3I-Bc-QV3" secondAttribute="trailing" constant="34" id="ye3-A8-QZT"/>
+                            <constraint firstItem="7Je-gE-LC1" firstAttribute="top" secondItem="e8v-CB-c1g" secondAttribute="bottom" constant="8" id="zHg-p1-nNa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="callBtn" destination="x3I-Bc-QV3" id="QYB-eA-pkj"/>
+                        <outlet property="hangupBtn" destination="6i3-zp-Ang" id="UOX-A0-vML"/>
+                        <outlet property="logTextView" destination="BZf-8y-2fp" id="FVn-J3-UVe"/>
+                        <outlet property="textField" destination="7Je-gE-LC1" id="msz-dk-eBK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-26" y="-75"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo.png" width="426" height="120"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

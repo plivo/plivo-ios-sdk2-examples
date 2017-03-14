@@ -1,0 +1,4 @@
+/* Localized versions of Info.plist keys */
+{
+    "NSMicrophoneUsageDescription" = "Need microphone access for voice calls";
+}
