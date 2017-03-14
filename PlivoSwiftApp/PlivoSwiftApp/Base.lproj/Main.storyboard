@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina3_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PlivoSwiftApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" highlighted="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5r2-Da-m5X">
+                                <rect key="frame" x="16" y="158" width="288" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DDU-xF-uMJ">
+                                <rect key="frame" x="16" y="213" width="137" height="42"/>
+                                <color key="backgroundColor" red="0.20000000000000001" green="0.59999999999999998" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Call">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="callPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="j79-Ta-zpG"/>
+                                </connections>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="gXm-2d-NV4">
+                                <rect key="frame" x="16" y="280" width="288" height="185"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plivo-logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="m4o-b2-Cu9">
+                                <rect key="frame" x="58" y="28" width="205" height="120"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6HE-wC-E2U">
+                                <rect key="frame" x="167" y="213" width="137" height="42"/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="End">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="endPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="haw-fm-itC"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="m4o-b2-Cu9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="42" id="5Em-bC-5e8"/>
+                            <constraint firstItem="DDU-xF-uMJ" firstAttribute="width" secondItem="6HE-wC-E2U" secondAttribute="width" id="Dr8-tY-CXs"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="DDU-xF-uMJ" secondAttribute="leading" id="FLt-jh-csm"/>
+                            <constraint firstItem="DDU-xF-uMJ" firstAttribute="top" secondItem="5r2-Da-m5X" secondAttribute="bottom" constant="25" id="GGZ-HI-JJA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="m4o-b2-Cu9" secondAttribute="trailing" constant="41" id="Hwd-o6-WJg"/>
+                            <constraint firstItem="6HE-wC-E2U" firstAttribute="leading" secondItem="DDU-xF-uMJ" secondAttribute="trailing" constant="14" id="LKk-Ll-YcT"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="gXm-2d-NV4" secondAttribute="leading" id="RCX-nd-IyR"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="gXm-2d-NV4" secondAttribute="bottom" constant="15" id="Roc-G6-dCv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gXm-2d-NV4" secondAttribute="trailing" id="U5A-lx-zBV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gXm-2d-NV4" secondAttribute="trailing" id="Uzd-0n-eIb"/>
+                            <constraint firstItem="gXm-2d-NV4" firstAttribute="top" secondItem="6HE-wC-E2U" secondAttribute="bottom" constant="25" id="YL1-8t-lwf"/>
+                            <constraint firstItem="5r2-Da-m5X" firstAttribute="top" secondItem="m4o-b2-Cu9" secondAttribute="bottom" constant="10" id="dvg-74-c5O"/>
+                            <constraint firstItem="m4o-b2-Cu9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="iaD-HL-eBQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5r2-Da-m5X" secondAttribute="trailing" id="idj-X8-eXz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6HE-wC-E2U" secondAttribute="trailing" id="j3L-7y-o6D"/>
+                            <constraint firstItem="DDU-xF-uMJ" firstAttribute="height" secondItem="6HE-wC-E2U" secondAttribute="height" id="la1-T4-dYK"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="5r2-Da-m5X" secondAttribute="leading" id="qMk-1E-Ujz"/>
+                            <constraint firstItem="6HE-wC-E2U" firstAttribute="top" secondItem="5r2-Da-m5X" secondAttribute="bottom" constant="25" id="sPp-QV-koe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="5r2-Da-m5X" secondAttribute="trailing" id="tNF-uy-GMe"/>
+                            <constraint firstItem="6HE-wC-E2U" firstAttribute="leading" secondItem="DDU-xF-uMJ" secondAttribute="trailing" constant="14" id="u1I-ed-Oz3"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="call" destination="DDU-xF-uMJ" id="h43-fW-b1l"/>
+                        <outlet property="debugText" destination="gXm-2d-NV4" id="xO9-bz-LiI"/>
+                        <outlet property="endcall" destination="6HE-wC-E2U" id="bfG-zN-shn"/>
+                        <outlet property="number" destination="5r2-Da-m5X" id="zG7-Wr-FAA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="135" y="137"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="plivo-logo.png" width="426" height="120"/>
+    </resources>
+</document>
