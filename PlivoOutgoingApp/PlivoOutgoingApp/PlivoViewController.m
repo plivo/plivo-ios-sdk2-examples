@@ -303,6 +303,8 @@
     [self logDebug:@"- On outgoing call invalid"];
     
     [self enableCallDisableHangup];
+    
+    [self performEndCallActionWithUUID:self.uuid];    
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
