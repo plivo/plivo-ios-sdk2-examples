@@ -304,7 +304,7 @@
     
     [self enableCallDisableHangup];
     
-    [self performEndCallActionWithUUID:self.uuid];    
+    [self performEndCallActionWithUUID:self.uuid];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
@@ -412,6 +412,20 @@
     }
 
     outCall = nil;
+    
+    [action fulfill];
+}
+
+- (void)provider:(CXProvider *)provider performPlayDTMFCallAction:(CXPlayDTMFCallAction *)action{
+    NSString *dtmfDigits = action.digits;
+    
+    if (incCall){
+        [incCall sendDigits:dtmfDigits];
+    }
+    
+    if (outCall){
+        [outCall sendDigits:dtmfDigits];
+    }
     
     [action fulfill];
 }
