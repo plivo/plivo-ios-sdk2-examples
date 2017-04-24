@@ -22,8 +22,6 @@
 
 @property (nonatomic, strong) APAddressBook *addressBook;
 @property (nonatomic, strong) NSArray *phoneContacts;
-@property (nonatomic, strong) NSArray *sipEndPoints;
-@property (nonatomic, strong) NSArray *sipEmailIds;
 
 @property (weak, nonatomic) IBOutlet UITableView* contactsTableView;
 @property (weak, nonatomic) IBOutlet UILabel* noContactsLabel;
@@ -69,12 +67,9 @@
     
     [self loadContacts];
     
-    self.sipEndPoints = [[NSUserDefaults standardUserDefaults] objectForKey:kSIPENDPOINTS];
-    self.sipEmailIds = [[NSUserDefaults standardUserDefaults] objectForKey:kSIPEMAILIDS];
-
     self.sipDetailsArray = [[NSUserDefaults standardUserDefaults] objectForKey:kSIPDETAILS];
     
-    if(self.sipEndPoints.count > 0)
+    if(self.sipDetailsArray.count > 0)
     {
         NSArray *itemArray = [NSArray arrayWithObjects: @"Phone", @"SIP", nil];
         
@@ -206,9 +201,10 @@
         
 }
     
-    /**
-     * onLoginFailed delegate implementation.
-     */
+/**
+ * onLoginFailed delegate implementation.
+ * Redirect to Login page
+ */
 - (void)onLoginFailed
 {
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -237,7 +233,9 @@
 
 
 #pragma mark - private
-
+/**
+ * Get Contacts information from Phone
+ */
 - (void)loadContacts
 {
     self.phoneContacts = nil;
@@ -286,6 +284,10 @@
     return 60.f;
 }
 
+/**
+ * Actual array
+ * Search results array
+ */
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if(self.isSearchControllerActive)
@@ -430,6 +432,9 @@
     
 }
 
+/**
+ * PlivoCallController will handle incoming/outgoing calls
+ */
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
@@ -509,10 +514,63 @@
             self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];        }
     }
     
-    
-    
 }
 
+#pragma mark - APContact Handling
+
+- (NSString *)contactName:(APContact *)contact
+{
+    if (contact.name.compositeName)
+    {
+        return contact.name.compositeName;
+    }
+    else if (contact.name.firstName && contact.name.lastName)
+    {
+        return [NSString stringWithFormat:@"%@ %@", contact.name.firstName, contact.name.lastName];
+    }
+    else if (contact.name.firstName || contact.name.lastName)
+    {
+        return contact.name.firstName ?: contact.name.lastName;
+    }
+    else
+    {
+        return @"Untitled contact";
+    }
+}
+
+- (NSString *)contactPhones:(APContact *)contact
+{
+    if (contact.phones.count > 0)
+    {
+        APPhone* phoneNum = contact.phones[0];
+        return phoneNum.number;
+    }
+    else
+    {
+        return @"(No phones)";
+    }
+}
+
+- (NSString *)contactEmails:(APContact *)contact
+{
+    if (contact.emails.count > 1)
+    {
+        NSMutableString *result = [[NSMutableString alloc] init];
+        for (APEmail *email in contact.emails)
+        {
+            [result appendFormat:@"%@, ", email.address];
+        }
+        return result;
+    }
+    else
+    {
+        return contact.emails.count == 1 ? contact.emails[0].address : @"(No emails)";
+    }
+}
+
+/**
+ * On click on Logout button
+ */
 - (IBAction)logoutButtonTapped:(id)sender
 {
     UIAlertController * alert = [UIAlertController
@@ -754,122 +812,4 @@ NSString *const SearchBarIsFirstResponderKey = @"SearchBarIsFirstResponderKey";
     self.searchController.searchBar.text = [coder decodeObjectForKey:SearchBarTextKey];
 }
 
-- (NSString *)contactName:(APContact *)contact
-{
-    if (contact.name.compositeName)
-    {
-        return contact.name.compositeName;
-    }
-    else if (contact.name.firstName && contact.name.lastName)
-    {
-        return [NSString stringWithFormat:@"%@ %@", contact.name.firstName, contact.name.lastName];
-    }
-    else if (contact.name.firstName || contact.name.lastName)
-    {
-        return contact.name.firstName ?: contact.name.lastName;
-    }
-    else
-    {
-        return @"Untitled contact";
-    }
-}
-
-- (NSString *)contactPhones:(APContact *)contact
-{
-    if (contact.phones.count > 0)
-    {
-        APPhone* phoneNum = contact.phones[0];
-        return phoneNum.number;
-    }
-    else
-    {
-        return @"(No phones)";
-    }
-}
-
-- (NSString *)contactEmails:(APContact *)contact
-{
-    if (contact.emails.count > 1)
-    {
-        NSMutableString *result = [[NSMutableString alloc] init];
-        for (APEmail *email in contact.emails)
-        {
-            [result appendFormat:@"%@, ", email.address];
-        }
-        return result;
-    }
-    else
-    {
-        return contact.emails.count == 1 ? contact.emails[0].address : @"(No emails)";
-    }
-}
-
 @end
-
-
-//                NSString *identifier = NSStringFromClass(ContactTableViewCell.class);
-//                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier
-//                                                                        forIndexPath:indexPath];
-//                if ([cell isKindOfClass:ContactTableViewCell.class])
-//                {
-//                    NSDictionary* sipDict = self.sipDetailsArray[indexPath.row];
-//
-//                    ContactTableViewCell *contactCell = (ContactTableViewCell *)cell;
-//
-//                    contactCell.nameLabel.text = [sipDict[@"eMail"] capitalizedString];
-//                    contactCell.phonesLabel.text = sipDict[@"endPoint"];
-//
-//
-//                }
-
-//            NSString *identifier = NSStringFromClass(ContactTableViewCell.class);
-//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier
-//                                                                    forIndexPath:indexPath];
-//            if ([cell isKindOfClass:ContactTableViewCell.class])
-//            {
-//                NSDictionary* sipDict = self.sipSearchResults[indexPath.row];
-//
-//                ContactTableViewCell *contactCell = (ContactTableViewCell *)cell;
-//
-//                contactCell.nameLabel.text = [sipDict[@"eMail"] capitalizedString];
-//                contactCell.phonesLabel.text = sipDict[@"endPoint"];
-//
-//            }
-
-//        NSMutableString *result = [[NSMutableString alloc] init];
-//        for (APPhone *phone in contact.phones)
-//        {
-//            NSString *string = phone.localizedLabel.length == 0 ? phone.number :
-//                               [NSString stringWithFormat:@"%@ (%@)", phone.number,
-//                                                          phone.localizedLabel];
-//            [result appendFormat:@"%@, ", string];
-//        }
-//        return result;
-
-//            NSString *identifier = NSStringFromClass(ContactTableViewCell.class);
-//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier
-//                                                                    forIndexPath:indexPath];
-//            if ([cell isKindOfClass:ContactTableViewCell.class])
-//            {
-//                ContactTableViewCell *contactCell = (ContactTableViewCell *)cell;
-//                [contactCell updateWithContact:self.phoneSearchResults[(NSUInteger)indexPath.row]];
-//            }
-//            return cell;
-//                NSString *identifier = NSStringFromClass(ContactTableViewCell.class);
-//                UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier
-//                                                                        forIndexPath:indexPath];
-//                if ([cell isKindOfClass:ContactTableViewCell.class])
-//                {
-//                    ContactTableViewCell *contactCell = (ContactTableViewCell *)cell;
-//                    [contactCell updateWithContact:self.phoneContacts[(NSUInteger)indexPath.row]];
-//                }
-//                return cell;
-//            NSString *identifier = NSStringFromClass(ContactTableViewCell.class);
-//            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier
-//                                                                    forIndexPath:indexPath];
-//            if ([cell isKindOfClass:ContactTableViewCell.class])
-//            {
-//                ContactTableViewCell *contactCell = (ContactTableViewCell *)cell;
-//                [contactCell updateWithContact:self.phoneContacts[(NSUInteger)indexPath.row]];
-//            }
-//            return cell;

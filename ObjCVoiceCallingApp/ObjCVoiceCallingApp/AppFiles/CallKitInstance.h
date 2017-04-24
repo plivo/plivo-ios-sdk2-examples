@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <CallKit/CallKit.h>
 
+/*!
+ * @discussion CallKitInstance class to maintain single Callkit instance in entire app lifecycle
+ */
 @interface CallKitInstance : NSObject
 + (CallKitInstance *)sharedInstance;
 @property (strong, nonatomic) NSUUID* callUUID;

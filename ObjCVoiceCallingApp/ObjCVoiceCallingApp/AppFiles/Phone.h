@@ -9,17 +9,24 @@
 #import <Foundation/Foundation.h>
 #import <PlivoVoiceKit/PlivoVoiceKit.h>
 
+/*!
+ * @discussion Phone class to handle Plivo voice SDK
+ */
 @interface Phone : NSObject
 
 + (Phone *)sharedInstance;
 
 /* login */
+// To register with SIP Server
 - (void)loginWithUserName:(NSString*)userName andPassword:(NSString*)password;
 
+//To unregister with SIP Server
 - (void)logout;
 
+//Register pushkit token
 - (void)registerToken:(NSData*)token;
 
+//receive and pass on (information or a message)
 - (void)relayVoipPushNotification:(NSDictionary*)pushdata;
 
 /* make call with extra headers */
@@ -28,14 +35,15 @@
 /* set delegate for plivo endpoint object */
 - (void)setDelegate:(id)delegate;
 
-- (void)enableAudio;
-
-- (void)disableAudio;
+- (void)configureAudioSession;
 
 - (void)startAudioDevice;
 
 - (void)stopAudioDevice;
 
-- (void)configureAudioSession;
+
+//- (void)enableAudio;
+//
+//- (void)disableAudio;
 
 @end

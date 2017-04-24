@@ -11,6 +11,11 @@
 
 @implementation CallInfo
 
+/**
+ *  Add recent calls info
+ *
+ *  @param callInfo contains Phone number or SIP Endpoit, Time of call
+ */
 +(void)addCallInfo:(NSDictionary*)callInfo
 {
     NSUserDefaults *callHistoryDefaults = [NSUserDefaults standardUserDefaults];
@@ -30,6 +35,10 @@
     
 }
 
+/**
+ *  Return recent calls info
+ *
+ */
 +(NSArray*)getCallsInfoArray
 {
     return [[NSUserDefaults standardUserDefaults] objectForKey:kCALLSINFO];

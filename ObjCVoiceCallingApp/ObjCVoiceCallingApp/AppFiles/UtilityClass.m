@@ -33,18 +33,27 @@
     return [[NSUserDefaults standardUserDefaults] boolForKey:kAUTHENTICATIONSTATUS];
 }
 
+/*
+ * To check empty string
+ */
+
 + (BOOL)isEmptyString:(NSString *)text
 {
     return (nil == text ||
             YES == [[self trimWhiteSpaces:text] isEqualToString:@""]) ? YES : NO;
 }
 
-// ************** String trim with white spaces funtion *****************
+/*
+ * To trim white spaces in string
+ */
 + (NSString *)trimWhiteSpaces:(NSString *)text
 {
     return [text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 }
 
+/*
+ * To check whether the network available
+ */
 +(BOOL)isNetworkAvailable
 {
     SCNetworkReachabilityFlags flags;

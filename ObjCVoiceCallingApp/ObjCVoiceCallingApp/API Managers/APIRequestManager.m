@@ -1,9 +1,9 @@
 //
 //  APIRequestManager.m
-//  Lechal
+//  ObjCVoiceCallingApp
 //
-//  Created by Ducere on 30/03/16.
-//  Copyright © 2016 Ducere. All rights reserved.
+//  Created by Siva  on 12/04/17.
+//  Copyright © 2017 Plivo. All rights reserved.
 //
 
 #import "APIRequestManager.h"

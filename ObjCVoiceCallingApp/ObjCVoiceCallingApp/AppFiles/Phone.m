@@ -38,26 +38,31 @@
     return self;
 }
 
+// To register with SIP Server
 - (void)loginWithUserName:(NSString*)userName andPassword:(NSString*)password
 {
     [endpoint login:userName AndPassword:password];
 }
 
+//To unregister with SIP Server
 - (void)logout
 {
     [endpoint logout];
 }
 
+//Register pushkit token
 - (void)registerToken:(NSData*)token
 {
     [endpoint registerToken:token];
 }
 
+//receive and pass on (information or a message)
 - (void)relayVoipPushNotification:(NSDictionary*)pushdata
 {
     [endpoint relayVoipPushNotification:pushdata];
 }
 
+/* make call with extra headers */
 - (PlivoOutgoing *)callWithDest:(NSString *)dest andHeaders:(NSDictionary *)headers
 {
     /* construct SIP URI */
@@ -77,24 +82,36 @@
     [endpoint setDelegate:delegate];
 }
 
-- (void) disableAudio{
-	[outCall hold];
+//To Configure Audio
+- (void)configureAudioSession{
+    [endpoint configureAudioDevice];
 }
 
-- (void) enableAudio{
-	[outCall unhold];
-}
-
+/*
+ * To Start Audio service
+ * To handle Audio Interruptions
+ * AVAudioSessionInterruptionTypeEnded
+ */
 - (void)startAudioDevice{
     [endpoint startAudioDevice];
 }
 
+/*
+ * To Start Audio service
+ * To handle Audio Interruptions
+ * AVAudioSessionInterruptionTypeBegan
+ */
 - (void)stopAudioDevice{
     [endpoint stopAudioDevice];
 }
 
-- (void)configureAudioSession{
-    [endpoint configureAudioDevice];
-}
+
+//- (void) disableAudio{
+//	[outCall hold];
+//}
+//
+//- (void) enableAudio{
+//	[outCall unhold];
+//}
 
 @end

@@ -54,15 +54,23 @@
     }
     
     
+    //One time signIn
+    //Save User's credentials in NSUserDefaults
+    //Check Authenticaiton status
     if([UtilityClass getUserAuthenticationStatus])
     {
     
+        //Default View Controller: ContactsViewController
+        //Landing page
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         UITabBarController* tabBarContrler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
         self.viewController = [tabBarContrler.viewControllers objectAtIndex:1];
+        
+        //ContactsViewController
         [[Phone sharedInstance] setDelegate:self.viewController];
         tabBarContrler.selectedViewController = [tabBarContrler.viewControllers objectAtIndex:1];
         
+        //Get Username and Password from NSUserDefaults and Login
         [[Phone sharedInstance] loginWithUserName:[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME] andPassword:[[NSUserDefaults standardUserDefaults] objectForKey:kPASSWORD]];
 
         self.window.rootViewController = tabBarContrler;
@@ -70,6 +78,7 @@
         
     }else
     {
+        //First time Log-In setup
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         LoginViewController* loginVC = [_mainStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [[Phone sharedInstance] setDelegate:loginVC];
@@ -150,10 +159,11 @@
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray * __nullable restorableObjects))restorationHandler NS_AVAILABLE_IOS(8_0)
 {
     
-    //Added by Siva on Tue 7, 2017
     if([UtilityClass getUserAuthenticationStatus])
     {
-        
+        //When user taps on iPhone's native call list
+        //This method will be called only if the call is related to Plivo
+   
         INInteraction *interaction = userActivity.interaction;
         
         INStartAudioCallIntent *startAudioCallIntent = (INStartAudioCallIntent *)interaction.intent;
@@ -164,8 +174,11 @@
         
         NSString *contactValue = personHandle.value;
         
+        //Maintaining unique Call Id
+        //Singleton
         [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
         
+        //PlivoCallController handles the incoming/outgoing calls
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         UITabBarController* tabBarContrler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
         PlivoCallController* plivoVC  = [tabBarContrler.viewControllers objectAtIndex:2];
@@ -185,9 +198,3 @@
     
 }
 @end
-
-//Customizing Tabbar
-//    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIFont systemFontOfSize:17.0], NSFontAttributeName, nil];
-//    [[UITabBarItem appearance] setTitleTextAttributes:attributes forState:UIControlStateNormal];
-//    [[UITabBarItem appearance] setTitlePositionAdjustment:UIOffsetMake(0.0, -13.0)];
-

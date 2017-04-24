@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		350CA46A8491FFA8B025720A /* Pods_ObjCVoiceCallingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1410967E7254BFCAAB53EFB /* Pods_ObjCVoiceCallingApp.framework */; };
+		471435371EAE37FF00B14584 /* plivo-gif-icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 471435361EAE37FF00B14584 /* plivo-gif-icon.gif */; };
 		472B34E41E9E371F00FF56B0 /* CallKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 472B34E31E9E371F00FF56B0 /* CallKit.framework */; };
 		473EF9631E9D28690022AF4B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 473EF9621E9D28690022AF4B /* main.m */; };
 		473EF96C1E9D28690022AF4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 473EF96A1E9D28690022AF4B /* Main.storyboard */; };
@@ -52,7 +53,6 @@
 		4740125A1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 4740123B1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json */; };
 		474012611EA80DC800BE9E2E /* APIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4740125E1EA80DC800BE9E2E /* APIRequestManager.m */; };
 		474012641EA80DC800BE9E2E /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 474012601EA80DC800BE9E2E /* STHTTPRequest.m */; };
-		474012691EA8101900BE9E2E /* SIPContacts.m in Sources */ = {isa = PBXBuildFile; fileRef = 474012681EA8101900BE9E2E /* SIPContacts.m */; };
 		47585F8F1E9DF40900DA1E6D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47585F8E1E9DF40900DA1E6D /* CoreData.framework */; };
 		47AE100A1EAD1AD10090C37C /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 47AE10091EAD1AD10090C37C /* UIView+Toast.m */; };
 		47E635641E9E481300F3D222 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E635631E9E481300F3D222 /* ContactsViewController.m */; };
@@ -61,8 +61,6 @@
 		47E637501EA022E600F3D222 /* PlivoVoiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 47E6374D1EA022D900F3D222 /* PlivoVoiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		47F5ED4D1EAE0C7700494E73 /* CallKitInstance.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F5ED4A1EAE0C7700494E73 /* CallKitInstance.m */; };
 		47F5ED4E1EAE0C7700494E73 /* Phone.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F5ED4C1EAE0C7700494E73 /* Phone.m */; };
-		47F5ED511EAE0C9200494E73 /* SIPContactsDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F5ED501EAE0C9200494E73 /* SIPContactsDetails.m */; };
-		47FB07F81EABB62800BABF0A /* plivo-gif-icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 47FB07F71EABB62800BABF0A /* plivo-gif-icon.gif */; };
 		47FF8F501EA50C34008A940C /* JCDialPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF8F491EA50C34008A940C /* JCDialPad.m */; };
 		47FF8F511EA50C34008A940C /* JCPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF8F4B1EA50C34008A940C /* JCPadButton.m */; };
 		47FF8F521EA50C34008A940C /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47FF8F4D1EA50C34008A940C /* MZTimerLabel.m */; };
@@ -106,6 +104,7 @@
 		05EE96EA78A05B59D0D39FA4 /* Pods-ObjCVoiceCallingApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjCVoiceCallingApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ObjCVoiceCallingApp/Pods-ObjCVoiceCallingApp.debug.xcconfig"; sourceTree = "<group>"; };
 		38C6F6625F0D6355E3D49EE9 /* Pods-ObjCVoiceCallingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjCVoiceCallingAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ObjCVoiceCallingAppUITests/Pods-ObjCVoiceCallingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		42E62619CB75A83FE15DA791 /* Pods-ObjCVoiceCallingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ObjCVoiceCallingAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ObjCVoiceCallingAppTests/Pods-ObjCVoiceCallingAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		471435361EAE37FF00B14584 /* plivo-gif-icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "plivo-gif-icon.gif"; path = "Resources/Images/plivo-gif-icon.gif"; sourceTree = "<group>"; };
 		472B34E31E9E371F00FF56B0 /* CallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CallKit.framework; path = System/Library/Frameworks/CallKit.framework; sourceTree = SDKROOT; };
 		473EF95E1E9D28690022AF4B /* ObjCVoiceCallingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjCVoiceCallingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		473EF9621E9D28690022AF4B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -170,8 +169,6 @@
 		4740125E1EA80DC800BE9E2E /* APIRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIRequestManager.m; path = "API Managers/APIRequestManager.m"; sourceTree = "<group>"; };
 		4740125F1EA80DC800BE9E2E /* STHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STHTTPRequest.h; path = "API Managers/STHTTPRequest.h"; sourceTree = "<group>"; };
 		474012601EA80DC800BE9E2E /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STHTTPRequest.m; path = "API Managers/STHTTPRequest.m"; sourceTree = "<group>"; };
-		474012671EA8101900BE9E2E /* SIPContacts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SIPContacts.h; path = Model/SIPContacts.h; sourceTree = "<group>"; };
-		474012681EA8101900BE9E2E /* SIPContacts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SIPContacts.m; path = Model/SIPContacts.m; sourceTree = "<group>"; };
 		47585F8E1E9DF40900DA1E6D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		47AE10081EAD1AD10090C37C /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Toast.h"; path = "View/UIView+Toast.h"; sourceTree = "<group>"; };
 		47AE10091EAD1AD10090C37C /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "View/UIView+Toast.m"; sourceTree = "<group>"; };
@@ -184,9 +181,6 @@
 		47F5ED4A1EAE0C7700494E73 /* CallKitInstance.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CallKitInstance.m; path = AppFiles/CallKitInstance.m; sourceTree = "<group>"; };
 		47F5ED4B1EAE0C7700494E73 /* Phone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Phone.h; path = AppFiles/Phone.h; sourceTree = "<group>"; };
 		47F5ED4C1EAE0C7700494E73 /* Phone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Phone.m; path = AppFiles/Phone.m; sourceTree = "<group>"; };
-		47F5ED4F1EAE0C9200494E73 /* SIPContactsDetails.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SIPContactsDetails.h; path = Model/SIPContactsDetails.h; sourceTree = "<group>"; };
-		47F5ED501EAE0C9200494E73 /* SIPContactsDetails.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SIPContactsDetails.m; path = Model/SIPContactsDetails.m; sourceTree = "<group>"; };
-		47FB07F71EABB62800BABF0A /* plivo-gif-icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "plivo-gif-icon.gif"; sourceTree = "<group>"; };
 		47FF8F441EA50C02008A940C /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = AppFiles/Constants.h; sourceTree = "<group>"; };
 		47FF8F481EA50C34008A940C /* JCDialPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCDialPad.h; path = ThirdParty/JCDialPad.h; sourceTree = "<group>"; };
 		47FF8F491EA50C34008A940C /* JCDialPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCDialPad.m; path = ThirdParty/JCDialPad.m; sourceTree = "<group>"; };
@@ -349,10 +343,6 @@
 			children = (
 				473EF9CE1E9D58550022AF4B /* CallInfo.h */,
 				473EF9CF1E9D58550022AF4B /* CallInfo.m */,
-				474012671EA8101900BE9E2E /* SIPContacts.h */,
-				474012681EA8101900BE9E2E /* SIPContacts.m */,
-				47F5ED4F1EAE0C9200494E73 /* SIPContactsDetails.h */,
-				47F5ED501EAE0C9200494E73 /* SIPContactsDetails.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -433,7 +423,7 @@
 		47E635BA1E9F8D7B00F3D222 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				47FB07F71EABB62800BABF0A /* plivo-gif-icon.gif */,
+				471435361EAE37FF00B14584 /* plivo-gif-icon.gif */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -625,11 +615,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47FB07F81EABB62800BABF0A /* plivo-gif-icon.gif in Resources */,
 				473EF9711E9D28690022AF4B /* LaunchScreen.storyboard in Resources */,
 				473EF96E1E9D28690022AF4B /* Assets.xcassets in Resources */,
 				474012251EA806A600BE9E2E /* GoogleService-Info.plist in Resources */,
 				4740125A1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json in Resources */,
+				471435371EAE37FF00B14584 /* plivo-gif-icon.gif in Resources */,
 				474012571EA80D8200BE9E2E /* PhoneNumberMetaData.json in Resources */,
 				473EF96C1E9D28690022AF4B /* Main.storyboard in Resources */,
 				4740124E1EA80D8200BE9E2E /* NBPhoneNumberMetadataForTesting.plist in Resources */,
@@ -820,9 +810,7 @@
 				473EF99D1E9D29E90022AF4B /* LoginViewController.m in Sources */,
 				47E635641E9E481300F3D222 /* ContactsViewController.m in Sources */,
 				47FF8F531EA50C34008A940C /* UIView+FrameAccessor.m in Sources */,
-				47F5ED511EAE0C9200494E73 /* SIPContactsDetails.m in Sources */,
 				47AE100A1EAD1AD10090C37C /* UIView+Toast.m in Sources */,
-				474012691EA8101900BE9E2E /* SIPContacts.m in Sources */,
 				473EF9A01E9D4FAB0022AF4B /* UtilityClass.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -63,7 +63,10 @@
     }
 }
 
-
+/**
+ *  Hide keyboard when user touches on UI
+ *
+ */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch * touch = [touches anyObject];
@@ -73,6 +76,7 @@
         [self.passwordTextField resignFirstResponder];
     }
 }
+
 
 - (IBAction)loginButtonTapped:(id)sender
 {
@@ -113,6 +117,10 @@
 
         [self.view makeToast:kLOGINSUCCESS];
 
+        /**
+         *  If user already logged in with G+ signIn
+         *
+         */
         if(![[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME])
         {
             [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:kUSERNAME];
@@ -123,6 +131,8 @@
         
         [UtilityClass setUserAuthenticationStatus:YES];
 
+        //Default View Controller: ContactsViewController
+        //Landing page
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         AppDelegate *_appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         UITabBarController* tabbarControler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
@@ -231,6 +241,11 @@
     
 }
 
+/*
+ * API Call to SIP Endpoint
+ * To get Array of SIP Endpoints
+ *
+ */
 - (void)getSIPEndpointCredentials:(NSString*)emailId
 {
     if([UtilityClass isNetworkAvailable])//Check internet connection
@@ -248,9 +263,6 @@
                   
                   [[NSUserDefaults standardUserDefaults] setObject:sipArray[0] forKey:kUSERNAME];
                   [[NSUserDefaults standardUserDefaults] setObject:@"7bjbk5ib7f23ie05be2h5713hf1hl774j94c88244e2185b" forKey:kPASSWORD];
-                  
-                  [[NSUserDefaults standardUserDefaults] setObject:dict.allKeys forKey:kSIPENDPOINTS];
-                  [[NSUserDefaults standardUserDefaults] setObject:dict.allValues forKey:kSIPEMAILIDS];
                   
                   NSMutableArray* sipContactsArray = [[NSMutableArray alloc] initWithCapacity:dict.allKeys.count];
                   

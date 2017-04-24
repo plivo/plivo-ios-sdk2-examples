@@ -12,6 +12,7 @@
 
 + (CallKitInstance *)sharedInstance
 {
+    //Singleton instance
     static CallKitInstance *sharedInstance = nil;
     if(sharedInstance == nil)
     {
@@ -24,6 +25,7 @@
 {
     if(self = [super init])
     {
+        
         CXProviderConfiguration* configuration = [[CXProviderConfiguration alloc] initWithLocalizedName:@"Plivo"];
         configuration.maximumCallGroups = 1;
         configuration.maximumCallsPerCallGroup = 1;

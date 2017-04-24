@@ -40,6 +40,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //Dial pad to enter phone number or to Enter DTMF Text
     self.pad = [[JCDialPad alloc] initWithFrame:self.dialPadView.bounds];
     self.pad.buttons = [JCDialPad defaultButtons];
     self.pad.delegate = self;
@@ -50,8 +51,10 @@
     
     [[CallKitInstance sharedInstance].callKitProvider setDelegate:self queue:nil];
     
+    //Add Call Interruption observers
     [self addObservers];
     
+    //Register with Pushkit to handle plivo calls in background
     [self voipRegistration];
 
 }
@@ -158,6 +161,7 @@
 
 }
 
+//To unregister with SIP Server
 - (void)unRegisterSIPEndpoit
 {
     [self.view makeToastActivity:CSToastPositionCenter];
@@ -379,6 +383,7 @@
 }
 
 #pragma mark - CallKit Actions
+//To make outgoing call
 - (void)performStartCallActionWithUUID:(NSUUID *)uuid handle:(NSString *)handle
 {
     NSLog(@"Outgoing call uuid is: %@", uuid);
@@ -449,6 +454,7 @@
     
 }
 
+//To repot incoming call
 - (void)reportIncomingCallFrom:(NSString *) from withUUID:(NSUUID *)uuid
 {
     CXHandle *callHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:from];
@@ -521,6 +527,7 @@
 }
 
 #pragma mark - CXProviderDelegate
+
 - (void)providerDidReset:(CXProvider *)provider
 {
     NSLog(@"ProviderDidReset");
@@ -785,6 +792,12 @@
     }
 }
 
+/*
+ * Display Dial pad to enter DTMF text
+ * Hide Mute/Unmute button
+ * Hide Hold/Unhold button
+ */
+
 - (IBAction)keypadButtonTapped:(id)sender
 {
     
@@ -807,6 +820,11 @@
     
 }
 
+/*
+ * Hide Dial pad view
+ * UnHide Mute/Unmute button
+ * UnHide Hold/Unhold button
+ */
 - (IBAction)hideButtonTapped:(id)sender;
 {
 
@@ -830,7 +848,9 @@
 }
 
 
-
+/*
+ * Mute/Unmute calls
+ */
 - (IBAction)muteButtonTapped:(id)sender
 {
     UIImage *img = [sender imageForState:UIControlStateNormal];
@@ -867,6 +887,9 @@
     }
 }
 
+/*
+ * Hold/Unhold calls
+ */
 - (IBAction)holdButtonTapped:(id)sender
 {
     UIImage *img = [sender imageForState:UIControlStateNormal];
@@ -913,6 +936,10 @@
 
 }
 
+/*
+ * Will be called when app terminates
+ * End on going calls(If any)
+ */
 - (void)appWillTerminate
 {
     [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
@@ -970,6 +997,11 @@
     [self.callButton setImage:[UIImage imageNamed:@"EndCall.png"] forState:UIControlStateNormal];
 }
 
+/*
+ * Handle audio interruptions
+ * AVAudioSessionInterruptionTypeBegan
+ * AVAudioSessionInterruptionTypeEnded
+ */
 - (void)handleInterruption:(NSNotification *)notification
 {
     
@@ -1133,47 +1165,3 @@
     return YES;
 }
 @end
-
-//        self.callerNameLabel.hidden = NO;
-//        self.callStateLabel.hidden = NO;
-//        [self.callButton setImage:[UIImage imageNamed:@"EndCall.png"] forState:UIControlStateNormal];
-//        self.callerNameLabel.text = incCall.fromUser;
-//        self.holdButton.hidden = NO;
-//        self.muteButton.hidden = NO;
-//        self.pad.digitsTextField.hidden = YES;
-
-//        if ([self.holdButton.titleLabel.text isEqualToString:@"Unhold"])
-//
-//        if(incCall)
-//        {
-//            [incCall hold];
-//        }
-//
-//        if(outCall)
-//        {
-//            [outCall hold];
-//        }
-
-
-//        [self.holdButton setTitle:@"Hold" forState:UIControlStateNormal];
-//
-//        if(incCall)
-//        {
-//            [incCall unhold];
-//        }
-//
-//        if(outCall)
-//        {
-//            [outCall unhold];
-//        }
-//                 self.userNameTextField.text = @"";
-//                 self.pad.digitsTextField.text = @"";
-//                 self.callerNameLabel.hidden = NO;
-//                 self.callStateLabel.hidden = NO;
-//                 [self.callButton setImage:[UIImage imageNamed:@"EndCall.png"] forState:UIControlStateNormal];
-//            [sender setImage:[UIImage imageNamed:@"EndCall.png"] forState:UIControlStateNormal];
-//
-//            self.callerNameLabel.hidden = NO;
-//            self.callStateLabel.hidden = NO;
-
-

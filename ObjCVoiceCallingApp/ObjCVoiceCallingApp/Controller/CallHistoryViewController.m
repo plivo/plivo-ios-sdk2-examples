@@ -16,7 +16,6 @@
 #import "AppDelegate.h"
 #import "Constants.h"
 #import "CallKitInstance.h"
-//#import "RecentsTableViewCell.h"
 
 @interface CallHistoryViewController ()
 @property (weak, nonatomic) IBOutlet UITableView* callHistoryTableView;
@@ -30,14 +29,10 @@
 {
     [super viewDidLoad];
     
-    //[CallInfo addCallInfo:@"siva170404101012"];
-    //[CallInfo addCallInfo:@"iPhone5S170406073006"];
-    //[CallInfo addCallInfo:@"iPhone6170406073331"];
-    //[CallInfo addCallInfo:@"xlite170405101327"];
-    
-    [CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"xlite170405101327",@"CallId",[NSDate date],@"CallTime", nil]];
+    //[CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"xlite170405101327",@"CallId",[NSDate date],@"CallTime", nil]];
 
 }
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -165,21 +160,3 @@
     return finalDate;
 }
 @end
-
-
-
-//    if ([cell isKindOfClass:RecentsTableViewCell.class])
-//    {
-//        NSArray* callInfoArray = [CallInfo getCallsInfoArray];
-//        NSDictionary* callInfo = callInfoArray[indexPath.row];
-//
-//        RecentsTableViewCell *contactCell = (RecentsTableViewCell *)cell;
-//        contactCell.contactLabel.text = callInfo[@"CallId"];
-//        contactCell.timeLabel.text = [self getStringFromDate:callInfo[@"CallTime"]];
-//    }
-
-//    ContactsViewController* contactsVC = [self.tabBarController.viewControllers objectAtIndex:1];
-//    [[Phone sharedInstance] setDelegate:contactsVC];
-//    NSString *cellIdentifier = NSStringFromClass(RecentsTableViewCell.class);
-//    UINib *nib = [UINib nibWithNibName:cellIdentifier bundle:NSBundle.mainBundle];
-//    [self.callHistoryTableView registerNib:nib forCellReuseIdentifier:cellIdentifier];
