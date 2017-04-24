@@ -45,10 +45,14 @@
     self.pad.buttons = [JCDialPad defaultButtons];
     self.pad.delegate = self;
     self.pad.showDeleteButton = YES;
-    self.dialPadView.backgroundColor = [UIColor whiteColor];
     self.pad.formatTextToPhoneNumber = NO;
-    [self.dialPadView addSubview:self.pad];
     
+    self.dialPadView.backgroundColor = [UIColor whiteColor];
+    [self.dialPadView addSubview:self.pad];
+
+    self.timer = [[MZTimerLabel alloc] initWithLabel:self.callStateLabel andTimerType:MZTimerLabelTypeStopWatch];
+    self.timer.timeFormat = @"HH:mm:ss";
+
     [[CallKitInstance sharedInstance].callKitProvider setDelegate:self queue:nil];
     
     //Add Call Interruption observers
@@ -179,6 +183,8 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self.view makeToast:kLOGINSUCCESS];
+        NSLog(@"%@",kLOGINSUCCESS);
+        
     });
     NSLog(@"Ready to make a call");
     
@@ -193,6 +199,8 @@
         
         [self.view makeToast:kLOGINFAILMSG];
         
+        NSLog(@"%@",kLOGINFAILMSG);
+
         [UtilityClass setUserAuthenticationStatus:NO];
         
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUSERNAME];
@@ -248,6 +256,8 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
+        
         self.userNameTextField.text = @"";
         self.pad.digitsTextField.text = @"";
         self.pad.rawText = @"";
@@ -281,6 +291,9 @@
     }
     else
     {
+        /*
+         * Reject the call when we already have active ongoing call
+         */
         [incoming reject];
         return;
     }
@@ -291,7 +304,6 @@
  */
 - (void)onIncomingCallHangup:(PlivoIncoming *)incoming
 {
-    /* log it */
     NSLog(@"- Incoming call ended");
     
     if(incCall)
@@ -329,10 +341,19 @@
         self.keypadButton.hidden = NO;
         self.holdButton.hidden = NO;
         
-        self.timer = [[MZTimerLabel alloc] initWithLabel:self.callStateLabel andTimerType:MZTimerLabelTypeStopWatch];
-        self.timer.timeFormat = @"HH:mm:ss";
         self.pad.digitsTextField.hidden = YES;
-        [self.timer start];
+        
+        if(!self.timer)
+        {
+            self.timer = [[MZTimerLabel alloc] initWithLabel:self.callStateLabel andTimerType:MZTimerLabelTypeStopWatch];
+            self.timer.timeFormat = @"HH:mm:ss";
+            [self.timer start];
+
+        }else
+        {
+            [self.timer start];
+            
+        }
         
     });
 }
@@ -490,39 +511,39 @@
 
 - (void)performEndCallActionWithUUID:(NSUUID *)uuid
 {
-    
-    NSLog(@"performEndCallActionWithUUID: %@",uuid);
-    
-    if(uuid == nil)
-    {
-        NSLog(@"UUID is null return from here");
-        return;
-    }
-    
-    CXEndCallAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:uuid];
-    CXTransaction *trasanction = [[CXTransaction alloc] initWithAction:endCallAction];
-    
-    [[CallKitInstance sharedInstance].callKitCallController requestTransaction:trasanction completion:^(NSError * _Nullable error) {
+    dispatch_async(dispatch_get_main_queue(), ^{
         
-        if(error)
+        NSLog(@"performEndCallActionWithUUID: %@",uuid);
+        
+        if(uuid == nil)
         {
-            NSLog(@"EndCallAction transaction request failed: %@", [error localizedDescription]);
+            NSLog(@"UUID is null return from here");
+            return;
+        }
+        
+        CXEndCallAction *endCallAction = [[CXEndCallAction alloc] initWithCallUUID:uuid];
+        CXTransaction *trasanction = [[CXTransaction alloc] initWithAction:endCallAction];
+        
+        [[CallKitInstance sharedInstance].callKitCallController requestTransaction:trasanction completion:^(NSError * _Nullable error) {
             
-            [self.view makeToast:kREQUESTFAILED];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
+            if(error)
+            {
+                NSLog(@"EndCallAction transaction request failed: %@", [error localizedDescription]);
                 
-                [self hideActiveCallView];
-            });
-        }
-        else
-        {
-            NSLog(@"EndCallAction transaction request successful");
-        }
-        
-    }];
-    
-    
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    [self.view makeToast:kREQUESTFAILED];
+                    
+                    [self hideActiveCallView];
+                });
+            }
+            else
+            {
+                NSLog(@"EndCallAction transaction request successful");
+            }
+            
+        }];
+    });
     
 }
 
@@ -544,7 +565,6 @@
     NSLog(@"provider:didActivateAudioSession");
     
     [[Phone sharedInstance] startAudioDevice];
-    
     
 }
 
@@ -590,7 +610,6 @@
     }
     else
     {
-        
         [[Phone sharedInstance] startAudioDevice];
         
     }
@@ -654,11 +673,17 @@
         
         [self unhideActiveCallView];
         
-        self.timer = [[MZTimerLabel alloc] initWithLabel:self.callStateLabel andTimerType:MZTimerLabelTypeStopWatch];
-        self.timer.timeFormat = @"HH:mm:ss";
-        [self.timer start];
-        
-        
+        if(!self.timer)
+        {
+            self.timer = [[MZTimerLabel alloc] initWithLabel:self.callStateLabel andTimerType:MZTimerLabelTypeStopWatch];
+            self.timer.timeFormat = @"HH:mm:ss";
+            [self.timer start];
+            
+        }else
+        {
+            [self.timer start];
+            
+        }        
     });
 }
 
@@ -685,7 +710,9 @@
 {
     UIImage *callButtonImg = [self.callButton imageForState:UIControlStateNormal];
     
-    if([CallKitInstance sharedInstance].callUUID == action.callUUID || [UIImagePNGRepresentation(callButtonImg) isEqual:UIImagePNGRepresentation([UIImage imageNamed:@"MakeCall.png"])])
+    NSLog(@"%@ -- %@",[CallKitInstance sharedInstance].callUUID,action.callUUID);
+    
+    if([[CallKitInstance sharedInstance].callUUID.UUIDString isEqualToString:action.callUUID.UUIDString] || [UIImagePNGRepresentation(callButtonImg) isEqual:UIImagePNGRepresentation([UIImage imageNamed:@"MakeCall.png"])])
     {
         NSLog(@"provider:performEndCallAction:");
         
@@ -773,8 +800,9 @@
             self.pad.digitsTextField.text = @"";;
             self.pad.rawText = @"";
 
+            [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
             /* outgoing call */
-            [self performStartCallActionWithUUID:[NSUUID UUID] handle:handle];
+            [self performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:handle];
             
         }
         else if ([data1  isEqual: UIImagePNGRepresentation([UIImage imageNamed:@"EndCall.png"])])
@@ -976,6 +1004,10 @@
     [self.callButton setImage:[UIImage imageNamed:@"MakeCall.png"] forState:UIControlStateNormal];
     
     [self.timer reset];
+    [self.timer removeFromSuperview];
+    self.timer = nil;
+    
+    self.callStateLabel.text = @"Calling...";
 }
 
 - (void)unhideActiveCallView

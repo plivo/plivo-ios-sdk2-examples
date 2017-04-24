@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Phone.h"
 
 @interface ContactsViewController : UIViewController
 @end

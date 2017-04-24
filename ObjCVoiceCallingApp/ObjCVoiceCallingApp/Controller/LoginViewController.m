@@ -10,10 +10,11 @@
 #import "UtilityClass.h"
 #import "AppDelegate.h"
 #import "Constants.h"
-#import "ContactsViewController.h"
+//#import "ContactsViewController.h"
 #import <Google/SignIn.h>
 #import "APIRequestManager.h"
 #import "UIView+Toast.h"
+#import "PlivoCallController.h"
 
 @interface LoginViewController ()<GIDSignInUIDelegate,GIDSignInDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
@@ -136,8 +137,12 @@
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         AppDelegate *_appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         UITabBarController* tabbarControler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
-        ContactsViewController* contactsVC = [tabbarControler.viewControllers objectAtIndex:1];
-        [[Phone sharedInstance] setDelegate:contactsVC];
+//        ContactsViewController* contactsVC = [tabbarControler.viewControllers objectAtIndex:1];
+//        [[Phone sharedInstance] setDelegate:contactsVC];
+        
+        PlivoCallController* plivoVC = [tabbarControler.viewControllers objectAtIndex:2];
+        [[Phone sharedInstance] setDelegate:plivoVC];
+
         tabbarControler.selectedViewController = [tabbarControler.viewControllers objectAtIndex:1];
         _appDelegate.window.rootViewController = tabbarControler;
 

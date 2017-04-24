@@ -52,6 +52,10 @@
         [self.view bringSubviewToFront:self.callHistoryTableView];
         [self.callHistoryTableView reloadData];
     }
+    
+    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
+    [[Phone sharedInstance] setDelegate:plivoVC];
+
 
 }
 

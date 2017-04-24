@@ -18,7 +18,7 @@
 #import "UIView+Toast.h"
 #import <Google/SignIn.h>
 
-@interface ContactsViewController ()<PlivoEndpointDelegate, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface ContactsViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, strong) APAddressBook *addressBook;
 @property (nonatomic, strong) NSArray *phoneContacts;
@@ -125,7 +125,10 @@
 {
     [super viewWillAppear:YES];
     
-    [[Phone sharedInstance] setDelegate:self];
+    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
+    [[Phone sharedInstance] setDelegate:plivoVC];
+    
+//    [[Phone sharedInstance] setDelegate:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -184,51 +187,6 @@
     
     self.isSearchControllerActive = NO;
 
-}
-
-#pragma mark - PlivoEndPoint Delegates
-    /**
-     * onLogin delegate implementation.
-     */
-- (void)onLogin
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self.view makeToast:kLOGINSUCCESS];
-        
-    });
-    NSLog(@"Ready to make a call");
-        
-}
-    
-/**
- * onLoginFailed delegate implementation.
- * Redirect to Login page
- */
-- (void)onLoginFailed
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-            
-        [self.view makeToast:kLOGINFAILMSG];
-
-        [UtilityClass setUserAuthenticationStatus:NO];
-        
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kUSERNAME];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPASSWORD];
-        [[NSUserDefaults standardUserDefaults] synchronize];
-        
-        [[GIDSignIn sharedInstance] signOut];
-
-        UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-        LoginViewController* loginVC = [_mainStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
-        [[Phone sharedInstance] setDelegate:loginVC];
-        
-        AppDelegate *_appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-        _appDelegate.window.rootViewController = loginVC;
-
-        
-    });
-    
 }
 
 
