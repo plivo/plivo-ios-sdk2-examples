@@ -1,0 +1,6 @@
+framework module Pods_ObjCVoiceCallingApp {
+  umbrella header "Pods-ObjCVoiceCallingApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
