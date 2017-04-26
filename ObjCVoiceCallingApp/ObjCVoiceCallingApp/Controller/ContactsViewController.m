@@ -18,7 +18,7 @@
 #import "UIView+Toast.h"
 #import <Google/SignIn.h>
 
-@interface ContactsViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
+@interface ContactsViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, PlivoCallControllerDelegate>
 
 @property (nonatomic, strong) APAddressBook *addressBook;
 @property (nonatomic, strong) NSArray *phoneContacts;
@@ -31,10 +31,8 @@
 @property (nonatomic, strong) NSMutableArray *sipSearchResults;
 @property (nonatomic, strong) UISegmentedControl *contactsSegmentControl;
 
-// for state restoration
-@property BOOL searchControllerWasActive;
-@property BOOL searchControllerSearchFieldWasFirstResponder;
 @property BOOL isSearchControllerActive;
+
 @property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @property (nonatomic, strong) NSArray *sipDetailsArray;
@@ -64,6 +62,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    [self.view makeToastActivity:CSToastPositionCenter];
     
     [self loadContacts];
     
@@ -102,6 +102,7 @@
     [self.searchController.searchBar sizeToFit];
     self.contactsTableView.tableHeaderView = self.searchController.searchBar;
     
+    
     // We want ourselves to be the delegate for this filtered table so didSelectRowAtIndexPath is called for both tables.
     self.searchController.delegate = self;
     self.searchController.dimsBackgroundDuringPresentation = NO; // default is YES
@@ -113,6 +114,9 @@
     //
     self.definesPresentationContext = YES;  // know where you want UISearchController to be displayed
 
+    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
+    [[Phone sharedInstance] setDelegate:plivoVC];
+    plivoVC.delegate = self;
 
 }
 
@@ -125,28 +129,15 @@
 {
     [super viewWillAppear:YES];
     
-    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
-    [[Phone sharedInstance] setDelegate:plivoVC];
-    
-//    [[Phone sharedInstance] setDelegate:self];
+    [self.contactsTableView reloadData];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
 {
-    [super viewDidAppear:animated];
-    
-    // restore the searchController's active state
-    if (self.searchControllerWasActive) {
-        self.searchController.active = self.searchControllerWasActive;
-        _searchControllerWasActive = NO;
-        
-        if (self.searchControllerSearchFieldWasFirstResponder) {
-            [self.searchController.searchBar becomeFirstResponder];
-            _searchControllerSearchFieldWasFirstResponder = NO;
-        }
-    }
-}
+    [super viewWillDisappear:YES];
+    self.isSearchControllerActive = NO;
 
+}
 
 #pragma mark - UISearchBarDelegate
 
@@ -398,6 +389,8 @@
     
     if(self.isSearchControllerActive)
     {
+        [self.searchController dismissViewControllerAnimated:NO completion:nil];
+
         if(self.contactsSegmentControl.selectedSegmentIndex == 0)
         {
             
@@ -423,7 +416,9 @@
             [[Phone sharedInstance] setDelegate:plivoVC];
             [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
             [plivoVC performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:sipDict[@"endPoint"]];
-            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];        }
+            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
+        }
+        
     }else
     {
         if(self.contactsSegmentControl)
@@ -544,10 +539,12 @@
                                 handler:^(UIAlertAction * action) {
                                     //Handle your yes please button action here
                                     
+                                    [self.view makeToastActivity:CSToastPositionCenter];
+                                    
                                     PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
                                     [[Phone sharedInstance] setDelegate:plivoVC];
                                     [plivoVC unRegisterSIPEndpoit];
-                                    self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
+                                    
                                     
                                 }];
     
@@ -711,63 +708,37 @@
     [self.contactsTableView reloadData];
 }
 
+#pragma mark - Plivo Controller delegate
 
-#pragma mark - UIStateRestoration
-
-// we restore several items for state restoration:
-//  1) Search controller's active state,
-//  2) search text,
-//  3) first responder
-
-NSString *const ViewControllerTitleKey = @"ViewControllerTitleKey";
-NSString *const SearchControllerIsActiveKey = @"SearchControllerIsActiveKey";
-NSString *const SearchBarTextKey = @"SearchBarTextKey";
-NSString *const SearchBarIsFirstResponderKey = @"SearchBarIsFirstResponderKey";
-
-- (void)encodeRestorableStateWithCoder:(NSCoder *)coder
+- (void)loggedInSuccessfully
 {
-    [super encodeRestorableStateWithCoder:coder];
-    
-    // encode the view state so it can be restored later
-    
-    // encode the title
-    [coder encodeObject:self.title forKey:ViewControllerTitleKey];
-    
-    UISearchController *searchController = self.searchController;
-    
-    // encode the search controller's active state
-    BOOL searchDisplayControllerIsActive = searchController.isActive;
-    [coder encodeBool:searchDisplayControllerIsActive forKey:SearchControllerIsActiveKey];
-    
-    // encode the first responser status
-    if (searchDisplayControllerIsActive) {
-        [coder encodeBool:[searchController.searchBar isFirstResponder] forKey:SearchBarIsFirstResponderKey];
-    }
-    
-    // encode the search bar text
-    [coder encodeObject:searchController.searchBar.text forKey:SearchBarTextKey];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.view hideToastActivity];
+        [self.view makeToast:kLOGINSUCCESS];
+        
+    });
+
 }
 
-- (void)decodeRestorableStateWithCoder:(NSCoder *)coder {
-    [super decodeRestorableStateWithCoder:coder];
+- (void)onLoginFailed
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.view makeToast:kLOGINFAILMSG];
+        
+    });
+
+}
+
+- (void)loggedOutSuccessfully
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [self.view hideToastActivity];
+        
+    });
     
-    // restore the title
-    self.title = [coder decodeObjectForKey:ViewControllerTitleKey];
-    
-    // restore the active state:
-    // we can't make the searchController active here since it's not part of the view
-    // hierarchy yet, instead we do it in viewWillAppear
-    //
-    _searchControllerWasActive = [coder decodeBoolForKey:SearchControllerIsActiveKey];
-    
-    // restore the first responder status:
-    // we can't make the searchController first responder here since it's not part of the view
-    // hierarchy yet, instead we do it in viewWillAppear
-    //
-    _searchControllerSearchFieldWasFirstResponder = [coder decodeBoolForKey:SearchBarIsFirstResponderKey];
-    
-    // restore the text in the search field
-    self.searchController.searchBar.text = [coder decodeObjectForKey:SearchBarTextKey];
 }
 
 @end

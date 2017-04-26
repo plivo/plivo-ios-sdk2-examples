@@ -9,7 +9,7 @@
 @optional
 - (BOOL)dialPad:(JCDialPad *)dialPad shouldInsertText:(NSString *)text forButtonPress:(JCPadButton *)button;
 - (BOOL)dialPad:(JCDialPad *)dialPad shouldInsertText:(NSString *)text forLongButtonPress:(JCPadButton *)button;
-
+- (void)getDtmfText:(NSString *)dtmfText withAppendStirng:(NSString*)appendText;
 @end
 
 @interface JCDialPad : UIView

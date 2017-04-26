@@ -16,8 +16,9 @@
 #import "AppDelegate.h"
 #import "Constants.h"
 #import "CallKitInstance.h"
+#import "UIView+Toast.h"
 
-@interface CallHistoryViewController ()
+@interface CallHistoryViewController ()<PlivoCallControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView* callHistoryTableView;
 @property (weak, nonatomic) IBOutlet UILabel* noRecentCallsLabel;
 - (IBAction)logoutButtonTapped:(id)sender;
@@ -30,6 +31,10 @@
     [super viewDidLoad];
     
     //[CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"xlite170405101327",@"CallId",[NSDate date],@"CallTime", nil]];
+
+    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
+    [[Phone sharedInstance] setDelegate:plivoVC];
+    plivoVC.delegate = self;
 
 }
 
@@ -52,10 +57,6 @@
         [self.view bringSubviewToFront:self.callHistoryTableView];
         [self.callHistoryTableView reloadData];
     }
-    
-    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
-    [[Phone sharedInstance] setDelegate:plivoVC];
-
 
 }
 
@@ -131,11 +132,14 @@
                                 handler:^(UIAlertAction * action) {
                                     //Handle your yes please button action here
                                     
+                                    [self.view makeToastActivity:CSToastPositionCenter];
+
                                     PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
                                     [[Phone sharedInstance] setDelegate:plivoVC];
                                     [plivoVC unRegisterSIPEndpoit];
-                                    self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
 
+                                    
+                                    
                                 }];
     
     UIAlertAction* noButton = [UIAlertAction
@@ -163,4 +167,25 @@
     NSString *finalDate = [dateFormat stringFromDate:date];    
     return finalDate;
 }
+
+#pragma mark - Plivo Controller delegate
+
+- (void)loggedInSuccessfully
+{
+    [self.view makeToast:kLOGINSUCCESS];
+    
+}
+
+- (void)onLoginFailed
+{
+    [self.view makeToast:kLOGINFAILMSG];
+    
+}
+
+- (void)loggedOutSuccessfully
+{
+    [self.view hideToastActivity];
+    
+}
+
 @end

@@ -24,7 +24,11 @@
 #import <Google/SignIn.h>
 #import <PushKit/PushKit.h>
 
-@interface PlivoCallController ()<PlivoEndpointDelegate, CXProviderDelegate, PKPushRegistryDelegate, JCDialPadDelegate>
+@interface PlivoCallController ()<CXProviderDelegate, PKPushRegistryDelegate, JCDialPadDelegate, PlivoEndpointDelegate>
+{
+    BOOL isItUserAction;
+    BOOL isItGSMCall;
+}
 @property (strong, nonatomic) JCDialPad *pad;
 @property (strong, nonatomic) MZTimerLabel *timer;
 @end
@@ -70,18 +74,28 @@
     [[Phone sharedInstance] setDelegate:self];
     
     [self hideActiveCallView];
+    
+    self.pad.buttons = [JCDialPad defaultButtons];
+    [self.pad layoutSubviews];
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:YES];
     
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Keypad Enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.pad layoutSubviews];
+
     self.pad.digitsTextField.text = @"";
     self.pad.showDeleteButton = NO;
     self.pad.rawText = @"";
-    self.userNameTextField.text = @"SIP URI or Phone Number";
-    self.dialPadView.alpha = 1.0;
+    self.muteButton.enabled = NO;
+    self.holdButton.enabled = NO;
+    self.keypadButton.enabled = NO;
 
+    [self hideActiveCallView];
 }
 
 - (BOOL) prefersStatusBarHidden
@@ -124,6 +138,7 @@
     }
     
     NSLog(@"Credentials token: %@", credentials.token);
+    
     [[Phone sharedInstance] registerToken:credentials.token];
 }
 
@@ -133,7 +148,9 @@
     if([type isEqualToString:PKPushTypeVoIP])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
+            
             [[Phone sharedInstance] relayVoipPushNotification:payload.dictionaryPayload];
+            
         });
     }
 }
@@ -168,7 +185,6 @@
 //To unregister with SIP Server
 - (void)unRegisterSIPEndpoit
 {
-    [self.view makeToastActivity:CSToastPositionCenter];
     [[Phone sharedInstance] logout];
     
 }
@@ -185,6 +201,8 @@
         [self.view makeToast:kLOGINSUCCESS];
         NSLog(@"%@",kLOGINSUCCESS);
         
+        [self.delegate loggedInSuccessfully];
+        
     });
     NSLog(@"Ready to make a call");
     
@@ -196,6 +214,9 @@
 - (void)onLoginFailed
 {
     dispatch_async(dispatch_get_main_queue(), ^{
+        
+        
+        [self.delegate onLoginFailed];
         
         [self.view makeToast:kLOGINFAILMSG];
         
@@ -226,7 +247,7 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self.view hideToastActivity];
+        [self.delegate loggedOutSuccessfully];
         
         [self.view makeToast:kLOGOUTSUCCESS];
         
@@ -309,7 +330,9 @@
     if(incCall)
     {
         NSLog(@"Hangup Incoming call : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
+        
         [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
+        
         incCall = nil;
     }
 }
@@ -322,10 +345,10 @@
     /* log it */
     NSLog(@"Incoming call Rejected : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
     
-    incCall = nil;
-    
     [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
     
+    incCall = nil;
+
 }
 
 /**
@@ -337,9 +360,9 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        self.muteButton.hidden = NO;
-        self.keypadButton.hidden = NO;
-        self.holdButton.hidden = NO;
+        self.muteButton.enabled = YES;
+        self.keypadButton.enabled = YES;
+        self.holdButton.enabled = YES;
         
         self.pad.digitsTextField.hidden = YES;
         
@@ -379,7 +402,12 @@
 - (void)onOutgoingCallRinging:(PlivoOutgoing *)call
 {
     NSLog(@"- On outgoing call ringing");
-    self.callStateLabel.text = @"Ringing...";
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        self.callStateLabel.text = @"Ringing...";
+        
+    });
 }
 
 /**
@@ -407,6 +435,9 @@
 //To make outgoing call
 - (void)performStartCallActionWithUUID:(NSUUID *)uuid handle:(NSString *)handle
 {
+    [self hideActiveCallView];
+    [self unhideActiveCallView];
+    
     NSLog(@"Outgoing call uuid is: %@", uuid);
     
     [[CallKitInstance sharedInstance].callKitProvider setDelegate:self queue:nil];
@@ -461,10 +492,6 @@
                  
                  [self unhideActiveCallView];
                  
-                 self.muteButton.hidden = YES;
-                 self.keypadButton.hidden = YES;
-                 self.holdButton.hidden = YES;
-                 
                  [[CallKitInstance sharedInstance].callKitProvider reportCallWithUUID:uuid updated:callUpdate];
                  
              });
@@ -495,6 +522,25 @@
             NSLog(@"Failed to report incoming call successfully: %@.", [error localizedDescription]);
             
             [self.view makeToast:kREQUESTFAILED];
+            
+            [[Phone sharedInstance] stopAudioDevice];
+            
+            if(incCall)
+            {
+                
+                if(incCall.state != Ongoing)
+                {
+                    NSLog(@"Incoming call - Reject");
+                    [incCall reject];
+                }
+                else
+                {
+                    NSLog(@"Incoming call - Hangup");
+                    [incCall hangup];
+                }
+                incCall = nil;
+                
+            }
             
         }
         else
@@ -534,7 +580,35 @@
                     
                     [self.view makeToast:kREQUESTFAILED];
                     
-                    [self hideActiveCallView];
+                    [[Phone sharedInstance] stopAudioDevice];
+                    
+                    if(incCall)
+                    {
+                        
+                        if(incCall.state != Ongoing)
+                        {
+                            NSLog(@"Incoming call - Reject");
+                            [incCall reject];
+                        }
+                        else
+                        {
+                            NSLog(@"Incoming call - Hangup");
+                            [incCall hangup];
+                        }
+                        incCall = nil;
+                        
+                    }
+                    
+                    if(outCall)
+                    {
+                        NSLog(@"Outgoing call - Hangup");
+                        [outCall hangup];
+                        outCall = nil;
+                        
+                    }
+                    
+                    self.tabBarController.tabBar.hidden = NO;
+                    self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:1];
                 });
             }
             else
@@ -660,9 +734,10 @@
     
     if(incCall)
     {
+        [CallKitInstance sharedInstance].callUUID = [action callUUID];
+
         [incCall answer];
         
-        [CallKitInstance sharedInstance].callUUID = [action callUUID];
     }
     
     outCall = nil;
@@ -673,6 +748,10 @@
         
         [self unhideActiveCallView];
         
+        self.muteButton.enabled = YES;
+        self.holdButton.enabled = YES;
+        self.keypadButton.enabled = YES;
+
         if(!self.timer)
         {
             self.timer = [[MZTimerLabel alloc] initWithLabel:self.callStateLabel andTimerType:MZTimerLabelTypeStopWatch];
@@ -708,11 +787,10 @@
 
 - (void)provider:(CXProvider *)provider performEndCallAction:(CXEndCallAction *)action
 {
-    UIImage *callButtonImg = [self.callButton imageForState:UIControlStateNormal];
     
     NSLog(@"%@ -- %@",[CallKitInstance sharedInstance].callUUID,action.callUUID);
     
-    if([[CallKitInstance sharedInstance].callUUID.UUIDString isEqualToString:action.callUUID.UUIDString] || [UIImagePNGRepresentation(callButtonImg) isEqual:UIImagePNGRepresentation([UIImage imageNamed:@"MakeCall.png"])])
+    if(!isItGSMCall || isItUserAction)
     {
         NSLog(@"provider:performEndCallAction:");
         
@@ -745,8 +823,9 @@
         
         [action fulfill];
         
-        [self hideActiveCallView];
+        isItUserAction = NO;
         
+        self.tabBarController.tabBar.hidden = NO;
         self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:1];
         
     }
@@ -773,10 +852,6 @@
             self.callerNameLabel.text = self.pad.digitsTextField.text;
             
             [self unhideActiveCallView];
-            
-            self.muteButton.hidden = YES;
-            self.keypadButton.hidden = YES;
-            self.holdButton.hidden = YES;
             
             NSString* handle;
             
@@ -807,10 +882,9 @@
         }
         else if ([data1  isEqual: UIImagePNGRepresentation([UIImage imageNamed:@"EndCall.png"])])
         {
-            [sender setImage:[UIImage imageNamed:@"MakeCall.png"] forState:UIControlStateNormal];
-            [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
             
-            [self hideActiveCallView];
+            isItUserAction = YES;
+            [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
             
         }
     }else
@@ -828,6 +902,8 @@
 
 - (IBAction)keypadButtonTapped:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Keypad Enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
     
     self.holdButton.hidden = YES;
     self.muteButton.hidden = YES;
@@ -841,7 +917,11 @@
     self.userNameTextField.textColor = [UIColor whiteColor];
     
     self.dialPadView.hidden = NO;
-    [self.dialPadView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"BackgroundCallImage.png"]]];
+    [self.dialPadView setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:76.0/255.0 blue:92.0/255.0 alpha:1.0]];
+
+    self.dialPadView.alpha = 0.7;
+    self.pad.buttons = [JCDialPad defaultButtons];
+    [self.pad layoutSubviews];
     
     self.callerNameLabel.hidden = YES;
     self.callStateLabel.hidden = YES;
@@ -855,6 +935,8 @@
  */
 - (IBAction)hideButtonTapped:(id)sender;
 {
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Keypad Enabled"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 
     self.holdButton.hidden = NO;
     self.muteButton.hidden = NO;
@@ -872,6 +954,8 @@
     self.callStateLabel.hidden = NO;
     
     [self.dialPadView setBackgroundColor:[UIColor whiteColor]];
+    self.pad.buttons = [JCDialPad defaultButtons];
+    [self.pad layoutSubviews];
 
 }
 
@@ -994,6 +1078,7 @@
     
     self.dialPadView.hidden = NO;
     self.userNameTextField.hidden = NO;
+    self.userNameTextField.enabled = YES;
     self.pad.digitsTextField.hidden = NO;
     self.pad.showDeleteButton = YES;
     self.pad.rawText = @"";
@@ -1008,6 +1093,10 @@
     self.timer = nil;
     
     self.callStateLabel.text = @"Calling...";
+    
+    self.dialPadView.alpha = 1.0;
+    self.dialPadView.backgroundColor = [UIColor whiteColor];
+
 }
 
 - (void)unhideActiveCallView
@@ -1015,10 +1104,11 @@
     self.callerNameLabel.hidden = NO;
     self.callStateLabel.hidden = NO;
     self.activeCallImageView.hidden = NO;
-    self.muteButton.hidden = YES;
-    self.keypadButton.hidden = YES;
-    self.holdButton.hidden = YES;
     
+    self.muteButton.hidden = NO;
+    self.keypadButton.hidden = NO;
+    self.holdButton.hidden = NO;
+
     self.dialPadView.hidden = YES;
     self.userNameTextField.hidden = YES;
     self.pad.digitsTextField.hidden = YES;
@@ -1048,6 +1138,8 @@
             
             if (theInterruptionType == AVAudioSessionInterruptionTypeBegan)
             {
+                NSLog(@"isItGSMCall = YES");
+                isItGSMCall = YES;
                 [[Phone sharedInstance] stopAudioDevice];
                 
                 NSLog(@"----------AVAudioSessionInterruptionTypeBegan-------------");
@@ -1055,6 +1147,9 @@
             
             if (theInterruptionType == AVAudioSessionInterruptionTypeEnded)
             {
+                NSLog(@"isItGSMCall = NO");
+
+                isItGSMCall = NO;
                 // make sure to activate the session
                 NSError *error = nil;
                 [[AVAudioSession sharedInstance] setActive:YES error:&error];
@@ -1132,21 +1227,11 @@
 - (BOOL)dialPad:(JCDialPad *)dialPad shouldInsertText:(NSString *)text forButtonPress:(JCPadButton *)button
 {
     
-    if(incCall)
-    {
-        [incCall sendDigits:text];
-        self.userNameTextField.text = dialPad.digitsTextField.text;
-    }
-    
-    if(outCall)
-    {
-        [outCall sendDigits:text];
-        self.userNameTextField.text = dialPad.digitsTextField.text;
-    }
-    
     if(!incCall && !outCall)
     {
+        self.userNameTextField.enabled = NO;
         self.userNameTextField.text = @"";
+        
     }
     
     return YES;
@@ -1154,26 +1239,30 @@
 
 - (BOOL)dialPad:(JCDialPad *)dialPad shouldInsertText:(NSString *)text forLongButtonPress:(JCPadButton *)button
 {
-    if(incCall)
-    {
-        [incCall sendDigits:text];
-        self.userNameTextField.text = dialPad.digitsTextField.text;
-    }
-    
-    if(outCall)
-    {
-        [outCall sendDigits:text];
-        self.userNameTextField.text = dialPad.digitsTextField.text;
-    }
     
     if(!incCall && !outCall)
     {
         self.userNameTextField.text = @"";
+        self.userNameTextField.enabled = NO;
     }
 
     return YES;
 }
 
+- (void)getDtmfText:(NSString *)dtmfText withAppendStirng:(NSString*)appendText
+{
+    if(incCall)
+    {
+        [incCall sendDigits:dtmfText];
+        self.userNameTextField.text = appendText;
+    }
+    
+    if(outCall)
+    {
+        [outCall sendDigits:dtmfText];
+        self.userNameTextField.text = appendText;
+    }
+}
 
 #pragma mark - Handling TextField
 /**

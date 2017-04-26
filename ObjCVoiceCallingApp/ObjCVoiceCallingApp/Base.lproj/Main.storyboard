@@ -21,11 +21,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PlivoIconWhite" translatesAutoresizingMaskIntoConstraints="NO" id="cyE-F2-M1Q">
-                                <rect key="frame" x="99" y="58" width="120" height="35"/>
+                                <rect key="frame" x="71" y="49" width="185" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SIP Username" placeholder="SIP Username" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="HTm-73-ZLO">
-                                <rect key="frame" x="32" y="139" width="263" height="50"/>
+                                <rect key="frame" x="32" y="168" width="263" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -34,8 +34,8 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="DCP-CA-D58"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Password" placeholder="Password" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="fnE-uZ-3Qt">
-                                <rect key="frame" x="32" y="204" width="263" height="50"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="kick#345" placeholder="Password" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="fnE-uZ-3Qt">
+                                <rect key="frame" x="32" y="233" width="263" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -45,7 +45,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nyv-mn-Res">
-                                <rect key="frame" x="32" y="291" width="263" height="50"/>
+                                <rect key="frame" x="32" y="298" width="263" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.2627450980392157" green="0.62745098039215685" blue="0.27450980392156865" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
@@ -60,14 +60,14 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A4O-mn-3KJ">
-                                <rect key="frame" x="142" y="381" width="35" height="17"/>
+                                <rect key="frame" x="142" y="400" width="35" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4xg-uv-QHw" userLabel="Googe+">
-                                <rect key="frame" x="37" y="446" width="263" height="50"/>
+                                <rect key="frame" x="32" y="438" width="263" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.85882352941176465" green="0.26666666666666666" blue="0.21568627450980393" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" image="PlivoG+Icon">
@@ -191,6 +191,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mdh-ne-lsC">
                                 <rect key="frame" x="64" y="195" width="192" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -254,33 +255,27 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CallerImage" translatesAutoresizingMaskIntoConstraints="NO" id="i4h-yd-Azg">
-                                <rect key="frame" x="124" y="135" width="74" height="74"/>
+                                <rect key="frame" x="124" y="135" width="84" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nHd-7Z-UeT">
-                                <rect key="frame" x="46" y="259" width="56" height="56"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Atc-sQ-EQE">
+                                <rect key="frame" x="46" y="259" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="UnholdIcon">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" image="UnholdIcon"/>
                                 <connections>
-                                    <action selector="holdButtonTapped:" destination="gt3-0Z-cMH" eventType="touchUpInside" id="OpL-4Q-DDR"/>
+                                    <action selector="holdButtonTapped:" destination="gt3-0Z-cMH" eventType="touchUpInside" id="0FP-BY-6O3"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIH-qg-drc" userLabel="KeyPadButton">
-                                <rect key="frame" x="130" y="259" width="56" height="56"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ds8-lv-xfA">
+                                <rect key="frame" x="130" y="259" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <state key="normal" image="KeyPadIcon">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <state key="normal" image="KeyPadIcon"/>
                                 <connections>
-                                    <action selector="keypadButtonTapped:" destination="gt3-0Z-cMH" eventType="touchUpInside" id="6m6-27-d89"/>
+                                    <action selector="keypadButtonTapped:" destination="gt3-0Z-cMH" eventType="touchUpInside" id="eEu-mD-vw6"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AyF-aO-YL8" userLabel="MuteButton">
-                                <rect key="frame" x="214" y="259" width="56" height="56"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AyF-aO-YL8" userLabel="MuteButton">
+                                <rect key="frame" x="214" y="259" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="Unmute"/>
                                 <connections>
@@ -303,7 +298,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pi3-zh-GGt" userLabel="CallButton">
-                                <rect key="frame" x="130" y="450" width="59" height="60"/>
+                                <rect key="frame" x="130" y="450" width="61" height="61"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <state key="normal" image="MakeCall"/>
                                 <connections>
@@ -333,8 +328,8 @@
                         <outlet property="callerNameLabel" destination="EhF-uy-gdx" id="H2L-95-akc"/>
                         <outlet property="dialPadView" destination="5t6-ab-VR2" id="3Mq-wM-9Yu"/>
                         <outlet property="hideButton" destination="AiD-HU-mfN" id="q0x-CY-zBv"/>
-                        <outlet property="holdButton" destination="nHd-7Z-UeT" id="baQ-0E-wj7"/>
-                        <outlet property="keypadButton" destination="rIH-qg-drc" id="ELh-tE-G6B"/>
+                        <outlet property="holdButton" destination="Atc-sQ-EQE" id="9b9-bm-jGQ"/>
+                        <outlet property="keypadButton" destination="Ds8-lv-xfA" id="y7c-UC-5IM"/>
                         <outlet property="muteButton" destination="AyF-aO-YL8" id="X9C-vQ-0vb"/>
                         <outlet property="userNameTextField" destination="D4O-0F-mmk" id="CLM-0x-9Wh"/>
                     </connections>
@@ -345,17 +340,17 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BackgroundCallImage" width="375" height="667"/>
-        <image name="CallerImage" width="54" height="54"/>
-        <image name="KeyPadIcon" width="41" height="41"/>
-        <image name="MakeCall" width="40" height="40"/>
-        <image name="PlivoG+Icon" width="81" height="14"/>
-        <image name="PlivoIconWhite" width="120" height="35"/>
-        <image name="TabbarIcon0" width="13" height="13"/>
-        <image name="TabbarIcon1" width="13" height="13"/>
-        <image name="TabbarIcon2" width="13" height="13"/>
+        <image name="BackgroundCallImage" width="320" height="569"/>
+        <image name="CallerImage" width="84" height="84"/>
+        <image name="KeyPadIcon" width="64" height="64"/>
+        <image name="MakeCall" width="61" height="61"/>
+        <image name="PlivoG+Icon" width="122" height="22"/>
+        <image name="PlivoIconWhite" width="185" height="54"/>
+        <image name="TabbarIcon0" width="30" height="30"/>
+        <image name="TabbarIcon1" width="30" height="30"/>
+        <image name="TabbarIcon2" width="30" height="30"/>
         <image name="TextFieldImage" width="253" height="42"/>
-        <image name="UnholdIcon" width="41" height="41"/>
-        <image name="Unmute" width="41" height="41"/>
+        <image name="UnholdIcon" width="64" height="64"/>
+        <image name="Unmute" width="64" height="64"/>
     </resources>
 </document>

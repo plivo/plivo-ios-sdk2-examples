@@ -19,6 +19,14 @@
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
+			<key>CFBundleURLName</key>
+			<string>plivo.PlivoCalling</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>plivo</string>
+			</array>
+		</dict>
+		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>

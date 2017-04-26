@@ -140,20 +140,31 @@
                   iosVersion:9];
 }
 
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    return [self application:application
-        processOpenURLAction:url
-           sourceApplication:sourceApplication
-                  annotation:annotation
-                  iosVersion:8];
+    
+        return [self application:application
+            processOpenURLAction:url
+               sourceApplication:sourceApplication
+                      annotation:annotation
+                      iosVersion:8];
 }
 
 - (BOOL)application:(UIApplication *)application processOpenURLAction:(NSURL*)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation iosVersion:(int)version
 {
-    return [[GIDSignIn sharedInstance] handleURL:url
-                               sourceApplication:sourceApplication
-                                      annotation:annotation];
+    if([[url absoluteString] containsString:@"plivo://"])
+    {
+        NSArray* latlngArray = [[url absoluteString] componentsSeparatedByString:@"://"];
+        
+        [self handleDeepLinking:latlngArray[1]];
+        
+        return YES;
+        
+    }else
+    {
+        return [[GIDSignIn sharedInstance] handleURL:url
+                                   sourceApplication:sourceApplication
+                                          annotation:annotation];
+    }
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray * __nullable restorableObjects))restorationHandler NS_AVAILABLE_IOS(8_0)
@@ -197,4 +208,23 @@
     }
     
 }
+
+-(void)handleDeepLinking:(NSString*)phoneNumber
+{
+    
+    //Maintaining unique Call Id
+    //Singleton
+    [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
+    
+    //PlivoCallController handles the incoming/outgoing calls
+    UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    UITabBarController* tabBarContrler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
+    PlivoCallController* plivoVC  = [tabBarContrler.viewControllers objectAtIndex:2];
+    [[Phone sharedInstance] setDelegate:plivoVC];
+    [plivoVC performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:phoneNumber];
+    tabBarContrler.selectedViewController = [tabBarContrler.viewControllers objectAtIndex:2];
+    self.window.rootViewController = tabBarContrler;
+    
+}
+
 @end

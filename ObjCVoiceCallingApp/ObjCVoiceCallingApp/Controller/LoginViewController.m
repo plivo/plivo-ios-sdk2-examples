@@ -10,7 +10,6 @@
 #import "UtilityClass.h"
 #import "AppDelegate.h"
 #import "Constants.h"
-//#import "ContactsViewController.h"
 #import <Google/SignIn.h>
 #import "APIRequestManager.h"
 #import "UIView+Toast.h"
@@ -137,8 +136,6 @@
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         AppDelegate *_appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
         UITabBarController* tabbarControler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
-//        ContactsViewController* contactsVC = [tabbarControler.viewControllers objectAtIndex:1];
-//        [[Phone sharedInstance] setDelegate:contactsVC];
         
         PlivoCallController* plivoVC = [tabbarControler.viewControllers objectAtIndex:2];
         [[Phone sharedInstance] setDelegate:plivoVC];
@@ -217,9 +214,6 @@
 - (void)signIn:(GIDSignIn *)signIn didSignInForUser:(GIDGoogleUser *)user
      withError:(NSError *)error
 {
-//    NSLog(@"userID ===%@",user.userID);
-//    NSLog(@"userID givenName ===%@",user.profile.givenName);
-//    NSLog(@"userID familyName ===%@",user.profile.familyName);
  
     NSLog(@"userID  name===%@",user.profile.name);
     NSLog(@"userID emil ===%@",user.profile.email);
@@ -235,11 +229,19 @@
     else
     {
         
-        [self.view makeToastActivity:CSToastPositionCenter];
-        
         if(![UtilityClass isEmptyString:user.profile.email])
         {
+            [self.view makeToastActivity:CSToastPositionCenter];
+
             [self getSIPEndpointCredentials:user.profile.email];
+        }
+        else
+        {
+            [[GIDSignIn sharedInstance] signOut];
+            [self.view makeToast:kINVALIDEMAIL];
+            self.view.userInteractionEnabled = YES;
+            return;
+
         }
 
     }

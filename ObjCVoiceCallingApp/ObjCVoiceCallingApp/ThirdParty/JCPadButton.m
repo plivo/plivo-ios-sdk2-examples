@@ -82,11 +82,23 @@
 #pragma mark - Helper Methods
 - (void)setDefaultStyles
 {
-    self.borderColor = [UIColor blackColor];
-    self.selectedColor = [UIColor colorWithWhite:1.000 alpha:0.600];
-    self.textColor = [UIColor blackColor];
-    self.hightlightedTextColor = [UIColor blackColor];
-	
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"Keypad Enabled"])
+    {
+        self.borderColor = [UIColor whiteColor];
+        self.selectedColor = [UIColor colorWithWhite:1.000 alpha:0.600];
+        self.textColor = [UIColor whiteColor];
+        self.hightlightedTextColor = [UIColor whiteColor];
+
+    }
+    else
+    {
+        self.borderColor = [UIColor blackColor];
+        self.selectedColor = [UIColor colorWithWhite:1.000 alpha:0.600];
+        self.textColor = [UIColor blackColor];
+        self.hightlightedTextColor = [UIColor blackColor];
+
+    }
+
 	static NSString* fontName = @"HelveticaNeue-Thin";
 	
 	static dispatch_once_t onceToken;

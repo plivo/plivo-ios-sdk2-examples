@@ -60,9 +60,8 @@
     self.deleteButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self.deleteButton addTarget:self action:@selector(didTapDeleteButton:) forControlEvents:UIControlEventTouchUpInside];
     self.deleteButton.titleLabel.font = [UIFont systemFontOfSize:24.0];
-//    [self.deleteButton setTitle:@"◀︎" forState:UIControlStateNormal];
     [self.deleteButton setImage:[UIImage imageNamed:@"ClearIcon"] forState:UIControlStateNormal];
-    [self.deleteButton setTitleColor:[self.mainColor colorWithAlphaComponent:0.500] forState:UIControlStateHighlighted];
+    [self.deleteButton setTintColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0]];
     self.deleteButton.hidden = YES;
     self.deleteButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     UIGestureRecognizer *holdRec = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(didHoldDeleteButton:)];
@@ -219,6 +218,8 @@
         }
         self.digitsTextField.text = formatted;
         
+        [self.delegate getDtmfText:text withAppendStirng:self.digitsTextField.text];
+
         [self toggleDeleteButtonVisible:YES animated:YES];
     }
 }
@@ -235,6 +236,7 @@
         formatted = [self.numFormatter description];
     }
     self.digitsTextField.text = formatted;
+    
     if (!self.rawText.length) {
         [self toggleDeleteButtonVisible:NO animated:YES];
     }
@@ -266,7 +268,7 @@
     }
 	
     CGFloat textFieldWidth = 250;
-    self.digitsTextField.frame = CGRectMake((self.correctWidth / 2.0) - (textFieldWidth / 2.0), top + 60, textFieldWidth, 40);
+    self.digitsTextField.frame = CGRectMake((self.correctWidth / 2.0) - (textFieldWidth / 2.0), top + [UIScreen mainScreen].bounds.size.height * 0.05281690141, textFieldWidth, 40);
     [self.contentView addSubview:self.digitsTextField];
     
     self.deleteButton.frame = CGRectMake(self.digitsTextField.right + 2, self.digitsTextField.center.y - 10, top + 28, 20);
@@ -279,7 +281,7 @@
     NSInteger numRows                     = DIV_ROUND_UP(count, 3);
 
     const CGFloat bottomSpace             = IS_IOS6_OR_LOWER ? 36 : 60; //Leave room for tab bar if necessary
-    CGFloat highestTopAllowed             = self.digitsTextField.bottom - 60 + 4;
+    CGFloat highestTopAllowed             = self.digitsTextField.bottom - [UIScreen mainScreen].bounds.size.height * 0.1056338028 + 4;
     CGFloat maxButtonAreaHeight           = self.height - highestTopAllowed - bottomSpace;
 
     const CGFloat horizontalButtonPadding = 20;
