@@ -1087,7 +1087,7 @@
     self.keypadButton.hidden = YES;
     self.hideButton.hidden = NO;
     self.activeCallImageView.hidden = YES;
-    self.userNameTextField.text = @"DTMF Text";
+    self.userNameTextField.text = @"";
     [self.view bringSubviewToFront:self.hideButton];
     
     self.userNameTextField.hidden = NO;
