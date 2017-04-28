@@ -5,6 +5,8 @@ target 'ObjCVoiceCallingApp' do
   use_frameworks!
   pod 'APAddressBook'
   pod 'Google/SignIn'
+  pod 'Fabric'
+  pod 'Crashlytics'
   target 'ObjCVoiceCallingAppTests' do
     inherit! :search_paths
   end

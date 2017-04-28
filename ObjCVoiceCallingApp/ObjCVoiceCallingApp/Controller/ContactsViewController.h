@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ContactsViewController : UIViewController
+- (void)makeCallWithSiriName:(NSString*)name;
 @end

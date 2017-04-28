@@ -14,6 +14,8 @@
 #import "APIRequestManager.h"
 #import "UIView+Toast.h"
 #import "PlivoCallController.h"
+#import <FirebaseAnalytics/FirebaseAnalytics.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface LoginViewController ()<GIDSignInUIDelegate,GIDSignInDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
@@ -90,6 +92,12 @@
             [self.view makeToastActivity:CSToastPositionCenter];
 
             [[Phone sharedInstance] loginWithUserName:self.userNameTextField.text andPassword:self.passwordTextField.text];
+            
+            [FIRAnalytics logEventWithName:@"Login"
+                                parameters:@{
+                                             @"Username": self.userNameTextField.text
+                                             }];
+
         }
         else
         {
@@ -126,10 +134,19 @@
             [[NSUserDefaults standardUserDefaults] setObject:self.userNameTextField.text forKey:kUSERNAME];
             [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:kPASSWORD];
             [[NSUserDefaults standardUserDefaults] synchronize];
+            
+            [[Crashlytics sharedInstance] setUserIdentifier:self.userNameTextField.text];
+
+            [FIRAnalytics logEventWithName:@"LoginSuccess"
+                                parameters:@{
+                                             @"Type": @"Direct",
+                                             @"Username": self.userNameTextField.text
+                                             }];
 
         }
         
         [UtilityClass setUserAuthenticationStatus:YES];
+
 
         //Default View Controller: ContactsViewController
         //Landing page
@@ -169,12 +186,20 @@
         
         self.view.userInteractionEnabled = YES;
 
+        [FIRAnalytics logEventWithName:@"LoginFailed"
+                            parameters:@{
+                                         @"Username": kUSERNAME
+                                         }];
+
         
     });
 }
 
 - (IBAction)googleloginTapped:(id)sender
 {
+    [FIRAnalytics logEventWithName:@"GoogleSignIn"
+                        parameters:nil];
+
     self.view.userInteractionEnabled = NO;
 
     [GIDSignIn sharedInstance].uiDelegate = self;
@@ -220,6 +245,9 @@
 
     if ([user.profile.email rangeOfString:@"@plivo.com"].location == NSNotFound)
     {
+        [FIRAnalytics logEventWithName:@"InvalidEmail"
+                            parameters:nil];
+
         [[GIDSignIn sharedInstance] signOut];
         [self.view makeToast:kINVALIDEMAIL];
         self.view.userInteractionEnabled = YES;
@@ -234,9 +262,21 @@
             [self.view makeToastActivity:CSToastPositionCenter];
 
             [self getSIPEndpointCredentials:user.profile.email];
+            
+            [FIRAnalytics logEventWithName:@"GoogleSignIn"
+                                parameters:@{
+                                             @"Name": user.profile.name,
+                                             @"Email": user.profile.email
+                                             }];
+            
+            [[Crashlytics sharedInstance] setUserName:user.profile.name];
+            [[Crashlytics sharedInstance] setUserEmail:user.profile.email];
         }
         else
         {
+            [FIRAnalytics logEventWithName:@"InvalidEmail"
+                                parameters:nil];
+
             [[GIDSignIn sharedInstance] signOut];
             [self.view makeToast:kINVALIDEMAIL];
             self.view.userInteractionEnabled = YES;
@@ -264,12 +304,13 @@
                   
                   NSArray* sipArray = json;
                   
-                  [UtilityClass setUserAuthenticationStatus:YES];
-                  
                   NSDictionary* dict = sipArray[1];
                   
                   [[NSUserDefaults standardUserDefaults] setObject:sipArray[0] forKey:kUSERNAME];
                   [[NSUserDefaults standardUserDefaults] setObject:@"7bjbk5ib7f23ie05be2h5713hf1hl774j94c88244e2185b" forKey:kPASSWORD];
+                  
+                  [[Crashlytics sharedInstance] setUserIdentifier:sipArray[0]];
+
                   
                   NSMutableArray* sipContactsArray = [[NSMutableArray alloc] initWithCapacity:dict.allKeys.count];
                   
@@ -286,15 +327,29 @@
                   
                   [[Phone sharedInstance] loginWithUserName:[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME] andPassword:[[NSUserDefaults standardUserDefaults] objectForKey:kPASSWORD]];
                   
+                  [FIRAnalytics logEventWithName:@"JsonResponseSuccess"
+                                      parameters:nil];
+
+                  
               });
               
           } failure:^(NSError *error)
          {
              NSLog(@"Error is: %@",error.description);
+             [FIRAnalytics logEventWithName:@"JsonResponseFail"
+                                 parameters:@{
+                                              @"Error": error.description
+                                              }];
+
          }];
         
     }else
     {
+        [FIRAnalytics logEventWithName:@"JsonResponseFail"
+                            parameters:@{
+                                         @"Error": kNOINTERNETMSG
+                                         }];
+
         [self.view makeToast:kNOINTERNETMSG];
     }
 }

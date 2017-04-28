@@ -9,19 +9,22 @@
 #import "AppDelegate.h"
 #import "LoginViewController.h"
 #import "UtilityClass.h"
-#import <Intents/Intents.h>
 #import "Constants.h"
 #import "CallKitInstance.h"
-#import <AVFoundation/AVFoundation.h>
-#import <Google/SignIn.h>
 #import "CallKitInstance.h"
 #import "PlivoCallController.h"
 #import "UIView+Toast.h"
+#import "ContactsViewController.h"
+#import <Intents/Intents.h>
+#import <Google/SignIn.h>
+#import <FirebaseAnalytics/FirebaseAnalytics.h>
+#import <Fabric/Fabric.h>
+#import <AVFoundation/AVFoundation.h>
+#import <Crashlytics/Crashlytics.h>
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 @interface AppDelegate ()
-
 @end
 
 @implementation AppDelegate
@@ -29,6 +32,23 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [Fabric with:@[[Crashlytics class]]];
+    
+    // Use Firebase library to configure APIs
+    [FIRApp configure];
+    
+    //Logging device details with the help of FIRAnalytics
+    
+    [FIRAnalytics logEventWithName:@"DeviceDetails"
+                        parameters:@{
+                                     @"Model": [UIDevice currentDevice].model,
+                                     @"Description": [UIDevice currentDevice].description,
+                                     @"localizedModel": [UIDevice currentDevice].localizedModel,
+                                     @"name": [UIDevice currentDevice].name,
+                                     @"systemVersion": [UIDevice currentDevice].systemVersion,
+                                     @"systemVersion": [UIDevice currentDevice].systemName
+                                     }];
     
     NSError* configureError;
     [[GGLContext sharedInstance] configureWithError: &configureError];
@@ -46,6 +66,7 @@
         }];
     }
     
+    //Request Record permission
     if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
     {
         [[AVAudioSession sharedInstance] requestRecordPermission:^(BOOL granted) {
@@ -53,6 +74,17 @@
         }];
     }
     
+    //Request Siri authorization
+    [INPreferences requestSiriAuthorization:^(INSiriAuthorizationStatus status) {
+        
+        if(status == INSiriAuthorizationStatusAuthorized)
+        {
+            NSLog(@"User gave permission to use Siri");
+        }else
+        {
+            NSLog(@"User did not give permission to use Siri");
+        }
+    }];
     
     //One time signIn
     //Save User's credentials in NSUserDefaults
@@ -85,9 +117,10 @@
         self.window.rootViewController = loginVC;
         
     }
-    
+
     return YES;
 }
+
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {
@@ -151,12 +184,18 @@
 
 - (BOOL)application:(UIApplication *)application processOpenURLAction:(NSURL*)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation iosVersion:(int)version
 {
+    //Deep linking
     if([[url absoluteString] containsString:@"plivo://"])
     {
         NSArray* latlngArray = [[url absoluteString] componentsSeparatedByString:@"://"];
         
         [self handleDeepLinking:latlngArray[1]];
         
+        [FIRAnalytics logEventWithName:@"DeepLinking"
+                            parameters:@{
+                                         @"Link": [url absoluteString]
+                                         }];
+
         return YES;
         
     }else
@@ -181,22 +220,50 @@
         
         INPerson *contact = startAudioCallIntent.contacts[0];
         
+        NSLog(@"%@",contact.displayName);
+        
         INPersonHandle *personHandle = contact.personHandle;
         
         NSString *contactValue = personHandle.value;
         
-        //Maintaining unique Call Id
-        //Singleton
-        [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
+        /*
+         * Handle Siri input
+         * From Siri we will get contact name
+         * Check whether this name exists in phone contacts
+         * If yes make a call
+         */
         
-        //PlivoCallController handles the incoming/outgoing calls
-        UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-        UITabBarController* tabBarContrler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
-        PlivoCallController* plivoVC  = [tabBarContrler.viewControllers objectAtIndex:2];
-        [[Phone sharedInstance] setDelegate:plivoVC];
-        [plivoVC performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:contactValue];
-        tabBarContrler.selectedViewController = [tabBarContrler.viewControllers objectAtIndex:2];
-        self.window.rootViewController = tabBarContrler;
+        if(!contactValue && contact.displayName)
+        {
+            //PlivoCallController handles the incoming/outgoing calls
+            UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            UITabBarController* tabBarContrler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
+            ContactsViewController* plivoVC  = [tabBarContrler.viewControllers objectAtIndex:1];
+            tabBarContrler.selectedViewController = [tabBarContrler.viewControllers objectAtIndex:1];
+            [plivoVC makeCallWithSiriName:contact.displayName];
+            self.window.rootViewController = tabBarContrler;
+            
+        }else
+        {
+        
+            //Maintaining unique Call Id
+            //Singleton
+            [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
+            
+            //PlivoCallController handles the incoming/outgoing calls
+            UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            UITabBarController* tabBarContrler = [_mainStoryboard instantiateViewControllerWithIdentifier:@"tabBarViewController"];
+            PlivoCallController* plivoVC  = [tabBarContrler.viewControllers objectAtIndex:2];
+            [[Phone sharedInstance] setDelegate:plivoVC];
+            [plivoVC performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:contactValue];
+            tabBarContrler.selectedViewController = [tabBarContrler.viewControllers objectAtIndex:2];
+            self.window.rootViewController = tabBarContrler;
+            
+            [FIRAnalytics logEventWithName:@"INInteraction"
+                                parameters:@{
+                                             @"Contact": contactValue
+                                             }];
+        }
 
         return YES;
         
@@ -226,5 +293,4 @@
     self.window.rootViewController = tabBarContrler;
     
 }
-
 @end

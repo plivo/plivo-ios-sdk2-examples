@@ -37,9 +37,6 @@
 		473EF9D01E9D58550022AF4B /* CallInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 473EF9CF1E9D58550022AF4B /* CallInfo.m */; };
 		473EF9D41E9D5B3F0022AF4B /* CallHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 473EF9D31E9D5B3F0022AF4B /* CallHistoryViewController.m */; };
 		4740121F1EA8033100BE9E2E /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4740121E1EA8033100BE9E2E /* SafariServices.framework */; };
-		474012251EA806A600BE9E2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 474012241EA806A600BE9E2E /* GoogleService-Info.plist */; };
-		474012261EA806A600BE9E2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 474012241EA806A600BE9E2E /* GoogleService-Info.plist */; };
-		474012271EA806A600BE9E2E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 474012241EA806A600BE9E2E /* GoogleService-Info.plist */; };
 		4740123C1EA80D8200BE9E2E /* NBAsYouTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4740122A1EA80D8200BE9E2E /* NBAsYouTypeFormatter.m */; };
 		4740123F1EA80D8200BE9E2E /* NBNumberFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 4740122C1EA80D8200BE9E2E /* NBNumberFormat.m */; };
 		474012421EA80D8200BE9E2E /* NBPhoneMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 4740122E1EA80D8200BE9E2E /* NBPhoneMetaData.m */; };
@@ -55,6 +52,9 @@
 		474012641EA80DC800BE9E2E /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 474012601EA80DC800BE9E2E /* STHTTPRequest.m */; };
 		47585F8F1E9DF40900DA1E6D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47585F8E1E9DF40900DA1E6D /* CoreData.framework */; };
 		47AE100A1EAD1AD10090C37C /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 47AE10091EAD1AD10090C37C /* UIView+Toast.m */; };
+		47CDA1711EB0F8BB00D83BB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47CDA1701EB0F8BB00D83BB6 /* GoogleService-Info.plist */; };
+		47CDA17B1EB1FC6900D83BB6 /* IntentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA17A1EB1FC6900D83BB6 /* IntentHandler.m */; };
+		47CDA1911EB1FC6900D83BB6 /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47CDA1771EB1FC6900D83BB6 /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47E635641E9E481300F3D222 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E635631E9E481300F3D222 /* ContactsViewController.m */; };
 		47E6357B1E9E642600F3D222 /* PlivoCallController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E6357A1E9E642600F3D222 /* PlivoCallController.m */; };
 		47E6374E1EA022D900F3D222 /* PlivoVoiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47E6374D1EA022D900F3D222 /* PlivoVoiceKit.framework */; };
@@ -84,9 +84,27 @@
 			remoteGlobalIDString = 473EF95D1E9D28690022AF4B;
 			remoteInfo = ObjCVoiceCallingApp;
 		};
+		47CDA18F1EB1FC6900D83BB6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 473EF9561E9D28690022AF4B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47CDA1761EB1FC6900D83BB6;
+			remoteInfo = IntentHandler;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		47CDA1981EB1FC6A00D83BB6 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				47CDA1911EB1FC6900D83BB6 /* IntentHandler.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		47E637511EA022E700F3D222 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -145,7 +163,6 @@
 		473EF9D31E9D5B3F0022AF4B /* CallHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CallHistoryViewController.m; path = Controller/CallHistoryViewController.m; sourceTree = "<group>"; };
 		474012191EA79B5500BE9E2E /* ObjCVoiceCallingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ObjCVoiceCallingApp.entitlements; sourceTree = "<group>"; };
 		4740121E1EA8033100BE9E2E /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		474012241EA806A600BE9E2E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		474012291EA80D8200BE9E2E /* NBAsYouTypeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBAsYouTypeFormatter.h; path = "ThirdParty/libPhoneNumber-iOS/NBAsYouTypeFormatter.h"; sourceTree = "<group>"; };
 		4740122A1EA80D8200BE9E2E /* NBAsYouTypeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAsYouTypeFormatter.m; path = "ThirdParty/libPhoneNumber-iOS/NBAsYouTypeFormatter.m"; sourceTree = "<group>"; };
 		4740122B1EA80D8200BE9E2E /* NBNumberFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBNumberFormat.h; path = "ThirdParty/libPhoneNumber-iOS/NBNumberFormat.h"; sourceTree = "<group>"; };
@@ -172,6 +189,12 @@
 		47585F8E1E9DF40900DA1E6D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		47AE10081EAD1AD10090C37C /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Toast.h"; path = "View/UIView+Toast.h"; sourceTree = "<group>"; };
 		47AE10091EAD1AD10090C37C /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "View/UIView+Toast.m"; sourceTree = "<group>"; };
+		47CDA1701EB0F8BB00D83BB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		47CDA1771EB1FC6900D83BB6 /* IntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		47CDA1791EB1FC6900D83BB6 /* IntentHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntentHandler.h; sourceTree = "<group>"; };
+		47CDA17A1EB1FC6900D83BB6 /* IntentHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntentHandler.m; sourceTree = "<group>"; };
+		47CDA17C1EB1FC6900D83BB6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47CDA1821EB1FC6900D83BB6 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		47E635621E9E481300F3D222 /* ContactsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ContactsViewController.h; path = Controller/ContactsViewController.h; sourceTree = "<group>"; };
 		47E635631E9E481300F3D222 /* ContactsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ContactsViewController.m; path = Controller/ContactsViewController.m; sourceTree = "<group>"; };
 		47E635791E9E642600F3D222 /* PlivoCallController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlivoCallController.h; path = Controller/PlivoCallController.h; sourceTree = "<group>"; };
@@ -242,16 +265,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47CDA1741EB1FC6900D83BB6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		473EF9551E9D28690022AF4B = {
 			isa = PBXGroup;
 			children = (
-				474012241EA806A600BE9E2E /* GoogleService-Info.plist */,
 				473EF9601E9D28690022AF4B /* ObjCVoiceCallingApp */,
 				473EF97A1E9D28690022AF4B /* ObjCVoiceCallingAppTests */,
 				473EF9851E9D28690022AF4B /* ObjCVoiceCallingAppUITests */,
+				47CDA1781EB1FC6900D83BB6 /* IntentHandler */,
 				473EF95F1E9D28690022AF4B /* Products */,
 				473EF9A41E9D54F30022AF4B /* Frameworks */,
 				F274FCA19670FDCFCE38E63D /* Pods */,
@@ -264,6 +294,7 @@
 				473EF95E1E9D28690022AF4B /* ObjCVoiceCallingApp.app */,
 				473EF9771E9D28690022AF4B /* ObjCVoiceCallingAppTests.xctest */,
 				473EF9821E9D28690022AF4B /* ObjCVoiceCallingAppUITests.xctest */,
+				47CDA1771EB1FC6900D83BB6 /* IntentHandler.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -271,6 +302,7 @@
 		473EF9601E9D28690022AF4B /* ObjCVoiceCallingApp */ = {
 			isa = PBXGroup;
 			children = (
+				47CDA1701EB0F8BB00D83BB6 /* GoogleService-Info.plist */,
 				474012191EA79B5500BE9E2E /* ObjCVoiceCallingApp.entitlements */,
 				473EF9971E9D28A50022AF4B /* AppFiles */,
 				473EF9961E9D28980022AF4B /* Model */,
@@ -388,6 +420,7 @@
 				A1410967E7254BFCAAB53EFB /* Pods_ObjCVoiceCallingApp.framework */,
 				7140FDD3274D546211922A53 /* Pods_ObjCVoiceCallingAppTests.framework */,
 				590339FDE62582ABC338A1AD /* Pods_ObjCVoiceCallingAppUITests.framework */,
+				47CDA1821EB1FC6900D83BB6 /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -401,6 +434,16 @@
 				474012601EA80DC800BE9E2E /* STHTTPRequest.m */,
 			);
 			name = "API Managers";
+			sourceTree = "<group>";
+		};
+		47CDA1781EB1FC6900D83BB6 /* IntentHandler */ = {
+			isa = PBXGroup;
+			children = (
+				47CDA1791EB1FC6900D83BB6 /* IntentHandler.h */,
+				47CDA17A1EB1FC6900D83BB6 /* IntentHandler.m */,
+				47CDA17C1EB1FC6900D83BB6 /* Info.plist */,
+			);
+			path = IntentHandler;
 			sourceTree = "<group>";
 		};
 		47E6358E1E9F8A6600F3D222 /* Resources */ = {
@@ -504,10 +547,13 @@
 				AAD1C790414CCD577B91D692 /* [CP] Embed Pods Frameworks */,
 				7D36F57B66155392C7E05342 /* [CP] Copy Pods Resources */,
 				47E637511EA022E700F3D222 /* Embed Frameworks */,
+				47CDA1721EB101AC00D83BB6 /* ShellScript */,
+				47CDA1981EB1FC6A00D83BB6 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				47CDA1901EB1FC6900D83BB6 /* PBXTargetDependency */,
 			);
 			name = ObjCVoiceCallingApp;
 			productName = ObjCVoiceCallingApp;
@@ -556,6 +602,23 @@
 			productReference = 473EF9821E9D28690022AF4B /* ObjCVoiceCallingAppUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		47CDA1761EB1FC6900D83BB6 /* IntentHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47CDA1951EB1FC6A00D83BB6 /* Build configuration list for PBXNativeTarget "IntentHandler" */;
+			buildPhases = (
+				47CDA1731EB1FC6900D83BB6 /* Sources */,
+				47CDA1741EB1FC6900D83BB6 /* Frameworks */,
+				47CDA1751EB1FC6900D83BB6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentHandler;
+			productName = IntentHandler;
+			productReference = 47CDA1771EB1FC6900D83BB6 /* IntentHandler.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -576,6 +639,9 @@
 							com.apple.Push = {
 								enabled = 1;
 							};
+							com.apple.Siri = {
+								enabled = 1;
+							};
 						};
 					};
 					473EF9761E9D28690022AF4B = {
@@ -587,6 +653,11 @@
 						CreatedOnToolsVersion = 8.3;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 473EF95D1E9D28690022AF4B;
+					};
+					47CDA1761EB1FC6900D83BB6 = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = A277824BB5;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -606,6 +677,7 @@
 				473EF95D1E9D28690022AF4B /* ObjCVoiceCallingApp */,
 				473EF9761E9D28690022AF4B /* ObjCVoiceCallingAppTests */,
 				473EF9811E9D28690022AF4B /* ObjCVoiceCallingAppUITests */,
+				47CDA1761EB1FC6900D83BB6 /* IntentHandler */,
 			);
 		};
 /* End PBXProject section */
@@ -617,7 +689,7 @@
 			files = (
 				473EF9711E9D28690022AF4B /* LaunchScreen.storyboard in Resources */,
 				473EF96E1E9D28690022AF4B /* Assets.xcassets in Resources */,
-				474012251EA806A600BE9E2E /* GoogleService-Info.plist in Resources */,
+				47CDA1711EB0F8BB00D83BB6 /* GoogleService-Info.plist in Resources */,
 				4740125A1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json in Resources */,
 				471435371EAE37FF00B14584 /* plivo-gif-icon.gif in Resources */,
 				474012571EA80D8200BE9E2E /* PhoneNumberMetaData.json in Resources */,
@@ -631,7 +703,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				474012261EA806A600BE9E2E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,7 +710,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				474012271EA806A600BE9E2E /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47CDA1751EB1FC6900D83BB6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,6 +767,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ObjCVoiceCallingAppUITests/Pods-ObjCVoiceCallingAppUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		47CDA1721EB101AC00D83BB6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 8724590774fd5788293202820f1353a9051ff88e e0b4dd01eace2c5e30af24d09def3116c5c91a640558bf8e71af3b37b5fae04b";
 		};
 		4F7BF4E5D84AEA71A42B9E04 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -831,6 +921,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		47CDA1731EB1FC6900D83BB6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47CDA17B1EB1FC6900D83BB6 /* IntentHandler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -843,6 +941,11 @@
 			isa = PBXTargetDependency;
 			target = 473EF95D1E9D28690022AF4B /* ObjCVoiceCallingApp */;
 			targetProxy = 473EF9831E9D28690022AF4B /* PBXContainerItemProxy */;
+		};
+		47CDA1901EB1FC6900D83BB6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47CDA1761EB1FC6900D83BB6 /* IntentHandler */;
+			targetProxy = 47CDA18F1EB1FC6900D83BB6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1065,6 +1168,37 @@
 			};
 			name = Release;
 		};
+		47CDA1961EB1FC6A00D83BB6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Siva Cherukuri (C92DTC732K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = IntentHandler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling.IntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		47CDA1971EB1FC6A00D83BB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Siva Cherukuri (C92DTC732K)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = IntentHandler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling.IntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1100,6 +1234,15 @@
 			buildConfigurations = (
 				473EF9921E9D28690022AF4B /* Debug */,
 				473EF9931E9D28690022AF4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47CDA1951EB1FC6A00D83BB6 /* Build configuration list for PBXNativeTarget "IntentHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47CDA1961EB1FC6A00D83BB6 /* Debug */,
+				47CDA1971EB1FC6A00D83BB6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

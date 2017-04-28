@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>IntentHandler.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>IntentHandlerUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>ObjCVoiceCallingApp.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +33,16 @@
 			<true/>
 		</dict>
 		<key>473EF9811E9D28690022AF4B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47CDA1761EB1FC6900D83BB6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47CDA1801EB1FC6900D83BB6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

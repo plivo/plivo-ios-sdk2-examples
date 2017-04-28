@@ -17,6 +17,7 @@
 #import "Constants.h"
 #import "CallKitInstance.h"
 #import "UIView+Toast.h"
+#import <FirebaseAnalytics/FirebaseAnalytics.h>
 
 @interface CallHistoryViewController ()<PlivoCallControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITableView* callHistoryTableView;
@@ -132,13 +133,15 @@
                                 handler:^(UIAlertAction * action) {
                                     //Handle your yes please button action here
                                     
+                                    [FIRAnalytics logEventWithName:@"Logout"
+                                                        parameters:@{
+                                                                     @"Class": @"RecentCalls"
+                                                                     }];
                                     [self.view makeToastActivity:CSToastPositionCenter];
 
                                     PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
                                     [[Phone sharedInstance] setDelegate:plivoVC];
                                     [plivoVC unRegisterSIPEndpoit];
-
-                                    
                                     
                                 }];
     
@@ -172,18 +175,32 @@
 
 - (void)loggedInSuccessfully
 {
+    [FIRAnalytics logEventWithName:@"LoginSuccess"
+                        parameters:@{
+                                     @"Class": @"RecentCalls"
+                                     }];
     [self.view makeToast:kLOGINSUCCESS];
     
 }
 
 - (void)onLoginFailed
 {
+    [FIRAnalytics logEventWithName:@"LoginFailed"
+                        parameters:@{
+                                     @"Class": @"RecentCalls"
+                                     }];
+
     [self.view makeToast:kLOGINFAILMSG];
     
 }
 
 - (void)loggedOutSuccessfully
 {
+    [FIRAnalytics logEventWithName:@"LogOut"
+                        parameters:@{
+                                     @"Class": @"RecentCalls"
+                                     }];
+
     [self.view hideToastActivity];
     
 }

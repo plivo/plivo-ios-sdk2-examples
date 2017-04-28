@@ -32,6 +32,7 @@
         
         self.callKitProvider = [[CXProvider alloc] initWithConfiguration:configuration];
         self.callKitCallController = [[CXCallController alloc] init];
+        self.callObserver = [[CXCallObserver alloc] init];
 
         return self;
     }

@@ -2,6 +2,9 @@ PODS:
   - APAddressBook (0.3.1):
     - APAddressBook/Core (= 0.3.1)
   - APAddressBook/Core (0.3.1)
+  - Crashlytics (3.8.4):
+    - Fabric (~> 1.6.3)
+  - Fabric (1.6.11)
   - FirebaseAnalytics (3.7.0):
     - FirebaseCore (~> 3.5)
     - FirebaseInstanceID (~> 1.0)
@@ -39,10 +42,14 @@ PODS:
 
 DEPENDENCIES:
   - APAddressBook
+  - Crashlytics
+  - Fabric
   - Google/SignIn
 
 SPEC CHECKSUMS:
   APAddressBook: f7e50fce276ae975c202b83b0ee98f4efde5a104
+  Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
+  Fabric: 5911403591946b8228ab1c51d98f1d7137e863c6
   FirebaseAnalytics: 0d1b7d81d5021155be37702a94ba1ec16d45365d
   FirebaseCore: a024587e43778508700af8c6b1209f7c4516ba02
   FirebaseInstanceID: 2d0518b1378fe9d685ef40cbdd63d2fdc1125339
@@ -52,6 +59,6 @@ SPEC CHECKSUMS:
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
 
-PODFILE CHECKSUM: d1f1ef4c697486d1ddb46dd6534bccfdc3de8e37
+PODFILE CHECKSUM: 891d35e8b83ef5d240956da0d063fb8dd6af1c51
 
 COCOAPODS: 1.2.1

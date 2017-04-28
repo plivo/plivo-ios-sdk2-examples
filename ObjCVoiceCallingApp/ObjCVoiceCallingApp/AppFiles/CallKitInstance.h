@@ -17,4 +17,5 @@
 @property (strong, nonatomic) NSUUID* callUUID;
 @property (strong, nonatomic) CXProvider *callKitProvider;
 @property (strong, nonatomic) CXCallController* callKitCallController;
+@property (strong, nonatomic) CXCallObserver *callObserver;
 @end

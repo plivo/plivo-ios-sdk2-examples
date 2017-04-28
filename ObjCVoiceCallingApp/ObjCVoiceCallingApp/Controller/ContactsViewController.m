@@ -17,6 +17,7 @@
 #import "CallKitInstance.h"
 #import "UIView+Toast.h"
 #import <Google/SignIn.h>
+#import <FirebaseAnalytics/FirebaseAnalytics.h>
 
 @interface ContactsViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, PlivoCallControllerDelegate>
 
@@ -204,20 +205,50 @@
             
             if(weakSelf.phoneContacts > 0)
             {
+                [FIRAnalytics logEventWithName:@"ContactsLoaded"
+                                    parameters:@{
+                                                 @"Count": [NSString stringWithFormat:@"%ld",(unsigned long)weakSelf.phoneContacts.count]
+                                                 }];
+
                 self.noContactsLabel.hidden = YES;
                 [self.view bringSubviewToFront:self.contactsTableView];
                 [weakSelf.contactsTableView reloadData];
+                
+                NSMutableArray* contctArray = [[NSMutableArray alloc] initWithCapacity:contacts.count];
 
-            }else{
-             
+                for(int i = 0; i < contacts.count; i++)
+                {
+                    
+                    NSMutableDictionary* contctDict = [NSMutableDictionary new];
+                    [contctDict setObject:[self contactName:contacts[i]] forKey:@"Name"];
+                    [contctDict setObject:[self contactPhones:contacts[i]] forKey:@"Number"];
+                    [contctArray addObject:contctDict];
+                    
+                }
+                
+                [[NSUserDefaults standardUserDefaults] setObject:[contctArray copy] forKey:@"PhoneContacts"];
+
+            }else
+            {
                 self.noContactsLabel.hidden = NO;
                 [self.view bringSubviewToFront:self.noContactsLabel];
+                
+                [FIRAnalytics logEventWithName:@"NoContacts"
+                                    parameters:@{
+                                                 @"Count": @"0"
+                                                 }];
+
             }
             
         }
         else if (error)
         {
             NSLog(@"No contacts");
+            [FIRAnalytics logEventWithName:@"NoContacts"
+                                parameters:@{
+                                             @"Error": error.description
+                                             }];
+
         }
     }];
 }
@@ -406,6 +437,8 @@
             [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
             [plivoVC performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:phoneNumber];
             self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
+            
+            
 
         }
         else
@@ -464,7 +497,9 @@
             [[Phone sharedInstance] setDelegate:plivoVC];
             [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
             [plivoVC performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:phoneNumber];
-            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];        }
+            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
+            
+        }
     }
     
 }
@@ -538,6 +573,11 @@
                                 style:UIAlertActionStyleDefault
                                 handler:^(UIAlertAction * action) {
                                     //Handle your yes please button action here
+                                    
+                                    [FIRAnalytics logEventWithName:@"Logout"
+                                                        parameters:@{
+                                                                     @"Class": @"Contacts"
+                                                                     }];
                                     
                                     [self.view makeToastActivity:CSToastPositionCenter];
                                     
@@ -708,12 +748,51 @@
     [self.contactsTableView reloadData];
 }
 
+/*
+ * Making a call by using Siri
+ */
+- (void)makeCallWithSiriName:(NSString*)name
+{
+    
+    NSArray* phoneContacts = [[NSUserDefaults standardUserDefaults] objectForKey:@"PhoneContacts"];
+    
+    for(int i = 0; i < phoneContacts.count; i++)
+    {
+        NSDictionary* contact = phoneContacts[i];
+        
+        if([contact[@"Name"] containsString:name])
+        {
+            NSString* contactNumber = contact[@"Number"];
+            
+            PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
+            [[Phone sharedInstance] setDelegate:plivoVC];
+            [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
+            
+            NSString *myNewString = [contactNumber stringByReplacingOccurrencesOfString:@"\\s"
+                                                                             withString:@""
+                                                                                options:NSRegularExpressionSearch
+                                                                                  range:NSMakeRange(0, contactNumber.length)];
+            
+            [plivoVC performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:myNewString];
+            self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
+            
+        }
+    }
+}
+
+
 #pragma mark - Plivo Controller delegate
 
 - (void)loggedInSuccessfully
 {
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        [FIRAnalytics logEventWithName:@"LoginSuccess"
+                            parameters:@{
+                                         @"Class": @"Contacts"
+                                         }];
+
         [self.view hideToastActivity];
         [self.view makeToast:kLOGINSUCCESS];
         
@@ -725,6 +804,11 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        [FIRAnalytics logEventWithName:@"LoginFailed"
+                            parameters:@{
+                                         @"Class": @"Contacts"
+                                         }];
+
         [self.view makeToast:kLOGINFAILMSG];
         
     });
@@ -735,6 +819,11 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
+        [FIRAnalytics logEventWithName:@"LogOut"
+                            parameters:@{
+                                         @"Class": @"Contacts"
+                                         }];
+
         [self.view hideToastActivity];
         
     });
