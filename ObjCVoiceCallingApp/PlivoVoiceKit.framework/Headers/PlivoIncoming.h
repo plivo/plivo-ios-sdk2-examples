@@ -7,7 +7,6 @@
 //  terms mentioned here, http://plivo.com/terms/
 
 #import "PlivoCall.h"
-#import <Foundation/Foundation.h>
 
 @interface PlivoIncoming : NSObject
 

@@ -8,9 +8,6 @@
 
 #import "PlivoCall.h"
 
-#import <Foundation/Foundation.h>
-
-
 @interface PlivoOutgoing : NSObject
 
 /* The accId of the registered Endpoint */

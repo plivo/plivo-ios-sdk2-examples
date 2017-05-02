@@ -20,6 +20,9 @@
 @interface LoginViewController ()<GIDSignInUIDelegate,GIDSignInDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@property (weak, nonatomic) IBOutlet UIButton *loginButton;
+@property (weak, nonatomic) IBOutlet UIButton *googleButton;
+
 - (IBAction)loginButtonTapped:(id)sender;
 - (IBAction)googleloginTapped:(id)sender;
 @end
@@ -30,6 +33,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.loginButton.layer.cornerRadius = DEVICE_HEIGHT * 0.04401408451;
+    self.googleButton.layer.cornerRadius = DEVICE_HEIGHT * 0.04401408451;
+
 
 }
 

@@ -26,7 +26,7 @@
                             </imageView>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SIP Username" placeholder="SIP Username" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="HTm-73-ZLO">
                                 <rect key="frame" x="32" y="186" width="263" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
@@ -36,7 +36,7 @@
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="kick#345" placeholder="Password" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="fnE-uZ-3Qt">
                                 <rect key="frame" x="32" y="251" width="263" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
@@ -52,9 +52,6 @@
                                 <state key="normal" title="Login">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="27"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="loginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="I6X-Z8-Dr0"/>
                                 </connections>
@@ -73,9 +70,6 @@
                                 <state key="normal" image="PlivoG+Icon">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="layer.cornerRadius" value="27"/>
-                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="googleloginTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QZY-ZR-97n"/>
                                 </connections>
@@ -84,6 +78,8 @@
                         <color key="backgroundColor" red="0.10588235294117647" green="0.10588235294117647" blue="0.10588235294117647" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
+                        <outlet property="googleButton" destination="4xg-uv-QHw" id="sLC-B9-Gv2"/>
+                        <outlet property="loginButton" destination="Nyv-mn-Res" id="9Af-QV-5Kp"/>
                         <outlet property="passwordTextField" destination="fnE-uZ-3Qt" id="Odb-EV-2oz"/>
                         <outlet property="userNameTextField" destination="HTm-73-ZLO" id="XM2-Qk-Qa8"/>
                     </connections>
