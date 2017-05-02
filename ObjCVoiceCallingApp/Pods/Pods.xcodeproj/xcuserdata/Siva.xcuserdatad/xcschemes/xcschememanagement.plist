@@ -4,64 +4,40 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>APAddressBook.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
 		<key>GTMOAuth2.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>3</integer>
 		</dict>
 		<key>GTMSessionFetcher.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>4</integer>
 		</dict>
 		<key>GoogleToolboxForMac.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>2</integer>
 		</dict>
 		<key>Pods-ObjCVoiceCallingApp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>5</integer>
 		</dict>
 		<key>Pods-ObjCVoiceCallingAppTests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>6</integer>
 		</dict>
 		<key>Pods-ObjCVoiceCallingAppUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
-			<key>orderHint</key>
-			<integer>7</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>107A9565F9DF88517DFD3E28C05B2B96</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>2AC90A8D5B90FC71F4C1DED359C4CC7F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -76,12 +52,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>85A90118CD3A3EC76EFD477750EB975A</key>
+		<key>76E91202F54F7C02650AEFAF61A492EB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>957E9089FFAA383010A75B4B9A7E4E1D</key>
+		<key>85A90118CD3A3EC76EFD477750EB975A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -325,6 +325,9 @@
                   
                   [[Phone sharedInstance] setDelegate:self];
                   
+                  NSLog(@"Username in G+ %@",[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME]);
+                  NSLog(@"Password in G+ %@",[[NSUserDefaults standardUserDefaults] objectForKey:kPASSWORD]);
+
                   [[Phone sharedInstance] loginWithUserName:[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME] andPassword:[[NSUserDefaults standardUserDefaults] objectForKey:kPASSWORD]];
                   
                   [FIRAnalytics logEventWithName:@"JsonResponseSuccess"

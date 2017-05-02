@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "957E9089FFAA383010A75B4B9A7E4E1D"
+               BlueprintIdentifier = "76E91202F54F7C02650AEFAF61A492EB"
                BuildableName = "Pods_ObjCVoiceCallingApp.framework"
                BlueprintName = "Pods-ObjCVoiceCallingApp"
                ReferencedContainer = "container:Pods.xcodeproj">
@@ -45,7 +45,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "957E9089FFAA383010A75B4B9A7E4E1D"
+            BlueprintIdentifier = "76E91202F54F7C02650AEFAF61A492EB"
             BuildableName = "Pods_ObjCVoiceCallingApp.framework"
             BlueprintName = "Pods-ObjCVoiceCallingApp"
             ReferencedContainer = "container:Pods.xcodeproj">

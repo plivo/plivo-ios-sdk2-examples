@@ -116,7 +116,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No recent calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5sR-bd-jhJ">
                                 <rect key="frame" x="64" y="195" width="192" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -346,9 +346,9 @@
         <image name="MakeCall" width="61" height="61"/>
         <image name="PlivoG+Icon" width="122" height="22"/>
         <image name="PlivoIconWhite" width="185" height="54"/>
-        <image name="TabbarIcon0" width="30" height="30"/>
-        <image name="TabbarIcon1" width="30" height="30"/>
-        <image name="TabbarIcon2" width="30" height="30"/>
+        <image name="TabbarIcon0" width="25" height="25"/>
+        <image name="TabbarIcon1" width="25" height="25"/>
+        <image name="TabbarIcon2" width="25" height="25"/>
         <image name="TextFieldImage" width="253" height="42"/>
         <image name="UnholdIcon" width="64" height="64"/>
         <image name="Unmute" width="64" height="64"/>
