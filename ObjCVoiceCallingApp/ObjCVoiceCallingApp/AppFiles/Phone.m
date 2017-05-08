@@ -70,7 +70,7 @@
 - (PlivoOutgoing *)callWithDest:(NSString *)dest andHeaders:(NSDictionary *)headers
 {
     /* construct SIP URI */
-    NSString *sipUri = [[NSString alloc]initWithFormat:@"sip:%@@phone.plivo.com", dest];
+    NSString *sipUri = [[NSString alloc]initWithFormat:@"sip:%@@phone.test.plivo.com", dest];
     
     /* create PlivoOutgoing object */
     outCall = [endpoint createOutgoingCall];

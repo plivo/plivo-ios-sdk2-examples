@@ -166,7 +166,9 @@
 
         tabbarControler.selectedViewController = [tabbarControler.viewControllers objectAtIndex:1];
         _appDelegate.window.rootViewController = tabbarControler;
-
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate voipRegistration];
 
     });
 

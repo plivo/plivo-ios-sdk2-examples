@@ -22,10 +22,11 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Crashlytics/Crashlytics.h>
 #import <Instabug/Instabug.h>
+#import <PushKit/PushKit.h>
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
-@interface AppDelegate ()
+@interface AppDelegate ()<PKPushRegistryDelegate>
 @end
 
 @implementation AppDelegate
@@ -70,7 +71,7 @@
             }
         }];
     }
-    
+        
     //Request Record permission
     if([[AVAudioSession sharedInstance] respondsToSelector:@selector(requestRecordPermission:)])
     {
@@ -124,6 +125,60 @@
     return YES;
 }
 
+// Register for VoIP notifications
+- (void)voipRegistration
+{
+    dispatch_queue_t mainQueue = dispatch_get_main_queue();
+    
+    // Create a push registry object
+    PKPushRegistry *voipResistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
+    // Set the registry's delegate to self
+    [voipResistry setDelegate:(id<PKPushRegistryDelegate> _Nullable)self];
+    //Set the push type to VOIP
+    voipResistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
+    
+}
+
+
+#pragma mark - Pushkit delegates
+
+// Handle updated push credentials
+- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials: (PKPushCredentials *)credentials forType:(NSString *)type
+{
+    // Register VoIP push token (a property of PKPushCredentials) with server
+    
+    if(credentials.token.length == 0)
+    {
+        NSLog(@"VOIP token NULL");
+        return;
+    }
+    
+    NSLog(@"Credentials token: %@", credentials.token);
+    
+    [FIRAnalytics logEventWithName:@"PushKit"
+                        parameters:@{
+                                     @"Token": credentials.token
+                                     }];
+    [[Phone sharedInstance] registerToken:credentials.token];
+}
+
+// Handle incoming pushes
+- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type
+{
+    if([type isEqualToString:PKPushTypeVoIP])
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [FIRAnalytics logEventWithName:@"PushKit"
+                                parameters:@{
+                                             @"Payload": payload.dictionaryPayload
+                                             }];
+            
+            [[Phone sharedInstance] relayVoipPushNotification:payload.dictionaryPayload];
+            
+        });
+    }
+}
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {

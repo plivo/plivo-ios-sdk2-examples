@@ -66,9 +66,6 @@
     //Add Call Interruption observers
     [self addObservers];
     
-    //Register with Pushkit to handle plivo calls in background
-    [self voipRegistration];
-
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -111,61 +108,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-// Register for VoIP notifications
-- (void)voipRegistration
-{
-    dispatch_queue_t mainQueue = dispatch_get_main_queue();
-    
-    // Create a push registry object
-    PKPushRegistry *voipResistry = [[PKPushRegistry alloc] initWithQueue:mainQueue];
-    // Set the registry's delegate to self
-    [voipResistry setDelegate:(id<PKPushRegistryDelegate> _Nullable)self];
-    //Set the push type to VOIP
-    voipResistry.desiredPushTypes = [NSSet setWithObject:PKPushTypeVoIP];
-    
-}
-
-
-#pragma mark - Pushkit delegates
-
-// Handle updated push credentials
-- (void)pushRegistry:(PKPushRegistry *)registry didUpdatePushCredentials: (PKPushCredentials *)credentials forType:(NSString *)type
-{
-    // Register VoIP push token (a property of PKPushCredentials) with server
-    
-    if(credentials.token.length == 0)
-    {
-        NSLog(@"VOIP token NULL");
-        return;
-    }
-    
-    NSLog(@"Credentials token: %@", credentials.token);
-    
-    [FIRAnalytics logEventWithName:@"PushKit"
-                        parameters:@{
-                                     @"Token": credentials.token
-                                     }];
-    [[Phone sharedInstance] registerToken:credentials.token];
-}
-
-// Handle incoming pushes
-- (void)pushRegistry:(PKPushRegistry *)registry didReceiveIncomingPushWithPayload:(PKPushPayload *)payload forType:(NSString *)type
-{
-    if([type isEqualToString:PKPushTypeVoIP])
-    {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [FIRAnalytics logEventWithName:@"PushKit"
-                                parameters:@{
-                                             @"Payload": payload.dictionaryPayload
-                                             }];
-            
-            [[Phone sharedInstance] relayVoipPushNotification:payload.dictionaryPayload];
-            
-        });
-    }
 }
 
 - (void)addObservers
@@ -218,6 +160,9 @@
         [UtilityClass hideToastActivity];
         
         [[Crashlytics sharedInstance] setUserIdentifier:[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME]];
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        [appDelegate voipRegistration];
         
     });
     NSLog(@"Ready to make a call");
@@ -1209,7 +1154,11 @@
         [FIRAnalytics logEventWithName:@"MuteButtonTapped"
                             parameters:nil];
         
-        [self.muteButton setImage:[UIImage imageNamed:@"MuteIcon.png"] forState:UIControlStateNormal];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.muteButton setImage:[UIImage imageNamed:@"MuteIcon.png"] forState:UIControlStateNormal];
+            
+        });
         
         if(incCall)
         {
@@ -1227,7 +1176,11 @@
         [FIRAnalytics logEventWithName:@"UnmuteButtonTapped"
                             parameters:nil];
         
-        [self.muteButton setImage:[UIImage imageNamed:@"Unmute.png"] forState:UIControlStateNormal];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.muteButton setImage:[UIImage imageNamed:@"Unmute.png"] forState:UIControlStateNormal];
+            
+        });
 
         if(incCall)
         {
@@ -1255,7 +1208,11 @@
         [FIRAnalytics logEventWithName:@"HoldButtonTapped"
                             parameters:nil];
         
-        [self.holdButton setImage:[UIImage imageNamed:@"HoldIcon.png"] forState:UIControlStateNormal];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.holdButton setImage:[UIImage imageNamed:@"HoldIcon.png"] forState:UIControlStateNormal];
+            
+        });
         
         if(incCall)
         {
@@ -1276,7 +1233,11 @@
         [FIRAnalytics logEventWithName:@"UnholdButtonTapped"
                             parameters:nil];
         
-        [self.holdButton setImage:[UIImage imageNamed:@"UnholdIcon.png"] forState:UIControlStateNormal];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self.holdButton setImage:[UIImage imageNamed:@"UnholdIcon.png"] forState:UIControlStateNormal];
+            
+        });
         
         if(incCall)
         {

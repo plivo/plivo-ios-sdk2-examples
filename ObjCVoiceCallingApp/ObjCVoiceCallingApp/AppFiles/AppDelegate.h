@@ -17,5 +17,7 @@
 
 @property (nonatomic, retain) ContactsViewController* viewController;
 
+- (void)voipRegistration;
+
 @end
 
