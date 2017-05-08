@@ -648,7 +648,7 @@
         {
             NSLog(@"Failed to report incoming call successfully: %@.", [error localizedDescription]);
             
-            [UtilityClass makeToast:kREQUESTFAILED];
+            //[UtilityClass makeToast:kREQUESTFAILED];
             
             [[Phone sharedInstance] stopAudioDevice];
             
@@ -720,7 +720,7 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    [UtilityClass makeToast:kREQUESTFAILED];
+                    //[UtilityClass makeToast:kREQUESTFAILED];
                     
                     [[Phone sharedInstance] stopAudioDevice];
                     
