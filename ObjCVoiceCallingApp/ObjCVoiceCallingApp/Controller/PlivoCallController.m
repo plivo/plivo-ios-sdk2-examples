@@ -7,10 +7,6 @@
 //
 
 #import "PlivoCallController.h"
-#import <PlivoVoiceKit/PlivoVoiceKit.h>
-#import <CallKit/CallKit.h>
-#import <UserNotifications/UserNotifications.h>
-#import <AVFoundation/AVFoundation.h>
 #import "UtilityClass.h"
 #import "CallInfo.h"
 #import "UIView+Toast.h"
@@ -21,6 +17,10 @@
 #import "JCPadButton.h"
 #import "MZTimerLabel.h"
 #import "CallKitInstance.h"
+#import <PlivoVoiceKit/PlivoVoiceKit.h>
+#import <CallKit/CallKit.h>
+#import <UserNotifications/UserNotifications.h>
+#import <AVFoundation/AVFoundation.h>
 #import <Google/SignIn.h>
 #import <PushKit/PushKit.h>
 #import <FirebaseAnalytics/FirebaseAnalytics.h>
@@ -213,12 +213,11 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self.view makeToast:kLOGINSUCCESS];
-        NSLog(@"%@",kLOGINSUCCESS);
+        [UtilityClass makeToast:kLOGINSUCCESS];
+        
+        [UtilityClass hideToastActivity];
         
         [[Crashlytics sharedInstance] setUserIdentifier:[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME]];
-
-        [self.delegate loggedInSuccessfully];
         
     });
     NSLog(@"Ready to make a call");
@@ -233,10 +232,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         
         
-        [self.delegate onLoginFailed];
+        [UtilityClass makeToast:@"408:Timedout Error"];
         
-        [self.view makeToast:kLOGINFAILMSG];
-        
+        [UtilityClass hideToastActivity];
+
         NSLog(@"%@",kLOGINFAILMSG);
 
         [UtilityClass setUserAuthenticationStatus:NO];
@@ -263,10 +262,8 @@
 - (void)onLogout
 {
     dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [self.delegate loggedOutSuccessfully];
-        
-        [self.view makeToast:kLOGOUTSUCCESS];
+                
+        [UtilityClass makeToast:kLOGOUTSUCCESS];
         
         [UtilityClass setUserAuthenticationStatus:NO];
         
@@ -292,62 +289,80 @@
  */
 - (void)onIncomingCall:(PlivoIncoming *)incoming
 {
-    [FIRAnalytics logEventWithName:@"OnIncomingCall"
-                        parameters:@{
-                                     @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
-                                     @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
-                                     @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
-                                     }];
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
-        
-        self.userNameTextField.text = @"";
-        self.pad.digitsTextField.text = @"";
-        self.pad.rawText = @"";
-        
-        self.callerNameLabel.text = incoming.fromUser;
-        self.callStateLabel.text = @"Incoming call...";
-        
-    });
-    
-    [[CallKitInstance sharedInstance].callKitProvider setDelegate:self queue:dispatch_get_main_queue()];
-    [[CallKitInstance sharedInstance].callObserver setDelegate:self queue:dispatch_get_main_queue()];
-    
-    [CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:incoming.fromUser,@"CallId",[NSDate date],@"CallTime", nil]];
-    
-    
-    //Added by Siva on Tue 11th, 2017
-    if(!incCall && !outCall)
-    {
-        /* log it */
-        NSLog(@"%@",[[NSString alloc]initWithFormat:@"Incoming Call from %@", incoming.fromContact]);
-        
-        /* assign incCall var */
-        incCall = incoming;
-        
-        outCall = nil;
-        
-        [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
-        
-        NSLog(@"Incoming Call UUID IS %@",[CallKitInstance sharedInstance].callUUID);
-        
-        [self reportIncomingCallFrom:incoming.fromUser withUUID:[CallKitInstance sharedInstance].callUUID];
-    }
-    else
-    {
-        [FIRAnalytics logEventWithName:@"OnIncomingCallReject"
-                            parameters:@{
-                                         @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
-                                         @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
-                                         @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
-                                         }];
-        /*
-         * Reject the call when we already have active ongoing call
-         */
-        [incoming reject];
-        return;
+    switch ([[AVAudioSession sharedInstance] recordPermission]) {
+            
+        case AVAudioSessionRecordPermissionGranted:
+        {
+            
+            [FIRAnalytics logEventWithName:@"OnIncomingCall"
+                                parameters:@{
+                                             @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
+                                             @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
+                                             @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
+                                             }];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                self.tabBarController.selectedViewController = [self.tabBarController.viewControllers objectAtIndex:2];
+                
+                self.userNameTextField.text = @"";
+                self.pad.digitsTextField.text = @"";
+                self.pad.rawText = @"";
+                
+                self.callerNameLabel.text = incoming.fromUser;
+                self.callStateLabel.text = @"Incoming call...";
+                
+            });
+            
+            [[CallKitInstance sharedInstance].callKitProvider setDelegate:self queue:dispatch_get_main_queue()];
+            [[CallKitInstance sharedInstance].callObserver setDelegate:self queue:dispatch_get_main_queue()];
+            
+            [CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:incoming.fromUser,@"CallId",[NSDate date],@"CallTime", nil]];
+            
+            
+            //Added by Siva on Tue 11th, 2017
+            if(!incCall && !outCall)
+            {
+                /* log it */
+                NSLog(@"%@",[[NSString alloc]initWithFormat:@"Incoming Call from %@", incoming.fromContact]);
+                
+                /* assign incCall var */
+                incCall = incoming;
+                
+                outCall = nil;
+                
+                [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
+                
+                NSLog(@"Incoming Call UUID IS %@",[CallKitInstance sharedInstance].callUUID);
+                
+                [self reportIncomingCallFrom:incoming.fromUser withUUID:[CallKitInstance sharedInstance].callUUID];
+            }
+            else
+            {
+                [FIRAnalytics logEventWithName:@"OnIncomingCallReject"
+                                    parameters:@{
+                                                 @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
+                                                 @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
+                                                 @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
+                                                 }];
+                /*
+                 * Reject the call when we already have active ongoing call
+                 */
+                [incoming reject];
+                return;
+            }
+            break;
+        }
+        case AVAudioSessionRecordPermissionDenied:
+            [UtilityClass makeToast:@"Please go to settings and turn on Microphone service for incoming/outgoing calls."];
+            [incoming reject];
+            break;
+        case AVAudioSessionRecordPermissionUndetermined:
+            // This is the initial state before a user has made any choice
+            // You can use this spot to request permission here if you want
+            break;
+        default:
+            break;
     }
 }
 
@@ -511,80 +526,100 @@
 //To make outgoing call
 - (void)performStartCallActionWithUUID:(NSUUID *)uuid handle:(NSString *)handle
 {
-    [FIRAnalytics logEventWithName:@"performStartCallActionWithUUID"
-                        parameters:@{
-                                     @"NSUUID": uuid.UUIDString,
-                                     @"Handle" : handle
-                                     }];
-    [self hideActiveCallView];
-    [self unhideActiveCallView];
-    
-    NSLog(@"Outgoing call uuid is: %@", uuid);
-    
-    [[CallKitInstance sharedInstance].callKitProvider setDelegate:self queue:dispatch_get_main_queue()];
-    [[CallKitInstance sharedInstance].callObserver setDelegate:self queue:dispatch_get_main_queue()];
-    
-    NSLog(@"provider:performStartCallActionWithUUID:");
-    
-    if( uuid == nil || handle == nil)
-    {
-        NSLog(@"UUID or Handle nil");
-        return;
+    switch ([[AVAudioSession sharedInstance] recordPermission]) {
+        
+        case AVAudioSessionRecordPermissionGranted:
+        {
+
+            NSLog(@"Permission granted");
+            
+            [FIRAnalytics logEventWithName:@"performStartCallActionWithUUID"
+                                parameters:@{
+                                             @"NSUUID": uuid.UUIDString,
+                                             @"Handle" : handle
+                                             }];
+            [self hideActiveCallView];
+            [self unhideActiveCallView];
+            
+            NSLog(@"Outgoing call uuid is: %@", uuid);
+            
+            [[CallKitInstance sharedInstance].callKitProvider setDelegate:self queue:dispatch_get_main_queue()];
+            [[CallKitInstance sharedInstance].callObserver setDelegate:self queue:dispatch_get_main_queue()];
+            
+            NSLog(@"provider:performStartCallActionWithUUID:");
+            
+            if( uuid == nil || handle == nil)
+            {
+                NSLog(@"UUID or Handle nil");
+                return;
+            }
+            
+            [CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:handle,@"CallId",[NSDate date],@"CallTime", nil]];
+            
+            NSString* newHandleString = [handle stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            
+            if ([newHandleString rangeOfString:@"+91"].location == NSNotFound && newHandleString.length == 10)
+            {
+                newHandleString = [NSString stringWithFormat:@"+91%@",newHandleString];
+            }
+            
+            CXHandle *callHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:newHandleString];
+            CXStartCallAction *startCallAction = [[CXStartCallAction alloc] initWithCallUUID:uuid handle:callHandle];
+            CXTransaction *transaction = [[CXTransaction alloc] initWithAction:startCallAction];
+            
+            [[CallKitInstance sharedInstance].callKitCallController requestTransaction:transaction completion:^(NSError * _Nullable error)
+             {
+                 
+                 if(error)
+                 {
+                     NSLog(@"StartCallAction transaction request failed: %@", [error localizedDescription]);
+                     
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         
+                         [UtilityClass makeToast:kSTARTACTIONFAILED];
+                         
+                     });
+                     
+                 }
+                 else
+                 {
+                     NSLog(@"StartCallAction transaction request successful");
+                     
+                     CXCallUpdate *callUpdate = [[CXCallUpdate alloc] init];
+                     callUpdate.remoteHandle = callHandle;
+                     callUpdate.supportsDTMF = YES;
+                     callUpdate.supportsHolding = YES;
+                     callUpdate.supportsGrouping = NO;
+                     callUpdate.supportsUngrouping = NO;
+                     callUpdate.hasVideo = NO;
+                     
+                     dispatch_async(dispatch_get_main_queue(), ^{
+                         
+                         self.callerNameLabel.text = handle;
+                         self.callStateLabel.text = @"Calling...";
+                         
+                         [self unhideActiveCallView];
+                         
+                         [[CallKitInstance sharedInstance].callKitProvider reportCallWithUUID:uuid updated:callUpdate];
+                         
+                     });
+                     
+                 }
+                 
+             }];
+            
+            break;
+        }
+        case AVAudioSessionRecordPermissionDenied:
+            [UtilityClass makeToast:@"Please go to settings and turn on Microphone service for incoming/outgoing calls."];
+            break;
+        case AVAudioSessionRecordPermissionUndetermined:
+            // This is the initial state before a user has made any choice
+            // You can use this spot to request permission here if you want
+            break;
+        default:
+            break;
     }
-    
-    [CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:handle,@"CallId",[NSDate date],@"CallTime", nil]];
-    
-    NSString* newHandleString = [handle stringByReplacingOccurrencesOfString:@"-" withString:@""];
-    
-    if ([newHandleString rangeOfString:@"+91"].location == NSNotFound && newHandleString.length == 10)
-    {
-        newHandleString = [NSString stringWithFormat:@"+91%@",newHandleString];
-    }
-    
-    CXHandle *callHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:newHandleString];
-    CXStartCallAction *startCallAction = [[CXStartCallAction alloc] initWithCallUUID:uuid handle:callHandle];
-    CXTransaction *transaction = [[CXTransaction alloc] initWithAction:startCallAction];
-    
-    [[CallKitInstance sharedInstance].callKitCallController requestTransaction:transaction completion:^(NSError * _Nullable error)
-     {
-         
-         if(error)
-         {
-             NSLog(@"StartCallAction transaction request failed: %@", [error localizedDescription]);
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 
-                 [self.view makeToast:kSTARTACTIONFAILED];
-                 
-             });
-             
-         }
-         else
-         {
-             NSLog(@"StartCallAction transaction request successful");
-             
-             CXCallUpdate *callUpdate = [[CXCallUpdate alloc] init];
-             callUpdate.remoteHandle = callHandle;
-             callUpdate.supportsDTMF = YES;
-             callUpdate.supportsHolding = YES;
-             callUpdate.supportsGrouping = NO;
-             callUpdate.supportsUngrouping = NO;
-             callUpdate.hasVideo = NO;
-             
-             dispatch_async(dispatch_get_main_queue(), ^{
-                 
-                 self.callerNameLabel.text = handle;
-                 self.callStateLabel.text = @"Calling...";
-                 
-                 [self unhideActiveCallView];
-                 
-                 [[CallKitInstance sharedInstance].callKitProvider reportCallWithUUID:uuid updated:callUpdate];
-                 
-             });
-             
-         }
-         
-     }];
     
 }
 
@@ -613,7 +648,7 @@
         {
             NSLog(@"Failed to report incoming call successfully: %@.", [error localizedDescription]);
             
-            [self.view makeToast:kREQUESTFAILED];
+            [UtilityClass makeToast:kREQUESTFAILED];
             
             [[Phone sharedInstance] stopAudioDevice];
             
@@ -685,7 +720,7 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
-                    [self.view makeToast:kREQUESTFAILED];
+                    [UtilityClass makeToast:kREQUESTFAILED];
                     
                     [[Phone sharedInstance] stopAudioDevice];
                     
@@ -1011,60 +1046,81 @@
 - (IBAction)callButtonTapped:(id)sender
 {
     
-    if((![self.userNameTextField.text isEqualToString:@"SIP URI or Phone Number"] && ![UtilityClass isEmptyString:self.userNameTextField.text]) || ![UtilityClass isEmptyString:self.pad.digitsTextField.text] || incCall || outCall )
-    {
-        [FIRAnalytics logEventWithName:@"MakeCallButtonTapped"
-                            parameters:nil];
-
-        UIImage *img = [sender imageForState:UIControlStateNormal];
-        NSData *data1 = UIImagePNGRepresentation(img);
-        if ([data1  isEqual:UIImagePNGRepresentation([UIImage imageNamed:@"MakeCall.png"])])
+    switch ([[AVAudioSession sharedInstance] recordPermission]) {
+            
+        case AVAudioSessionRecordPermissionGranted:
         {
             
-            self.callStateLabel.text = @"Calling...";
-            self.callerNameLabel.text = self.pad.digitsTextField.text;
-            
-            [self unhideActiveCallView];
-            
-            NSString* handle;
-            
-            if(![self.pad.digitsTextField.text isEqualToString:@""])
+            if((![self.userNameTextField.text isEqualToString:@"SIP URI or Phone Number"] && ![UtilityClass isEmptyString:self.userNameTextField.text]) || ![UtilityClass isEmptyString:self.pad.digitsTextField.text] || incCall || outCall )
             {
-                handle = self.pad.digitsTextField.text;
+                [FIRAnalytics logEventWithName:@"MakeCallButtonTapped"
+                                    parameters:nil];
                 
-            }else if(![self.userNameTextField.text isEqualToString:@""])
-            {
-                handle = self.userNameTextField.text;
-                
+                UIImage *img = [sender imageForState:UIControlStateNormal];
+                NSData *data1 = UIImagePNGRepresentation(img);
+                if ([data1  isEqual:UIImagePNGRepresentation([UIImage imageNamed:@"MakeCall.png"])])
+                {
+                    
+                    self.callStateLabel.text = @"Calling...";
+                    self.callerNameLabel.text = self.pad.digitsTextField.text;
+                    
+                    [self unhideActiveCallView];
+                    
+                    NSString* handle;
+                    
+                    if(![self.pad.digitsTextField.text isEqualToString:@""])
+                    {
+                        handle = self.pad.digitsTextField.text;
+                        
+                    }else if(![self.userNameTextField.text isEqualToString:@""])
+                    {
+                        handle = self.userNameTextField.text;
+                        
+                    }else
+                    {
+                        
+                        [UtilityClass makeToast:kINVALIDSIPENDPOINTMSG];
+                        
+                        return;
+                        
+                    }
+                    
+                    self.userNameTextField.text = @"";
+                    self.pad.digitsTextField.text = @"";;
+                    self.pad.rawText = @"";
+                    
+                    [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
+                    /* outgoing call */
+                    [self performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:handle];
+                    
+                }
+                else if ([data1  isEqual: UIImagePNGRepresentation([UIImage imageNamed:@"EndCall.png"])])
+                {
+                    [FIRAnalytics logEventWithName:@"EndCallButtonTapped"
+                                        parameters:nil];
+                    isItUserAction = YES;
+                    [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
+                    
+                }
             }else
             {
-                [self.view makeToast:kINVALIDSIPENDPOINTMSG];
-
-                return;
+                [UtilityClass makeToast:kINVALIDSIPENDPOINTMSG];
                 
             }
-            
-            self.userNameTextField.text = @"";
-            self.pad.digitsTextField.text = @"";;
-            self.pad.rawText = @"";
-
-            [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];
-            /* outgoing call */
-            [self performStartCallActionWithUUID:[CallKitInstance sharedInstance].callUUID handle:handle];
-            
+            break;
         }
-        else if ([data1  isEqual: UIImagePNGRepresentation([UIImage imageNamed:@"EndCall.png"])])
+        case AVAudioSessionRecordPermissionDenied:
         {
-            [FIRAnalytics logEventWithName:@"EndCallButtonTapped"
-                                parameters:nil];
-            isItUserAction = YES;
-            [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
-            
+            [UtilityClass makeToast:@"Please go to settings and turn on Microphone service for incoming/outgoing calls."];
+            break;
         }
-    }else
-    {
-        [self.view makeToast:kINVALIDSIPENDPOINTMSG];
-
+        case AVAudioSessionRecordPermissionUndetermined:
+            // This is the initial state before a user has made any choice
+            // You can use this spot to request permission here if you want
+            break;
+        default:
+            break;
+            
     }
 }
 
@@ -1094,7 +1150,7 @@
     self.userNameTextField.textColor = [UIColor whiteColor];
     
     self.dialPadView.hidden = NO;
-    [self.dialPadView setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:76.0/255.0 blue:92.0/255.0 alpha:1.0]];
+    [self.dialPadView setBackgroundColor:[UIColor colorWithRed:0.0/255.0 green:75.0/255.0 blue:58.0/255.0 alpha:1.0]];
 
     self.dialPadView.alpha = 0.7;
     self.pad.buttons = [JCDialPad defaultButtons];

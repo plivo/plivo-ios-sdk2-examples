@@ -19,7 +19,7 @@
 #import "UIView+Toast.h"
 #import <FirebaseAnalytics/FirebaseAnalytics.h>
 
-@interface CallHistoryViewController ()<PlivoCallControllerDelegate>
+@interface CallHistoryViewController ()
 @property (weak, nonatomic) IBOutlet UITableView* callHistoryTableView;
 @property (weak, nonatomic) IBOutlet UILabel* noRecentCallsLabel;
 - (IBAction)logoutButtonTapped:(id)sender;
@@ -31,11 +31,8 @@
 {
     [super viewDidLoad];
     
-    //[CallInfo addCallInfo:[NSDictionary dictionaryWithObjectsAndKeys:@"xlite170405101327",@"CallId",[NSDate date],@"CallTime", nil]];
-
     PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
     [[Phone sharedInstance] setDelegate:plivoVC];
-    plivoVC.delegate = self;
 
 }
 
@@ -137,8 +134,9 @@
                                                         parameters:@{
                                                                      @"Class": @"RecentCalls"
                                                                      }];
-                                    [self.view makeToastActivity:CSToastPositionCenter];
-
+                                    
+                                    [UtilityClass makeToastActivity];
+                                    
                                     PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
                                     [[Phone sharedInstance] setDelegate:plivoVC];
                                     [plivoVC unRegisterSIPEndpoit];
@@ -169,40 +167,6 @@
     [dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *finalDate = [dateFormat stringFromDate:date];    
     return finalDate;
-}
-
-#pragma mark - Plivo Controller delegate
-
-- (void)loggedInSuccessfully
-{
-    [FIRAnalytics logEventWithName:@"LoginSuccess"
-                        parameters:@{
-                                     @"Class": @"RecentCalls"
-                                     }];
-    [self.view makeToast:kLOGINSUCCESS];
-    
-}
-
-- (void)onLoginFailed
-{
-    [FIRAnalytics logEventWithName:@"LoginFailed"
-                        parameters:@{
-                                     @"Class": @"RecentCalls"
-                                     }];
-
-    [self.view makeToast:kLOGINFAILMSG];
-    
-}
-
-- (void)loggedOutSuccessfully
-{
-    [FIRAnalytics logEventWithName:@"LogOut"
-                        parameters:@{
-                                     @"Class": @"RecentCalls"
-                                     }];
-
-    [self.view hideToastActivity];
-    
 }
 
 @end

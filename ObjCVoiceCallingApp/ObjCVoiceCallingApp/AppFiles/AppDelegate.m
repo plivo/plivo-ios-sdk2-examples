@@ -21,6 +21,7 @@
 #import <Fabric/Fabric.h>
 #import <AVFoundation/AVFoundation.h>
 #import <Crashlytics/Crashlytics.h>
+#import <Instabug/Instabug.h>
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -37,6 +38,10 @@
     
     // Use Firebase library to configure APIs
     [FIRApp configure];
+    
+    [Instabug startWithToken:@"e6ed8dc0eb51f00f84a30322771f73df" invocationEvent:IBGInvocationEventShake];
+
+    [Instabug identifyUserWithEmail:@"sivachows@outlook.com" name:@"Siva Cherukuri"];
     
     //Logging device details with the help of FIRAnalytics
     
@@ -101,12 +106,10 @@
         //ContactsViewController
         [[Phone sharedInstance] setDelegate:self.viewController];
         tabBarContrler.selectedViewController = [tabBarContrler.viewControllers objectAtIndex:1];
-        
+        self.window.rootViewController = tabBarContrler;
+
         //Get Username and Password from NSUserDefaults and Login
         [[Phone sharedInstance] loginWithUserName:[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME] andPassword:[[NSUserDefaults standardUserDefaults] objectForKey:kPASSWORD]];
-
-        self.window.rootViewController = tabBarContrler;
-        
         
     }else
     {
@@ -269,7 +272,7 @@
         
     }else
     {
-        [self.window.rootViewController.view makeToast:@"Please login to make a call"];
+        [UtilityClass makeToast:@"Please login to make a call"];
         return NO;
         
     }

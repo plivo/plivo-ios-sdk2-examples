@@ -10,8 +10,11 @@
 #import <UIKit/UIKit.h>
 
 @interface UtilityClass : NSObject
-+(void)setUserAuthenticationStatus:(BOOL)status;
-+(BOOL)getUserAuthenticationStatus;
++ (void)setUserAuthenticationStatus:(BOOL)status;
++ (BOOL)getUserAuthenticationStatus;
 + (BOOL)isEmptyString:(NSString *)text;
-+(BOOL)isNetworkAvailable;
++ (BOOL)isNetworkAvailable;
++ (void)makeToastActivity;
++ (void)hideToastActivity;
++ (void)makeToast:(NSString*)toastMsg;
 @end

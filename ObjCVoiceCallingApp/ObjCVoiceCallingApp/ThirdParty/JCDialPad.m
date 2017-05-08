@@ -68,15 +68,12 @@
     [self.deleteButton addGestureRecognizer:holdRec];
     
     self.digitsTextField = [UITextField new];
-    self.digitsTextField.font = IS_IOS6_OR_LOWER
-                                ? [UIFont fontWithName:@"HelveticaNeue" size:38.0]
-                                : [UIFont fontWithName:@"HelveticaNeue-Thin" size:38.0];
+    self.digitsTextField.font = [UIFont systemFontOfSize:36.0 weight:UIFontWeightThin];
     self.digitsTextField.adjustsFontSizeToFitWidth = YES;
     self.digitsTextField.enabled = NO;
     self.digitsTextField.textAlignment = NSTextAlignmentCenter;
     self.digitsTextField.contentVerticalAlignment = UIViewContentModeCenter;
     self.digitsTextField.borderStyle = UITextBorderStyleNone;
-//    self.digitsTextField.textColor = [self.mainColor colorWithAlphaComponent:0.9];
     self.digitsTextField.textColor = [UIColor blackColor];
     
     self.formatTextToPhoneNumber = YES;
@@ -267,7 +264,7 @@
         top -= 20;
     }
 	
-    CGFloat textFieldWidth = 250;
+    CGFloat textFieldWidth = [UIScreen mainScreen].bounds.size.width * 0.78125;
     self.digitsTextField.frame = CGRectMake((self.correctWidth / 2.0) - (textFieldWidth / 2.0), top + [UIScreen mainScreen].bounds.size.height * 0.05281690141, textFieldWidth, 40);
     [self.contentView addSubview:self.digitsTextField];
     
@@ -285,7 +282,7 @@
     CGFloat maxButtonAreaHeight           = self.height - highestTopAllowed - bottomSpace;
 
     const CGFloat horizontalButtonPadding = 20;
-    CGFloat totalButtonHeight             = numRows * JCPadButtonHeight;
+    CGFloat totalButtonHeight             = numRows * [UIScreen mainScreen].bounds.size.height * 0.1144366197;
     CGFloat maxTotalPaddingHeight         = maxButtonAreaHeight - totalButtonHeight;
     CGFloat verticalButtonPadding         = MIN(16, maxTotalPaddingHeight / (numRows-1));
     CGFloat totalPaddingHeight            = verticalButtonPadding * (numRows-1);
@@ -294,12 +291,12 @@
     CGFloat buttonAreaVertCenter          = highestTopAllowed + (maxButtonAreaHeight/2);
     CGFloat topRowTop                     = buttonAreaVertCenter - (buttonAreaHeight/2);
     
-    CGFloat cellWidth                     = JCPadButtonWidth + horizontalButtonPadding;
+    CGFloat cellWidth                     = [UIScreen mainScreen].bounds.size.height * 0.1144366197 + horizontalButtonPadding;
     CGFloat center                        = [self correctWidth]/2.0;
     
-    if (IS_IPAD) {
-        topRowTop = highestTopAllowed + 24;
-    }
+//    if (IS_IPAD) {
+//        topRowTop = highestTopAllowed + 24;
+//    }
     
     [self.buttons enumerateObjectsUsingBlock:^(JCPadButton *btn, NSUInteger idx, BOOL *stop) {
         NSInteger row = idx / 3;
@@ -316,7 +313,7 @@
 
 - (void)setUpButton:(UIButton *)button left:(CGFloat)left top:(CGFloat)top
 {
-    button.frame = CGRectMake(left, top, JCPadButtonWidth, JCPadButtonHeight);
+    button.frame = CGRectMake(left, top, [UIScreen mainScreen].bounds.size.height * 0.1144366197, [UIScreen mainScreen].bounds.size.height * 0.1144366197);
     [button addTarget:self action:@selector(didTapButton:) forControlEvents:UIControlEventTouchUpInside];
     
     UIGestureRecognizer *rec = [[UILongPressGestureRecognizer alloc]
@@ -325,7 +322,7 @@
     [button addGestureRecognizer:rec];
     
     [self.contentView addSubview:button];
-    [self setRoundedView:button toDiameter:JCPadButtonHeight];
+    [self setRoundedView:button toDiameter:[UIScreen mainScreen].bounds.size.height * 0.1144366197];
 }
 
 - (void)toggleDeleteButtonVisible:(BOOL)visible animated:(BOOL)animated

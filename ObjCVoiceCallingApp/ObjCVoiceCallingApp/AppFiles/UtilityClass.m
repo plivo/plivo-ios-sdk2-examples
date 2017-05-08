@@ -9,6 +9,8 @@
 #import "UtilityClass.h"
 #import <SystemConfiguration/SCNetworkReachability.h>
 #import "Constants.h"
+#import "AppDelegate.h"
+#import "UIView+Toast.h"
 
 @implementation UtilityClass
 
@@ -67,6 +69,27 @@
     && (flags & kSCNetworkReachabilityFlagsReachable);
     
     return canReach;
+}
+
++ (void)makeToastActivity
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.window.rootViewController.view makeToastActivity:CSToastPositionCenter];
+
+}
+
++ (void)hideToastActivity
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.window.rootViewController.view hideToastActivity];
+
+}
+
++ (void)makeToast:(NSString*)toastMsg
+{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.window.rootViewController.view makeToast:toastMsg];
+
 }
 
 @end

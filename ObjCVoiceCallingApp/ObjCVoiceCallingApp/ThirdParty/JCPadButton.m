@@ -1,6 +1,8 @@
 
 #import "JCPadButton.h"
 #import <QuartzCore/QuartzCore.h>
+#import <AudioToolbox/AudioToolbox.h>
+#import "Constants.h"
 
 #define animationLength 0.15
 #define IS_IOS6_OR_LOWER (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1)
@@ -21,7 +23,7 @@
 #pragma mark - Init Methods
 - (instancetype)initWithMainLabel:(NSString *)main subLabel:(NSString *)sub
 {
-    if (self = [super initWithFrame:CGRectMake(0, 0, JCPadButtonWidth, JCPadButtonHeight)])
+    if (self = [super initWithFrame:CGRectMake(0, 0, heightCalculate(65), heightCalculate(65))])
     {
         [self setDefaultStyles];
         
@@ -85,15 +87,15 @@
     if([[NSUserDefaults standardUserDefaults] boolForKey:@"Keypad Enabled"])
     {
         self.borderColor = [UIColor whiteColor];
-        self.selectedColor = [UIColor colorWithWhite:1.000 alpha:0.600];
+        self.selectedColor = [UIColor lightGrayColor];
         self.textColor = [UIColor whiteColor];
-        self.hightlightedTextColor = [UIColor whiteColor];
+        self.hightlightedTextColor = [UIColor blackColor];
 
     }
     else
     {
         self.borderColor = [UIColor blackColor];
-        self.selectedColor = [UIColor colorWithWhite:1.000 alpha:0.600];
+        self.selectedColor = [UIColor lightGrayColor];
         self.textColor = [UIColor blackColor];
         self.hightlightedTextColor = [UIColor blackColor];
 
@@ -108,8 +110,8 @@
 		}
 	});
 	
-    self.mainLabelFont = [UIFont fontWithName:fontName size:32];
-    self.subLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:10];
+    self.mainLabelFont = [UIFont fontWithName:fontName size:heightCalculate(32)];
+    self.subLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:heightCalculate(10)];
 }
 
 - (void)prepareApperance
@@ -143,7 +145,7 @@
 		self.mainLabel.center = center;
 	}
     
-    self.subLabel.frame = CGRectMake(0, self.mainLabel.frame.origin.y + self.mainLabel.frame.size.height + 3, self.frame.size.width, 10);
+    self.subLabel.frame = CGRectMake(0, self.mainLabel.frame.origin.y + self.mainLabel.frame.size.height + 3, self.frame.size.width, heightCalculate(10));
     [self addSubview:self.subLabel];
 }
 
@@ -152,6 +154,8 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     [super touchesBegan:touches withEvent:event];
+
+    AudioServicesPlaySystemSound(1104);
 
     __weak JCPadButton *weakSelf = self;
     [UIView animateWithDuration:animationLength delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{

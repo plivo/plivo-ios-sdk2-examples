@@ -19,7 +19,7 @@
 #import <Google/SignIn.h>
 #import <FirebaseAnalytics/FirebaseAnalytics.h>
 
-@interface ContactsViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating, PlivoCallControllerDelegate>
+@interface ContactsViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
 
 @property (nonatomic, strong) APAddressBook *addressBook;
 @property (nonatomic, strong) NSArray *phoneContacts;
@@ -64,7 +64,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.view makeToastActivity:CSToastPositionCenter];
+    [UtilityClass makeToastActivity];
     
     [self loadContacts];
     
@@ -117,7 +117,6 @@
 
     PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
     [[Phone sharedInstance] setDelegate:plivoVC];
-    plivoVC.delegate = self;
 
 }
 
@@ -579,7 +578,7 @@
                                                                      @"Class": @"Contacts"
                                                                      }];
                                     
-                                    [self.view makeToastActivity:CSToastPositionCenter];
+                                    [UtilityClass makeToastActivity];
                                     
                                     PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
                                     [[Phone sharedInstance] setDelegate:plivoVC];
@@ -780,54 +779,5 @@
     }
 }
 
-
-#pragma mark - Plivo Controller delegate
-
-- (void)loggedInSuccessfully
-{
-    
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [FIRAnalytics logEventWithName:@"LoginSuccess"
-                            parameters:@{
-                                         @"Class": @"Contacts"
-                                         }];
-
-        [self.view hideToastActivity];
-        [self.view makeToast:kLOGINSUCCESS];
-        
-    });
-
-}
-
-- (void)onLoginFailed
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [FIRAnalytics logEventWithName:@"LoginFailed"
-                            parameters:@{
-                                         @"Class": @"Contacts"
-                                         }];
-
-        [self.view makeToast:kLOGINFAILMSG];
-        
-    });
-
-}
-
-- (void)loggedOutSuccessfully
-{
-    dispatch_async(dispatch_get_main_queue(), ^{
-        
-        [FIRAnalytics logEventWithName:@"LogOut"
-                            parameters:@{
-                                         @"Class": @"Contacts"
-                                         }];
-
-        [self.view hideToastActivity];
-        
-    });
-    
-}
 
 @end

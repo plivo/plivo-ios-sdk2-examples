@@ -10,12 +10,12 @@
 #import "UtilityClass.h"
 #import "AppDelegate.h"
 #import "Constants.h"
-#import <Google/SignIn.h>
 #import "APIRequestManager.h"
 #import "UIView+Toast.h"
 #import "PlivoCallController.h"
 #import <FirebaseAnalytics/FirebaseAnalytics.h>
 #import <Crashlytics/Crashlytics.h>
+#import <Google/SignIn.h>
 
 @interface LoginViewController ()<GIDSignInUIDelegate,GIDSignInDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
@@ -96,7 +96,7 @@
         {
             self.view.userInteractionEnabled = NO;
             
-            [self.view makeToastActivity:CSToastPositionCenter];
+            [UtilityClass makeToastActivity];
 
             [[Phone sharedInstance] loginWithUserName:self.userNameTextField.text andPassword:self.passwordTextField.text];
             
@@ -108,13 +108,13 @@
         }
         else
         {
-            [self.view makeToast:kNOINTERNETMSG];
+            [UtilityClass makeToast:kNOINTERNETMSG];
 
         }
     }
     else
     {
-        [self.view makeToast:kINVALIDENTRIESMSG];
+        [UtilityClass makeToast:kINVALIDENTRIESMSG];
 
     }
   
@@ -128,9 +128,9 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        [self.view hideToastActivity];
-
-        [self.view makeToast:kLOGINSUCCESS];
+        [UtilityClass hideToastActivity];
+        
+        [UtilityClass makeToast:kLOGINSUCCESS];
 
         /**
          *  If user already logged in with G+ signIn
@@ -187,9 +187,9 @@
         
         [[GIDSignIn sharedInstance] signOut];
         
-        [self.view hideToastActivity];
+        [UtilityClass hideToastActivity];
         
-        [self.view makeToast:kLOGINFAILMSG];
+        [UtilityClass makeToast:kLOGINFAILMSG];
         
         self.view.userInteractionEnabled = YES;
 
@@ -256,7 +256,9 @@
                             parameters:nil];
 
         [[GIDSignIn sharedInstance] signOut];
-        [self.view makeToast:kINVALIDEMAIL];
+
+        [UtilityClass makeToast:kINVALIDEMAIL];
+        
         self.view.userInteractionEnabled = YES;
         return;
 
@@ -266,7 +268,7 @@
         
         if(![UtilityClass isEmptyString:user.profile.email])
         {
-            [self.view makeToastActivity:CSToastPositionCenter];
+            [UtilityClass makeToastActivity];
 
             [self getSIPEndpointCredentials:user.profile.email];
             
@@ -285,7 +287,9 @@
                                 parameters:nil];
 
             [[GIDSignIn sharedInstance] signOut];
-            [self.view makeToast:kINVALIDEMAIL];
+
+            [UtilityClass makeToast:kINVALIDEMAIL];
+            
             self.view.userInteractionEnabled = YES;
             return;
 
@@ -360,7 +364,7 @@
                                          @"Error": kNOINTERNETMSG
                                          }];
 
-        [self.view makeToast:kNOINTERNETMSG];
+        [UtilityClass makeToast:kNOINTERNETMSG];
     }
 }
 

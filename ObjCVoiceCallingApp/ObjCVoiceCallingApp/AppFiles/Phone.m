@@ -7,6 +7,8 @@
 //
 
 #import "Phone.h"
+#import "UtilityClass.h"
+#import "UIView+Toast.h"
 #import <PlivoVoiceKit/PlivoVoiceKit.h>
 
 @implementation Phone
@@ -41,6 +43,8 @@
 // To register with SIP Server
 - (void)loginWithUserName:(NSString*)userName andPassword:(NSString*)password
 {
+    [UtilityClass makeToastActivity];
+    
     [endpoint login:userName AndPassword:password];
 }
 

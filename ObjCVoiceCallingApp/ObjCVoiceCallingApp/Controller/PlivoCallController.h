@@ -9,13 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Phone.h"
 
-@protocol PlivoCallControllerDelegate <NSObject>
-@optional
-- (void)loggedInSuccessfully;
-- (void)loggedOutSuccessfully;
-- (void)onLoginFailed;
-@end
-
 @interface PlivoCallController : UIViewController
 
 @property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
@@ -28,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *holdButton;
 @property (weak, nonatomic) IBOutlet UIButton *keypadButton;
 @property (weak, nonatomic) IBOutlet UIImageView* activeCallImageView;
-@property(nonatomic, weak) id<PlivoCallControllerDelegate> delegate;
 
 - (IBAction)callButtonTapped:(id)sender;
 - (IBAction)hideButtonTapped:(id)sender;
