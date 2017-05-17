@@ -9,6 +9,7 @@
 #import "Phone.h"
 #import "UtilityClass.h"
 #import "UIView+Toast.h"
+#import "Constants.h"
 #import <PlivoVoiceKit/PlivoVoiceKit.h>
 
 @implementation Phone
@@ -70,7 +71,7 @@
 - (PlivoOutgoing *)callWithDest:(NSString *)dest andHeaders:(NSDictionary *)headers
 {
     /* construct SIP URI */
-    NSString *sipUri = [[NSString alloc]initWithFormat:@"sip:%@@phone.test.plivo.com", dest];
+    NSString *sipUri = [[NSString alloc]initWithFormat:@"sip:%@%@", dest,kENDPOINTURL];
     
     /* create PlivoOutgoing object */
     outCall = [endpoint createOutgoingCall];

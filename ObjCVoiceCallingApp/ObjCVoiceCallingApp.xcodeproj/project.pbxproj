@@ -469,8 +469,8 @@
 		473EF9A41E9D54F30022AF4B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4740121E1EA8033100BE9E2E /* SafariServices.framework */,
 				47E6374D1EA022D900F3D222 /* PlivoVoiceKit.framework */,
+				4740121E1EA8033100BE9E2E /* SafariServices.framework */,
 				472B34E31E9E371F00FF56B0 /* CallKit.framework */,
 				47585F8E1E9DF40900DA1E6D /* CoreData.framework */,
 				473EF9C11E9D555E0022AF4B /* CoreGraphics.framework */,

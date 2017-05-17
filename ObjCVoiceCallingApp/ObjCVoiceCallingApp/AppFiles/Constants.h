@@ -35,3 +35,4 @@
 #define kSIPENDPOINTS  @"SipEndPoints"
 #define kSIPEMAILIDS  @"SipEmailIds"
 #define kSIPDETAILS  @"SipDetails"
+#define kENDPOINTURL @"@phone.test.plivo.com"

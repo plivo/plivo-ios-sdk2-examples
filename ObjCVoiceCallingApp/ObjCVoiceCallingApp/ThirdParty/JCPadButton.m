@@ -110,8 +110,9 @@
 		}
 	});
 	
-    self.mainLabelFont = [UIFont fontWithName:fontName size:heightCalculate(32)];
-    self.subLabelFont = [UIFont fontWithName:@"HelveticaNeue" size:heightCalculate(10)];
+    self.mainLabelFont = [UIFont systemFontOfSize:heightCalculate(32) weight:UIFontWeightThin];
+    self.subLabelFont = [UIFont systemFontOfSize:heightCalculate(10) weight:UIFontWeightThin];
+
 }
 
 - (void)prepareApperance
@@ -155,7 +156,7 @@
 {
     [super touchesBegan:touches withEvent:event];
 
-    AudioServicesPlaySystemSound(1104);
+    AudioServicesPlaySystemSound(1200);
 
     __weak JCPadButton *weakSelf = self;
     [UIView animateWithDuration:animationLength delay:0.0f options:UIViewAnimationOptionCurveEaseIn animations:^{

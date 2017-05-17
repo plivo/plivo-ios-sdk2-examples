@@ -26,7 +26,7 @@
 #import <FirebaseAnalytics/FirebaseAnalytics.h>
 #import <Crashlytics/Crashlytics.h>
 
-@interface PlivoCallController ()<CXProviderDelegate, PKPushRegistryDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate>
+@interface PlivoCallController ()<CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate>
 {
     BOOL isItUserAction;
     BOOL isItGSMCall;
@@ -1280,6 +1280,8 @@
 
 - (void)hideActiveCallView
 {
+    [UIDevice currentDevice].proximityMonitoringEnabled = NO;
+
     self.callerNameLabel.hidden = YES;
     self.callStateLabel.hidden = YES;
     self.activeCallImageView.hidden = YES;
@@ -1312,6 +1314,8 @@
 
 - (void)unhideActiveCallView
 {
+    [UIDevice currentDevice].proximityMonitoringEnabled = YES;
+
     self.callerNameLabel.hidden = NO;
     self.callStateLabel.hidden = NO;
     self.activeCallImageView.hidden = NO;
