@@ -70,6 +70,25 @@
     
     self.sipDetailsArray = [[NSUserDefaults standardUserDefaults] objectForKey:kSIPDETAILS];
     
+    NSMutableArray* tempSipArray = [[NSMutableArray alloc] init];
+    
+    for(int i = 0; i < self.sipDetailsArray.count; i++){
+     
+        NSDictionary* sipDict = self.sipDetailsArray[i];
+        
+        if([UtilityClass validateEmail:[sipDict[@"eMail"] capitalizedString]]){
+
+            [tempSipArray addObject:sipDict];
+        }
+        
+    }
+    
+    self.sipDetailsArray = nil;
+    
+    self.sipDetailsArray = [tempSipArray copy];
+    
+    tempSipArray = nil;
+
     if(self.sipDetailsArray.count > 0)
     {
         NSArray *itemArray = [NSArray arrayWithObjects: @"Phone", @"SIP", nil];

@@ -74,6 +74,7 @@
 + (void)makeToastActivity
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.window.rootViewController.view.userInteractionEnabled = NO;
     [appDelegate.window.rootViewController.view makeToastActivity:CSToastPositionCenter];
 
 }
@@ -81,6 +82,7 @@
 + (void)hideToastActivity
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.window.rootViewController.view.userInteractionEnabled = YES;
     [appDelegate.window.rootViewController.view hideToastActivity];
 
 }
@@ -90,6 +92,34 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.window.rootViewController.view makeToast:toastMsg];
 
+}
+
+// Email address validation function
++ (BOOL)validateEmail:(NSString *)theEmail
+{
+    BOOL isValid = YES;
+    
+    NSRange rangeAt = [theEmail rangeOfString:@"@"];
+    if (0 == rangeAt.length)
+        isValid = NO;
+    else
+    {
+        NSString *domainName = [theEmail substringFromIndex:rangeAt.location + 1];
+        rangeAt = [domainName rangeOfString:@"@"];
+        if (0 != rangeAt.length)
+            isValid = NO;
+        else
+        {
+            NSInteger dotCount = [[domainName componentsSeparatedByString:@"."] count];
+            if(dotCount < 2 || dotCount > 3)
+                isValid = NO;
+            else
+                if(1 != [[theEmail componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"$!~+`/{}?%^*\\=&'#| "]] count])
+                    isValid = NO;
+        }
+    }
+    return isValid;
+    
 }
 
 @end

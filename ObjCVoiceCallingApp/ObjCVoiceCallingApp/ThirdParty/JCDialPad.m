@@ -278,7 +278,7 @@
     NSInteger numRows                     = DIV_ROUND_UP(count, 3);
 
     const CGFloat bottomSpace             = IS_IOS6_OR_LOWER ? 36 : 60; //Leave room for tab bar if necessary
-    CGFloat highestTopAllowed             = self.digitsTextField.bottom - [UIScreen mainScreen].bounds.size.height * 0.1056338028 + 4;
+    CGFloat highestTopAllowed             = 0;
     CGFloat maxButtonAreaHeight           = self.height - highestTopAllowed - bottomSpace;
 
     const CGFloat horizontalButtonPadding = 20;

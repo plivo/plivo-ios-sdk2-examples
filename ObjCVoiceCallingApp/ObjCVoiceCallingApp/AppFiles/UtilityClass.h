@@ -17,4 +17,5 @@
 + (void)makeToastActivity;
 + (void)hideToastActivity;
 + (void)makeToast:(NSString*)toastMsg;
++ (BOOL)validateEmail:(NSString *)theEmail;
 @end
