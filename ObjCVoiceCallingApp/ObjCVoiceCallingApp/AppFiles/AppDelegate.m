@@ -21,7 +21,6 @@
 #import <Fabric/Fabric.h>
 #import <AVFoundation/AVFoundation.h>
 #import <Crashlytics/Crashlytics.h>
-#import <Instabug/Instabug.h>
 #import <PushKit/PushKit.h>
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -39,10 +38,6 @@
     
     // Use Firebase library to configure APIs
     [FIRApp configure];
-    
-    [Instabug startWithToken:@"e6ed8dc0eb51f00f84a30322771f73df" invocationEvent:IBGInvocationEventShake];
-
-    [Instabug identifyUserWithEmail:@"sivachows@outlook.com" name:@"Siva Cherukuri"];
     
     //Logging device details with the help of FIRAnalytics
     

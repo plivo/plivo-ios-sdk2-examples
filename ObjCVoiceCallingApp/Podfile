@@ -6,7 +6,6 @@ target 'ObjCVoiceCallingApp' do
   pod 'Google/SignIn'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Instabug'
 
   target 'ObjCVoiceCallingAppTests' do
     inherit! :search_paths

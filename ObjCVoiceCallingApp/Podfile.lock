@@ -36,13 +36,11 @@ PODS:
   - GTMSessionFetcher/Core (1.1.9)
   - GTMSessionFetcher/Full (1.1.9):
     - GTMSessionFetcher/Core (= 1.1.9)
-  - Instabug (7.2.2)
 
 DEPENDENCIES:
   - Crashlytics
   - Fabric
   - Google/SignIn
-  - Instabug
 
 SPEC CHECKSUMS:
   Crashlytics: 79e236942ca1e7fc641df1feb9a275360a78ab6a
@@ -55,8 +53,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
-  Instabug: 53daedd49e9980499a5eca44d1fb3a74d30b5c88
 
-PODFILE CHECKSUM: 60ef5d9138964b28eb42fcae9a85d03e18f14557
+PODFILE CHECKSUM: cfb321cf63ebd410a9cf0d7ef317ab338f5150c8
 
 COCOAPODS: 1.2.1
