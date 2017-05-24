@@ -20,12 +20,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PlivoIconWhite" translatesAutoresizingMaskIntoConstraints="NO" id="CIp-Gd-MLB">
-                                <rect key="frame" x="94" y="307" width="185" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PlivoIconWhite" translatesAutoresizingMaskIntoConstraints="NO" id="CIp-Gd-MLB">
+                                <rect key="frame" x="95" y="307" width="185" height="54"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.10588235294117647" green="0.10588235294117647" blue="0.10588235294117647" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="CIp-Gd-MLB" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="ezv-ZY-fWe"/>
+                            <constraint firstItem="CIp-Gd-MLB" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="llb-EF-LXo"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
