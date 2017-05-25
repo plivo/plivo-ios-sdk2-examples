@@ -83,18 +83,3 @@
 }
 
 @end
-
-//INPersonHandle* personHandle = [[INPersonHandle alloc] initWithValue:@"8686198299" type:INPersonHandleTypePhoneNumber];
-//INPerson* person = [[INPerson alloc] initWithPersonHandle:personHandle nameComponents:nil displayName:@"Siva" image:nil contactIdentifier:[NSUUID UUID].UUIDString customIdentifier:[NSUUID UUID].UUIDString];
-
-//            INPersonHandle* personHandle = [[INPersonHandle alloc] initWithValue:@"8686198299" type:INPersonHandleTypePhoneNumber];
-//            INPerson* person = [[INPerson alloc] initWithPersonHandle:personHandle nameComponents:nil displayName:@"Siva" image:nil contactIdentifier:[NSUUID UUID].UUIDString customIdentifier:[NSUUID UUID].UUIDString];
-
-//        INPersonHandle* personHandle = [[INPersonHandle alloc] initWithValue:@"8686198299" type:INPersonHandleTypePhoneNumber];
-//        INPerson* person = [[INPerson alloc] initWithPersonHandle:personHandle nameComponents:nil displayName:@"Siva" image:nil contactIdentifier:[NSUUID UUID].UUIDString customIdentifier:[NSUUID UUID].UUIDString];
-//        [resolutionResults addObject:[INPersonResolutionResult successWithResolvedPerson:person]];
-
-//        INPersonHandle* personHandle = [[INPersonHandle alloc] initWithValue:@"8686198299" type:INPersonHandleTypePhoneNumber];
-//        INPerson* person = [[INPerson alloc] initWithPersonHandle:personHandle nameComponents:nil displayName:@"Siva" image:nil contactIdentifier:[NSUUID UUID].UUIDString customIdentifier:[NSUUID UUID].UUIDString];
-//        [resolutionResults addObject:[INPersonResolutionResult successWithResolvedPerson:person]];
-

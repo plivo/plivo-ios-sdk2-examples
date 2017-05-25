@@ -16,7 +16,6 @@
 #import "AppDelegate.h"
 #import "CallKitInstance.h"
 #import "UIView+Toast.h"
-#import <Google/SignIn.h>
 #import <FirebaseAnalytics/FirebaseAnalytics.h>
 
 @interface ContactsViewController ()<UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating>
@@ -33,8 +32,6 @@
 @property (nonatomic, strong) UISegmentedControl *contactsSegmentControl;
 
 @property BOOL isSearchControllerActive;
-
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
 
 @property (nonatomic, strong) NSArray *sipDetailsArray;
 
@@ -625,10 +622,80 @@
     // update the filtered array based on the search text
     NSString *searchText = searchController.searchBar.text;
     
-    if(self.contactsSegmentControl.selectedSegmentIndex == 0)
+    if(self.contactsSegmentControl.selectedSegmentIndex == 1)
     {
+        self.sipSearchResults = [self.sipDetailsArray mutableCopy];
+        
+        // strip out all the leading and trailing spaces
+        NSString *strippedString = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        
+        // break up the search terms (separated by spaces)
+        NSArray *searchItems = nil;
+        if (strippedString.length > 0) {
+            searchItems = [strippedString componentsSeparatedByString:@" "];
+        }
+        
+        // build all the "AND" expressions for each value in the searchString
+        //
+        NSMutableArray *andMatchPredicates = [NSMutableArray array];
+        
+        for (NSString *searchString in searchItems) {
+            // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
+            //
+            // example if searchItems contains "iphone 599 2007":
+            //      name CONTAINS[c] "iphone"
+            //      name CONTAINS[c] "599", yearIntroduced ==[c] 599, introPrice ==[c] 599
+            //      name CONTAINS[c] "2007", yearIntroduced ==[c] 2007, introPrice ==[c] 2007
+            //
+            NSMutableArray *searchItemsPredicate = [NSMutableArray array];
+            
+            // Below we use NSExpression represent expressions in our predicates.
+            // NSPredicate is made up of smaller, atomic parts: two NSExpressions (a left-hand value and a right-hand value)
+            
+            // name field matching
+            NSExpression *lhs = [NSExpression expressionForKeyPath:@"eMail"];
+            NSExpression *rhs = [NSExpression expressionForConstantValue:searchString];
+            NSPredicate *finalPredicate = [NSComparisonPredicate
+                                           predicateWithLeftExpression:lhs
+                                           rightExpression:rhs
+                                           modifier:NSDirectPredicateModifier
+                                           type:NSContainsPredicateOperatorType
+                                           options:NSCaseInsensitivePredicateOption];
+            [searchItemsPredicate addObject:finalPredicate];
+            
+            // yearIntroduced field matching
+            NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
+            numberFormatter.numberStyle = NSNumberFormatterNoStyle;
+            NSNumber *targetNumber = [numberFormatter numberFromString:searchString];
+            if (targetNumber != nil) {   // searchString may not convert to a number
+                lhs = [NSExpression expressionForKeyPath:@"endPoint"];
+                rhs = [NSExpression expressionForConstantValue:targetNumber];
+                finalPredicate = [NSComparisonPredicate
+                                  predicateWithLeftExpression:lhs
+                                  rightExpression:rhs
+                                  modifier:NSDirectPredicateModifier
+                                  type:NSEqualToPredicateOperatorType
+                                  options:NSCaseInsensitivePredicateOption];
+                [searchItemsPredicate addObject:finalPredicate];
+                
+            }
+            
+            // at this OR predicate to our master AND predicate
+            NSCompoundPredicate *orMatchPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:searchItemsPredicate];
+            [andMatchPredicates addObject:orMatchPredicates];
+        }
+        
+        // match up the fields of the Product object
+        NSCompoundPredicate *finalCompoundPredicate =
+        [NSCompoundPredicate andPredicateWithSubpredicates:andMatchPredicates];
+        self.sipSearchResults = [[self.sipSearchResults filteredArrayUsingPredicate:finalCompoundPredicate] mutableCopy];
+        
+    }
+    else
+    {
+        
         self.phoneSearchResults = [self.phoneContacts mutableCopy];
-
+        
         // strip out all the leading and trailing spaces
         NSString *strippedString = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         
@@ -693,74 +760,7 @@
         NSCompoundPredicate *finalCompoundPredicate =
         [NSCompoundPredicate andPredicateWithSubpredicates:andMatchPredicates];
         self.phoneSearchResults = [[self.phoneSearchResults filteredArrayUsingPredicate:finalCompoundPredicate] mutableCopy];
-    }
-    else
-    {
-        self.sipSearchResults = [self.sipDetailsArray mutableCopy];
-
-        // strip out all the leading and trailing spaces
-        NSString *strippedString = [searchText stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
         
-        // break up the search terms (separated by spaces)
-        NSArray *searchItems = nil;
-        if (strippedString.length > 0) {
-            searchItems = [strippedString componentsSeparatedByString:@" "];
-        }
-        
-        // build all the "AND" expressions for each value in the searchString
-        //
-        NSMutableArray *andMatchPredicates = [NSMutableArray array];
-        
-        for (NSString *searchString in searchItems) {
-            // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
-            //
-            // example if searchItems contains "iphone 599 2007":
-            //      name CONTAINS[c] "iphone"
-            //      name CONTAINS[c] "599", yearIntroduced ==[c] 599, introPrice ==[c] 599
-            //      name CONTAINS[c] "2007", yearIntroduced ==[c] 2007, introPrice ==[c] 2007
-            //
-            NSMutableArray *searchItemsPredicate = [NSMutableArray array];
-            
-            // Below we use NSExpression represent expressions in our predicates.
-            // NSPredicate is made up of smaller, atomic parts: two NSExpressions (a left-hand value and a right-hand value)
-            
-            // name field matching
-            NSExpression *lhs = [NSExpression expressionForKeyPath:@"eMail"];
-            NSExpression *rhs = [NSExpression expressionForConstantValue:searchString];
-            NSPredicate *finalPredicate = [NSComparisonPredicate
-                                           predicateWithLeftExpression:lhs
-                                           rightExpression:rhs
-                                           modifier:NSDirectPredicateModifier
-                                           type:NSContainsPredicateOperatorType
-                                           options:NSCaseInsensitivePredicateOption];
-            [searchItemsPredicate addObject:finalPredicate];
-            
-            // yearIntroduced field matching
-            NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
-            numberFormatter.numberStyle = NSNumberFormatterNoStyle;
-            NSNumber *targetNumber = [numberFormatter numberFromString:searchString];
-            if (targetNumber != nil) {   // searchString may not convert to a number
-                lhs = [NSExpression expressionForKeyPath:@"endPoint"];
-                rhs = [NSExpression expressionForConstantValue:targetNumber];
-                finalPredicate = [NSComparisonPredicate
-                                  predicateWithLeftExpression:lhs
-                                  rightExpression:rhs
-                                  modifier:NSDirectPredicateModifier
-                                  type:NSEqualToPredicateOperatorType
-                                  options:NSCaseInsensitivePredicateOption];
-                [searchItemsPredicate addObject:finalPredicate];
-                
-            }
-            
-            // at this OR predicate to our master AND predicate
-            NSCompoundPredicate *orMatchPredicates = [NSCompoundPredicate orPredicateWithSubpredicates:searchItemsPredicate];
-            [andMatchPredicates addObject:orMatchPredicates];
-        }
-        
-        // match up the fields of the Product object
-        NSCompoundPredicate *finalCompoundPredicate =
-        [NSCompoundPredicate andPredicateWithSubpredicates:andMatchPredicates];
-        self.sipSearchResults = [[self.sipSearchResults filteredArrayUsingPredicate:finalCompoundPredicate] mutableCopy];
     }
     
     [self.contactsTableView reloadData];
