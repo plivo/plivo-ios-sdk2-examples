@@ -1,0 +1,6 @@
+framework module PlivoVoiceKit {
+  umbrella header "PlivoVoiceKit.h"
+
+  export *
+  module * { export * }
+}

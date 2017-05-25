@@ -1,0 +1,1343 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		14A517037E99052AD0FD1884 /* Pods_SwiftVoiceCallingAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DECAA91E9E4D3BB6174A99B /* Pods_SwiftVoiceCallingAppUITests.framework */; };
+		1E02D4E39DEB53E922DB7416 /* Pods_SwiftVoiceCallingApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 280E7CB41FF6D0DB84B30F45 /* Pods_SwiftVoiceCallingApp.framework */; };
+		47332D341EB92B02003FB887 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47332D321EB92B02003FB887 /* Main.storyboard */; };
+		47332D361EB92B02003FB887 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 47332D351EB92B02003FB887 /* Assets.xcassets */; };
+		47332D391EB92B02003FB887 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47332D371EB92B02003FB887 /* LaunchScreen.storyboard */; };
+		47332D441EB92B02003FB887 /* SwiftVoiceCallingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47332D431EB92B02003FB887 /* SwiftVoiceCallingAppTests.swift */; };
+		47332D4F1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47332D4E1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift */; };
+		47F225811ED5882C0057A39F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225801ED5882C0057A39F /* AppDelegate.swift */; };
+		47F225831ED588F20057A39F /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225821ED588F20057A39F /* ServiceManager.swift */; };
+		47F225851ED589000057A39F /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225841ED589000057A39F /* APIRequestManager.swift */; };
+		47F2258A1ED58A5A0057A39F /* Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225891ED58A5A0057A39F /* Phone.swift */; };
+		47F2258C1ED58BA80057A39F /* UtilClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2258B1ED58BA80057A39F /* UtilClass.swift */; };
+		47F225D01ED58D0B0057A39F /* NBAsYouTypeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225BE1ED58D0B0057A39F /* NBAsYouTypeFormatter.m */; };
+		47F225D11ED58D0B0057A39F /* NBNumberFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225C01ED58D0B0057A39F /* NBNumberFormat.m */; };
+		47F225D21ED58D0B0057A39F /* NBPhoneMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225C21ED58D0B0057A39F /* NBPhoneMetaData.m */; };
+		47F225D31ED58D0B0057A39F /* NBPhoneNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225C41ED58D0B0057A39F /* NBPhoneNumber.m */; };
+		47F225D41ED58D0B0057A39F /* NBPhoneNumberDesc.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225C71ED58D0B0057A39F /* NBPhoneNumberDesc.m */; };
+		47F225D51ED58D0B0057A39F /* NBPhoneNumberMetadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47F225C81ED58D0B0057A39F /* NBPhoneNumberMetadata.plist */; };
+		47F225D61ED58D0B0057A39F /* NBPhoneNumberMetadataForTesting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47F225C91ED58D0B0057A39F /* NBPhoneNumberMetadataForTesting.plist */; };
+		47F225D71ED58D0B0057A39F /* NBPhoneNumberUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225CB1ED58D0B0057A39F /* NBPhoneNumberUtil.m */; };
+		47F225D81ED58D0B0057A39F /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225CD1ED58D0B0057A39F /* NSArray+NBAdditions.m */; };
+		47F2265A1ED58DD30057A39F /* APAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226281ED58DD30057A39F /* APAddress.m */; };
+		47F2265B1ED58DD30057A39F /* APAddressBookAccessRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226291ED58DD30057A39F /* APAddressBookAccessRoutine.m */; };
+		47F2265C1ED58DD30057A39F /* APAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2262C1ED58DD30057A39F /* APAddressBook.m */; };
+		47F2265D1ED58DD30057A39F /* APImageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2262D1ED58DD30057A39F /* APImageExtractor.m */; };
+		47F2265E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2262E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m */; };
+		47F2265F1ED58DD30057A39F /* APContactBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226331ED58DD30057A39F /* APContactBuilder.m */; };
+		47F226601ED58DD30057A39F /* APAddressBookRefWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226341ED58DD30057A39F /* APAddressBookRefWrapper.m */; };
+		47F226611ED58DD30057A39F /* APContactDataExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226361ED58DD30057A39F /* APContactDataExtractor.m */; };
+		47F226621ED58DD30057A39F /* APSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226371ED58DD30057A39F /* APSource.m */; };
+		47F226631ED58DD30057A39F /* APContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226381ED58DD30057A39F /* APContact.m */; };
+		47F226641ED58DD30057A39F /* APContactDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2263E1ED58DD30057A39F /* APContactDate.m */; };
+		47F226651ED58DD30057A39F /* APAddressBookContactsRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226401ED58DD30057A39F /* APAddressBookContactsRoutine.m */; };
+		47F226661ED58DD30057A39F /* APThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226411ED58DD30057A39F /* APThread.m */; };
+		47F226671ED58DD30057A39F /* APContactListBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226421ED58DD30057A39F /* APContactListBuilder.m */; };
+		47F226681ED58DD30057A39F /* APEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226431ED58DD30057A39F /* APEmail.m */; };
+		47F226691ED58DD30057A39F /* APPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226451ED58DD30057A39F /* APPhone.m */; };
+		47F2266A1ED58DD30057A39F /* APSocialProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226461ED58DD30057A39F /* APSocialProfile.m */; };
+		47F2266B1ED58DD30057A39F /* APJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226491ED58DD30057A39F /* APJob.m */; };
+		47F2266C1ED58DD30057A39F /* APName.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2264A1ED58DD30057A39F /* APName.m */; };
+		47F2266D1ED58DD30057A39F /* APAddressBookBaseRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2264D1ED58DD30057A39F /* APAddressBookBaseRoutine.m */; };
+		47F2266E1ED58DD30057A39F /* APRecordDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226501ED58DD30057A39F /* APRecordDate.m */; };
+		47F2266F1ED58DD30057A39F /* APSocialServiceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226521ED58DD30057A39F /* APSocialServiceHelper.m */; };
+		47F226701ED58DD30057A39F /* APRelatedPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226531ED58DD30057A39F /* APRelatedPerson.m */; };
+		47F226711ED58DD30057A39F /* Private in Resources */ = {isa = PBXBuildFile; fileRef = 47F226581ED58DD30057A39F /* Private */; };
+		47F226721ED58DD30057A39F /* Public in Resources */ = {isa = PBXBuildFile; fileRef = 47F226591ED58DD30057A39F /* Public */; };
+		47F2267C1ED58E090057A39F /* JCDialPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226751ED58E090057A39F /* JCDialPad.m */; };
+		47F2267D1ED58E090057A39F /* JCPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226771ED58E090057A39F /* JCPadButton.m */; };
+		47F2267E1ED58E090057A39F /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226791ED58E090057A39F /* MZTimerLabel.m */; };
+		47F2267F1ED58E090057A39F /* UIView+FrameAccessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2267B1ED58E090057A39F /* UIView+FrameAccessor.m */; };
+		47F226851ED590020057A39F /* PlivoVoiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226841ED590020057A39F /* PlivoVoiceKit.framework */; };
+		47F226871ED590200057A39F /* PlivoVoiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226841ED590020057A39F /* PlivoVoiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		47F2268A1ED590370057A39F /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226891ED590370057A39F /* SafariServices.framework */; };
+		47F2268C1ED590410057A39F /* CallKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2268B1ED590410057A39F /* CallKit.framework */; };
+		47F226901ED590690057A39F /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2268D1ED590690057A39F /* CoreData.framework */; };
+		47F226911ED590690057A39F /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2268E1ED590690057A39F /* CoreGraphics.framework */; };
+		47F226921ED590690057A39F /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2268F1ED590690057A39F /* CoreMedia.framework */; };
+		47F226951ED590790057A39F /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226931ED590790057A39F /* AVFoundation.framework */; };
+		47F226961ED590790057A39F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226941ED590790057A39F /* Foundation.framework */; };
+		47F226981ED590840057A39F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226971ED590840057A39F /* AudioToolbox.framework */; };
+		47F2269A1ED5908C0057A39F /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226991ED5908C0057A39F /* CFNetwork.framework */; };
+		47F2269C1ED590930057A39F /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2269B1ED590930057A39F /* UIKit.framework */; };
+		47F2269E1ED5909D0057A39F /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2269D1ED5909D0057A39F /* OpenGLES.framework */; };
+		47F226A01ED590A50057A39F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F2269F1ED590A50057A39F /* QuartzCore.framework */; };
+		47F226A21ED590AF0057A39F /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226A11ED590AF0057A39F /* Intents.framework */; };
+		47F226A41ED590B70057A39F /* PushKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226A31ED590B70057A39F /* PushKit.framework */; };
+		47F226A61ED590BE0057A39F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226A51ED590BE0057A39F /* Security.framework */; };
+		47F226A81ED590C60057A39F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226A71ED590C60057A39F /* SystemConfiguration.framework */; };
+		47F226AB1ED590CE0057A39F /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226A91ED590CE0057A39F /* UserNotifications.framework */; };
+		47F226AC1ED590CE0057A39F /* UserNotificationsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47F226AA1ED590CE0057A39F /* UserNotificationsUI.framework */; };
+		47F226AE1ED595770057A39F /* CallInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226AD1ED595770057A39F /* CallInfo.swift */; };
+		47F226B01ED595CE0057A39F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47F226AF1ED595CE0057A39F /* GoogleService-Info.plist */; };
+		47F226B21ED597580057A39F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226B11ED597580057A39F /* LoginViewController.swift */; };
+		47F226B41ED597700057A39F /* CallHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226B31ED597700057A39F /* CallHistoryViewController.swift */; };
+		47F226B61ED597850057A39F /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226B51ED597850057A39F /* ContactsViewController.swift */; };
+		47F226B81ED5979A0057A39F /* PlivoCallController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226B71ED5979A0057A39F /* PlivoCallController.swift */; };
+		47F226BA1ED598310057A39F /* CallKitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226B91ED598310057A39F /* CallKitInstance.swift */; };
+		47F226C11ED5C2CD0057A39F /* PhoneNumberMetaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226BF1ED5C2CD0057A39F /* PhoneNumberMetaData.json */; };
+		47F226C21ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */; };
+		47F226C51ED71DF10057A39F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226C41ED71DF10057A39F /* UIView+Toast.m */; };
+		47F226CF1ED720210057A39F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226CE1ED720210057A39F /* IntentHandler.swift */; };
+		47F226D31ED720210057A39F /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47F226CC1ED720210057A39F /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		F841B3501E870444B1780268 /* Pods_SwiftVoiceCallingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		47332D401EB92B02003FB887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47332D231EB92B02003FB887 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47332D2A1EB92B02003FB887;
+			remoteInfo = SwiftVoiceCallingApp;
+		};
+		47332D4B1EB92B02003FB887 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47332D231EB92B02003FB887 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47332D2A1EB92B02003FB887;
+			remoteInfo = SwiftVoiceCallingApp;
+		};
+		47F226D11ED720210057A39F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 47332D231EB92B02003FB887 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 47F226CB1ED720210057A39F;
+			remoteInfo = IntentHandler;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		47F226881ED590200057A39F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				47F226871ED590200057A39F /* PlivoVoiceKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47F226D71ED720210057A39F /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				47F226D31ED720210057A39F /* IntentHandler.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		174621EC968818EF6F4230E7 /* Pods-SwiftVoiceCallingAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		280E7CB41FF6D0DB84B30F45 /* Pods_SwiftVoiceCallingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVoiceCallingApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		40A91985A491D0C3402A33E8 /* Pods-SwiftVoiceCallingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		47332D2B1EB92B02003FB887 /* SwiftVoiceCallingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftVoiceCallingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		47332D331EB92B02003FB887 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		47332D351EB92B02003FB887 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		47332D381EB92B02003FB887 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		47332D3A1EB92B02003FB887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47332D3F1EB92B02003FB887 /* SwiftVoiceCallingAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftVoiceCallingAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		47332D431EB92B02003FB887 /* SwiftVoiceCallingAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVoiceCallingAppTests.swift; sourceTree = "<group>"; };
+		47332D451EB92B02003FB887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47332D4A1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftVoiceCallingAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		47332D4E1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVoiceCallingAppUITests.swift; sourceTree = "<group>"; };
+		47332D501EB92B02003FB887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		47332D5C1EB92C21003FB887 /* SwiftVoiceCallingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftVoiceCallingApp.entitlements; sourceTree = "<group>"; };
+		47F225801ED5882C0057A39F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "App Files/AppDelegate.swift"; sourceTree = "<group>"; };
+		47F225821ED588F20057A39F /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = "API Managers/ServiceManager.swift"; sourceTree = "<group>"; };
+		47F225841ED589000057A39F /* APIRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestManager.swift; path = "API Managers/APIRequestManager.swift"; sourceTree = "<group>"; };
+		47F225881ED58A460057A39F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "App Files/Constants.h"; sourceTree = "<group>"; };
+		47F225891ED58A5A0057A39F /* Phone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Phone.swift; path = "App Files/Phone.swift"; sourceTree = "<group>"; };
+		47F2258B1ED58BA80057A39F /* UtilClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UtilClass.swift; path = "App Files/UtilClass.swift"; sourceTree = "<group>"; };
+		47F225BD1ED58D0B0057A39F /* NBAsYouTypeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBAsYouTypeFormatter.h; path = "Third party/libPhoneNumber-iOS/NBAsYouTypeFormatter.h"; sourceTree = "<group>"; };
+		47F225BE1ED58D0B0057A39F /* NBAsYouTypeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBAsYouTypeFormatter.m; path = "Third party/libPhoneNumber-iOS/NBAsYouTypeFormatter.m"; sourceTree = "<group>"; };
+		47F225BF1ED58D0B0057A39F /* NBNumberFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBNumberFormat.h; path = "Third party/libPhoneNumber-iOS/NBNumberFormat.h"; sourceTree = "<group>"; };
+		47F225C01ED58D0B0057A39F /* NBNumberFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBNumberFormat.m; path = "Third party/libPhoneNumber-iOS/NBNumberFormat.m"; sourceTree = "<group>"; };
+		47F225C11ED58D0B0057A39F /* NBPhoneMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBPhoneMetaData.h; path = "Third party/libPhoneNumber-iOS/NBPhoneMetaData.h"; sourceTree = "<group>"; };
+		47F225C21ED58D0B0057A39F /* NBPhoneMetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBPhoneMetaData.m; path = "Third party/libPhoneNumber-iOS/NBPhoneMetaData.m"; sourceTree = "<group>"; };
+		47F225C31ED58D0B0057A39F /* NBPhoneNumber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumber.h; path = "Third party/libPhoneNumber-iOS/NBPhoneNumber.h"; sourceTree = "<group>"; };
+		47F225C41ED58D0B0057A39F /* NBPhoneNumber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumber.m; path = "Third party/libPhoneNumber-iOS/NBPhoneNumber.m"; sourceTree = "<group>"; };
+		47F225C51ED58D0B0057A39F /* NBPhoneNumberDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumberDefines.h; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberDefines.h"; sourceTree = "<group>"; };
+		47F225C61ED58D0B0057A39F /* NBPhoneNumberDesc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumberDesc.h; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberDesc.h"; sourceTree = "<group>"; };
+		47F225C71ED58D0B0057A39F /* NBPhoneNumberDesc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberDesc.m; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberDesc.m"; sourceTree = "<group>"; };
+		47F225C81ED58D0B0057A39F /* NBPhoneNumberMetadata.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = NBPhoneNumberMetadata.plist; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberMetadata.plist"; sourceTree = "<group>"; };
+		47F225C91ED58D0B0057A39F /* NBPhoneNumberMetadataForTesting.plist */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; name = NBPhoneNumberMetadataForTesting.plist; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberMetadataForTesting.plist"; sourceTree = "<group>"; };
+		47F225CA1ED58D0B0057A39F /* NBPhoneNumberUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NBPhoneNumberUtil.h; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberUtil.h"; sourceTree = "<group>"; };
+		47F225CB1ED58D0B0057A39F /* NBPhoneNumberUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberUtil.m; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberUtil.m"; sourceTree = "<group>"; };
+		47F225CC1ED58D0B0057A39F /* NSArray+NBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+NBAdditions.h"; path = "Third party/libPhoneNumber-iOS/NSArray+NBAdditions.h"; sourceTree = "<group>"; };
+		47F225CD1ED58D0B0057A39F /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+NBAdditions.m"; path = "Third party/libPhoneNumber-iOS/NSArray+NBAdditions.m"; sourceTree = "<group>"; };
+		47F226281ED58DD30057A39F /* APAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddress.m; path = "Third party/AP Contacts/APAddress.m"; sourceTree = "<group>"; };
+		47F226291ED58DD30057A39F /* APAddressBookAccessRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookAccessRoutine.m; path = "Third party/AP Contacts/APAddressBookAccessRoutine.m"; sourceTree = "<group>"; };
+		47F2262A1ED58DD30057A39F /* APAddressBookBaseRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookBaseRoutine.h; path = "Third party/AP Contacts/APAddressBookBaseRoutine.h"; sourceTree = "<group>"; };
+		47F2262B1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookExternalChangeRoutine.h; path = "Third party/AP Contacts/APAddressBookExternalChangeRoutine.h"; sourceTree = "<group>"; };
+		47F2262C1ED58DD30057A39F /* APAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBook.m; path = "Third party/AP Contacts/APAddressBook.m"; sourceTree = "<group>"; };
+		47F2262D1ED58DD30057A39F /* APImageExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APImageExtractor.m; path = "Third party/AP Contacts/APImageExtractor.m"; sourceTree = "<group>"; };
+		47F2262E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookExternalChangeRoutine.m; path = "Third party/AP Contacts/APAddressBookExternalChangeRoutine.m"; sourceTree = "<group>"; };
+		47F2262F1ED58DD30057A39F /* APName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APName.h; path = "Third party/AP Contacts/APName.h"; sourceTree = "<group>"; };
+		47F226301ED58DD30057A39F /* APAddressBookAccessRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookAccessRoutine.h; path = "Third party/AP Contacts/APAddressBookAccessRoutine.h"; sourceTree = "<group>"; };
+		47F226311ED58DD30057A39F /* APContactBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactBuilder.h; path = "Third party/AP Contacts/APContactBuilder.h"; sourceTree = "<group>"; };
+		47F226321ED58DD30057A39F /* APAddressBookRefWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookRefWrapper.h; path = "Third party/AP Contacts/APAddressBookRefWrapper.h"; sourceTree = "<group>"; };
+		47F226331ED58DD30057A39F /* APContactBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactBuilder.m; path = "Third party/AP Contacts/APContactBuilder.m"; sourceTree = "<group>"; };
+		47F226341ED58DD30057A39F /* APAddressBookRefWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookRefWrapper.m; path = "Third party/AP Contacts/APAddressBookRefWrapper.m"; sourceTree = "<group>"; };
+		47F226351ED58DD30057A39F /* APContactDataExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactDataExtractor.h; path = "Third party/AP Contacts/APContactDataExtractor.h"; sourceTree = "<group>"; };
+		47F226361ED58DD30057A39F /* APContactDataExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactDataExtractor.m; path = "Third party/AP Contacts/APContactDataExtractor.m"; sourceTree = "<group>"; };
+		47F226371ED58DD30057A39F /* APSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APSource.m; path = "Third party/AP Contacts/APSource.m"; sourceTree = "<group>"; };
+		47F226381ED58DD30057A39F /* APContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContact.m; path = "Third party/AP Contacts/APContact.m"; sourceTree = "<group>"; };
+		47F226391ED58DD30057A39F /* APImageExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APImageExtractor.h; path = "Third party/AP Contacts/APImageExtractor.h"; sourceTree = "<group>"; };
+		47F2263A1ED58DD30057A39F /* APSocialServiceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APSocialServiceHelper.h; path = "Third party/AP Contacts/APSocialServiceHelper.h"; sourceTree = "<group>"; };
+		47F2263B1ED58DD30057A39F /* APAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddress.h; path = "Third party/AP Contacts/APAddress.h"; sourceTree = "<group>"; };
+		47F2263C1ED58DD30057A39F /* APPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPhone.h; path = "Third party/AP Contacts/APPhone.h"; sourceTree = "<group>"; };
+		47F2263D1ED58DD30057A39F /* APContactDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactDate.h; path = "Third party/AP Contacts/APContactDate.h"; sourceTree = "<group>"; };
+		47F2263E1ED58DD30057A39F /* APContactDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactDate.m; path = "Third party/AP Contacts/APContactDate.m"; sourceTree = "<group>"; };
+		47F2263F1ED58DD30057A39F /* APSocialProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APSocialProfile.h; path = "Third party/AP Contacts/APSocialProfile.h"; sourceTree = "<group>"; };
+		47F226401ED58DD30057A39F /* APAddressBookContactsRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookContactsRoutine.m; path = "Third party/AP Contacts/APAddressBookContactsRoutine.m"; sourceTree = "<group>"; };
+		47F226411ED58DD30057A39F /* APThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APThread.m; path = "Third party/AP Contacts/APThread.m"; sourceTree = "<group>"; };
+		47F226421ED58DD30057A39F /* APContactListBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactListBuilder.m; path = "Third party/AP Contacts/APContactListBuilder.m"; sourceTree = "<group>"; };
+		47F226431ED58DD30057A39F /* APEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APEmail.m; path = "Third party/AP Contacts/APEmail.m"; sourceTree = "<group>"; };
+		47F226441ED58DD30057A39F /* APAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBook.h; path = "Third party/AP Contacts/APAddressBook.h"; sourceTree = "<group>"; };
+		47F226451ED58DD30057A39F /* APPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPhone.m; path = "Third party/AP Contacts/APPhone.m"; sourceTree = "<group>"; };
+		47F226461ED58DD30057A39F /* APSocialProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APSocialProfile.m; path = "Third party/AP Contacts/APSocialProfile.m"; sourceTree = "<group>"; };
+		47F226471ED58DD30057A39F /* APJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APJob.h; path = "Third party/AP Contacts/APJob.h"; sourceTree = "<group>"; };
+		47F226481ED58DD30057A39F /* APContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContact.h; path = "Third party/AP Contacts/APContact.h"; sourceTree = "<group>"; };
+		47F226491ED58DD30057A39F /* APJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APJob.m; path = "Third party/AP Contacts/APJob.m"; sourceTree = "<group>"; };
+		47F2264A1ED58DD30057A39F /* APName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APName.m; path = "Third party/AP Contacts/APName.m"; sourceTree = "<group>"; };
+		47F2264B1ED58DD30057A39F /* APAddressBookExternalChangeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookExternalChangeDelegate.h; path = "Third party/AP Contacts/APAddressBookExternalChangeDelegate.h"; sourceTree = "<group>"; };
+		47F2264C1ED58DD30057A39F /* APRecordDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APRecordDate.h; path = "Third party/AP Contacts/APRecordDate.h"; sourceTree = "<group>"; };
+		47F2264D1ED58DD30057A39F /* APAddressBookBaseRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookBaseRoutine.m; path = "Third party/AP Contacts/APAddressBookBaseRoutine.m"; sourceTree = "<group>"; };
+		47F2264E1ED58DD30057A39F /* APAddressBookContactsRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookContactsRoutine.h; path = "Third party/AP Contacts/APAddressBookContactsRoutine.h"; sourceTree = "<group>"; };
+		47F2264F1ED58DD30057A39F /* APEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APEmail.h; path = "Third party/AP Contacts/APEmail.h"; sourceTree = "<group>"; };
+		47F226501ED58DD30057A39F /* APRecordDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APRecordDate.m; path = "Third party/AP Contacts/APRecordDate.m"; sourceTree = "<group>"; };
+		47F226511ED58DD30057A39F /* APRelatedPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APRelatedPerson.h; path = "Third party/AP Contacts/APRelatedPerson.h"; sourceTree = "<group>"; };
+		47F226521ED58DD30057A39F /* APSocialServiceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APSocialServiceHelper.m; path = "Third party/AP Contacts/APSocialServiceHelper.m"; sourceTree = "<group>"; };
+		47F226531ED58DD30057A39F /* APRelatedPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APRelatedPerson.m; path = "Third party/AP Contacts/APRelatedPerson.m"; sourceTree = "<group>"; };
+		47F226541ED58DD30057A39F /* APContactListBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactListBuilder.h; path = "Third party/AP Contacts/APContactListBuilder.h"; sourceTree = "<group>"; };
+		47F226551ED58DD30057A39F /* APSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APSource.h; path = "Third party/AP Contacts/APSource.h"; sourceTree = "<group>"; };
+		47F226561ED58DD30057A39F /* APThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APThread.h; path = "Third party/AP Contacts/APThread.h"; sourceTree = "<group>"; };
+		47F226571ED58DD30057A39F /* APTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APTypes.h; path = "Third party/AP Contacts/APTypes.h"; sourceTree = "<group>"; };
+		47F226581ED58DD30057A39F /* Private */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Private; path = "Third party/AP Contacts/Private"; sourceTree = "<group>"; };
+		47F226591ED58DD30057A39F /* Public */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Public; path = "Third party/AP Contacts/Public"; sourceTree = "<group>"; };
+		47F226741ED58E090057A39F /* JCDialPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCDialPad.h; path = "Third party/Other/JCDialPad.h"; sourceTree = "<group>"; };
+		47F226751ED58E090057A39F /* JCDialPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCDialPad.m; path = "Third party/Other/JCDialPad.m"; sourceTree = "<group>"; };
+		47F226761ED58E090057A39F /* JCPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCPadButton.h; path = "Third party/Other/JCPadButton.h"; sourceTree = "<group>"; };
+		47F226771ED58E090057A39F /* JCPadButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCPadButton.m; path = "Third party/Other/JCPadButton.m"; sourceTree = "<group>"; };
+		47F226781ED58E090057A39F /* MZTimerLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MZTimerLabel.h; path = "Third party/Other/MZTimerLabel.h"; sourceTree = "<group>"; };
+		47F226791ED58E090057A39F /* MZTimerLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MZTimerLabel.m; path = "Third party/Other/MZTimerLabel.m"; sourceTree = "<group>"; };
+		47F2267A1ED58E090057A39F /* UIView+FrameAccessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+FrameAccessor.h"; path = "Third party/Other/UIView+FrameAccessor.h"; sourceTree = "<group>"; };
+		47F2267B1ED58E090057A39F /* UIView+FrameAccessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+FrameAccessor.m"; path = "Third party/Other/UIView+FrameAccessor.m"; sourceTree = "<group>"; };
+		47F226841ED590020057A39F /* PlivoVoiceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PlivoVoiceKit.framework; sourceTree = "<group>"; };
+		47F226891ED590370057A39F /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		47F2268B1ED590410057A39F /* CallKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CallKit.framework; path = System/Library/Frameworks/CallKit.framework; sourceTree = SDKROOT; };
+		47F2268D1ED590690057A39F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		47F2268E1ED590690057A39F /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		47F2268F1ED590690057A39F /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		47F226931ED590790057A39F /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		47F226941ED590790057A39F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		47F226971ED590840057A39F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		47F226991ED5908C0057A39F /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		47F2269B1ED590930057A39F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		47F2269D1ED5909D0057A39F /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		47F2269F1ED590A50057A39F /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		47F226A11ED590AF0057A39F /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		47F226A31ED590B70057A39F /* PushKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PushKit.framework; path = System/Library/Frameworks/PushKit.framework; sourceTree = SDKROOT; };
+		47F226A51ED590BE0057A39F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		47F226A71ED590C60057A39F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		47F226A91ED590CE0057A39F /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		47F226AA1ED590CE0057A39F /* UserNotificationsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotificationsUI.framework; path = System/Library/Frameworks/UserNotificationsUI.framework; sourceTree = SDKROOT; };
+		47F226AD1ED595770057A39F /* CallInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallInfo.swift; path = Model/CallInfo.swift; sourceTree = "<group>"; };
+		47F226AF1ED595CE0057A39F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "SwiftVoiceCallingApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		47F226B11ED597580057A39F /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginViewController.swift; path = Controller/LoginViewController.swift; sourceTree = "<group>"; };
+		47F226B31ED597700057A39F /* CallHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallHistoryViewController.swift; path = Controller/CallHistoryViewController.swift; sourceTree = "<group>"; };
+		47F226B51ED597850057A39F /* ContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContactsViewController.swift; path = Controller/ContactsViewController.swift; sourceTree = "<group>"; };
+		47F226B71ED5979A0057A39F /* PlivoCallController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlivoCallController.swift; path = Controller/PlivoCallController.swift; sourceTree = "<group>"; };
+		47F226B91ED598310057A39F /* CallKitInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallKitInstance.swift; path = "App Files/CallKitInstance.swift"; sourceTree = "<group>"; };
+		47F226BF1ED5C2CD0057A39F /* PhoneNumberMetaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaData.json; path = "Third party/libPhoneNumber-iOS/PhoneNumberMetaData.json"; sourceTree = "<group>"; };
+		47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaDataForTesting.json; path = "Third party/libPhoneNumber-iOS/PhoneNumberMetaDataForTesting.json"; sourceTree = "<group>"; };
+		47F226C31ED71DF10057A39F /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Toast.h"; path = "View/UIView+Toast.h"; sourceTree = "<group>"; };
+		47F226C41ED71DF10057A39F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "View/UIView+Toast.m"; sourceTree = "<group>"; };
+		47F226C71ED71E570057A39F /* SwiftVoiceCallingApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftVoiceCallingApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		47F226CC1ED720210057A39F /* IntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		47F226CE1ED720210057A39F /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		47F226D01ED720210057A39F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		483897A3509F2E88E477A9FF /* Pods-SwiftVoiceCallingApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp.debug.xcconfig"; sourceTree = "<group>"; };
+		5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVoiceCallingAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DECAA91E9E4D3BB6174A99B /* Pods_SwiftVoiceCallingAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVoiceCallingAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp.release.xcconfig"; sourceTree = "<group>"; };
+		60D97E76CFDD69FCDC48BC6B /* Pods-SwiftVoiceCallingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E146EF47870C8EF27CE5A02F /* Pods-SwiftVoiceCallingAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		47332D281EB92B02003FB887 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47F226AB1ED590CE0057A39F /* UserNotifications.framework in Frameworks */,
+				47F226AC1ED590CE0057A39F /* UserNotificationsUI.framework in Frameworks */,
+				47F226A81ED590C60057A39F /* SystemConfiguration.framework in Frameworks */,
+				47F226A61ED590BE0057A39F /* Security.framework in Frameworks */,
+				47F226A41ED590B70057A39F /* PushKit.framework in Frameworks */,
+				47F226A21ED590AF0057A39F /* Intents.framework in Frameworks */,
+				47F226A01ED590A50057A39F /* QuartzCore.framework in Frameworks */,
+				47F2269E1ED5909D0057A39F /* OpenGLES.framework in Frameworks */,
+				47F2269C1ED590930057A39F /* UIKit.framework in Frameworks */,
+				47F2269A1ED5908C0057A39F /* CFNetwork.framework in Frameworks */,
+				47F226981ED590840057A39F /* AudioToolbox.framework in Frameworks */,
+				47F226951ED590790057A39F /* AVFoundation.framework in Frameworks */,
+				47F226961ED590790057A39F /* Foundation.framework in Frameworks */,
+				47F226901ED590690057A39F /* CoreData.framework in Frameworks */,
+				47F226911ED590690057A39F /* CoreGraphics.framework in Frameworks */,
+				47F226921ED590690057A39F /* CoreMedia.framework in Frameworks */,
+				47F2268C1ED590410057A39F /* CallKit.framework in Frameworks */,
+				47F2268A1ED590370057A39F /* SafariServices.framework in Frameworks */,
+				47F226851ED590020057A39F /* PlivoVoiceKit.framework in Frameworks */,
+				1E02D4E39DEB53E922DB7416 /* Pods_SwiftVoiceCallingApp.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47332D3C1EB92B02003FB887 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F841B3501E870444B1780268 /* Pods_SwiftVoiceCallingAppTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47332D471EB92B02003FB887 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14A517037E99052AD0FD1884 /* Pods_SwiftVoiceCallingAppUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47F226C91ED720210057A39F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		47332D221EB92B02003FB887 = {
+			isa = PBXGroup;
+			children = (
+				47F226AF1ED595CE0057A39F /* GoogleService-Info.plist */,
+				47332D2D1EB92B02003FB887 /* SwiftVoiceCallingApp */,
+				47332D421EB92B02003FB887 /* SwiftVoiceCallingAppTests */,
+				47332D4D1EB92B02003FB887 /* SwiftVoiceCallingAppUITests */,
+				47F226CD1ED720210057A39F /* IntentHandler */,
+				47332D2C1EB92B02003FB887 /* Products */,
+				47F226831ED58FF00057A39F /* Frameworks */,
+				B9BE5D7A6251FA8CB3519523 /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		47332D2C1EB92B02003FB887 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				47332D2B1EB92B02003FB887 /* SwiftVoiceCallingApp.app */,
+				47332D3F1EB92B02003FB887 /* SwiftVoiceCallingAppTests.xctest */,
+				47332D4A1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.xctest */,
+				47F226CC1ED720210057A39F /* IntentHandler.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		47332D2D1EB92B02003FB887 /* SwiftVoiceCallingApp */ = {
+			isa = PBXGroup;
+			children = (
+				47F2257E1ED5880C0057A39F /* App Files */,
+				47F2257D1ED588060057A39F /* Model */,
+				47F2257C1ED588000057A39F /* View */,
+				47F2257B1ED587F80057A39F /* Controller */,
+				47F2257A1ED587ED0057A39F /* API Managers */,
+				47F225791ED587DA0057A39F /* Third Party */,
+				47332D5C1EB92C21003FB887 /* SwiftVoiceCallingApp.entitlements */,
+				47332D321EB92B02003FB887 /* Main.storyboard */,
+				47332D351EB92B02003FB887 /* Assets.xcassets */,
+				47332D371EB92B02003FB887 /* LaunchScreen.storyboard */,
+				47332D3A1EB92B02003FB887 /* Info.plist */,
+			);
+			path = SwiftVoiceCallingApp;
+			sourceTree = "<group>";
+		};
+		47332D421EB92B02003FB887 /* SwiftVoiceCallingAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				47332D431EB92B02003FB887 /* SwiftVoiceCallingAppTests.swift */,
+				47332D451EB92B02003FB887 /* Info.plist */,
+			);
+			path = SwiftVoiceCallingAppTests;
+			sourceTree = "<group>";
+		};
+		47332D4D1EB92B02003FB887 /* SwiftVoiceCallingAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				47332D4E1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift */,
+				47332D501EB92B02003FB887 /* Info.plist */,
+			);
+			path = SwiftVoiceCallingAppUITests;
+			sourceTree = "<group>";
+		};
+		47F225791ED587DA0057A39F /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				47F2259E1ED58C8B0057A39F /* libPhoneNumber-iOS */,
+				47F2259D1ED58C820057A39F /* APContacts */,
+				47F226731ED58DDA0057A39F /* Miscelleneous */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		47F2257A1ED587ED0057A39F /* API Managers */ = {
+			isa = PBXGroup;
+			children = (
+				47F225841ED589000057A39F /* APIRequestManager.swift */,
+				47F225821ED588F20057A39F /* ServiceManager.swift */,
+			);
+			name = "API Managers";
+			sourceTree = "<group>";
+		};
+		47F2257B1ED587F80057A39F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				47F226B11ED597580057A39F /* LoginViewController.swift */,
+				47F226B31ED597700057A39F /* CallHistoryViewController.swift */,
+				47F226B51ED597850057A39F /* ContactsViewController.swift */,
+				47F226B71ED5979A0057A39F /* PlivoCallController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		47F2257C1ED588000057A39F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				47F226C31ED71DF10057A39F /* UIView+Toast.h */,
+				47F226C41ED71DF10057A39F /* UIView+Toast.m */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		47F2257D1ED588060057A39F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				47F226AD1ED595770057A39F /* CallInfo.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		47F2257E1ED5880C0057A39F /* App Files */ = {
+			isa = PBXGroup;
+			children = (
+				47F226C71ED71E570057A39F /* SwiftVoiceCallingApp-Bridging-Header.h */,
+				47F225801ED5882C0057A39F /* AppDelegate.swift */,
+				47F225891ED58A5A0057A39F /* Phone.swift */,
+				47F226B91ED598310057A39F /* CallKitInstance.swift */,
+				47F2258B1ED58BA80057A39F /* UtilClass.swift */,
+				47F225881ED58A460057A39F /* Constants.h */,
+			);
+			name = "App Files";
+			sourceTree = "<group>";
+		};
+		47F2259D1ED58C820057A39F /* APContacts */ = {
+			isa = PBXGroup;
+			children = (
+				47F226281ED58DD30057A39F /* APAddress.m */,
+				47F226291ED58DD30057A39F /* APAddressBookAccessRoutine.m */,
+				47F2262A1ED58DD30057A39F /* APAddressBookBaseRoutine.h */,
+				47F2262B1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.h */,
+				47F2262C1ED58DD30057A39F /* APAddressBook.m */,
+				47F2262D1ED58DD30057A39F /* APImageExtractor.m */,
+				47F2262E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m */,
+				47F2262F1ED58DD30057A39F /* APName.h */,
+				47F226301ED58DD30057A39F /* APAddressBookAccessRoutine.h */,
+				47F226311ED58DD30057A39F /* APContactBuilder.h */,
+				47F226321ED58DD30057A39F /* APAddressBookRefWrapper.h */,
+				47F226331ED58DD30057A39F /* APContactBuilder.m */,
+				47F226341ED58DD30057A39F /* APAddressBookRefWrapper.m */,
+				47F226351ED58DD30057A39F /* APContactDataExtractor.h */,
+				47F226361ED58DD30057A39F /* APContactDataExtractor.m */,
+				47F226371ED58DD30057A39F /* APSource.m */,
+				47F226381ED58DD30057A39F /* APContact.m */,
+				47F226391ED58DD30057A39F /* APImageExtractor.h */,
+				47F2263A1ED58DD30057A39F /* APSocialServiceHelper.h */,
+				47F2263B1ED58DD30057A39F /* APAddress.h */,
+				47F2263C1ED58DD30057A39F /* APPhone.h */,
+				47F2263D1ED58DD30057A39F /* APContactDate.h */,
+				47F2263E1ED58DD30057A39F /* APContactDate.m */,
+				47F2263F1ED58DD30057A39F /* APSocialProfile.h */,
+				47F226401ED58DD30057A39F /* APAddressBookContactsRoutine.m */,
+				47F226411ED58DD30057A39F /* APThread.m */,
+				47F226421ED58DD30057A39F /* APContactListBuilder.m */,
+				47F226431ED58DD30057A39F /* APEmail.m */,
+				47F226441ED58DD30057A39F /* APAddressBook.h */,
+				47F226451ED58DD30057A39F /* APPhone.m */,
+				47F226461ED58DD30057A39F /* APSocialProfile.m */,
+				47F226471ED58DD30057A39F /* APJob.h */,
+				47F226481ED58DD30057A39F /* APContact.h */,
+				47F226491ED58DD30057A39F /* APJob.m */,
+				47F2264A1ED58DD30057A39F /* APName.m */,
+				47F2264B1ED58DD30057A39F /* APAddressBookExternalChangeDelegate.h */,
+				47F2264C1ED58DD30057A39F /* APRecordDate.h */,
+				47F2264D1ED58DD30057A39F /* APAddressBookBaseRoutine.m */,
+				47F2264E1ED58DD30057A39F /* APAddressBookContactsRoutine.h */,
+				47F2264F1ED58DD30057A39F /* APEmail.h */,
+				47F226501ED58DD30057A39F /* APRecordDate.m */,
+				47F226511ED58DD30057A39F /* APRelatedPerson.h */,
+				47F226521ED58DD30057A39F /* APSocialServiceHelper.m */,
+				47F226531ED58DD30057A39F /* APRelatedPerson.m */,
+				47F226541ED58DD30057A39F /* APContactListBuilder.h */,
+				47F226551ED58DD30057A39F /* APSource.h */,
+				47F226561ED58DD30057A39F /* APThread.h */,
+				47F226571ED58DD30057A39F /* APTypes.h */,
+				47F226581ED58DD30057A39F /* Private */,
+				47F226591ED58DD30057A39F /* Public */,
+			);
+			name = APContacts;
+			sourceTree = "<group>";
+		};
+		47F2259E1ED58C8B0057A39F /* libPhoneNumber-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				47F226BF1ED5C2CD0057A39F /* PhoneNumberMetaData.json */,
+				47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */,
+				47F225BD1ED58D0B0057A39F /* NBAsYouTypeFormatter.h */,
+				47F225BE1ED58D0B0057A39F /* NBAsYouTypeFormatter.m */,
+				47F225BF1ED58D0B0057A39F /* NBNumberFormat.h */,
+				47F225C01ED58D0B0057A39F /* NBNumberFormat.m */,
+				47F225C11ED58D0B0057A39F /* NBPhoneMetaData.h */,
+				47F225C21ED58D0B0057A39F /* NBPhoneMetaData.m */,
+				47F225C31ED58D0B0057A39F /* NBPhoneNumber.h */,
+				47F225C41ED58D0B0057A39F /* NBPhoneNumber.m */,
+				47F225C51ED58D0B0057A39F /* NBPhoneNumberDefines.h */,
+				47F225C61ED58D0B0057A39F /* NBPhoneNumberDesc.h */,
+				47F225C71ED58D0B0057A39F /* NBPhoneNumberDesc.m */,
+				47F225C81ED58D0B0057A39F /* NBPhoneNumberMetadata.plist */,
+				47F225C91ED58D0B0057A39F /* NBPhoneNumberMetadataForTesting.plist */,
+				47F225CA1ED58D0B0057A39F /* NBPhoneNumberUtil.h */,
+				47F225CB1ED58D0B0057A39F /* NBPhoneNumberUtil.m */,
+				47F225CC1ED58D0B0057A39F /* NSArray+NBAdditions.h */,
+				47F225CD1ED58D0B0057A39F /* NSArray+NBAdditions.m */,
+			);
+			name = "libPhoneNumber-iOS";
+			sourceTree = "<group>";
+		};
+		47F226731ED58DDA0057A39F /* Miscelleneous */ = {
+			isa = PBXGroup;
+			children = (
+				47F226741ED58E090057A39F /* JCDialPad.h */,
+				47F226751ED58E090057A39F /* JCDialPad.m */,
+				47F226761ED58E090057A39F /* JCPadButton.h */,
+				47F226771ED58E090057A39F /* JCPadButton.m */,
+				47F226781ED58E090057A39F /* MZTimerLabel.h */,
+				47F226791ED58E090057A39F /* MZTimerLabel.m */,
+				47F2267A1ED58E090057A39F /* UIView+FrameAccessor.h */,
+				47F2267B1ED58E090057A39F /* UIView+FrameAccessor.m */,
+			);
+			name = Miscelleneous;
+			sourceTree = "<group>";
+		};
+		47F226831ED58FF00057A39F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47F226841ED590020057A39F /* PlivoVoiceKit.framework */,
+				47F226A91ED590CE0057A39F /* UserNotifications.framework */,
+				47F226AA1ED590CE0057A39F /* UserNotificationsUI.framework */,
+				47F226A71ED590C60057A39F /* SystemConfiguration.framework */,
+				47F226A51ED590BE0057A39F /* Security.framework */,
+				47F226A31ED590B70057A39F /* PushKit.framework */,
+				47F226A11ED590AF0057A39F /* Intents.framework */,
+				47F2269F1ED590A50057A39F /* QuartzCore.framework */,
+				47F2269D1ED5909D0057A39F /* OpenGLES.framework */,
+				47F2269B1ED590930057A39F /* UIKit.framework */,
+				47F226991ED5908C0057A39F /* CFNetwork.framework */,
+				47F226971ED590840057A39F /* AudioToolbox.framework */,
+				47F226931ED590790057A39F /* AVFoundation.framework */,
+				47F226941ED590790057A39F /* Foundation.framework */,
+				47F2268D1ED590690057A39F /* CoreData.framework */,
+				47F2268E1ED590690057A39F /* CoreGraphics.framework */,
+				47F2268F1ED590690057A39F /* CoreMedia.framework */,
+				47F2268B1ED590410057A39F /* CallKit.framework */,
+				47F226891ED590370057A39F /* SafariServices.framework */,
+				280E7CB41FF6D0DB84B30F45 /* Pods_SwiftVoiceCallingApp.framework */,
+				5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */,
+				5DECAA91E9E4D3BB6174A99B /* Pods_SwiftVoiceCallingAppUITests.framework */,
+			);
+			name = Frameworks;
+			path = SwiftVoiceCallingApp;
+			sourceTree = "<group>";
+		};
+		47F226CD1ED720210057A39F /* IntentHandler */ = {
+			isa = PBXGroup;
+			children = (
+				47F226CE1ED720210057A39F /* IntentHandler.swift */,
+				47F226D01ED720210057A39F /* Info.plist */,
+			);
+			path = IntentHandler;
+			sourceTree = "<group>";
+		};
+		B9BE5D7A6251FA8CB3519523 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				483897A3509F2E88E477A9FF /* Pods-SwiftVoiceCallingApp.debug.xcconfig */,
+				5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */,
+				174621EC968818EF6F4230E7 /* Pods-SwiftVoiceCallingAppTests.debug.xcconfig */,
+				40A91985A491D0C3402A33E8 /* Pods-SwiftVoiceCallingAppTests.release.xcconfig */,
+				E146EF47870C8EF27CE5A02F /* Pods-SwiftVoiceCallingAppUITests.debug.xcconfig */,
+				60D97E76CFDD69FCDC48BC6B /* Pods-SwiftVoiceCallingAppUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		47332D2A1EB92B02003FB887 /* SwiftVoiceCallingApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47332D531EB92B02003FB887 /* Build configuration list for PBXNativeTarget "SwiftVoiceCallingApp" */;
+			buildPhases = (
+				ED380866705337B343D61856 /* [CP] Check Pods Manifest.lock */,
+				47332D271EB92B02003FB887 /* Sources */,
+				47332D281EB92B02003FB887 /* Frameworks */,
+				47332D291EB92B02003FB887 /* Resources */,
+				47F226881ED590200057A39F /* Embed Frameworks */,
+				7EE5DC6B14621A1794511FD0 /* [CP] Embed Pods Frameworks */,
+				E7CBE815A5884C27749078B1 /* [CP] Copy Pods Resources */,
+				47F226D71ED720210057A39F /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47F226D21ED720210057A39F /* PBXTargetDependency */,
+			);
+			name = SwiftVoiceCallingApp;
+			productName = SwiftVoiceCallingApp;
+			productReference = 47332D2B1EB92B02003FB887 /* SwiftVoiceCallingApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		47332D3E1EB92B02003FB887 /* SwiftVoiceCallingAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47332D561EB92B02003FB887 /* Build configuration list for PBXNativeTarget "SwiftVoiceCallingAppTests" */;
+			buildPhases = (
+				9782F842F3298AED8A22F24C /* [CP] Check Pods Manifest.lock */,
+				47332D3B1EB92B02003FB887 /* Sources */,
+				47332D3C1EB92B02003FB887 /* Frameworks */,
+				47332D3D1EB92B02003FB887 /* Resources */,
+				B1A5C3445F4A4E22CD44F850 /* [CP] Embed Pods Frameworks */,
+				8701BC7B9A8567A75F67E684 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47332D411EB92B02003FB887 /* PBXTargetDependency */,
+			);
+			name = SwiftVoiceCallingAppTests;
+			productName = SwiftVoiceCallingAppTests;
+			productReference = 47332D3F1EB92B02003FB887 /* SwiftVoiceCallingAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		47332D491EB92B02003FB887 /* SwiftVoiceCallingAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47332D591EB92B02003FB887 /* Build configuration list for PBXNativeTarget "SwiftVoiceCallingAppUITests" */;
+			buildPhases = (
+				C07A4DAF01FF1B623061AF54 /* [CP] Check Pods Manifest.lock */,
+				47332D461EB92B02003FB887 /* Sources */,
+				47332D471EB92B02003FB887 /* Frameworks */,
+				47332D481EB92B02003FB887 /* Resources */,
+				D35634D126EB8501226017AE /* [CP] Embed Pods Frameworks */,
+				E1FC7AFB81E60CC5A7D80922 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				47332D4C1EB92B02003FB887 /* PBXTargetDependency */,
+			);
+			name = SwiftVoiceCallingAppUITests;
+			productName = SwiftVoiceCallingAppUITests;
+			productReference = 47332D4A1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		47F226CB1ED720210057A39F /* IntentHandler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 47F226D41ED720210057A39F /* Build configuration list for PBXNativeTarget "IntentHandler" */;
+			buildPhases = (
+				47F226C81ED720210057A39F /* Sources */,
+				47F226C91ED720210057A39F /* Frameworks */,
+				47F226CA1ED720210057A39F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IntentHandler;
+			productName = IntentHandler;
+			productReference = 47F226CC1ED720210057A39F /* IntentHandler.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		47332D231EB92B02003FB887 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = Plivo;
+				TargetAttributes = {
+					47332D2A1EB92B02003FB887 = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = A277824BB5;
+						LastSwiftMigration = 0830;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.Siri = {
+								enabled = 1;
+							};
+						};
+					};
+					47332D3E1EB92B02003FB887 = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = A277824BB5;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 47332D2A1EB92B02003FB887;
+					};
+					47332D491EB92B02003FB887 = {
+						CreatedOnToolsVersion = 8.3;
+						DevelopmentTeam = A277824BB5;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 47332D2A1EB92B02003FB887;
+					};
+					47F226CB1ED720210057A39F = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = A277824BB5;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 47332D261EB92B02003FB887 /* Build configuration list for PBXProject "SwiftVoiceCallingApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 47332D221EB92B02003FB887;
+			productRefGroup = 47332D2C1EB92B02003FB887 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				47332D2A1EB92B02003FB887 /* SwiftVoiceCallingApp */,
+				47332D3E1EB92B02003FB887 /* SwiftVoiceCallingAppTests */,
+				47332D491EB92B02003FB887 /* SwiftVoiceCallingAppUITests */,
+				47F226CB1ED720210057A39F /* IntentHandler */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		47332D291EB92B02003FB887 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47332D391EB92B02003FB887 /* LaunchScreen.storyboard in Resources */,
+				47F225D51ED58D0B0057A39F /* NBPhoneNumberMetadata.plist in Resources */,
+				47F226711ED58DD30057A39F /* Private in Resources */,
+				47F226C21ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json in Resources */,
+				47F226721ED58DD30057A39F /* Public in Resources */,
+				47332D361EB92B02003FB887 /* Assets.xcassets in Resources */,
+				47F226C11ED5C2CD0057A39F /* PhoneNumberMetaData.json in Resources */,
+				47F226B01ED595CE0057A39F /* GoogleService-Info.plist in Resources */,
+				47332D341EB92B02003FB887 /* Main.storyboard in Resources */,
+				47F225D61ED58D0B0057A39F /* NBPhoneNumberMetadataForTesting.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47332D3D1EB92B02003FB887 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47332D481EB92B02003FB887 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47F226CA1ED720210057A39F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7EE5DC6B14621A1794511FD0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8701BC7B9A8567A75F67E684 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9782F842F3298AED8A22F24C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B1A5C3445F4A4E22CD44F850 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C07A4DAF01FF1B623061AF54 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D35634D126EB8501226017AE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E1FC7AFB81E60CC5A7D80922 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E7CBE815A5884C27749078B1 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ED380866705337B343D61856 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		47332D271EB92B02003FB887 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47F226B21ED597580057A39F /* LoginViewController.swift in Sources */,
+				47F226B61ED597850057A39F /* ContactsViewController.swift in Sources */,
+				47F226651ED58DD30057A39F /* APAddressBookContactsRoutine.m in Sources */,
+				47F225D31ED58D0B0057A39F /* NBPhoneNumber.m in Sources */,
+				47F225D11ED58D0B0057A39F /* NBNumberFormat.m in Sources */,
+				47F2266C1ED58DD30057A39F /* APName.m in Sources */,
+				47F226C51ED71DF10057A39F /* UIView+Toast.m in Sources */,
+				47F2258A1ED58A5A0057A39F /* Phone.swift in Sources */,
+				47F2265C1ED58DD30057A39F /* APAddressBook.m in Sources */,
+				47F2265A1ED58DD30057A39F /* APAddress.m in Sources */,
+				47F226B41ED597700057A39F /* CallHistoryViewController.swift in Sources */,
+				47F226641ED58DD30057A39F /* APContactDate.m in Sources */,
+				47F2265B1ED58DD30057A39F /* APAddressBookAccessRoutine.m in Sources */,
+				47F2267E1ED58E090057A39F /* MZTimerLabel.m in Sources */,
+				47F225D21ED58D0B0057A39F /* NBPhoneMetaData.m in Sources */,
+				47F225851ED589000057A39F /* APIRequestManager.swift in Sources */,
+				47F226671ED58DD30057A39F /* APContactListBuilder.m in Sources */,
+				47F2267D1ED58E090057A39F /* JCPadButton.m in Sources */,
+				47F2266B1ED58DD30057A39F /* APJob.m in Sources */,
+				47F226BA1ED598310057A39F /* CallKitInstance.swift in Sources */,
+				47F226601ED58DD30057A39F /* APAddressBookRefWrapper.m in Sources */,
+				47F2267C1ED58E090057A39F /* JCDialPad.m in Sources */,
+				47F226691ED58DD30057A39F /* APPhone.m in Sources */,
+				47F225811ED5882C0057A39F /* AppDelegate.swift in Sources */,
+				47F225D71ED58D0B0057A39F /* NBPhoneNumberUtil.m in Sources */,
+				47F226B81ED5979A0057A39F /* PlivoCallController.swift in Sources */,
+				47F2265F1ED58DD30057A39F /* APContactBuilder.m in Sources */,
+				47F2265D1ED58DD30057A39F /* APImageExtractor.m in Sources */,
+				47F226661ED58DD30057A39F /* APThread.m in Sources */,
+				47F226681ED58DD30057A39F /* APEmail.m in Sources */,
+				47F225D81ED58D0B0057A39F /* NSArray+NBAdditions.m in Sources */,
+				47F2266F1ED58DD30057A39F /* APSocialServiceHelper.m in Sources */,
+				47F226621ED58DD30057A39F /* APSource.m in Sources */,
+				47F226701ED58DD30057A39F /* APRelatedPerson.m in Sources */,
+				47F2266A1ED58DD30057A39F /* APSocialProfile.m in Sources */,
+				47F225D01ED58D0B0057A39F /* NBAsYouTypeFormatter.m in Sources */,
+				47F2266D1ED58DD30057A39F /* APAddressBookBaseRoutine.m in Sources */,
+				47F226631ED58DD30057A39F /* APContact.m in Sources */,
+				47F225D41ED58D0B0057A39F /* NBPhoneNumberDesc.m in Sources */,
+				47F2258C1ED58BA80057A39F /* UtilClass.swift in Sources */,
+				47F225831ED588F20057A39F /* ServiceManager.swift in Sources */,
+				47F226611ED58DD30057A39F /* APContactDataExtractor.m in Sources */,
+				47F2267F1ED58E090057A39F /* UIView+FrameAccessor.m in Sources */,
+				47F2266E1ED58DD30057A39F /* APRecordDate.m in Sources */,
+				47F2265E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m in Sources */,
+				47F226AE1ED595770057A39F /* CallInfo.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47332D3B1EB92B02003FB887 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47332D441EB92B02003FB887 /* SwiftVoiceCallingAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47332D461EB92B02003FB887 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47332D4F1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47F226C81ED720210057A39F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				47F226CF1ED720210057A39F /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		47332D411EB92B02003FB887 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47332D2A1EB92B02003FB887 /* SwiftVoiceCallingApp */;
+			targetProxy = 47332D401EB92B02003FB887 /* PBXContainerItemProxy */;
+		};
+		47332D4C1EB92B02003FB887 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47332D2A1EB92B02003FB887 /* SwiftVoiceCallingApp */;
+			targetProxy = 47332D4B1EB92B02003FB887 /* PBXContainerItemProxy */;
+		};
+		47F226D21ED720210057A39F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 47F226CB1ED720210057A39F /* IntentHandler */;
+			targetProxy = 47F226D11ED720210057A39F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		47332D321EB92B02003FB887 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47332D331EB92B02003FB887 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		47332D371EB92B02003FB887 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				47332D381EB92B02003FB887 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		47332D511EB92B02003FB887 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		47332D521EB92B02003FB887 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		47332D541EB92B02003FB887 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 483897A3509F2E88E477A9FF /* Pods-SwiftVoiceCallingApp.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SwiftVoiceCallingApp/SwiftVoiceCallingApp.entitlements;
+				DEVELOPMENT_TEAM = A277824BB5;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SwiftVoiceCallingApp",
+				);
+				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		47332D551EB92B02003FB887 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = SwiftVoiceCallingApp/SwiftVoiceCallingApp.entitlements;
+				DEVELOPMENT_TEAM = A277824BB5;
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SwiftVoiceCallingApp",
+				);
+				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		47332D571EB92B02003FB887 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 174621EC968818EF6F4230E7 /* Pods-SwiftVoiceCallingAppTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = SwiftVoiceCallingAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftVoiceCallingApp.app/SwiftVoiceCallingApp";
+			};
+			name = Debug;
+		};
+		47332D581EB92B02003FB887 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 40A91985A491D0C3402A33E8 /* Pods-SwiftVoiceCallingAppTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = SwiftVoiceCallingAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftVoiceCallingApp.app/SwiftVoiceCallingApp";
+			};
+			name = Release;
+		};
+		47332D5A1EB92B02003FB887 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E146EF47870C8EF27CE5A02F /* Pods-SwiftVoiceCallingAppUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = SwiftVoiceCallingAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SwiftVoiceCallingApp;
+			};
+			name = Debug;
+		};
+		47332D5B1EB92B02003FB887 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 60D97E76CFDD69FCDC48BC6B /* Pods-SwiftVoiceCallingAppUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = SwiftVoiceCallingAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = SwiftVoiceCallingApp;
+			};
+			name = Release;
+		};
+		47F226D51ED720210057A39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = IntentHandler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling.IntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		47F226D61ED720210057A39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEVELOPMENT_TEAM = A277824BB5;
+				INFOPLIST_FILE = IntentHandler/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling.IntentHandler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		47332D261EB92B02003FB887 /* Build configuration list for PBXProject "SwiftVoiceCallingApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47332D511EB92B02003FB887 /* Debug */,
+				47332D521EB92B02003FB887 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47332D531EB92B02003FB887 /* Build configuration list for PBXNativeTarget "SwiftVoiceCallingApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47332D541EB92B02003FB887 /* Debug */,
+				47332D551EB92B02003FB887 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47332D561EB92B02003FB887 /* Build configuration list for PBXNativeTarget "SwiftVoiceCallingAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47332D571EB92B02003FB887 /* Debug */,
+				47332D581EB92B02003FB887 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47332D591EB92B02003FB887 /* Build configuration list for PBXNativeTarget "SwiftVoiceCallingAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47332D5A1EB92B02003FB887 /* Debug */,
+				47332D5B1EB92B02003FB887 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47F226D41ED720210057A39F /* Build configuration list for PBXNativeTarget "IntentHandler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				47F226D51ED720210057A39F /* Debug */,
+				47F226D61ED720210057A39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 47332D231EB92B02003FB887 /* Project object */;
+}

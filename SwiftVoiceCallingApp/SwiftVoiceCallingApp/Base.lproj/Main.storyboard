@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="u61-o8-49f">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="jvN-Cs-kcD">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="u61-o8-49f" customClass="LoginViewController" customModule="SwiftVoiceCallingApp" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dh2-K7-OdA"/>
+                        <viewControllerLayoutGuide type="bottom" id="knP-lF-YZt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3lE-qI-I8G">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="PlivoIconWhite" translatesAutoresizingMaskIntoConstraints="NO" id="Nqu-Dc-iKO">
+                                <rect key="frame" x="71" y="81" width="185" height="54"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SIP Username" placeholder="SIP Username" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="q2k-bI-UJj">
+                                <rect key="frame" x="32" y="186" width="263" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                <connections>
+                                    <outlet property="delegate" destination="u61-o8-49f" id="bjz-B3-dcs"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="test1234" placeholder="Password" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="BXW-Ug-J7Y">
+                                <rect key="frame" x="32" y="251" width="263" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="u61-o8-49f" id="8CE-Zd-woY"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tzp-6T-fcq">
+                                <rect key="frame" x="32" y="316" width="263" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.26274509800000001" green="0.62745098040000002" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButtonTapped:" destination="u61-o8-49f" eventType="touchUpInside" id="MOn-PI-Yxz"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="or" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E3d-vy-cNv">
+                                <rect key="frame" x="142" y="385" width="35" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="beJ-lE-Ri7" userLabel="Googe+">
+                                <rect key="frame" x="32" y="423" width="263" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.85882352939999995" green="0.2666666667" blue="0.2156862745" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" image="PlivoG+Icon">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="googleloginTapped:" destination="u61-o8-49f" eventType="touchUpInside" id="Zyr-Yk-YRz"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.1058823529" green="0.1058823529" blue="0.1058823529" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="googleButton" destination="beJ-lE-Ri7" id="BFL-GO-bJI"/>
+                        <outlet property="loginButton" destination="tzp-6T-fcq" id="e6S-gN-P8L"/>
+                        <outlet property="passwordTextField" destination="BXW-Ug-J7Y" id="aSC-Kb-NIF"/>
+                        <outlet property="userNameTextField" destination="q2k-bI-UJj" id="nOr-5j-iV3"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d0P-fF-ADc" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="116" y="277"/>
+        </scene>
+        <!--Recents-->
+        <scene sceneID="Vvm-pG-Hoj">
+            <objects>
+                <viewController storyboardIdentifier="CallHistoryViewController" id="4Gu-xe-bmu" customClass="CallHistoryViewController" customModule="SwiftVoiceCallingApp" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ote-rd-554"/>
+                        <viewControllerLayoutGuide type="bottom" id="z0p-cY-NsB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="A7D-Xv-zEc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="X2v-df-RNd">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="4Gu-xe-bmu" id="96F-Ta-nS6"/>
+                                    <outlet property="delegate" destination="4Gu-xe-bmu" id="QM2-g3-HAG"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No recent calls" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iw3-hs-KIY">
+                                <rect key="frame" x="64" y="178" width="192" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0c6-em-ozc" userLabel="Line View">
+                                <rect key="frame" x="0.0" y="64" width="320" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ce6-Vl-w1k">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <navigationItem title="Recents" id="EfR-cX-MKw">
+                                        <barButtonItem key="rightBarButtonItem" title="Logout" id="0Ws-9P-sd9">
+                                            <connections>
+                                                <action selector="logoutButtonTapped:" destination="4Gu-xe-bmu" id="5x4-jv-lff"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Recents" image="TabbarIcon0" id="p3P-XR-BHV"/>
+                    <connections>
+                        <outlet property="callHistoryTableView" destination="X2v-df-RNd" id="mtd-mn-EjJ"/>
+                        <outlet property="noRecentCallsLabel" destination="iw3-hs-KIY" id="UYs-LX-2HP"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WT8-OI-vgq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1598" y="-377"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="YPs-5E-EUx">
+            <objects>
+                <tabBarController storyboardIdentifier="tabBarViewController" automaticallyAdjustsScrollViewInsets="NO" id="TR6-Yv-FXv" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="s0x-Rd-TNk">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="4Gu-xe-bmu" kind="relationship" relationship="viewControllers" id="R80-rl-pDd"/>
+                        <segue destination="KB7-cH-tVL" kind="relationship" relationship="viewControllers" id="saj-ZC-5MT"/>
+                        <segue destination="4Cm-hv-q5e" kind="relationship" relationship="viewControllers" id="DsP-aN-JOG"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HAT-dM-ZKK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="819" y="277"/>
+        </scene>
+        <!--Contacts-->
+        <scene sceneID="v0H-G3-wjT">
+            <objects>
+                <viewController storyboardIdentifier="ContactsViewController" id="KB7-cH-tVL" customClass="ContactsViewController" customModule="SwiftVoiceCallingApp" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="MgI-F5-n01"/>
+                        <viewControllerLayoutGuide type="bottom" id="krs-C9-18L"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7k9-gj-XYe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="519"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="tbf-md-dcv">
+                                <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="KB7-cH-tVL" id="Szf-vp-PUd"/>
+                                    <outlet property="delegate" destination="KB7-cH-tVL" id="EMT-D7-eLq"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nMV-Pt-bSG">
+                                <rect key="frame" x="64" y="178" width="192" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ywa-SJ-LJ5">
+                                <rect key="frame" x="0.0" y="20" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <navigationItem id="nu0-fB-54R">
+                                        <barButtonItem key="rightBarButtonItem" title="Logout" id="3WR-YD-2lo">
+                                            <connections>
+                                                <action selector="logoutButtonTapped:" destination="KB7-cH-tVL" id="Zai-2E-6AA"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Contacts" image="TabbarIcon1" id="1xc-hQ-Y8Z"/>
+                    <connections>
+                        <outlet property="contactsTableView" destination="tbf-md-dcv" id="K5q-UU-H14"/>
+                        <outlet property="navigationItem" destination="nu0-fB-54R" id="3f4-dS-Wx9"/>
+                        <outlet property="noContactsLabel" destination="nMV-Pt-bSG" id="DSi-dd-xrS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wqh-FJ-C4M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1598" y="277"/>
+        </scene>
+        <!--Keypad-->
+        <scene sceneID="kXh-Ne-adr">
+            <objects>
+                <viewController storyboardIdentifier="PlivoCallController" id="4Cm-hv-q5e" customClass="PlivoCallController" customModule="SwiftVoiceCallingApp" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="KYH-Wu-hiC"/>
+                        <viewControllerLayoutGuide type="bottom" id="N6z-Is-mar"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="IC0-ZR-I3f">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="BackgroundCallImage" translatesAutoresizingMaskIntoConstraints="NO" id="nMC-Ze-4Ud">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="617"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Jack Smith" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="KaR-re-pzf">
+                                <rect key="frame" x="35" y="50" width="250" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="36"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Calling..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTt-Pt-26O">
+                                <rect key="frame" x="64" y="90" width="193" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="CallerImage" translatesAutoresizingMaskIntoConstraints="NO" id="wB2-7N-eaR">
+                                <rect key="frame" x="124" y="150" width="84" height="84"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aq4-6n-R3O">
+                                <rect key="frame" x="46" y="274" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="UnholdIcon"/>
+                                <connections>
+                                    <action selector="holdButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="vwC-Q0-IWH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crM-gv-zft">
+                                <rect key="frame" x="130" y="274" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="KeyPadIcon"/>
+                                <connections>
+                                    <action selector="keypadButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="2NS-hv-lhy"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-JK-dYb" userLabel="MuteButton">
+                                <rect key="frame" x="214" y="274" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Unmute"/>
+                                <connections>
+                                    <action selector="muteButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="XHX-d2-w98"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zxD-nU-N8B">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="617"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="SIP URI or Phone Number" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ufr-bb-DCv">
+                                <rect key="frame" x="35" y="50" width="250" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="36"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="4Cm-hv-q5e" id="KMZ-31-1o4"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gv7-r2-ClQ" userLabel="CallButton">
+                                <rect key="frame" x="130" y="480" width="61" height="61"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="MakeCall"/>
+                                <connections>
+                                    <action selector="callButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="rTh-4C-BL8"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3M-Cs-SmQ">
+                                <rect key="frame" x="258" y="510" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" heightSizable="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Hide">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="hideButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="AWd-KC-ffx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Keypad" image="TabbarIcon2" id="KZr-vP-2bQ"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activeCallImageView" destination="wB2-7N-eaR" id="nav-oY-7L5"/>
+                        <outlet property="callButton" destination="Gv7-r2-ClQ" id="4UC-bq-Eiv"/>
+                        <outlet property="callStateLabel" destination="cTt-Pt-26O" id="5I2-nJ-DPr"/>
+                        <outlet property="callerNameLabel" destination="KaR-re-pzf" id="veB-hZ-R5c"/>
+                        <outlet property="dialPadView" destination="zxD-nU-N8B" id="HCD-tl-F7i"/>
+                        <outlet property="hideButton" destination="r3M-Cs-SmQ" id="RYE-W4-qXH"/>
+                        <outlet property="holdButton" destination="aq4-6n-R3O" id="ftj-hd-8Oi"/>
+                        <outlet property="keypadButton" destination="crM-gv-zft" id="AYv-oB-GdM"/>
+                        <outlet property="muteButton" destination="bYp-JK-dYb" id="qCn-Lx-0PB"/>
+                        <outlet property="userNameTextField" destination="ufr-bb-DCv" id="8i3-SN-icv"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hBb-bW-Gl7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1598" y="927"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="BackgroundCallImage" width="320" height="569"/>
+        <image name="CallerImage" width="84" height="84"/>
+        <image name="KeyPadIcon" width="64" height="64"/>
+        <image name="MakeCall" width="61" height="61"/>
+        <image name="PlivoG+Icon" width="122" height="22"/>
+        <image name="PlivoIconWhite" width="185" height="54"/>
+        <image name="TabbarIcon0" width="25" height="25"/>
+        <image name="TabbarIcon1" width="25" height="25"/>
+        <image name="TabbarIcon2" width="25" height="25"/>
+        <image name="TextFieldImage" width="253" height="42"/>
+        <image name="UnholdIcon" width="64" height="64"/>
+        <image name="Unmute" width="64" height="64"/>
+    </resources>
+</document>
