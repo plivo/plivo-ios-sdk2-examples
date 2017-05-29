@@ -46,7 +46,14 @@
 {
     [UtilityClass makeToastActivity];
     
-    [endpoint login:userName AndPassword:password];
+    if(![UtilityClass isEmptyString:userName] && ![UtilityClass isEmptyString:password]){
+        
+        [endpoint login:userName AndPassword:password];
+
+    }else{
+        
+        [UtilityClass makeToast:@"Invalid username or password"];
+    }
 }
 
 //To unregister with SIP Server

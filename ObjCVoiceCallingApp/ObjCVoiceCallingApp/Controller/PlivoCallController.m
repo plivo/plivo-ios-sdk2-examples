@@ -823,11 +823,35 @@
     {
         [[Phone sharedInstance] stopAudioDevice];
         
+        if(incCall)
+        {
+            [incCall hold];
+        }
+        
+        if(outCall)
+        {
+            [outCall hold];
+        }
+        
+        [self.holdButton setImage:[UIImage imageNamed:@"HoldIcon.png"] forState:UIControlStateNormal];
+
     }
     else
     {
         [[Phone sharedInstance] startAudioDevice];
         
+        if(incCall)
+        {
+            [incCall unhold];
+        }
+        
+        if(outCall)
+        {
+            [outCall unhold];
+        }
+        
+        [self.holdButton setImage:[UIImage imageNamed:@"UnholdIcon.png"] forState:UIControlStateNormal];
+
     }
 }
 
@@ -1350,53 +1374,64 @@
     
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        
         @try {
             
             UInt8 theInterruptionType = [[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] intValue];
             
-            //NSLog(@"Session interrupted > --- %s ---\n", theInterruptionType == AVAudioSessionInterruptionTypeBegan ? "Begin Interruption" : "End Interruption");
-            
             if (theInterruptionType == AVAudioSessionInterruptionTypeBegan)
             {
-                //NSLog(@"isItGSMCall = YES");
+                NSLog(@"isItGSMCall = YES");
                 isItGSMCall = YES;
+                
+                CXSetHeldCallAction *setHeldCallAction = [[CXSetHeldCallAction alloc]
+                                                          initWithCallUUID:[CallKitInstance sharedInstance].callUUID onHold:YES];
+                CXTransaction *transaction = [[CXTransaction alloc]
+                                              initWithAction:setHeldCallAction];
+                [[CallKitInstance sharedInstance].callKitCallController requestTransaction:transaction completion:^(NSError * _Nullable error) {
+                    if (error)
+                    {
+                        NSLog(@"%@", error);
+                    }
+                }];
+                
                 [[Phone sharedInstance] stopAudioDevice];
+
+                NSLog(@"----------AVAudioSessionInterruptionTypeBegan-------------");
                 
-                //NSLog(@"----------AVAudioSessionInterruptionTypeBegan-------------");
-                
-                [FIRAnalytics logEventWithName:@"AVAudioSessionInterruptionTypeBegan"
-                                    parameters:nil];
             }
             
             if (theInterruptionType == AVAudioSessionInterruptionTypeEnded)
             {
-                //NSLog(@"isItGSMCall = NO");
-
+                NSLog(@"isItGSMCall = NO");
                 isItGSMCall = NO;
+                
+                CXSetHeldCallAction *setHeldCallAction = [[CXSetHeldCallAction alloc]
+                                                          initWithCallUUID:[CallKitInstance sharedInstance].callUUID onHold:NO];
+                CXTransaction *transaction = [[CXTransaction alloc]
+                                              initWithAction:setHeldCallAction];
+                [[CallKitInstance sharedInstance].callKitCallController requestTransaction:transaction completion:^(NSError * _Nullable error) {
+                    if (error) {
+                        NSLog(@"%@", error);
+                    }
+                }];
+
+                
                 // make sure to activate the session
                 NSError *error = nil;
                 [[AVAudioSession sharedInstance] setActive:YES error:&error];
-                if (nil != error) //NSLog(@"AVAudioSession set active failed with error: %@", error);
+                if (nil != error)
+                    NSLog(@"AVAudioSession set active failed with error: %@", error);
                 
                 [[Phone sharedInstance] startAudioDevice];
                 
-                //NSLog(@"----------AVAudioSessionInterruptionTypeEnded-------------");
-                
-                [FIRAnalytics logEventWithName:@"AVAudioSessionInterruptionTypeEnded"
-                                    parameters:nil];
+                NSLog(@"----------AVAudioSessionInterruptionTypeEnded-------------");
                 
             }
             
         }
         @catch (NSException *exception)
         {
-            [FIRAnalytics logEventWithName:@"AVAudioSessionInterruption"
-                                parameters:@{
-                                             @"Error": exception.description
-                                             }];
-            
-            //NSLog(@"Exception: %@",exception.description);
+            NSLog(@"Exception: %@",exception.description);
             
         }
         @finally {
@@ -1425,7 +1460,7 @@
             break;
         case AVAudioSessionRouteChangeReasonCategoryChange:
             NSLog(@"     CategoryChange");
-            //NSLog(@" New Category: %@", [[AVAudioSession sharedInstance] category]);
+            NSLog(@" New Category: %@", [[AVAudioSession sharedInstance] category]);
             break;
         case AVAudioSessionRouteChangeReasonOverride:
             NSLog(@"     Override");

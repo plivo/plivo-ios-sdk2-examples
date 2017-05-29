@@ -446,6 +446,10 @@
                                                                                  withString:@""
                                                                                     options:NSRegularExpressionSearch
                                                                                       range:NSMakeRange(0, apPhoneObj.number.length)];
+            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
+            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
+            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
+            
             
             PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
             [[Phone sharedInstance] setDelegate:plivoVC];
@@ -480,6 +484,9 @@
                                                                                      withString:@""
                                                                                         options:NSRegularExpressionSearch
                                                                                           range:NSMakeRange(0, apPhoneObj.number.length)];
+                phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
+                phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
+                phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
                 
                 PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
                 [[Phone sharedInstance] setDelegate:plivoVC];
@@ -507,7 +514,10 @@
                                                                                  withString:@""
                                                                                     options:NSRegularExpressionSearch
                                                                                       range:NSMakeRange(0, apPhoneObj.number.length)];
-            
+            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
+            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
+            phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
+
             PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
             [[Phone sharedInstance] setDelegate:plivoVC];
             [CallKitInstance sharedInstance].callUUID = [NSUUID UUID];

@@ -17,9 +17,9 @@
 #import <Crashlytics/Crashlytics.h>
 #import <Google/SignIn.h>
 
-@interface LoginViewController ()<GIDSignInUIDelegate,GIDSignInDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
-@property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
+@interface LoginViewController ()<GIDSignInUIDelegate,GIDSignInDelegate,UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UITextField *userNameTextField;
+@property (strong, nonatomic) IBOutlet UITextField *passwordTextField;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *googleButton;
 
@@ -37,6 +37,19 @@
     self.loginButton.layer.cornerRadius = DEVICE_HEIGHT * 0.04401408451;
     self.googleButton.layer.cornerRadius = DEVICE_HEIGHT * 0.04401408451;
 
+    self.userNameTextField.delegate = self;
+    self.passwordTextField.delegate = self;
+
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:YES];
+    
+    [self.userNameTextField setValue:[UIColor whiteColor]
+                     forKeyPath:@"_placeholderLabel.textColor"];
+    [self.passwordTextField setValue:[UIColor whiteColor]
+                 forKeyPath:@"_placeholderLabel.textColor"];
 
 }
 
@@ -58,18 +71,8 @@
  */
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField       // return NO to disallow editing.
 {
-    if(textField == self.userNameTextField)
-    {
-        self.userNameTextField.text = @"";
-        return YES;
+    return YES;
 
-    }
-    else
-    {
-        self.passwordTextField.text = @"";
-        return YES;
-
-    }
 }
 
 /**
@@ -99,6 +102,9 @@
             [UtilityClass makeToastActivity];
 
             [[Phone sharedInstance] loginWithUserName:self.userNameTextField.text andPassword:self.passwordTextField.text];
+            
+            self.userNameTextField.delegate = nil;
+            self.passwordTextField.delegate = nil;
             
             [FIRAnalytics logEventWithName:@"Login"
                                 parameters:@{
@@ -132,6 +138,8 @@
         
         [UtilityClass makeToast:kLOGINSUCCESS];
 
+        [UtilityClass setUserAuthenticationStatus:YES];
+
         /**
          *  If user already logged in with G+ signIn
          *
@@ -152,8 +160,6 @@
 
         }
         
-        [UtilityClass setUserAuthenticationStatus:YES];
-
 
         //Default View Controller: ContactsViewController
         //Landing page
@@ -187,6 +193,9 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPASSWORD];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
+        self.userNameTextField.delegate = self;
+        self.passwordTextField.delegate = self;
+
         [[GIDSignIn sharedInstance] signOut];
         
         [UtilityClass hideToastActivity];
