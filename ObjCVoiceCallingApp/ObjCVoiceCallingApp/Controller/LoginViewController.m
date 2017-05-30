@@ -213,6 +213,7 @@
     });
 }
 
+//Login with Google account
 - (IBAction)googleloginTapped:(id)sender
 {
     [FIRAnalytics logEventWithName:@"GoogleSignIn"

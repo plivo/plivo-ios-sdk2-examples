@@ -136,11 +136,6 @@
 
 }
 
-- (void)handleSegmentControl:(UISegmentedControl *)segment
-{
-    [self.contactsTableView reloadData];
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
@@ -152,7 +147,18 @@
 {
     [super viewWillDisappear:YES];
     self.isSearchControllerActive = NO;
+    
+}
 
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)handleSegmentControl:(UISegmentedControl *)segment
+{
+    [self.contactsTableView reloadData];
 }
 
 #pragma mark - UISearchBarDelegate
@@ -197,7 +203,6 @@
 }
 
 
-#pragma mark - private
 /**
  * Get Contacts information from Phone
  */
@@ -268,11 +273,7 @@
     }];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark - UITableview
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -581,51 +582,6 @@
     }
 }
 
-/**
- * On click on Logout button
- */
-- (IBAction)logoutButtonTapped:(id)sender
-{
-    UIAlertController * alert = [UIAlertController
-                                 alertControllerWithTitle:@"Logout"
-                                 message:@"Are you sure you want to logout?"
-                                 preferredStyle:UIAlertControllerStyleAlert];
-    
-    
-    
-    UIAlertAction* yesButton = [UIAlertAction
-                                actionWithTitle:@"Yes"
-                                style:UIAlertActionStyleDefault
-                                handler:^(UIAlertAction * action) {
-                                    //Handle your yes please button action here
-                                    
-                                    [FIRAnalytics logEventWithName:@"Logout"
-                                                        parameters:@{
-                                                                     @"Class": @"Contacts"
-                                                                     }];
-                                    
-                                    [UtilityClass makeToastActivity];
-                                    
-                                    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
-                                    [[Phone sharedInstance] setDelegate:plivoVC];
-                                    [plivoVC unRegisterSIPEndpoit];
-                                    
-                                    
-                                }];
-    
-    UIAlertAction* noButton = [UIAlertAction
-                               actionWithTitle:@"No"
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction * action) {
-                                   //Handle no, thanks button
-                               }];
-    
-    [alert addAction:yesButton];
-    [alert addAction:noButton];
-    
-    [self presentViewController:alert animated:YES completion:nil];
-}
-
 #pragma mark - UISearchResultsUpdating
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -808,5 +764,49 @@
     }
 }
 
+/**
+ * On click on Logout button
+ */
+- (IBAction)logoutButtonTapped:(id)sender
+{
+    UIAlertController * alert = [UIAlertController
+                                 alertControllerWithTitle:@"Logout"
+                                 message:@"Are you sure you want to logout?"
+                                 preferredStyle:UIAlertControllerStyleAlert];
+    
+    
+    
+    UIAlertAction* yesButton = [UIAlertAction
+                                actionWithTitle:@"Yes"
+                                style:UIAlertActionStyleDefault
+                                handler:^(UIAlertAction * action) {
+                                    //Handle your yes please button action here
+                                    
+                                    [FIRAnalytics logEventWithName:@"Logout"
+                                                        parameters:@{
+                                                                     @"Class": @"Contacts"
+                                                                     }];
+                                    
+                                    [UtilityClass makeToastActivity];
+                                    
+                                    PlivoCallController* plivoVC = [self.tabBarController.viewControllers objectAtIndex:2];
+                                    [[Phone sharedInstance] setDelegate:plivoVC];
+                                    [plivoVC unRegisterSIPEndpoit];
+                                    
+                                    
+                                }];
+    
+    UIAlertAction* noButton = [UIAlertAction
+                               actionWithTitle:@"No"
+                               style:UIAlertActionStyleDefault
+                               handler:^(UIAlertAction * action) {
+                                   //Handle no, thanks button
+                               }];
+    
+    [alert addAction:yesButton];
+    [alert addAction:noButton];
+    
+    [self presentViewController:alert animated:YES completion:nil];
+}
 
 @end
