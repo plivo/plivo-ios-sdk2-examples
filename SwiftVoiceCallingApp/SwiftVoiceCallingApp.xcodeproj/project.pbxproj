@@ -14,6 +14,7 @@
 		47332D391EB92B02003FB887 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 47332D371EB92B02003FB887 /* LaunchScreen.storyboard */; };
 		47332D441EB92B02003FB887 /* SwiftVoiceCallingAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47332D431EB92B02003FB887 /* SwiftVoiceCallingAppTests.swift */; };
 		47332D4F1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47332D4E1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift */; };
+		47966B381EDBF5CF00FA2160 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 47966B371EDBF5CF00FA2160 /* UIView+Toast.m */; };
 		47F225811ED5882C0057A39F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225801ED5882C0057A39F /* AppDelegate.swift */; };
 		47F225831ED588F20057A39F /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225821ED588F20057A39F /* ServiceManager.swift */; };
 		47F225851ED589000057A39F /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225841ED589000057A39F /* APIRequestManager.swift */; };
@@ -86,7 +87,6 @@
 		47F226BA1ED598310057A39F /* CallKitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226B91ED598310057A39F /* CallKitInstance.swift */; };
 		47F226C11ED5C2CD0057A39F /* PhoneNumberMetaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226BF1ED5C2CD0057A39F /* PhoneNumberMetaData.json */; };
 		47F226C21ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */; };
-		47F226C51ED71DF10057A39F /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226C41ED71DF10057A39F /* UIView+Toast.m */; };
 		47F226CF1ED720210057A39F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226CE1ED720210057A39F /* IntentHandler.swift */; };
 		47F226D31ED720210057A39F /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47F226CC1ED720210057A39F /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F841B3501E870444B1780268 /* Pods_SwiftVoiceCallingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */; };
@@ -157,6 +157,8 @@
 		47332D4E1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftVoiceCallingAppUITests.swift; sourceTree = "<group>"; };
 		47332D501EB92B02003FB887 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		47332D5C1EB92C21003FB887 /* SwiftVoiceCallingApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SwiftVoiceCallingApp.entitlements; sourceTree = "<group>"; };
+		47966B361EDBF5CF00FA2160 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Toast.h"; path = "Third party/Other/UIView+Toast.h"; sourceTree = "<group>"; };
+		47966B371EDBF5CF00FA2160 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "Third party/Other/UIView+Toast.m"; sourceTree = "<group>"; };
 		47F225801ED5882C0057A39F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "App Files/AppDelegate.swift"; sourceTree = "<group>"; };
 		47F225821ED588F20057A39F /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = "API Managers/ServiceManager.swift"; sourceTree = "<group>"; };
 		47F225841ED589000057A39F /* APIRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestManager.swift; path = "API Managers/APIRequestManager.swift"; sourceTree = "<group>"; };
@@ -266,8 +268,6 @@
 		47F226B91ED598310057A39F /* CallKitInstance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallKitInstance.swift; path = "App Files/CallKitInstance.swift"; sourceTree = "<group>"; };
 		47F226BF1ED5C2CD0057A39F /* PhoneNumberMetaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaData.json; path = "Third party/libPhoneNumber-iOS/PhoneNumberMetaData.json"; sourceTree = "<group>"; };
 		47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaDataForTesting.json; path = "Third party/libPhoneNumber-iOS/PhoneNumberMetaDataForTesting.json"; sourceTree = "<group>"; };
-		47F226C31ED71DF10057A39F /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Toast.h"; path = "View/UIView+Toast.h"; sourceTree = "<group>"; };
-		47F226C41ED71DF10057A39F /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "View/UIView+Toast.m"; sourceTree = "<group>"; };
 		47F226C71ED71E570057A39F /* SwiftVoiceCallingApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftVoiceCallingApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		47F226CC1ED720210057A39F /* IntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		47F226CE1ED720210057A39F /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -428,8 +428,6 @@
 		47F2257C1ED588000057A39F /* View */ = {
 			isa = PBXGroup;
 			children = (
-				47F226C31ED71DF10057A39F /* UIView+Toast.h */,
-				47F226C41ED71DF10057A39F /* UIView+Toast.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -445,12 +443,12 @@
 		47F2257E1ED5880C0057A39F /* App Files */ = {
 			isa = PBXGroup;
 			children = (
-				47F226C71ED71E570057A39F /* SwiftVoiceCallingApp-Bridging-Header.h */,
 				47F225801ED5882C0057A39F /* AppDelegate.swift */,
 				47F225891ED58A5A0057A39F /* Phone.swift */,
 				47F226B91ED598310057A39F /* CallKitInstance.swift */,
 				47F2258B1ED58BA80057A39F /* UtilClass.swift */,
 				47F225881ED58A460057A39F /* Constants.h */,
+				47F226C71ED71E570057A39F /* SwiftVoiceCallingApp-Bridging-Header.h */,
 			);
 			name = "App Files";
 			sourceTree = "<group>";
@@ -541,6 +539,8 @@
 		47F226731ED58DDA0057A39F /* Miscelleneous */ = {
 			isa = PBXGroup;
 			children = (
+				47966B361EDBF5CF00FA2160 /* UIView+Toast.h */,
+				47966B371EDBF5CF00FA2160 /* UIView+Toast.m */,
 				47F226741ED58E090057A39F /* JCDialPad.h */,
 				47F226751ED58E090057A39F /* JCDialPad.m */,
 				47F226761ED58E090057A39F /* JCPadButton.h */,
@@ -947,7 +947,7 @@
 				47F225D31ED58D0B0057A39F /* NBPhoneNumber.m in Sources */,
 				47F225D11ED58D0B0057A39F /* NBNumberFormat.m in Sources */,
 				47F2266C1ED58DD30057A39F /* APName.m in Sources */,
-				47F226C51ED71DF10057A39F /* UIView+Toast.m in Sources */,
+				47966B381EDBF5CF00FA2160 /* UIView+Toast.m in Sources */,
 				47F2258A1ED58A5A0057A39F /* Phone.swift in Sources */,
 				47F2265C1ED58DD30057A39F /* APAddressBook.m in Sources */,
 				47F2265A1ED58DD30057A39F /* APAddress.m in Sources */,
@@ -1336,6 +1336,7 @@
 				47F226D61ED720210057A39F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -16,6 +16,7 @@ class CallKitInstance: NSObject {
     var callKitCallController: CXCallController?
     var callObserver: CXCallObserver?
     
+    //Singleton instance
     static let sharedInstance = CallKitInstance()
 
     override init() {

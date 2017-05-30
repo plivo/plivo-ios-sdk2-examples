@@ -12,7 +12,7 @@ import FirebaseAnalytics
 import Crashlytics
 import Fabric
 
-class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate, APIRequestManagerDelegate {
+class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDelegate, APIRequestManagerDelegate, UITextFieldDelegate {
 
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -30,7 +30,18 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         googleButton.layer.cornerRadius = UIScreen.main.bounds.size.height * 0.04401408451
         
         apiMangerInstance.delegate = self
+        
+        self.userNameTextField.delegate = self
+        self.passwordTextField.delegate = self
 
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        
+        userNameTextField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
+        passwordTextField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,15 +62,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
      * Hide keyboard when text filed being clicked
      */
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // return NO to disallow editing.
-        if textField == userNameTextField {
-            userNameTextField.text = ""
-            return true
-        }
-        else {
-            passwordTextField.text = ""
-            return true
-        }
+        return true
     }
     
     /**
@@ -106,6 +109,9 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         
         DispatchQueue.main.async(execute: {() -> Void in
             
+            self.userNameTextField.delegate = nil
+            self.passwordTextField.delegate = nil
+
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINSUCCESS)
             /**
@@ -141,10 +147,16 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
      */
     func onLoginFailed() {
         DispatchQueue.main.async(execute: {() -> Void in
+            
+            self.userNameTextField.delegate = self
+            self.passwordTextField.delegate = self
+
             UtilClass.setUserAuthenticationStatus(false)
+            
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
             UserDefaults.standard.synchronize()
+            
             GIDSignIn.sharedInstance().signOut()
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINFAILMSG)
@@ -153,7 +165,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         })
     }
     
+    //Login with Google account
+    
     @IBAction func googleloginTapped(_ sender: Any) {
+        
         FIRAnalytics.logEvent(withName: "GoogleSignIn", parameters: nil)
         self.view.isUserInteractionEnabled = false
         GIDSignIn.sharedInstance().uiDelegate = self
@@ -162,11 +177,13 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         // Replace with the value of CLIENT_ID key in GoogleService-Info.plist
         GIDSignIn.sharedInstance().shouldFetchBasicProfile = true
         GIDSignIn.sharedInstance().signIn()
+        
     }
     
     // MARK: -Google SignIn Delegate
     //pragma mark - Google SignIn Delegate
     func sign(inWillDispatch signIn: GIDSignIn, error: Error?) {
+        
     }
     
     // Dismiss the "Sign in with Google" view
@@ -193,6 +210,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
             return
         }
         else {
+            
             if !UtilClass.isEmpty(user.profile.email) {
                 UtilClass.makeToastActivity()
                 getSIPEndpointCredentials(user.profile.email)

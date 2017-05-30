@@ -25,7 +25,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var contactsTableView: UITableView!
     @IBOutlet weak var noContactsLabel: UILabel!
     
-    // MARK: - life cycle
+    // MARK: - Life cycle
     
     required init?(coder aDecoder: NSCoder)
     {
@@ -56,22 +56,27 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         UtilClass.makeToastActivity()
         loadContacts()
         
-        sipDetailsArray = (UserDefaults.standard.object(forKey: kSIPDETAILS) as? [Any])!
-        var tempSipArray = [Any]()
-        
-        for i in 0..<sipDetailsArray.count
+        if (UserDefaults.standard.object(forKey: kSIPDETAILS) != nil)
         {
-            let sipDict: [AnyHashable: Any] = sipDetailsArray[i] as! [AnyHashable : Any]
+            sipDetailsArray = (UserDefaults.standard.object(forKey: kSIPDETAILS) as? [Any])!
+            var tempSipArray = [Any]()
             
-            if UtilClass.validateEmail(validateEmailString:sipDict["eMail"] as! String) {
-                tempSipArray.append(sipDict)
+            for i in 0..<sipDetailsArray.count
+            {
+                let sipDict: [AnyHashable: Any] = sipDetailsArray[i] as! [AnyHashable : Any]
+                
+                if UtilClass.validateEmail(validateEmailString:sipDict["eMail"] as! String) {
+                    tempSipArray.append(sipDict)
+                }
+                
             }
             
+            sipDetailsArray = []
+            sipDetailsArray = tempSipArray
+            tempSipArray = []
+
         }
         
-        sipDetailsArray = []
-        sipDetailsArray = tempSipArray
-        tempSipArray = []
         
         self.contactsTableView.delegate = self
         self.contactsTableView.dataSource = self
@@ -120,10 +125,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
 
-    func handleSegmentControl(_ segment: UISegmentedControl) {
-        contactsTableView.reloadData()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         contactsTableView.reloadData()
@@ -133,6 +134,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewWillDisappear(true)
         isSearchControllerActive = false
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func handleSegmentControl(_ segment: UISegmentedControl) {
+        contactsTableView.reloadData()
+    }
+    
     
     // MARK: - UISearchBarDelegate
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -168,6 +179,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         isSearchControllerActive = false
     }
     
+    // MARK: - APContacts
     func loadContacts()
     {
         addressBook.loadContacts
@@ -227,11 +239,10 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
         return "No phone"
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
+    
+    
+    // MARK: - UITableView
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
     }
@@ -418,24 +429,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    @IBAction func logoutButtonTapped(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
-        let yesButton = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
-            //Handle your yes please button action here
-            FIRAnalytics.logEvent(withName: "Logout", parameters: ["Class": "Contacts" as NSObject])
-            UtilClass.makeToastActivity()
-            let plivoVC: PlivoCallController? = (self.tabBarController?.viewControllers?[2] as? PlivoCallController)
-            Phone.sharedInstance.setDelegate(plivoVC!)
-            plivoVC?.unRegisterSIPEndpoit()
-        })
-        let noButton = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
-            //Handle no, thanks button
-        })
-        alert.addAction(yesButton)
-        alert.addAction(noButton)
-        present(alert, animated: true, completion: { _ in })
-    }
     
     // MARK: - UISearchResultsUpdating
     func updateSearchResults(for searchController: UISearchController) {
@@ -585,4 +578,24 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         }
     
     }
+    
+    @IBAction func logoutButtonTapped(_ sender: Any) {
+        
+        let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
+        let yesButton = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+            //Handle your yes please button action here
+            FIRAnalytics.logEvent(withName: "Logout", parameters: ["Class": "Contacts" as NSObject])
+            UtilClass.makeToastActivity()
+            let plivoVC: PlivoCallController? = (self.tabBarController?.viewControllers?[2] as? PlivoCallController)
+            Phone.sharedInstance.setDelegate(plivoVC!)
+            plivoVC?.unRegisterSIPEndpoit()
+        })
+        let noButton = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
+            //Handle no, thanks button
+        })
+        alert.addAction(yesButton)
+        alert.addAction(noButton)
+        present(alert, animated: true, completion: { _ in })
+    }
+    
 }

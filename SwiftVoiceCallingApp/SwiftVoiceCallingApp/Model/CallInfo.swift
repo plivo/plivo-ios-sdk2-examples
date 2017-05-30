@@ -39,7 +39,9 @@ class CallInfo: NSObject {
      */
     class func getCallsInfoArray() -> [Any] {
         
-        return UserDefaults.standard.object(forKey: kCALLSINFO) as? [Any] ?? [Any]()
+        let callInfoArray = UserDefaults.standard.object(forKey: kCALLSINFO) as? [Any] ?? [Any]()
+        
+        return callInfoArray.reversed()
 
     }
 }
