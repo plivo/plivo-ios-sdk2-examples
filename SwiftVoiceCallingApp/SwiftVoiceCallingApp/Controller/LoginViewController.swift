@@ -199,9 +199,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
     //completed sign In
     func sign(_ signIn: GIDSignIn, didSignInFor user: GIDGoogleUser, withError error: Error?)
     {
-        print("userID  name===\(user.profile.name)")
-        print("userID emil ===\(user.profile.email)")
-        
         if (user.profile.email as NSString).range(of: "@plivo.com").location == NSNotFound {
             FIRAnalytics.logEvent(withName: "InvalidEmail", parameters: nil)
             GIDSignIn.sharedInstance().signOut()

@@ -23,8 +23,8 @@ class IntentHandler: INExtension, INStartAudioCallIntentHandling {
         }
         
         let userActivity = NSUserActivity(activityType: String(describing: INStartAudioCallIntent.self))
-        
         response = INStartAudioCallIntentResponse(code: .continueInApp, userActivity: userActivity)
+
     }
     
 }

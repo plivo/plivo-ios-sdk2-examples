@@ -12,6 +12,7 @@ import AVFoundation
 import GoogleSignIn
 import FirebaseAnalytics
 import Crashlytics
+import PlivoVoiceKit
 
 class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate {
 
@@ -113,8 +114,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func onLogin() {
         DispatchQueue.main.async(execute: {() -> Void in
-            UtilClass.makeToast(kLOGINSUCCESS)
             UtilClass.hideToastActivity()
+            UtilClass.makeToast(kLOGINSUCCESS)
             Crashlytics.sharedInstance().setUserName(UserDefaults.standard.object(forKey: kUSERNAME) as? String)
             let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             appDelegate?.voipRegistration()
@@ -327,65 +328,72 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     // MARK: - CallKit Actions
     func performStartCallAction(with uuid: UUID, handle: String) {
         
-        switch AVAudioSession.sharedInstance().recordPermission() {
+        if UtilClass.isNetworkAvailable(){
             
-        case AVAudioSessionRecordPermission.granted:
-            //NSLog(@"Permission granted");
-            FIRAnalytics.logEvent(withName: "performStartCallActionWithUUID", parameters: ["NSUUID": uuid.uuidString as NSObject, "Handle": handle as NSObject])
-            hideActiveCallView()
-            unhideActiveCallView()
-            //NSLog(@"Outgoing call uuid is: %@", uuid);
-            CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
-            CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
-            //NSLog(@"provider:performStartCallActionWithUUID:");
-            if uuid == nil || handle == nil {
-                //NSLog(@"UUID or Handle nil");
-                return
+            switch AVAudioSession.sharedInstance().recordPermission() {
+                
+            case AVAudioSessionRecordPermission.granted:
+                //NSLog(@"Permission granted");
+                FIRAnalytics.logEvent(withName: "performStartCallActionWithUUID", parameters: ["NSUUID": uuid.uuidString as NSObject, "Handle": handle as NSObject])
+                hideActiveCallView()
+                unhideActiveCallView()
+                //NSLog(@"Outgoing call uuid is: %@", uuid);
+                CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
+                CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
+                //NSLog(@"provider:performStartCallActionWithUUID:");
+                if uuid == nil || handle == nil {
+                    //NSLog(@"UUID or Handle nil");
+                    return
+                }
+                
+                CallInfo.addCallsInfo(callInfo:[handle,Date()])
+                
+                var newHandleString: String = handle.replacingOccurrences(of: "-", with: "")
+                if (newHandleString as NSString).range(of: "+91").location == NSNotFound && (newHandleString.characters.count) == 10 {
+                    newHandleString = "+91\(newHandleString)"
+                }
+                let callHandle = CXHandle(type: .generic, value: newHandleString)
+                let startCallAction = CXStartCallAction(call: uuid, handle: callHandle)
+                let transaction = CXTransaction(action:startCallAction)
+                CallKitInstance.sharedInstance.callKitCallController?.request(transaction, completion: {(_ error: Error?) -> Void in
+                    if error != nil {
+                        //NSLog(@"StartCallAction transaction request failed: %@", [error localizedDescription]);
+                        DispatchQueue.main.async(execute: {() -> Void in
+                            UtilClass.makeToast(kSTARTACTIONFAILED)
+                        })
+                    }
+                    else {
+                        //NSLog(@"StartCallAction transaction request successful");
+                        let callUpdate = CXCallUpdate()
+                        callUpdate.remoteHandle = callHandle
+                        callUpdate.supportsDTMF = true
+                        callUpdate.supportsHolding = true
+                        callUpdate.supportsGrouping = false
+                        callUpdate.supportsUngrouping = false
+                        callUpdate.hasVideo = false
+                        DispatchQueue.main.async(execute: {() -> Void in
+                            self.callerNameLabel.text = handle
+                            self.callStateLabel.text = "Calling..."
+                            self.unhideActiveCallView()
+                            CallKitInstance.sharedInstance.callKitProvider?.reportCall(with: uuid, updated: callUpdate)
+                        })
+                    }
+                })
+                break
+            case AVAudioSessionRecordPermission.denied:
+                UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
+                break
+            case AVAudioSessionRecordPermission.undetermined:
+                // This is the initial state before a user has made any choice
+                // You can use this spot to request permission here if you want
+                break
+            default:
+                break
             }
             
-            CallInfo.addCallsInfo(callInfo:[handle,Date()])
-        
-            var newHandleString: String = handle.replacingOccurrences(of: "-", with: "")
-            if (newHandleString as NSString).range(of: "+91").location == NSNotFound && (newHandleString.characters.count) == 10 {
-                newHandleString = "+91\(newHandleString)"
-            }
-            let callHandle = CXHandle(type: .generic, value: newHandleString)
-            let startCallAction = CXStartCallAction(call: uuid, handle: callHandle)
-            let transaction = CXTransaction(action:startCallAction)
-            CallKitInstance.sharedInstance.callKitCallController?.request(transaction, completion: {(_ error: Error?) -> Void in
-                if error != nil {
-                    //NSLog(@"StartCallAction transaction request failed: %@", [error localizedDescription]);
-                    DispatchQueue.main.async(execute: {() -> Void in
-                        UtilClass.makeToast(kSTARTACTIONFAILED)
-                    })
-                }
-                else {
-                    //NSLog(@"StartCallAction transaction request successful");
-                    let callUpdate = CXCallUpdate()
-                    callUpdate.remoteHandle = callHandle
-                    callUpdate.supportsDTMF = true
-                    callUpdate.supportsHolding = true
-                    callUpdate.supportsGrouping = false
-                    callUpdate.supportsUngrouping = false
-                    callUpdate.hasVideo = false
-                    DispatchQueue.main.async(execute: {() -> Void in
-                        self.callerNameLabel.text = handle
-                        self.callStateLabel.text = "Calling..."
-                        self.unhideActiveCallView()
-                        CallKitInstance.sharedInstance.callKitProvider?.reportCall(with: uuid, updated: callUpdate)
-                    })
-                }
-            })
-            break
-        case AVAudioSessionRecordPermission.denied:
-            UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
-            break
-        case AVAudioSessionRecordPermission.undetermined:
-            // This is the initial state before a user has made any choice
-            // You can use this spot to request permission here if you want
-            break
-        default:
-            break
+        }else{
+            
+            UtilClass.makeToast("Please connect to internet")
         }
         
     }
@@ -665,6 +673,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     // MARK: - Handling IBActions
     @IBAction func callButtonTapped(_ sender: Any) {
         
+        if UtilClass.isNetworkAvailable(){
+
         switch AVAudioSession.sharedInstance().recordPermission() {
         case AVAudioSessionRecordPermission.granted:
             if (!(userNameTextField.text! == "SIP URI or Phone Number") && !UtilClass.isEmpty(userNameTextField.text!)) || !UtilClass.isEmpty(pad!.digitsTextField.text!) || (incCall != nil) || (outCall != nil) {
@@ -716,6 +726,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             break
         default:
             break
+        }
+        }else{
+            UtilClass.makeToast("Please connect to internet")
         }
         
     }

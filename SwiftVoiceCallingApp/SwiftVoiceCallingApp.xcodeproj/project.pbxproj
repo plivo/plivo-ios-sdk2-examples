@@ -16,7 +16,6 @@
 		47332D4F1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47332D4E1EB92B02003FB887 /* SwiftVoiceCallingAppUITests.swift */; };
 		47966B381EDBF5CF00FA2160 /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 47966B371EDBF5CF00FA2160 /* UIView+Toast.m */; };
 		47F225811ED5882C0057A39F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225801ED5882C0057A39F /* AppDelegate.swift */; };
-		47F225831ED588F20057A39F /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225821ED588F20057A39F /* ServiceManager.swift */; };
 		47F225851ED589000057A39F /* APIRequestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225841ED589000057A39F /* APIRequestManager.swift */; };
 		47F2258A1ED58A5A0057A39F /* Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F225891ED58A5A0057A39F /* Phone.swift */; };
 		47F2258C1ED58BA80057A39F /* UtilClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F2258B1ED58BA80057A39F /* UtilClass.swift */; };
@@ -160,7 +159,6 @@
 		47966B361EDBF5CF00FA2160 /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Toast.h"; path = "Third party/Other/UIView+Toast.h"; sourceTree = "<group>"; };
 		47966B371EDBF5CF00FA2160 /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "Third party/Other/UIView+Toast.m"; sourceTree = "<group>"; };
 		47F225801ED5882C0057A39F /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "App Files/AppDelegate.swift"; sourceTree = "<group>"; };
-		47F225821ED588F20057A39F /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ServiceManager.swift; path = "API Managers/ServiceManager.swift"; sourceTree = "<group>"; };
 		47F225841ED589000057A39F /* APIRequestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = APIRequestManager.swift; path = "API Managers/APIRequestManager.swift"; sourceTree = "<group>"; };
 		47F225881ED58A460057A39F /* Constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Constants.h; path = "App Files/Constants.h"; sourceTree = "<group>"; };
 		47F225891ED58A5A0057A39F /* Phone.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Phone.swift; path = "App Files/Phone.swift"; sourceTree = "<group>"; };
@@ -409,7 +407,6 @@
 			isa = PBXGroup;
 			children = (
 				47F225841ED589000057A39F /* APIRequestManager.swift */,
-				47F225821ED588F20057A39F /* ServiceManager.swift */,
 			);
 			name = "API Managers";
 			sourceTree = "<group>";
@@ -981,7 +978,6 @@
 				47F226631ED58DD30057A39F /* APContact.m in Sources */,
 				47F225D41ED58D0B0057A39F /* NBPhoneNumberDesc.m in Sources */,
 				47F2258C1ED58BA80057A39F /* UtilClass.swift in Sources */,
-				47F225831ED588F20057A39F /* ServiceManager.swift in Sources */,
 				47F226611ED58DD30057A39F /* APContactDataExtractor.m in Sources */,
 				47F2267F1ED58E090057A39F /* UIView+FrameAccessor.m in Sources */,
 				47F2266E1ED58DD30057A39F /* APRecordDate.m in Sources */,

@@ -53,7 +53,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        UtilClass.makeToastActivity()
         loadContacts()
         
         if (UserDefaults.standard.object(forKey: kSIPDETAILS) != nil)
@@ -254,11 +253,14 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         if isSearchControllerActive {
-            if contactsSegmentControl?.selectedSegmentIndex == 0 {
-                return phoneSearchResults.count
+            
+            if contactsSegmentControl?.selectedSegmentIndex == 1 {
+                return sipSearchResults.count
+
             }
             else {
-                return sipSearchResults.count
+                return phoneSearchResults.count
+
             }
         }
         else
@@ -280,19 +282,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isSearchControllerActive {
-            if contactsSegmentControl?.selectedSegmentIndex == 0 {
-                let editprofileIdentifier: String = "CallHistory"
-                var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
-                if cell == nil {
-                    cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
-                }
-                let contact: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
-                cell?.textLabel?.text = contactName(contact!)
-                cell?.detailTextLabel?.text = contactPhones(contact!)
-                cell?.imageView?.image = UIImage(named: "TabbarIcon1")
-                return cell!
-            }
-            else {
+            if contactsSegmentControl?.selectedSegmentIndex == 1 {
+                
                 let editprofileIdentifier: String = "CallHistory"
                 var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
                 if cell == nil {
@@ -301,6 +292,20 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 let sipDict: [AnyHashable: Any] = sipSearchResults[indexPath.row] as! [AnyHashable : Any]
                 cell?.textLabel?.text = sipDict["eMail"] as? String
                 cell?.detailTextLabel?.text = sipDict["endPoint"] as? String
+                cell?.imageView?.image = UIImage(named: "TabbarIcon1")
+                return cell!
+                
+            }
+            else {
+                
+                let editprofileIdentifier: String = "CallHistory"
+                var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
+                if cell == nil {
+                    cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
+                }
+                let contact: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
+                cell?.textLabel?.text = contactName(contact!)
+                cell?.detailTextLabel?.text = contactPhones(contact!)
                 cell?.imageView?.image = UIImage(named: "TabbarIcon1")
                 return cell!
             }
@@ -353,30 +358,34 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         {
             self.searchController?.dismiss(animated: false, completion: nil)
         
-            if contactsSegmentControl?.selectedSegmentIndex == 0 {
+            if contactsSegmentControl?.selectedSegmentIndex == 1 {
                 
-                let contactDetails: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
-                
-                let apPhoneObj: APPhone? = contactDetails?.phones?[0]
-
-                let phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
-                let phoneNumber2 = phoneNumber.replacingOccurrences(of: "(", with: "")
-                let phoneNumber3 = phoneNumber2.replacingOccurrences(of: ")", with: "")
-                let phoneNumber4 = phoneNumber3.replacingOccurrences(of: "-", with: "")
-
-                let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
-                tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
-                Phone.sharedInstance.setDelegate(plivoVC!)
-                CallKitInstance.sharedInstance.callUUID = UUID()
-                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber4)
-            }
-            else {
                 let sipDict: [AnyHashable: Any] = sipSearchResults[indexPath.row] as! [AnyHashable : Any]
                 let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
                 tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
                 Phone.sharedInstance.setDelegate(plivoVC!)
                 CallKitInstance.sharedInstance.callUUID = UUID()
                 plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: sipDict["endPoint"] as! String)
+
+                
+            }
+            else
+            {
+                
+                let contactDetails: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
+                
+                let apPhoneObj: APPhone? = contactDetails?.phones?[0]
+                
+                let phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+                let phoneNumber2 = phoneNumber.replacingOccurrences(of: "(", with: "")
+                let phoneNumber3 = phoneNumber2.replacingOccurrences(of: ")", with: "")
+                let phoneNumber4 = phoneNumber3.replacingOccurrences(of: "-", with: "")
+                
+                let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
+                tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
+                Phone.sharedInstance.setDelegate(plivoVC!)
+                CallKitInstance.sharedInstance.callUUID = UUID()
+                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber4)
             }
         }
         else
