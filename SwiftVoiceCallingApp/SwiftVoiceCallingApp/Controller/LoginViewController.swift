@@ -1,3 +1,4 @@
+
 //
 //  LoginViewController.swift
 //  SwiftVoiceCallingApp
@@ -199,29 +200,37 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
     //completed sign In
     func sign(_ signIn: GIDSignIn, didSignInFor user: GIDGoogleUser, withError error: Error?)
     {
-        if (user.profile.email as NSString).range(of: "@plivo.com").location == NSNotFound {
-            FIRAnalytics.logEvent(withName: "InvalidEmail", parameters: nil)
-            GIDSignIn.sharedInstance().signOut()
-            UtilClass.makeToast(kINVALIDEMAIL)
-            self.view.isUserInteractionEnabled = true
-            return
-        }
-        else {
-            
-            if !UtilClass.isEmpty(user.profile.email) {
-                UtilClass.makeToastActivity()
-                getSIPEndpointCredentials(user.profile.email)
-                FIRAnalytics.logEvent(withName: "GoogleSignIn", parameters: ["Name": user.profile.name! as NSObject, "Email": user.profile.email! as NSObject])
-                Crashlytics.sharedInstance().setUserName(user.profile.name)
-                Crashlytics.sharedInstance().setUserEmail(user.profile.email)
-            }
-            else {
+        
+        if(user.profile != nil)
+        {
+            if (user.profile.email as NSString).range(of: "@plivo.com").location == NSNotFound {
                 FIRAnalytics.logEvent(withName: "InvalidEmail", parameters: nil)
                 GIDSignIn.sharedInstance().signOut()
                 UtilClass.makeToast(kINVALIDEMAIL)
                 self.view.isUserInteractionEnabled = true
                 return
             }
+            else {
+                
+                if !UtilClass.isEmpty(user.profile.email) {
+                    UtilClass.makeToastActivity()
+                    getSIPEndpointCredentials(user.profile.email)
+                    FIRAnalytics.logEvent(withName: "GoogleSignIn", parameters: ["Name": user.profile.name! as NSObject, "Email": user.profile.email! as NSObject])
+                    Crashlytics.sharedInstance().setUserName(user.profile.name)
+                    Crashlytics.sharedInstance().setUserEmail(user.profile.email)
+                }
+                else {
+                    FIRAnalytics.logEvent(withName: "InvalidEmail", parameters: nil)
+                    GIDSignIn.sharedInstance().signOut()
+                    UtilClass.makeToast(kINVALIDEMAIL)
+                    self.view.isUserInteractionEnabled = true
+                    return
+                }
+            }
+        }else{
+            UtilClass.makeToast(kINVALIDEMAIL)
+            self.view.isUserInteractionEnabled = true
+            return
         }
     }
 
