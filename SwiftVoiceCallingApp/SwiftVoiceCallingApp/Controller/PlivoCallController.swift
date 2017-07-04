@@ -25,6 +25,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     @IBOutlet weak var muteButton: UIButton!
     @IBOutlet weak var holdButton: UIButton!
     @IBOutlet weak var keypadButton: UIButton!
+    @IBOutlet weak var speakerButton: UIButton!
     @IBOutlet weak var activeCallImageView: UIImageView!
 
     var pad: JCDialPad?
@@ -37,6 +38,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     var outCall: PlivoOutgoing?
     var incCall: PlivoIncoming?
     
+    var isSpeakerOn: Bool = false
+
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -57,6 +60,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
         //Add Call Interruption observers
         addObservers()
+        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -746,6 +750,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         muteButton.isHidden = true
         keypadButton.isHidden = true
         hideButton.isHidden = false
+        speakerButton.isHidden = true
         activeCallImageView.isHidden = true
         userNameTextField.text = ""
         view.bringSubview(toFront: hideButton)
@@ -772,6 +777,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         UserDefaults.standard.synchronize()
         holdButton.isHidden = false
         muteButton.isHidden = false
+        speakerButton.isHidden = false
         keypadButton.isHidden = false
         dialPadView.isHidden = true
         hideButton.isHidden = true
@@ -863,6 +869,46 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
     }
     
+    
+    @IBAction func speakerButtonTapped(_ sender: Any) {
+    
+        handleSpeaker()
+        
+    }
+    
+    
+    func handleSpeaker() {
+
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        if(isSpeakerOn)
+        {
+            self.speakerButton.setImage(UIImage(named: "Speaker.png"), for: .normal)
+            
+            do {
+                try audioSession.overrideOutputAudioPort(AVAudioSessionPortOverride.none)
+            } catch let error as NSError {
+                print("audioSession error: \(error.localizedDescription)")
+            }
+            isSpeakerOn = false
+        }
+        else
+        {
+            self.speakerButton.setImage(UIImage(named: "Speaker_Selected.png"), for: .normal)
+
+            /* Enable Speaker Phone mode */
+            
+            do {
+                try audioSession.overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
+            } catch let error as NSError {
+                print("audioSession error: \(error.localizedDescription)")
+            }
+            
+            isSpeakerOn = true
+            
+        }
+    }
+    
     func hideActiveCallView() {
         UIDevice.current.isProximityMonitoringEnabled = false
         callerNameLabel.isHidden = true
@@ -886,6 +932,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         callStateLabel.text = "Calling..."
         dialPadView.alpha = 1.0
         dialPadView.backgroundColor = UIColor.white
+        
+        handleSpeaker()
     }
     
     func unhideActiveCallView() {

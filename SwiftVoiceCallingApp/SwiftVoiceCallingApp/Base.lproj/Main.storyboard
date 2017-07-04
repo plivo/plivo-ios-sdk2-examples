@@ -270,6 +270,14 @@
                                     <action selector="keypadButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="2NS-hv-lhy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKo-zU-ymM" userLabel="Speaker Button">
+                                <rect key="frame" x="130" y="350" width="65" height="83"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="Speaker"/>
+                                <connections>
+                                    <action selector="speakerButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="Fwb-yu-G1L"/>
+                                </connections>
+                            </button>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-JK-dYb" userLabel="MuteButton">
                                 <rect key="frame" x="214" y="274" width="64" height="64"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
@@ -326,6 +334,7 @@
                         <outlet property="holdButton" destination="aq4-6n-R3O" id="ftj-hd-8Oi"/>
                         <outlet property="keypadButton" destination="crM-gv-zft" id="AYv-oB-GdM"/>
                         <outlet property="muteButton" destination="bYp-JK-dYb" id="qCn-Lx-0PB"/>
+                        <outlet property="speakerButton" destination="DKo-zU-ymM" id="dZB-Lb-0dO"/>
                         <outlet property="userNameTextField" destination="ufr-bb-DCv" id="8i3-SN-icv"/>
                     </connections>
                 </viewController>
@@ -341,6 +350,7 @@
         <image name="MakeCall" width="61" height="61"/>
         <image name="PlivoG+Icon" width="122" height="22"/>
         <image name="PlivoIconWhite" width="185" height="54"/>
+        <image name="Speaker" width="65" height="83"/>
         <image name="TabbarIcon0" width="25" height="25"/>
         <image name="TabbarIcon1" width="25" height="25"/>
         <image name="TabbarIcon2" width="25" height="25"/>
