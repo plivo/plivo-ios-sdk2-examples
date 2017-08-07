@@ -376,16 +376,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 
                 let apPhoneObj: APPhone? = contactDetails?.phones?[0]
                 
-                let phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
-                let phoneNumber2 = phoneNumber.replacingOccurrences(of: "(", with: "")
-                let phoneNumber3 = phoneNumber2.replacingOccurrences(of: ")", with: "")
-                let phoneNumber4 = phoneNumber3.replacingOccurrences(of: "-", with: "")
+                var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+                phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
+                phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
+                phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
                 
                 let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
                 tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
                 Phone.sharedInstance.setDelegate(plivoVC!)
                 CallKitInstance.sharedInstance.callUUID = UUID()
-                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber4)
+                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
             }
         }
         else
@@ -398,16 +398,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     let contactDetails: APContact? = phoneContacts[Int(indexPath.row)]
                     let apPhoneObj: APPhone? = contactDetails?.phones?[0]
                     
-                    let phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
-                    let phoneNumber2 = phoneNumber.replacingOccurrences(of: "(", with: "")
-                    let phoneNumber3 = phoneNumber2.replacingOccurrences(of: ")", with: "")
-                    let phoneNumber4 = phoneNumber3.replacingOccurrences(of: "-", with: "")
+                    var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+                    phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
+                    phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
+                    phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
                     
                     let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
                     tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
                     Phone.sharedInstance.setDelegate(plivoVC!)
                     CallKitInstance.sharedInstance.callUUID = UUID()
-                    plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber4)
+                    plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
                 }
                 else
                 {
@@ -424,16 +424,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 let contactDetails: APContact? = phoneContacts[Int(indexPath.row)]
                 let apPhoneObj: APPhone? = contactDetails?.phones?[0]
                 
-                let phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
-                let phoneNumber2 = phoneNumber.replacingOccurrences(of: "(", with: "")
-                let phoneNumber3 = phoneNumber2.replacingOccurrences(of: ")", with: "")
-                let phoneNumber4 = phoneNumber3.replacingOccurrences(of: "-", with: "")
+                var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+                 phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
+                 phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
+                 phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
 
                 let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
                 tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
                 Phone.sharedInstance.setDelegate(plivoVC!)
                 CallKitInstance.sharedInstance.callUUID = UUID()
-                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber4)
+                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
             }
         }
     }
@@ -577,12 +577,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 Phone.sharedInstance.setDelegate(plivoVC!)
                 CallKitInstance.sharedInstance.callUUID = UUID()
                 
-                let phoneNumber: String = (contactNumber as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length:contactNumber.characters.count))
-                let phoneNumber2 = phoneNumber.replacingOccurrences(of: "(", with: "")
-                let phoneNumber3 = phoneNumber2.replacingOccurrences(of: ")", with: "")
-                let phoneNumber4 = phoneNumber3.replacingOccurrences(of: "-", with: "")
+                var phoneNumber: String = (contactNumber as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length:contactNumber.characters.count))
+                phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
+                phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
+                phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
                 
-                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber4)
+                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
             }
         }
     
