@@ -31,6 +31,10 @@
 /* Whether the call is muted */
 @property (nonatomic, readonly) BOOL muted;
 
+/* Whether the call is onHold */
+@property (nonatomic, readonly) BOOL isOnHold;
+
+
 /* State of the call */
 @property (nonatomic, readwrite) PlivoCallState state;
 

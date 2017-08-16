@@ -364,6 +364,8 @@
  */
 - (void)onOutgoingCallAnswered:(PlivoOutgoing *)call
 {
+    NSLog(@"Call ID is: %@",call.callId);
+    
     [FIRAnalytics logEventWithName:@"onOutgoingCallAnswered"
                         parameters:@{
                                      @"CallId": [NSString stringWithFormat:@"%@",call.callId],

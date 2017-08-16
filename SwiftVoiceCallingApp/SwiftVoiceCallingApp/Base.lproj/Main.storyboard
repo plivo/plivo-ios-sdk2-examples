@@ -25,14 +25,14 @@
                                 <rect key="frame" x="71" y="81" width="185" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SIP Username" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="q2k-bI-UJj">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="snsone170720062259" placeholder="SIP Username" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="q2k-bI-UJj">
                                 <rect key="frame" x="32" y="186" width="263" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="BXW-Ug-J7Y">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="12345" placeholder="Password" textAlignment="center" minimumFontSize="17" background="TextFieldImage" translatesAutoresizingMaskIntoConstraints="NO" id="BXW-Ug-J7Y">
                                 <rect key="frame" x="32" y="251" width="263" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -115,19 +115,40 @@ typedef enum
  */
 - (void)login:(NSString *)username AndPassword:(NSString *)password;
 
+/*  
+ 
+    This method is used to register the device token for VOIP push notifications.
+    @param token
+    Register for Push Notifications and get the device token from APNS and tell the PlivoVoiceKit about the push token
+
+ */
 - (void)registerToken:(NSData*)token;
 
+/* 
+    @param pushInfo is NSDictionary object, this is forwarded by the apple push notification.
+    When the push arrives below Pushkit's delegate method will be called.
+ 
+ */
 - (void)relayVoipPushNotification:(NSDictionary *)pushinfo;
 
+/*
+  Following three apis required for the apple Callkit integration.
+  Configure audio session before the call.
+ */
+- (void)configureAudioDevice;
+
+/*
+ Depending on the call status(Hold or Active) you’ll want to start, or stop processing the call’s audio.
+ */
 - (void)startAudioDevice;
 
+/*
+ Depending on the call status(Hold or Active) you’ll want to start, or stop processing the call’s audio.
+ */
 - (void)stopAudioDevice;
-
-- (void)configureAudioDevice;
 
 /* Send Keep Alive packet while in background mode
  */
-
 - (void)keepAlive;
 
 /* Unregisters an endpoint

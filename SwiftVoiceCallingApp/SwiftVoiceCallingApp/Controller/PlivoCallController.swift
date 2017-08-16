@@ -10,9 +10,9 @@ import UIKit
 import CallKit
 import AVFoundation
 import GoogleSignIn
-import FirebaseAnalytics
 import Crashlytics
 import PlivoVoiceKit
+import ReachabilitySwift
 
 class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate {
 
@@ -40,6 +40,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     var isSpeakerOn: Bool = false
 
+    let reachability = Reachability()!
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -102,12 +104,40 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         // if media services are reset, we need to rebuild our audio chain
         NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleMediaServerReset), name: NSNotification.Name.AVAudioSessionMediaServicesWereReset, object: AVAudioSession.sharedInstance())
         NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.appWillTerminate), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
+        
+        //To check Network Reachability
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
+        do{
+            try reachability.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+    }
+    
+    func reachabilityChanged(note: Notification) {
+        
+        let reachability = note.object as! Reachability
+        
+        if reachability.isReachable {
+            if reachability.isReachableViaWiFi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        } else {
+            print("Network not reachable")
+            
+            UtilClass.makeToast(kNOINTERNETMSG)
+
+            self.isItUserAction = true
+            self.performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
+
+        }
     }
     
     //To unregister with SIP Server
     
     func unRegisterSIPEndpoit() {
-        FIRAnalytics.logEvent(withName: "SIPEndpointUnregister", parameters: nil)
         Phone.sharedInstance.logout()
     }
     
@@ -117,14 +147,17 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onLogin delegate implementation.
      */
     func onLogin() {
+        
         DispatchQueue.main.async(execute: {() -> Void in
+            
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINSUCCESS)
             Crashlytics.sharedInstance().setUserName(UserDefaults.standard.object(forKey: kUSERNAME) as? String)
             let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             appDelegate?.voipRegistration()
+            
         })
-        //NSLog(@"Ready to make a call");
+        print("Ready to make a call");
     }
     
     /**
@@ -134,7 +167,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         DispatchQueue.main.async(execute: {() -> Void in
             UtilClass.makeToast("408:Timedout Error")
             UtilClass.hideToastActivity()
-            //NSLog(@"%@",kLOGINFAILMSG);
+            print("%@",kLOGINFAILMSG);
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
@@ -159,6 +192,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 self.performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
             }
             
+            
             UtilClass.makeToast(kLOGOUTSUCCESS)
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
@@ -166,6 +200,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             UserDefaults.standard.synchronize()
             GIDSignIn.sharedInstance().signOut()
             UtilClass.hideToastActivity()
+            
             let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
             Phone.sharedInstance.setDelegate(loginVC!)
@@ -185,8 +220,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             case AVAudioSessionRecordPermission.granted:
                
                 print("Permission granted")
-            
-                FIRAnalytics.logEvent(withName: "OnIncomingCall", parameters: ["CallId": "\(incoming.callId)" as NSObject, "Account Id": "\(incoming.accId)" as NSObject, "From": "\(incoming.fromUser)" as NSObject])
                 
                 DispatchQueue.main.async(execute: {() -> Void in
                     self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
@@ -203,16 +236,14 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 //Added by Siva on Tue 11th, 2017
                 if !(incCall != nil) && !(outCall != nil) {
                     /* log it */
-                    //NSLog(@"%@",[[NSString alloc]initWithFormat:@"Incoming Call from %@", incoming.fromContact]);
+                    print("Incoming Call from %@", incoming.fromContact);
                     /* assign incCall var */
                     incCall = incoming
                     outCall = nil
                     CallKitInstance.sharedInstance.callUUID = UUID()
-                    //NSLog(@"Incoming Call UUID IS %@",[CallKitInstance sharedInstance].callUUID);
                     reportIncomingCall(from: incoming.fromUser, with: CallKitInstance.sharedInstance.callUUID!)
                 }
                 else {
-                    FIRAnalytics.logEvent(withName: "OnIncomingCallReject", parameters: ["CallId": "\(incoming.callId)" as NSObject, "Account Id": "\(incoming.accId)" as NSObject, "From": "\(incoming.fromUser)" as NSObject])
                     /*
                      * Reject the call when we already have active ongoing call
                      */
@@ -242,10 +273,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     func onIncomingCallHangup(_ incoming: PlivoIncoming) {
-        //NSLog(@"- Incoming call ended");
-        FIRAnalytics.logEvent(withName: "onIncomingCallHangup", parameters: ["CallId": "\(incoming.callId)" as NSObject, "Account Id": "\(incoming.accId)" as NSObject, "From": "\(incoming.fromUser)" as NSObject])
+        print("- Incoming call ended");
         if (incCall != nil) {
-            //NSLog(@"Hangup Incoming call : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
+            self.isItUserAction = true
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
             incCall = nil
         }
@@ -255,9 +285,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onIncomingCallRejected implementation.
      */
     func onIncomingCallRejected(_ incoming: PlivoIncoming) {
-        FIRAnalytics.logEvent(withName: "onIncomingCallRejected", parameters: ["CallId": "\(incoming.callId)" as NSObject, "Account Id": "\(incoming.accId)" as NSObject, "From": "\(incoming.fromUser)" as NSObject])
         /* log it */
-        //NSLog(@"Incoming call Rejected : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
+        self.isItUserAction = true
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
         incCall = nil
     }
@@ -266,8 +295,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onOutgoingCallAnswered delegate implementation
      */
     func onOutgoingCallAnswered(_ call: PlivoOutgoing) {
-        FIRAnalytics.logEvent(withName: "onOutgoingCallAnswered", parameters: ["CallId": "\(call.callId)" as NSObject, "Account Id": "\(call.accId)" as NSObject])
-        //NSLog(@"- On outgoing call answered");
+        
+        print("Call id in Answerd is:")
+        print(call.callId)
+        
+        print("- On outgoing call answered");
         DispatchQueue.main.async(execute: {() -> Void in
             self.muteButton.isEnabled = true
             self.keypadButton.isEnabled = true
@@ -289,22 +321,31 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     func onOutgoingCallHangup(_ call: PlivoOutgoing) {
-        FIRAnalytics.logEvent(withName: "onOutgoingCallHangup", parameters: ["CallId": "\(call.callId)" as NSObject, "Account Id": "\(call.accId)" as NSObject])
-        //NSLog(@"Hangup call : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
+        
+        print("Call id in Hangup is:")
+        print(call.callId)
+
+        self.isItUserAction = true
+
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
     }
     
     func onCalling(_ call: PlivoOutgoing) {
-        FIRAnalytics.logEvent(withName: "onOutgoingCallonCalling", parameters: nil)
-        //NSLog(@"On Caling");
+        
+        print("Call id in onCalling is:")
+        print(call.callId)
+
+        print("On Caling");
     }
     
     /**
      * onOutgoingCallRinging delegate implementation.
      */
     func onOutgoingCallRinging(_ call: PlivoOutgoing) {
-        FIRAnalytics.logEvent(withName: "onOutgoingCallRinging", parameters: ["Event": "onOutgoingCallRinging" as NSObject, "CallId": "\(call.callId)" as NSObject])
-        //NSLog(@"- On outgoing call ringing");
+        
+        print("Call id in Ringing is:")
+        print(call.callId)
+
         DispatchQueue.main.async(execute: {() -> Void in
             self.callStateLabel.text = "Ringing..."
         })
@@ -314,8 +355,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onOutgoingCallrejected delegate implementation.
      */
     func onOutgoingCallRejected(_ call: PlivoOutgoing) {
-        FIRAnalytics.logEvent(withName: "onOutgoingCallRejected", parameters: ["CallId": "\(call.callId)" as NSObject, "Account Id": "\(call.accId)" as NSObject])
-        //NSLog(@"Outgoing call Rejected : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
+        
+        print("Call id in Rejected is:")
+        print(call.callId)
+
+        self.isItUserAction = true
+
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
     }
     
@@ -323,8 +368,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onOutgoingCallInvalid delegate implementation.
      */
     func onOutgoingCallInvalid(_ call: PlivoOutgoing) {
-        FIRAnalytics.logEvent(withName: "onOutgoingCallInvalid", parameters: ["CallId": "\(call.callId)" as NSObject, "Account Id": "\(call.accId)" as NSObject])
-        //NSLog(@"- On outgoing call invalid");
+        
+        print("Call id in Invalid is:")
+        print(call.callId)
+
+        self.isItUserAction = true
+
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
     }
     
@@ -337,16 +386,15 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             switch AVAudioSession.sharedInstance().recordPermission() {
                 
             case AVAudioSessionRecordPermission.granted:
-                //NSLog(@"Permission granted");
-                FIRAnalytics.logEvent(withName: "performStartCallActionWithUUID", parameters: ["NSUUID": uuid.uuidString as NSObject, "Handle": handle as NSObject])
+                print("Permission granted");
                 hideActiveCallView()
                 unhideActiveCallView()
-                //NSLog(@"Outgoing call uuid is: %@", uuid);
+                print("Outgoing call uuid is: %@", uuid);
                 CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
                 CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
-                //NSLog(@"provider:performStartCallActionWithUUID:");
+                print("provider:performStartCallActionWithUUID:");
                 if uuid == nil || handle == nil {
-                    //NSLog(@"UUID or Handle nil");
+                    print("UUID or Handle nil");
                     return
                 }
                 
@@ -361,13 +409,13 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 let transaction = CXTransaction(action:startCallAction)
                 CallKitInstance.sharedInstance.callKitCallController?.request(transaction, completion: {(_ error: Error?) -> Void in
                     if error != nil {
-                        //NSLog(@"StartCallAction transaction request failed: %@", [error localizedDescription]);
+                        print("StartCallAction transaction request failed: %@", error.debugDescription);
                         DispatchQueue.main.async(execute: {() -> Void in
                             UtilClass.makeToast(kSTARTACTIONFAILED)
                         })
                     }
                     else {
-                        //NSLog(@"StartCallAction transaction request successful");
+                        print("StartCallAction transaction request successful");
                         let callUpdate = CXCallUpdate()
                         callUpdate.remoteHandle = callHandle
                         callUpdate.supportsDTMF = true
@@ -403,7 +451,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func reportIncomingCall(from: String, with uuid: UUID) {
-        FIRAnalytics.logEvent(withName: "reportIncomingCallFrom", parameters: ["NSUUID": uuid.uuidString as NSObject, "from": from as NSObject])
+        
         let callHandle = CXHandle(type: .generic, value: from)
         let callUpdate = CXCallUpdate()
         callUpdate.remoteHandle = callHandle
@@ -413,49 +461,24 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         callUpdate.supportsUngrouping = false
         callUpdate.hasVideo = false
         
-        //For testing added on May 30th, 2017
-//        if (incCall != nil) {
-//            CallKitInstance.sharedInstance.callUUID = uuid
-//            incCall?.answer()
-//        }
-//        outCall = nil
-//        
-//        DispatchQueue.main.async(execute: {() -> Void in
-//            self.unhideActiveCallView()
-//            self.muteButton.isEnabled = true
-//            self.holdButton.isEnabled = true
-//            self.keypadButton.isEnabled = true
-//            if !(self.timer != nil) {
-//                self.timer = MZTimerLabel(label: self.callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
-//                self.timer?.timeFormat = "HH:mm:ss"
-//                self.timer?.start()
-//            }
-//            else {
-//                self.timer?.start()
-//            }
-//        })
-        
         CallKitInstance.sharedInstance.callKitProvider?.reportNewIncomingCall(with: uuid, update: callUpdate, completion: {(_ error: Error?) -> Void in
             if error != nil {
-                //NSLog(@"Failed to report incoming call successfully: %@.", [error localizedDescription]);
+                print("Failed to report incoming call successfully: %@", error.debugDescription);
                 //[UtilityClass makeToast:kREQUESTFAILED];
                 Phone.sharedInstance.stopAudioDevice()
                 if (self.incCall != nil) {
                     if self.incCall?.state != Ongoing {
-                        FIRAnalytics.logEvent(withName: "IncomingCallReject", parameters: ["CallUUID": uuid.uuidString as NSObject, "from": from as NSObject])
-                        //NSLog(@"Incoming call - Reject");
+                        print("Incoming call - Reject");
                         self.incCall?.reject()
                     }
                     else {
-                        FIRAnalytics.logEvent(withName: "IncomingCallHangup", parameters: ["CallUUID": uuid.uuidString as NSObject, "from": from as NSObject])
-                        //NSLog(@"Incoming call - Hangup");
+                        print("Incoming call - Hangup");
                         self.incCall?.hangup()
                     }
                     self.incCall = nil
                 }
             }
             else {
-                FIRAnalytics.logEvent(withName: "IncomingCallSuccessfullyReported.", parameters: nil)
                 print("Incoming call successfully reported.");
                 Phone.sharedInstance.configureAudioSession()
             }
@@ -465,45 +488,46 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     func performEndCallAction(with uuid: UUID) {
         
         DispatchQueue.main.async(execute: {() -> Void in
-            //NSLog(@"performEndCallActionWithUUID: %@",uuid);
-            if uuid == nil {
-                //NSLog(@"UUID is null return from here");
-                return
-            }
+            
+            print("performEndCallActionWithUUID: %@",uuid);
+
             let endCallAction = CXEndCallAction(call: uuid)
             let trasanction = CXTransaction(action:endCallAction)
             CallKitInstance.sharedInstance.callKitCallController?.request(trasanction, completion: {(_ error: Error?) -> Void in
                 if error != nil {
-                    //NSLog(@"EndCallAction transaction request failed: %@", [error localizedDescription]);
+                    print("EndCallAction transaction request failed: %@", error.debugDescription);
+                    
                     DispatchQueue.main.async(execute: {() -> Void in
-                        //[UtilityClass makeToast:kREQUESTFAILED];
+                        
                         Phone.sharedInstance.stopAudioDevice()
+                        
                         if (self.incCall != nil) {
                             if self.incCall?.state != Ongoing {
-                                FIRAnalytics.logEvent(withName: "IncomingCallReject", parameters: ["CallUUID": uuid.uuidString as NSObject, "from": "\(self.incCall!.fromUser)" as NSObject])
-                                //NSLog(@"Incoming call - Reject");
+                                print("Incoming call - Reject");
                                 self.incCall?.reject()
                             }
                             else {
-                                FIRAnalytics.logEvent(withName: "IncomingCallHangup", parameters: ["CallUUID": uuid.uuidString as NSObject, "from": "\(self.incCall!.fromUser)" as NSObject])
-                                //NSLog(@"Incoming call - Hangup");
+                                print("Incoming call - Hangup");
                                 self.incCall?.hangup()
                             }
                             self.incCall = nil
                         }
+                        
                         if (self.outCall != nil) {
-                            FIRAnalytics.logEvent(withName: "OutgoingCallHangup", parameters: ["CallUUID": uuid.uuidString as NSObject])
-                            //NSLog(@"Outgoing call - Hangup");
+                            print("Outgoing call - Hangup");
                             self.outCall?.hangup()
                             self.outCall = nil
                         }
+                        
+                        self.hideActiveCallView()
+                        
                         self.tabBarController?.tabBar.isHidden = false
                         self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
                     })
                 }
                 else {
-                    FIRAnalytics.logEvent(withName: "EndCallActionTransactionRequestSuccessful", parameters: nil)
-                    //NSLog(@"EndCallAction transaction request successful");
+                    
+                    print("EndCallAction transaction request successful");
                 }
             })
         })
@@ -513,16 +537,16 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     // MARK: - CXCallObserverDelegate
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         if call == nil || call.hasEnded == true {
-            //NSLog(@"CXCallState : Disconnected");
+            print("CXCallState : Disconnected");
         }
         if call.isOutgoing == true && call.hasConnected == false {
-            //NSLog(@"CXCallState : Dialing");
+            print("CXCallState : Dialing");
         }
         if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false && call != nil {
-            //NSLog(@"CXCallState : Incoming");
+            print("CXCallState : Incoming");
         }
         if call.hasConnected == true && call.hasEnded == false {
-            //NSLog(@"CXCallState : Connected");
+            print("CXCallState : Connected");
         }
     }
     
@@ -530,29 +554,28 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     // MARK: - CXProvider Handling
 
     func providerDidReset(_ provider: CXProvider) {
-        //NSLog(@"ProviderDidReset");
+        print("ProviderDidReset");
     }
     
     func providerDidBegin(_ provider: CXProvider) {
-        //NSLog(@"providerDidBegin");
+        print("providerDidBegin");
     }
     
     func provider(_ provider: CXProvider, didActivate audioSession: AVAudioSession) {
-        //NSLog(@"provider:didActivateAudioSession");
+        print("provider:didActivateAudioSession");
         Phone.sharedInstance.startAudioDevice()
     }
     
     func provider(_ provider: CXProvider, didDeactivate audioSession: AVAudioSession) {
-        //NSLog(@"provider:didDeactivateAudioSession:");
+        print("provider:didDeactivateAudioSession:");
     }
     
     func provider(_ provider: CXProvider, timedOutPerforming action: CXAction) {
-        //NSLog(@"provider:timedOutPerformingAction:");
+        print("provider:timedOutPerformingAction:");
     }
     
     func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
-        //NSLog(@"provider:performStartCallAction:");
-        FIRAnalytics.logEvent(withName: "PerformStartCallAction", parameters: nil)
+        print("provider:performStartCallAction:");
         Phone.sharedInstance.configureAudioSession()
         //Set extra headers
         let extraHeaders: [AnyHashable: Any] = [
@@ -561,7 +584,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         ]
         
         let dest: String = action.handle.value
-        //NSLog(@"%@",[[NSString alloc]initWithFormat:@"- Make a call to '%@'", dest]);
         //Make the call
         outCall = Phone.sharedInstance.call(withDest: dest, andHeaders: extraHeaders)
         if (outCall != nil) {
@@ -603,8 +625,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
-        FIRAnalytics.logEvent(withName: "performAnswerCallAction", parameters: nil)
-        //NSLog(@"provider:performAnswerCallAction:");
+        print("provider:performAnswerCallAction:");
         //Answer the call
         if (incCall != nil) {
             CallKitInstance.sharedInstance.callUUID = action.callUUID
@@ -629,8 +650,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func provider(_ provider: CXProvider, perform action: CXPlayDTMFCallAction) {
-        //NSLog(@"provider:performPlayDTMFCallAction:");
-        FIRAnalytics.logEvent(withName: "performPlayDTMFCallAction", parameters: nil)
+        print("provider:performPlayDTMFCallAction:");
         let dtmfDigits: String = action.digits
         if (incCall != nil) {
             incCall?.sendDigits(dtmfDigits)
@@ -642,36 +662,39 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
-        //NSLog(@"%@ -- %@",[CallKitInstance sharedInstance].callUUID,action.callUUID);
-        if !isItGSMCall || isItUserAction {
-            FIRAnalytics.logEvent(withName: "performEndCallAction", parameters: nil)
-            //NSLog(@"provider:performEndCallAction:");
-            Phone.sharedInstance.stopAudioDevice()
-            if (incCall != nil) {
-                if incCall?.state != Ongoing {
-                    //NSLog(@"Incoming call - Reject");
-                    incCall?.reject()
+
+        DispatchQueue.main.async(execute: {() -> Void in
+            
+            if !self.isItGSMCall || self.isItUserAction {
+            
+                print("provider:performEndCallAction:");
+                
+                Phone.sharedInstance.stopAudioDevice()
+                if (self.incCall != nil) {
+                    if self.incCall?.state != Ongoing {
+                        print("Incoming call - Reject");
+                        self.incCall?.reject()
+                    }
+                    else {
+                        print("Incoming call - Hangup");
+                        self.incCall?.hangup()
+                    }
+                    self.incCall = nil
                 }
-                else {
-                    //NSLog(@"Incoming call - Hangup");
-                    incCall?.hangup()
+                if (self.outCall != nil) {
+                    print("Outgoing call - Hangup");
+                    self.outCall?.hangup()
+                    self.outCall = nil
                 }
-                incCall = nil
+                action.fulfill()
+                self.isItUserAction = false
+                self.tabBarController?.tabBar.isHidden = false
+                self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
             }
-            if (outCall != nil) {
-                //NSLog(@"Outgoing call - Hangup");
-                outCall?.hangup()
-                outCall = nil
+            else {
+                print("GSM - provider:performEndCallAction:");
             }
-            action.fulfill()
-            isItUserAction = false
-            tabBarController?.tabBar.isHidden = false
-            tabBarController?.selectedViewController = tabBarController?.viewControllers?[1]
-        }
-        else {
-            FIRAnalytics.logEvent(withName: "performEndCallAction", parameters: nil)
-            //NSLog(@"GSM - provider:performEndCallAction:");
-        }
+        })
     }
     
     // MARK: - Handling IBActions
@@ -680,9 +703,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         if UtilClass.isNetworkAvailable(){
 
         switch AVAudioSession.sharedInstance().recordPermission() {
+            
         case AVAudioSessionRecordPermission.granted:
+            
             if (!(userNameTextField.text! == "SIP URI or Phone Number") && !UtilClass.isEmpty(userNameTextField.text!)) || !UtilClass.isEmpty(pad!.digitsTextField.text!) || (incCall != nil) || (outCall != nil) {
-                FIRAnalytics.logEvent(withName: "MakeCallButtonTapped", parameters: nil)
+                
                 let img: UIImage? = (sender as AnyObject).image(for: .normal)
                 let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
                 
@@ -709,10 +734,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                     CallKitInstance.sharedInstance.callUUID = UUID()
                     /* outgoing call */
                     performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: handle)
+                    
                 }
                 else if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "EndCall.png")!)))! {
 
-                    FIRAnalytics.logEvent(withName: "EndCallButtonTapped", parameters: nil)
                     isItUserAction = true
                     performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
                 }
@@ -743,7 +768,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * Hide Hold/Unhold button
      */
     @IBAction func keypadButtonTapped(_ sender: Any) {
-        FIRAnalytics.logEvent(withName: "KeypadButtonTapped", parameters: nil)
         UserDefaults.standard.set(true, forKey: "Keypad Enabled")
         UserDefaults.standard.synchronize()
         holdButton.isHidden = true
@@ -772,7 +796,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     @IBAction func hideButtonTapped(_ sender: Any) {
-        FIRAnalytics.logEvent(withName: "HideButtonTapped", parameters: nil)
         UserDefaults.standard.set(false, forKey: "Keypad Enabled")
         UserDefaults.standard.synchronize()
         holdButton.isHidden = false
@@ -802,7 +825,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "Unmute.png")!)))! {
 
-            FIRAnalytics.logEvent(withName: "MuteButtonTapped", parameters: nil)
             DispatchQueue.main.async(execute: {() -> Void in
                 self.muteButton.setImage(UIImage(named: "MuteIcon.png"), for: .normal)
             })
@@ -815,7 +837,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
         else {
             
-            FIRAnalytics.logEvent(withName: "UnmuteButtonTapped", parameters: nil)
             DispatchQueue.main.async(execute: {() -> Void in
                 self.muteButton.setImage(UIImage(named: "Unmute.png"), for: .normal)
             })
@@ -839,7 +860,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "UnholdIcon.png")!)))! {
 
-            FIRAnalytics.logEvent(withName: "HoldButtonTapped", parameters: nil)
             DispatchQueue.main.async(execute: {() -> Void in
                 self.holdButton.setImage(UIImage(named: "HoldIcon.png"), for: .normal)
             })
@@ -854,7 +874,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
         else {
             
-            FIRAnalytics.logEvent(withName: "UnholdButtonTapped", parameters: nil)
             DispatchQueue.main.async(execute: {() -> Void in
                 self.holdButton.setImage(UIImage(named: "UnholdIcon.png"), for: .normal)
             })
@@ -962,38 +981,39 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     func handleInterruption(_ notification: Notification)
     {
         
-        guard let userInfo = notification.userInfo,
-            let interruptionTypeRawValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-            let interruptionType = AVAudioSessionInterruptionType(rawValue: interruptionTypeRawValue) else {
-                return
-        }
-        
-        switch interruptionType {
-            
-        case .began:
-            
-            self.isItGSMCall = true
-            Phone.sharedInstance.stopAudioDevice()
-            print("----------AVAudioSessionInterruptionTypeBegan-------------")
-            FIRAnalytics.logEvent(withName: "AVAudioSessionInterruptionTypeBegan", parameters: nil)
-            break
-            
-        case .ended:
-            
-            self.isItGSMCall = false
-            
-            // make sure to activate the session
-            let error: Error? = nil
-            try? AVAudioSession.sharedInstance().setActive(true)
-            if nil != error {
-                print("AVAudioSession set active failed with error")
-                Phone.sharedInstance.startAudioDevice()
+        if self.incCall != nil || self.outCall != nil
+        {
+            guard let userInfo = notification.userInfo,
+                let interruptionTypeRawValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+                let interruptionType = AVAudioSessionInterruptionType(rawValue: interruptionTypeRawValue) else {
+                    return
             }
-            print("----------AVAudioSessionInterruptionTypeEnded-------------")
-            FIRAnalytics.logEvent(withName: "AVAudioSessionInterruptionTypeEnded", parameters: nil)
-            break
+            
+            switch interruptionType {
+                
+            case .began:
+                
+                self.isItGSMCall = true
+                Phone.sharedInstance.stopAudioDevice()
+                print("----------AVAudioSessionInterruptionTypeBegan-------------")
+                break
+                
+            case .ended:
+                
+                self.isItGSMCall = false
+                
+                // make sure to activate the session
+                let error: Error? = nil
+                try? AVAudioSession.sharedInstance().setActive(true)
+                if nil != error {
+                    print("AVAudioSession set active failed with error")
+                    Phone.sharedInstance.startAudioDevice()
+                }
+                print("----------AVAudioSessionInterruptionTypeEnded-------------")
+                break
+            }
+            
         }
-        
     }
     
     func handleRouteChange(_ notification: Notification)
@@ -1002,11 +1022,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func handleMediaServerReset(_ notification: Notification) {
-        //NSLog(@"Media server has reset");
+        print("Media server has reset");
         // rebuild the audio chain
         Phone.sharedInstance.configureAudioSession()
         Phone.sharedInstance.startAudioDevice()
-        FIRAnalytics.logEvent(withName: "HandleMediaServerReset", parameters: nil)
     }
     
     /*
@@ -1016,7 +1035,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func appWillTerminate() {
         GIDSignIn.sharedInstance().signOut()
-        FIRAnalytics.logEvent(withName: "AppWillTerminate", parameters: nil)
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
     }
     
@@ -1039,7 +1057,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func getDtmfText(_ dtmfText: String, withAppendStirng appendText: String) {
-        FIRAnalytics.logEvent(withName: "DTMFTextHandling", parameters: nil)
         if (incCall != nil) {
             incCall?.sendDigits(dtmfText)
             userNameTextField.text = appendText

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import FirebaseAnalytics
 import APAddressBook
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
@@ -593,7 +592,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let yesButton = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
             //Handle your yes please button action here
-            FIRAnalytics.logEvent(withName: "Logout", parameters: ["Class": "Contacts" as NSObject])
             UtilClass.makeToastActivity()
             let plivoVC: PlivoCallController? = (self.tabBarController?.viewControllers?[2] as? PlivoCallController)
             Phone.sharedInstance.setDelegate(plivoVC!)

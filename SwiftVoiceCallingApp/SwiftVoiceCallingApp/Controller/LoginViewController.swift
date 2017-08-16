@@ -9,7 +9,6 @@
 
 import UIKit
 import GoogleSignIn
-import FirebaseAnalytics
 import Crashlytics
 import Fabric
 
@@ -91,7 +90,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
                 view.isUserInteractionEnabled = false
                 UtilClass.makeToastActivity()
                 Phone.sharedInstance.login(withUserName: userNameTextField.text!, andPassword: passwordTextField.text!)
-                FIRAnalytics.logEvent(withName: "Login", parameters: ["Username": userNameTextField.text! as NSObject])
             }
             else {
                 UtilClass.makeToast(kNOINTERNETMSG)
@@ -125,7 +123,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
                 UserDefaults.standard.set(self.passwordTextField.text, forKey: kPASSWORD)
                 UserDefaults.standard.synchronize()
                 Crashlytics.sharedInstance().setUserName(self.userNameTextField.text)
-                FIRAnalytics.logEvent(withName: "LoginSuccess", parameters: ["Type": "Direct" as NSObject, "Username": self.userNameTextField.text! as NSObject])
             }
             
             UtilClass.setUserAuthenticationStatus(true)
@@ -162,7 +159,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINFAILMSG)
             self.view.isUserInteractionEnabled = true
-            FIRAnalytics.logEvent(withName: "LoginFailed", parameters: ["Username": kUSERNAME as NSObject])
         })
     }
     
@@ -170,7 +166,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
     
     @IBAction func googleloginTapped(_ sender: Any) {
         
-        FIRAnalytics.logEvent(withName: "GoogleSignIn", parameters: nil)
         self.view.isUserInteractionEnabled = false
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().delegate = self
@@ -204,7 +199,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         if(user.profile != nil)
         {
             if (user.profile.email as NSString).range(of: "@plivo.com").location == NSNotFound {
-                FIRAnalytics.logEvent(withName: "InvalidEmail", parameters: nil)
                 GIDSignIn.sharedInstance().signOut()
                 UtilClass.makeToast(kINVALIDEMAIL)
                 self.view.isUserInteractionEnabled = true
@@ -215,12 +209,10 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
                 if !UtilClass.isEmpty(user.profile.email) {
                     UtilClass.makeToastActivity()
                     getSIPEndpointCredentials(user.profile.email)
-                    FIRAnalytics.logEvent(withName: "GoogleSignIn", parameters: ["Name": user.profile.name! as NSObject, "Email": user.profile.email! as NSObject])
                     Crashlytics.sharedInstance().setUserName(user.profile.name)
                     Crashlytics.sharedInstance().setUserEmail(user.profile.email)
                 }
                 else {
-                    FIRAnalytics.logEvent(withName: "InvalidEmail", parameters: nil)
                     GIDSignIn.sharedInstance().signOut()
                     UtilClass.makeToast(kINVALIDEMAIL)
                     self.view.isUserInteractionEnabled = true
@@ -250,7 +242,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
         }
         else
         {
-            FIRAnalytics.logEvent(withName: "JsonResponseFail", parameters: ["Error": kNOINTERNETMSG as NSObject])
             UtilClass.makeToast(kNOINTERNETMSG)
         }
     }
@@ -289,7 +280,6 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate, GIDSignInDeleg
             print("Username in G+ \(String(describing: UserDefaults.standard.object(forKey: kUSERNAME)))")
             print("Password in G+ \(String(describing: UserDefaults.standard.object(forKey: kPASSWORD)))")
             Phone.sharedInstance.login(withUserName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, andPassword: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
-            FIRAnalytics.logEvent(withName: "JsonResponseSuccess", parameters: nil)
             
         }
     }
