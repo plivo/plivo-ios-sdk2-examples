@@ -62,6 +62,8 @@ It's easy to install the Voice framework if you manage your dependencies using C
         a. Make sure “Push Notifications” and “Background Modes” are set to on.
         b. Within “Background Modes” enable both “Audio, AirPlay and Picture in Picture” and “Voice over IP” settings.
 
+![plivo-websdk-2.0-example](ReadMeImages/image0.png)
+
       2. Create VoIP Service Certificate
         
         Creating a VoIP service certificate requires two steps:
@@ -73,22 +75,41 @@ It's easy to install the Voice framework if you manage your dependencies using C
             
             a. Open Keychain access by selecting “Open Keychain access” in utilities folder. You can select that as shown in the image.
 
+![plivo-websdk-2.0-example](ReadMeImages/image13.png)
+
             b. Once Keychain access opens click on “Keychain Access” from the Menu bar and select the following:  Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority .
+            
+![plivo-websdk-2.0-example](ReadMeImages/image12.png)
+
             c. Give your CSR a helpful descriptive name, such as iosplivoapp.certSigningRequest, and choose the location to save it on your hard drive, then click Save.
+
+![plivo-websdk-2.0-example](ReadMeImages/image4.png)
 
             d. Next, visit the  Apple Developer portal  and make sure that your App ID has the “Push Notifications” service enabled.
             e. Visit certificates section in  Apple Developer portal  upload .csr file and create certificate.
 
+![plivo-websdk-2.0-example](ReadMeImages/image8.png)
+
+![plivo-websdk-2.0-example](ReadMeImages/image1.png)
+
             f. Create a corresponding Provisioning Profile for your app ID and create an  Apple VoIP Services Certificate  for this app.
 
+![plivo-websdk-2.0-example](ReadMeImages/image11.png)
 
       3. Create a Push Credential with your VoIP Service Certificate
       
           Once you have generated the VoIP Services Certificate, you will need to update it in Plivo dashboard so that Plivo can send push notifications to your app on your behalf.
           a. Export your VoIP Service Certificate as a .p12 file from Keychain Access.
 
+![plivo-websdk-2.0-example](ReadMeImages/image7.png)
+
+![plivo-websdk-2.0-example](ReadMeImages/image10.png)
+
+![plivo-websdk-2.0-example](ReadMeImages/image2.png)
+
           You need not enter a password and create the .p12 file by clicking on OK.
 
+![plivo-websdk-2.0-example](ReadMeImages/image6.png)
 
       4. Updating the information in Plivo dashboard
       
@@ -112,6 +133,11 @@ It's easy to install the Voice framework if you manage your dependencies using C
             From the output of the previous command, strip anything outside of "-----BEGIN CERTIFICATE-----" and "-----END CERTIFICATE-----" boundaries and outside of "-----BEGIN RSA PRIVATE KEY-----" and "-----END RSA PRIVATE KEY-----" boundaries.
 
             This text can be pasted into the UI that will be available in the Plivo Dashboard.
+
+![plivo-websdk-2.0-example](ReadMeImages/image5.png)
+
+![plivo-websdk-2.0-example](ReadMeImages/image3.png)
+
 
             Please make sure to select the ‘Sandbox’ mode in case you have generated a sandbox certificate (similar to development mode).
 
