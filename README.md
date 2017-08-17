@@ -47,9 +47,13 @@ Signup and create endpoints with Plivo using below link
 ### <a name="bullet3"></a>3. Run the app
 
 Open `ObjCVoiceCallingApp.xcworkspace` or `SwiftVoiceCallingApp.xcworkspace`. 
+
 Build and run the app. 
+
 Enter sip endpoint username and password. 
+
 After successful login make VoiceCalls. 
+
 
 
 ### <a name="bullet4"></a>4. Plivo iOS SDK V2 with Push Kit integration
@@ -71,8 +75,11 @@ Let us see each of these steps in detail.
 #### Enable VoIP services in your application
         
 You can enable VoIP services from XCode. Select the “ Capabilities” tab and enable the following settings:
+
 a. Make sure “Push Notifications” and “Background Modes” are set to on.
+
 b. Within “Background Modes” enable both “Audio, AirPlay and Picture in Picture” and “Voice over IP” settings.
+
 
 ![plivo-iOSsdk-2.0-example](ReadMeImages/image0.png)
 
@@ -85,7 +92,7 @@ Creating a VoIP service certificate requires two steps:
 ###### Creating the service certificate using the CSR
    
    
-###### Create a Certificate Signing Request(CSR)
+##### Create a Certificate Signing Request(CSR)
 
 Certificate signing request (CSR) is a prerequisite for creating a certificate in the  iOS Dev Center . CSR can be generated using the following steps:
             
