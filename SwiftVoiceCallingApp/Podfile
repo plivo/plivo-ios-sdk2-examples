@@ -3,7 +3,6 @@
 target 'SwiftVoiceCallingApp' do
 	
   use_frameworks!
-  pod 'Google/SignIn'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'APAddressBook/Swift'

@@ -15,9 +15,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     var searchController: UISearchController?
     var contactsSegmentControl: UISegmentedControl?
     var phoneSearchResults = [Any]()
-    var sipSearchResults = [Any]()
     var isSearchControllerActive: Bool = false
-    var sipDetailsArray = [Any]()
     
     let addressBook = APAddressBook()
     
@@ -50,56 +48,20 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         loadContacts()
-        
-        if (UserDefaults.standard.object(forKey: kSIPDETAILS) != nil)
-        {
-            sipDetailsArray = (UserDefaults.standard.object(forKey: kSIPDETAILS) as? [Any])!
-            var tempSipArray = [Any]()
-            
-            for i in 0..<sipDetailsArray.count
-            {
-                let sipDict: [AnyHashable: Any] = sipDetailsArray[i] as! [AnyHashable : Any]
-                
-                if UtilClass.validateEmail(validateEmailString:sipDict["eMail"] as! String) {
-                    tempSipArray.append(sipDict)
-                }
-                
-            }
-            
-            sipDetailsArray = []
-            sipDetailsArray = tempSipArray
-            tempSipArray = []
-
-        }
         
         
         self.contactsTableView.delegate = self
         self.contactsTableView.dataSource = self
         
-        if sipDetailsArray.count > 0
-        {
-            let itemArray: [Any] = ["Phone", "SIP"]
-            // Create UISegmentedControl object to add control UISegment.
-            contactsSegmentControl = UISegmentedControl(items: itemArray)
-            // Set frame for objSegment Control (formate: (x, y, width, height)). where, y = (height of view - height of control).
-            contactsSegmentControl?.frame = CGRect(x: CGFloat(UIScreen.main.bounds.size.width * 0.28125), y: CGFloat(27), width: CGFloat(UIScreen.main.bounds.size.width * 0.4375), height: CGFloat(29))
-            // handle UISegmentedControl action.
-            contactsSegmentControl?.addTarget(self, action: #selector(self.handleSegmentControl(_:)), for: .valueChanged)
-            
-            contactsSegmentControl?.selectedSegmentIndex = 0
-            view.addSubview(contactsSegmentControl!)
-        }
-        else
-        {
-            let label = UILabel(frame: CGRect(x: CGFloat(UIScreen.main.bounds.size.width * 0.28125), y: CGFloat(27), width: CGFloat(UIScreen.main.bounds.size.width * 0.4375), height: CGFloat(29)))
-            label.text = "Contacts"
-            label.textAlignment = .center
-            label.font = UIFont.boldSystemFont(ofSize: CGFloat(17))
-            view.addSubview(label)
-        }
+        
+        let label = UILabel(frame: CGRect(x: CGFloat(UIScreen.main.bounds.size.width * 0.28125), y: CGFloat(27), width: CGFloat(UIScreen.main.bounds.size.width * 0.4375), height: CGFloat(29)))
+        label.text = "Contacts"
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: CGFloat(17))
+        view.addSubview(label)
         
         searchController = UISearchController(searchResultsController: nil)
         searchController?.searchResultsUpdater = self as? UISearchResultsUpdating
@@ -253,101 +215,45 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     {
         if isSearchControllerActive {
             
-            if contactsSegmentControl?.selectedSegmentIndex == 1 {
-                return sipSearchResults.count
+            return phoneSearchResults.count
 
-            }
-            else {
-                return phoneSearchResults.count
-
-            }
         }
         else
         {
-            if (contactsSegmentControl != nil)
-            {
-                if contactsSegmentControl?.selectedSegmentIndex == 0 {
-                    return phoneContacts.count
-                }
-                else {
-                    return sipDetailsArray.count
-                }
-            }
-            else {
-                return phoneContacts.count
-            }
+            return phoneContacts.count
+            
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if isSearchControllerActive {
-            if contactsSegmentControl?.selectedSegmentIndex == 1 {
-                
-                let editprofileIdentifier: String = "CallHistory"
-                var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
-                if cell == nil {
-                    cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
-                }
-                let sipDict: [AnyHashable: Any] = sipSearchResults[indexPath.row] as! [AnyHashable : Any]
-                cell?.textLabel?.text = sipDict["eMail"] as? String
-                cell?.detailTextLabel?.text = sipDict["endPoint"] as? String
-                cell?.imageView?.image = UIImage(named: "TabbarIcon1")
-                return cell!
-                
+        
+        if isSearchControllerActive
+        {
+            
+            let editprofileIdentifier: String = "CallHistory"
+            var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
+            if cell == nil {
+                cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
             }
-            else {
-                
-                let editprofileIdentifier: String = "CallHistory"
-                var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
-                if cell == nil {
-                    cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
-                }
-                let contact: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
-                cell?.textLabel?.text = contactName(contact!)
-                cell?.detailTextLabel?.text = contactPhones(contact!)
-                cell?.imageView?.image = UIImage(named: "TabbarIcon1")
-                return cell!
-            }
+            let contact: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
+            cell?.textLabel?.text = contactName(contact!)
+            cell?.detailTextLabel?.text = contactPhones(contact!)
+            cell?.imageView?.image = UIImage(named: "TabbarIcon1")
+            return cell!
         }
         else {
-            if (contactsSegmentControl != nil) {
-                if contactsSegmentControl?.selectedSegmentIndex == 0 {
-                    let editprofileIdentifier: String = "CallHistory"
-                    var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
-                    if cell == nil {
-                        cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
-                    }
-                    let contact: APContact? = phoneContacts[Int(indexPath.row)]
-                    cell?.textLabel?.text = contactName(contact!)
-                    cell?.detailTextLabel?.text = contactPhones(contact!)
-                    cell?.imageView?.image = UIImage(named: "TabbarIcon1")
-                    return cell!
-                }
-                else {
-                    let editprofileIdentifier: String = "CallHistory"
-                    var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
-                    if cell == nil {
-                        cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
-                    }
-                    let sipDict: [AnyHashable: Any] = sipDetailsArray[indexPath.row] as! [AnyHashable : Any]
-                    cell?.textLabel?.text = sipDict["eMail"] as? String
-                    cell?.detailTextLabel?.text = sipDict["endPoint"] as? String
-                    cell?.imageView?.image = UIImage(named: "TabbarIcon1")
-                    return cell!
-                }
+            
+            let editprofileIdentifier: String = "CallHistory"
+            var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
+            if cell == nil {
+                cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
             }
-            else {
-                let editprofileIdentifier: String = "CallHistory"
-                var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
-                if cell == nil {
-                    cell = UITableViewCell(style: .subtitle, reuseIdentifier: editprofileIdentifier)
-                }
-                let contact: APContact? = phoneContacts[Int(indexPath.row)]
-                cell?.textLabel?.text = contactName(contact!)
-                cell?.detailTextLabel?.text = contactPhones(contact!)
-                cell?.imageView?.image = UIImage(named: "TabbarIcon1")
-                return cell!
-            }
+            let contact: APContact? = phoneContacts[Int(indexPath.row)]
+            cell?.textLabel?.text = contactName(contact!)
+            cell?.detailTextLabel?.text = contactPhones(contact!)
+            cell?.imageView?.image = UIImage(named: "TabbarIcon1")
+            return cell!
+            
         }
     }
     
@@ -356,84 +262,40 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         if isSearchControllerActive
         {
             self.searchController?.dismiss(animated: false, completion: nil)
-        
-            if contactsSegmentControl?.selectedSegmentIndex == 1 {
-                
-                let sipDict: [AnyHashable: Any] = sipSearchResults[indexPath.row] as! [AnyHashable : Any]
-                let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
-                tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
-                Phone.sharedInstance.setDelegate(plivoVC!)
-                CallKitInstance.sharedInstance.callUUID = UUID()
-                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: sipDict["endPoint"] as! String)
-
-                
-            }
-            else
-            {
-                
-                let contactDetails: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
-                
-                let apPhoneObj: APPhone? = contactDetails?.phones?[0]
-                
-                var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
-                phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
-                phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
-                phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
-                
-                let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
-                tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
-                Phone.sharedInstance.setDelegate(plivoVC!)
-                CallKitInstance.sharedInstance.callUUID = UUID()
-                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
-            }
+            
+            
+            let contactDetails: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
+            
+            let apPhoneObj: APPhone? = contactDetails?.phones?[0]
+            
+            var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+            phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
+            phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
+            phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
+            
+            let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
+            tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
+            Phone.sharedInstance.setDelegate(plivoVC!)
+            CallKitInstance.sharedInstance.callUUID = UUID()
+            plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
+            
         }
         else
         {
-            if (contactsSegmentControl != nil)
-            {
-                
-                if contactsSegmentControl?.selectedSegmentIndex == 0
-                {
-                    let contactDetails: APContact? = phoneContacts[Int(indexPath.row)]
-                    let apPhoneObj: APPhone? = contactDetails?.phones?[0]
-                    
-                    var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
-                    phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
-                    phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
-                    phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
-                    
-                    let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
-                    tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
-                    Phone.sharedInstance.setDelegate(plivoVC!)
-                    CallKitInstance.sharedInstance.callUUID = UUID()
-                    plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
-                }
-                else
-                {
-                    let sipDict: [AnyHashable: Any] = sipDetailsArray[indexPath.row] as! [AnyHashable : Any]
-                    let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
-                    tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
-                    Phone.sharedInstance.setDelegate(plivoVC!)
-                    CallKitInstance.sharedInstance.callUUID = UUID()
-                    plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: sipDict["endPoint"] as! String)
-                }
-            }
-            else
-            {
-                let contactDetails: APContact? = phoneContacts[Int(indexPath.row)]
-                let apPhoneObj: APPhone? = contactDetails?.phones?[0]
-                
-                var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
-                 phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
-                 phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
-                 phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
-
-                let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
-                tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
-                Phone.sharedInstance.setDelegate(plivoVC!)
-                CallKitInstance.sharedInstance.callUUID = UUID()
-                plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
-            }
+            
+            let contactDetails: APContact? = phoneContacts[Int(indexPath.row)]
+            let apPhoneObj: APPhone? = contactDetails?.phones?[0]
+            
+            var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+            phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
+            phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
+            phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
+            
+            let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
+            tabBarController?.selectedViewController = tabBarController?.viewControllers?[2]
+            Phone.sharedInstance.setDelegate(plivoVC!)
+            CallKitInstance.sharedInstance.callUUID = UUID()
+            plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
         }
     }
     
@@ -444,118 +306,61 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         // update the filtered array based on the search text
         let searchText: String = searchController.searchBar.text!
         
-        if contactsSegmentControl?.selectedSegmentIndex == 1
-        {
-            sipSearchResults = sipDetailsArray
-            // strip out all the leading and trailing spaces
-            var strippedString: String = searchText.trimmingCharacters(in: CharacterSet.whitespaces)
-            // break up the search terms (separated by spaces)
-            var searchItems: [String]? = nil
-            if (strippedString.characters.count) > 0 {
-                searchItems = strippedString.components(separatedBy: " ")
-            }
-            // build all the "AND" expressions for each value in the searchString
-            //
-            var andMatchPredicates = [Any]()
-            
-            if(searchItems != nil)
-            {
-                for searchString: String in searchItems! {
-                    // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
-                    //
-                    // example if searchItems contains "iphone 599 2007":
-                    //      name CONTAINS[c] "iphone"
-                    //      name CONTAINS[c] "599", yearIntroduced ==[c] 599, introPrice ==[c] 599
-                    //      name CONTAINS[c] "2007", yearIntroduced ==[c] 2007, introPrice ==[c] 2007
-                    //
-                    var searchItemsPredicate = [Any]()
-                    // Below we use NSExpression represent expressions in our predicates.
-                    // NSPredicate is made up of smaller, atomic parts: two NSExpressions (a left-hand value and a right-hand value)
-                    // name field matching
-                    var lhs = NSExpression(forKeyPath: "eMail")
-                    var rhs = NSExpression(forConstantValue: searchString)
-                    var finalPredicate: NSPredicate? = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .direct, type: .contains, options: .caseInsensitive)
-                    searchItemsPredicate.append(finalPredicate)
-                    // yearIntroduced field matching
-                    var numberFormatter = NumberFormatter()
-                    numberFormatter.numberStyle = .none
-                    var targetNumber = numberFormatter.number(from: searchString)
-                    if targetNumber != nil {
-                        // searchString may not convert to a number
-                        lhs = NSExpression(forKeyPath: "endPoint")
-                        rhs = NSExpression(forConstantValue: targetNumber)
-                        finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .direct, type: .equalTo, options: .caseInsensitive)
-                        searchItemsPredicate.append(finalPredicate)
-                    }
-                    
-                    // at this OR predicate to our master AND predicate
-                    let orMatchPredicates:NSCompoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates:searchItemsPredicate as! [NSPredicate])
-                    andMatchPredicates.append(orMatchPredicates)
-                }
-            }
-            // match up the fields of the Product object
-            let finalCompoundPredicate:NSCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:andMatchPredicates as! [NSPredicate])
-            sipSearchResults = sipSearchResults.filter { finalCompoundPredicate.evaluate(with: $0) }
-            
-            
-        }else
-        {
-            
-            phoneSearchResults = phoneContacts
-            // strip out all the leading and trailing spaces
-            let strippedString: String = searchText.trimmingCharacters(in: CharacterSet.whitespaces)
-            // break up the search terms (separated by spaces)
-            var searchItems: [String]? = nil
-            if (strippedString.characters.count ) > 0 {
-                searchItems = strippedString.components(separatedBy: " ")
-            }
-            // build all the "AND" expressions for each value in the searchString
-            //
-            var andMatchPredicates = [Any]()
-            
-            if(searchItems != nil)
-            {
-                
-                for searchString: String in searchItems! {
-                    // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
-                    //
-                    // example if searchItems contains "iphone 599 2007":
-                    //      name CONTAINS[c] "iphone"
-                    //      name CONTAINS[c] "599", yearIntroduced ==[c] 599, introPrice ==[c] 599
-                    //      name CONTAINS[c] "2007", yearIntroduced ==[c] 2007, introPrice ==[c] 2007
-                    //
-                    var searchItemsPredicate = [Any]()
-                    // Below we use NSExpression represent expressions in our predicates.
-                    // NSPredicate is made up of smaller, atomic parts: two NSExpressions (a left-hand value and a right-hand value)
-                    // name field matching
-                    var lhs = NSExpression(forKeyPath: "name.compositeName")
-                    var rhs = NSExpression(forConstantValue: searchString)
-                    var finalPredicate: NSPredicate? = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .direct, type: .contains, options: .caseInsensitive)
-                    searchItemsPredicate.append(finalPredicate as Any)
-                    // yearIntroduced field matching
-                    let numberFormatter = NumberFormatter()
-                    numberFormatter.numberStyle = .none
-                    let targetNumber = numberFormatter.number(from: searchString)
-                    if targetNumber != nil {
-                        // searchString may not convert to a number
-                        lhs = NSExpression(forKeyPath: "phones")
-                        rhs = NSExpression(forConstantValue: targetNumber)
-                        finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .direct, type: .equalTo, options: .caseInsensitive)
-                        searchItemsPredicate.append(finalPredicate as Any)
-                    }
-                    // at this OR predicate to our master AND predicate
-                    let orMatchPredicates:NSCompoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates:searchItemsPredicate as! [NSPredicate])
-                    andMatchPredicates.append(orMatchPredicates)
-                }
-            }
-            // match up the fields of the Product object
-            let finalCompoundPredicate:NSCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:andMatchPredicates as! [NSPredicate])
-            phoneSearchResults = phoneSearchResults.filter { finalCompoundPredicate.evaluate(with: $0) }
-    
+        phoneSearchResults = phoneContacts
+        // strip out all the leading and trailing spaces
+        let strippedString: String = searchText.trimmingCharacters(in: CharacterSet.whitespaces)
+        // break up the search terms (separated by spaces)
+        var searchItems: [String]? = nil
+        if (strippedString.characters.count ) > 0 {
+            searchItems = strippedString.components(separatedBy: " ")
         }
+        // build all the "AND" expressions for each value in the searchString
+        //
+        var andMatchPredicates = [Any]()
+        
+        if(searchItems != nil)
+        {
+            
+            for searchString: String in searchItems! {
+                // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
+                //
+                // example if searchItems contains "iphone 599 2007":
+                //      name CONTAINS[c] "iphone"
+                //      name CONTAINS[c] "599", yearIntroduced ==[c] 599, introPrice ==[c] 599
+                //      name CONTAINS[c] "2007", yearIntroduced ==[c] 2007, introPrice ==[c] 2007
+                //
+                var searchItemsPredicate = [Any]()
+                // Below we use NSExpression represent expressions in our predicates.
+                // NSPredicate is made up of smaller, atomic parts: two NSExpressions (a left-hand value and a right-hand value)
+                // name field matching
+                var lhs = NSExpression(forKeyPath: "name.compositeName")
+                var rhs = NSExpression(forConstantValue: searchString)
+                var finalPredicate: NSPredicate? = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .direct, type: .contains, options: .caseInsensitive)
+                searchItemsPredicate.append(finalPredicate as Any)
+                // yearIntroduced field matching
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .none
+                let targetNumber = numberFormatter.number(from: searchString)
+                if targetNumber != nil {
+                    // searchString may not convert to a number
+                    lhs = NSExpression(forKeyPath: "phones")
+                    rhs = NSExpression(forConstantValue: targetNumber)
+                    finalPredicate = NSComparisonPredicate(leftExpression: lhs, rightExpression: rhs, modifier: .direct, type: .equalTo, options: .caseInsensitive)
+                    searchItemsPredicate.append(finalPredicate as Any)
+                }
+                // at this OR predicate to our master AND predicate
+                let orMatchPredicates:NSCompoundPredicate = NSCompoundPredicate(orPredicateWithSubpredicates:searchItemsPredicate as! [NSPredicate])
+                andMatchPredicates.append(orMatchPredicates)
+            }
+        }
+        // match up the fields of the Product object
+        let finalCompoundPredicate:NSCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:andMatchPredicates as! [NSPredicate])
+        phoneSearchResults = phoneSearchResults.filter { finalCompoundPredicate.evaluate(with: $0) }
+        
+        
         
         self.contactsTableView.reloadData()
-
+        
     }
     
     /*

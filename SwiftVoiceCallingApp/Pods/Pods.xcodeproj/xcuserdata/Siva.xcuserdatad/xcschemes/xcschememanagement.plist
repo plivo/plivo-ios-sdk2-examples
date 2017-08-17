@@ -9,21 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>GTMOAuth2.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>GTMSessionFetcher.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>GoogleToolboxForMac.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-SwiftVoiceCallingApp.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,22 +32,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>107A9565F9DF88517DFD3E28C05B2B96</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>1EACF9C62B59D5A56BF30B55D3126B53</key>
+		<key>2C2E6743812B2E28DA4C4FF27A3FC29A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>53A94CCFDBB0E008B37772DE155C018A</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>681BE6E3D02A43F9BA63777AC435C8FD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -77,12 +52,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B1C4AAFAF49036C7007633DAA3C806AD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>FFC7C1968B8DB06E06D8A884002A076B</key>
+		<key>90CC800ED874ED127520535DA2DE276A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

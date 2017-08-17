@@ -21,9 +21,7 @@
 #import <CallKit/CallKit.h>
 #import <UserNotifications/UserNotifications.h>
 #import <AVFoundation/AVFoundation.h>
-#import <Google/SignIn.h>
 #import <PushKit/PushKit.h>
-#import <FirebaseAnalytics/FirebaseAnalytics.h>
 #import <Crashlytics/Crashlytics.h>
 
 @interface PlivoCallController ()<CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate>
@@ -140,8 +138,6 @@
 //To unregister with SIP Server
 - (void)unRegisterSIPEndpoit
 {
-    [FIRAnalytics logEventWithName:@"SIPEndpointUnregister"
-                        parameters:nil];
     [[Phone sharedInstance] logout];
     
 }
@@ -189,8 +185,6 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPASSWORD];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [[GIDSignIn sharedInstance] signOut];
-
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         LoginViewController* loginVC = [_mainStoryboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
         [[Phone sharedInstance] setDelegate:loginVC];
@@ -218,8 +212,6 @@
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPASSWORD];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
-        [[GIDSignIn sharedInstance] signOut];
-        
         [UtilityClass hideToastActivity];
 
         UIStoryboard *_mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -242,13 +234,6 @@
             
         case AVAudioSessionRecordPermissionGranted:
         {
-            
-            [FIRAnalytics logEventWithName:@"OnIncomingCall"
-                                parameters:@{
-                                             @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
-                                             @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
-                                             @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
-                                             }];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 
@@ -288,12 +273,6 @@
             }
             else
             {
-                [FIRAnalytics logEventWithName:@"OnIncomingCallReject"
-                                    parameters:@{
-                                                 @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
-                                                 @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
-                                                 @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
-                                                 }];
                 /*
                  * Reject the call when we already have active ongoing call
                  */
@@ -322,13 +301,6 @@
 {
     //NSLog(@"- Incoming call ended");
     
-    [FIRAnalytics logEventWithName:@"onIncomingCallHangup"
-                        parameters:@{
-                                     @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
-                                     @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
-                                     @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
-                                     }];
-    
     if(incCall)
     {
         //NSLog(@"Hangup Incoming call : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
@@ -344,12 +316,7 @@
  */
 - (void)onIncomingCallRejected:(PlivoIncoming *)incoming
 {
-    [FIRAnalytics logEventWithName:@"onIncomingCallRejected"
-                        parameters:@{
-                                     @"CallId": [NSString stringWithFormat:@"%@",incoming.callId],
-                                     @"Account Id" : [NSString stringWithFormat:@"%d",incoming.accId],
-                                     @"From" : [NSString stringWithFormat:@"%@",incoming.fromUser]
-                                     }];
+  
     /* log it */
     //NSLog(@"Incoming call Rejected : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
     
@@ -365,12 +332,6 @@
 - (void)onOutgoingCallAnswered:(PlivoOutgoing *)call
 {
     NSLog(@"Call ID is: %@",call.callId);
-    
-    [FIRAnalytics logEventWithName:@"onOutgoingCallAnswered"
-                        parameters:@{
-                                     @"CallId": [NSString stringWithFormat:@"%@",call.callId],
-                                     @"Account Id" : [NSString stringWithFormat:@"%d",call.accId]
-                                     }];
     
     //NSLog(@"- On outgoing call answered");
     
@@ -402,12 +363,6 @@
  */
 - (void)onOutgoingCallHangup:(PlivoOutgoing *)call
 {
-    [FIRAnalytics logEventWithName:@"onOutgoingCallHangup"
-                        parameters:@{
-                                     @"CallId": [NSString stringWithFormat:@"%@",call.callId],
-                                     @"Account Id" : [NSString stringWithFormat:@"%d",call.accId]
-                                     }];
-    
     //NSLog(@"Hangup call : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
     
     [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
@@ -415,8 +370,6 @@
 
 - (void)onCalling:(PlivoOutgoing *)call
 {
-    [FIRAnalytics logEventWithName:@"onOutgoingCallonCalling"
-                        parameters:nil];
     //NSLog(@"On Caling");
 }
 
@@ -425,12 +378,6 @@
  */
 - (void)onOutgoingCallRinging:(PlivoOutgoing *)call
 {
-    
-    [FIRAnalytics logEventWithName:@"onOutgoingCallRinging"
-                        parameters:@{
-                                     @"Event" : @"onOutgoingCallRinging",
-                                     @"CallId": [NSString stringWithFormat:@"%@",call.callId],
-                                     }];
     
     //NSLog(@"- On outgoing call ringing");
     
@@ -446,12 +393,6 @@
  */
 - (void)onOutgoingCallRejected:(PlivoOutgoing *)call
 {
-    [FIRAnalytics logEventWithName:@"onOutgoingCallRejected"
-                        parameters:@{
-                                     @"CallId": [NSString stringWithFormat:@"%@",call.callId],
-                                     @"Account Id" : [NSString stringWithFormat:@"%d",call.accId]
-                                     }];
-    
     //NSLog(@"Outgoing call Rejected : UUID IS %@",[CallKitInstance sharedInstance].callUUID);
     
     [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
@@ -462,11 +403,6 @@
  */
 - (void)onOutgoingCallInvalid:(PlivoOutgoing *)call
 {
-    [FIRAnalytics logEventWithName:@"onOutgoingCallInvalid"
-                        parameters:@{
-                                     @"CallId": [NSString stringWithFormat:@"%@",call.callId],
-                                     @"Account Id" : [NSString stringWithFormat:@"%d",call.accId]
-                                     }];
     
     //NSLog(@"- On outgoing call invalid");
     
@@ -484,11 +420,6 @@
 
             //NSLog(@"Permission granted");
             
-            [FIRAnalytics logEventWithName:@"performStartCallActionWithUUID"
-                                parameters:@{
-                                             @"NSUUID": uuid.UUIDString,
-                                             @"Handle" : handle
-                                             }];
             [self hideActiveCallView];
             [self unhideActiveCallView];
             
@@ -577,11 +508,6 @@
 //To repot incoming call
 - (void)reportIncomingCallFrom:(NSString *) from withUUID:(NSUUID *)uuid
 {
-    [FIRAnalytics logEventWithName:@"reportIncomingCallFrom"
-                        parameters:@{
-                                     @"NSUUID": uuid.UUIDString,
-                                     @"from" : from
-                                     }];
     
     CXHandle *callHandle = [[CXHandle alloc] initWithType:CXHandleTypeGeneric value:from];
     
@@ -608,23 +534,11 @@
                 
                 if(incCall.state != Ongoing)
                 {
-                    [FIRAnalytics logEventWithName:@"IncomingCallReject"
-                                        parameters:@{
-                                                     @"CallUUID": uuid.UUIDString,
-                                                     @"from" : from
-                                                     }];
-                    
                     //NSLog(@"Incoming call - Reject");
                     [incCall reject];
                 }
                 else
                 {
-                    [FIRAnalytics logEventWithName:@"IncomingCallHangup"
-                                        parameters:@{
-                                                     @"CallUUID": uuid.UUIDString,
-                                                     @"from" : from
-                                                     }];
-                    
                     //NSLog(@"Incoming call - Hangup");
                     [incCall hangup];
                 }
@@ -635,9 +549,6 @@
         }
         else
         {
-            [FIRAnalytics logEventWithName:@"IncomingCallSuccessfullyReported."
-                                parameters:nil];
-            
             //NSLog(@"Incoming call successfully reported.");
             
             [[Phone sharedInstance] configureAudioSession];
@@ -680,23 +591,11 @@
                         
                         if(incCall.state != Ongoing)
                         {
-                            [FIRAnalytics logEventWithName:@"IncomingCallReject"
-                                                parameters:@{
-                                                             @"CallUUID": uuid.UUIDString,
-                                                             @"from" : [NSString stringWithFormat:@"%@",incCall.fromUser]
-                                                             }];
-                            
                             //NSLog(@"Incoming call - Reject");
                             [incCall reject];
                         }
                         else
                         {
-                            [FIRAnalytics logEventWithName:@"IncomingCallHangup"
-                                                parameters:@{
-                                                             @"CallUUID": uuid.UUIDString,
-                                                             @"from" : [NSString stringWithFormat:@"%@",incCall.fromUser]
-                                                             }];
-                            
                             //NSLog(@"Incoming call - Hangup");
                             [incCall hangup];
                         }
@@ -706,11 +605,6 @@
                     
                     if(outCall)
                     {
-                        [FIRAnalytics logEventWithName:@"OutgoingCallHangup"
-                                            parameters:@{
-                                                         @"CallUUID": uuid.UUIDString
-                                                         }];
-                        
                         //NSLog(@"Outgoing call - Hangup");
                         [outCall hangup];
                         outCall = nil;
@@ -723,8 +617,6 @@
             }
             else
             {
-                [FIRAnalytics logEventWithName:@"EndCallActionTransactionRequestSuccessful"
-                                    parameters:nil];
                 //NSLog(@"EndCallAction transaction request successful");
             }
             
@@ -789,9 +681,6 @@
 - (void)provider:(CXProvider *)provider performStartCallAction:(CXStartCallAction *)action
 {
     //NSLog(@"provider:performStartCallAction:");
-    
-    [FIRAnalytics logEventWithName:@"PerformStartCallAction"
-                        parameters:nil];
     
     [[Phone sharedInstance] configureAudioSession];
     
@@ -896,8 +785,6 @@
 
 - (void)provider:(CXProvider *)provider performAnswerCallAction:(CXAnswerCallAction *)action
 {
-    [FIRAnalytics logEventWithName:@"performAnswerCallAction"
-                        parameters:nil];
     
     //NSLog(@"provider:performAnswerCallAction:");
     
@@ -941,9 +828,6 @@
 {
     //NSLog(@"provider:performPlayDTMFCallAction:");
     
-    [FIRAnalytics logEventWithName:@"performPlayDTMFCallAction"
-                        parameters:nil];
-
     NSString* dtmfDigits = action.digits;
     
     if(incCall)
@@ -966,9 +850,6 @@
     
     if(!isItGSMCall || isItUserAction)
     {
-        [FIRAnalytics logEventWithName:@"performEndCallAction"
-                            parameters:nil];
-        
         //NSLog(@"provider:performEndCallAction:");
         
         [[Phone sharedInstance] stopAudioDevice];
@@ -1008,9 +889,6 @@
     }
     else
     {
-        [FIRAnalytics logEventWithName:@"performEndCallAction"
-                            parameters:nil];
-        
         //NSLog(@"GSM - provider:performEndCallAction:");
         
     }
@@ -1028,8 +906,6 @@
             
             if((![self.userNameTextField.text isEqualToString:@"SIP URI or Phone Number"] && ![UtilityClass isEmptyString:self.userNameTextField.text]) || ![UtilityClass isEmptyString:self.pad.digitsTextField.text] || incCall || outCall )
             {
-                [FIRAnalytics logEventWithName:@"MakeCallButtonTapped"
-                                    parameters:nil];
                 
                 UIImage *img = [sender imageForState:UIControlStateNormal];
                 NSData *data1 = UIImagePNGRepresentation(img);
@@ -1071,8 +947,6 @@
                 }
                 else if ([data1  isEqual: UIImagePNGRepresentation([UIImage imageNamed:@"EndCall.png"])])
                 {
-                    [FIRAnalytics logEventWithName:@"EndCallButtonTapped"
-                                        parameters:nil];
                     isItUserAction = YES;
                     [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
                     
@@ -1107,8 +981,6 @@
 
 - (IBAction)keypadButtonTapped:(id)sender
 {
-    [FIRAnalytics logEventWithName:@"KeypadButtonTapped"
-                        parameters:nil];
     
     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"Keypad Enabled"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -1143,9 +1015,6 @@
  */
 - (IBAction)hideButtonTapped:(id)sender;
 {
-    [FIRAnalytics logEventWithName:@"HideButtonTapped"
-                        parameters:nil];
-    
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"Keypad Enabled"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 
@@ -1181,9 +1050,6 @@
     NSData *data1 = UIImagePNGRepresentation(img);
     if ([data1  isEqual:UIImagePNGRepresentation([UIImage imageNamed:@"Unmute.png"])])
     {
-        [FIRAnalytics logEventWithName:@"MuteButtonTapped"
-                            parameters:nil];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [self.muteButton setImage:[UIImage imageNamed:@"MuteIcon.png"] forState:UIControlStateNormal];
@@ -1203,9 +1069,6 @@
     }
     else
     {
-        [FIRAnalytics logEventWithName:@"UnmuteButtonTapped"
-                            parameters:nil];
-        
         dispatch_async(dispatch_get_main_queue(), ^{
             
             [self.muteButton setImage:[UIImage imageNamed:@"Unmute.png"] forState:UIControlStateNormal];
@@ -1235,8 +1098,6 @@
 
     if ([data1  isEqual:UIImagePNGRepresentation([UIImage imageNamed:@"UnholdIcon.png"])])
     {
-        [FIRAnalytics logEventWithName:@"HoldButtonTapped"
-                            parameters:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -1260,8 +1121,6 @@
     }
     else
     {
-        [FIRAnalytics logEventWithName:@"UnholdButtonTapped"
-                            parameters:nil];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
@@ -1292,11 +1151,6 @@
  */
 - (void)appWillTerminate
 {
-    [[GIDSignIn sharedInstance] signOut];
-
-    [FIRAnalytics logEventWithName:@"AppWillTerminate"
-                        parameters:nil];
-    
     [self performEndCallActionWithUUID:[CallKitInstance sharedInstance].callUUID];
 }
 
@@ -1480,8 +1334,6 @@
     NSLog(@"Previous route:\n");
     NSLog(@"%@", routeDescription);
     
-    [FIRAnalytics logEventWithName:@"AudioRouteChange"
-                        parameters:nil];
 }
 
 - (void)handleMediaServerReset:(NSNotification *)notification
@@ -1492,9 +1344,6 @@
     [[Phone sharedInstance] configureAudioSession];
     [[Phone sharedInstance] startAudioDevice];
     
-    [FIRAnalytics logEventWithName:@"HandleMediaServerReset"
-                        parameters:nil];
-
 }
 
 #pragma mark - JCDialPadDelegates
@@ -1526,9 +1375,6 @@
 
 - (void)getDtmfText:(NSString *)dtmfText withAppendStirng:(NSString*)appendText
 {
-    [FIRAnalytics logEventWithName:@"DTMFTextHandling"
-                        parameters:nil];
-    
     if(incCall)
     {
         [incCall sendDigits:dtmfText];

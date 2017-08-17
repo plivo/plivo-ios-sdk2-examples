@@ -9,7 +9,6 @@
 import UIKit
 import CallKit
 import AVFoundation
-import GoogleSignIn
 import Crashlytics
 import PlivoVoiceKit
 import ReachabilitySwift
@@ -172,7 +171,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
             UserDefaults.standard.synchronize()
-            GIDSignIn.sharedInstance().signOut()
             let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
             Phone.sharedInstance.setDelegate(loginVC!)
@@ -198,7 +196,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
             UserDefaults.standard.synchronize()
-            GIDSignIn.sharedInstance().signOut()
             UtilClass.hideToastActivity()
             
             let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -1034,7 +1031,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     func appWillTerminate() {
-        GIDSignIn.sharedInstance().signOut()
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
     }
     

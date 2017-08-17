@@ -17,7 +17,6 @@
 #import "Constants.h"
 #import "CallKitInstance.h"
 #import "UIView+Toast.h"
-#import <FirebaseAnalytics/FirebaseAnalytics.h>
 
 @interface CallHistoryViewController ()
 @property (weak, nonatomic) IBOutlet UITableView* callHistoryTableView;
@@ -129,11 +128,6 @@
                                 style:UIAlertActionStyleDefault
                                 handler:^(UIAlertAction * action) {
                                     //Handle your yes please button action here
-                                    
-                                    [FIRAnalytics logEventWithName:@"Logout"
-                                                        parameters:@{
-                                                                     @"Class": @"RecentCalls"
-                                                                     }];
                                     
                                     [UtilityClass makeToastActivity];
                                     

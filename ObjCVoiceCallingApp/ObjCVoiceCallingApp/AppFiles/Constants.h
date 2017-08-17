@@ -31,10 +31,6 @@
 #define kINCOMINGCALLREPORTFAILED @"Failed to report incoming call successfully"
 #define kSTARTACTIONFAILED @"StartCallAction transaction request failed"
 #define kENDACTIONFAILED @"EndCallAction transaction request failed"
-#define kSERVERURL @"https://iossdk:0d0c2ea141d0b7cde33cc3cef9@plivojs.herokuapp.com/restAPI.php?email="
-#define kSIPENDPOINTS  @"SipEndPoints"
-#define kSIPEMAILIDS  @"SipEmailIds"
-#define kSIPDETAILS  @"SipDetails"
 //#define kENDPOINTURL @"@phone.test.plivo.com"
 #define kENDPOINTURL @"@phone.plivo.com"
 

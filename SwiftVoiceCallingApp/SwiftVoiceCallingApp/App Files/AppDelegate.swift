@@ -10,12 +10,9 @@ import UIKit
 import PushKit
 import Crashlytics
 import Fabric
-import FirebaseAnalytics
-import Google
 import AVFoundation
 import Intents
 import UserNotifications
-import GoogleSignIn
 
 @UIApplicationMain
 
@@ -28,12 +25,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         // Override point for customization after application launch.
         
         Fabric.with([Crashlytics.self])
-        // Use Firebase library to configure APIs
-        FIRApp.configure()
-        
-        var configureError: Error?
-        GGLContext.sharedInstance().configuration
-        assert(configureError == nil, "Error configuring Google services: \(String(describing: configureError))")
         
         //For VOIP Notificaitons
         if #available(iOS 10.0, *)
@@ -124,7 +115,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             return
         }
         print("Credentials token: \(credentials.token)")
-        FIRAnalytics.logEvent(withName: "PushKit", parameters: ["Token": credentials.token as NSObject])
         Phone.sharedInstance.registerToken(credentials.token)
     }
     
@@ -141,7 +131,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         if (type == PKPushType.voIP) {
             
             DispatchQueue.main.async(execute: {() -> Void in
-                FIRAnalytics.logEvent(withName: "PushKit", parameters: ["Payload": payload.dictionaryPayload as NSObject])
                 Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
             })
         }
@@ -193,15 +182,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     
     func application(_ application: UIApplication, processOpenURLAction url: URL, sourceApplication: String, annotation: Any, iosVersion version: Int) -> Bool {
         //Deep linking
-        if url.absoluteString.contains("plivo://") {
             let latlngArray: [Any] = url.absoluteString.components(separatedBy: "://")
             handleDeepLinking(latlngArray[1] as! String)
-            FIRAnalytics.logEvent(withName: "DeepLinking", parameters: ["Link": url.absoluteString as NSObject])
             return true
-        }
-        else {
-            return GIDSignIn.sharedInstance().handle(url, sourceApplication: sourceApplication, annotation: annotation)
-        }
     }
 
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping (_ restorableObjects: [Any]?) -> Void) -> Bool {
@@ -243,7 +226,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
                 Phone.sharedInstance.setDelegate(plivoVC!)
                 plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: contactValue!)
                 window?.rootViewController = tabBarContrler
-                FIRAnalytics.logEvent(withName: "INInteraction", parameters: ["Contact": contactValue! as NSObject])
             }
             return true
         }

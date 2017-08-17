@@ -15,8 +15,6 @@
 #import "UIView+Toast.h"
 #import "ContactsViewController.h"
 #import <Intents/Intents.h>
-#import <Google/SignIn.h>
-#import <FirebaseAnalytics/FirebaseAnalytics.h>
 #import <Fabric/Fabric.h>
 #import <AVFoundation/AVFoundation.h>
 #import <Crashlytics/Crashlytics.h>
@@ -34,25 +32,6 @@
     // Override point for customization after application launch.
     
     [Fabric with:@[[Crashlytics class]]];
-    
-    // Use Firebase library to configure APIs
-    [FIRApp configure];
-    
-    //Logging device details with the help of FIRAnalytics
-    
-    [FIRAnalytics logEventWithName:@"DeviceDetails"
-                        parameters:@{
-                                     @"Model": [UIDevice currentDevice].model,
-                                     @"Description": [UIDevice currentDevice].description,
-                                     @"localizedModel": [UIDevice currentDevice].localizedModel,
-                                     @"name": [UIDevice currentDevice].name,
-                                     @"systemVersion": [UIDevice currentDevice].systemVersion,
-                                     @"systemVersion": [UIDevice currentDevice].systemName
-                                     }];
-    
-    NSError* configureError;
-    [[GGLContext sharedInstance] configureWithError: &configureError];
-    NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
     
     // Override point for customization after application launch.
     if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0"))
@@ -149,10 +128,6 @@
     
     NSLog(@"Credentials token: %@", credentials.token);
     
-    [FIRAnalytics logEventWithName:@"PushKit"
-                        parameters:@{
-                                     @"Token": credentials.token
-                                     }];
     [[Phone sharedInstance] registerToken:credentials.token];
 }
 
@@ -162,11 +137,6 @@
     if([type isEqualToString:PKPushTypeVoIP])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            
-            [FIRAnalytics logEventWithName:@"PushKit"
-                                parameters:@{
-                                             @"Payload": payload.dictionaryPayload
-                                             }];
             
             [[Phone sharedInstance] relayVoipPushNotification:payload.dictionaryPayload];
             
@@ -237,26 +207,13 @@
 
 - (BOOL)application:(UIApplication *)application processOpenURLAction:(NSURL*)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation iosVersion:(int)version
 {
-    //Deep linking
-    if([[url absoluteString] containsString:@"plivo://"])
-    {
-        NSArray* latlngArray = [[url absoluteString] componentsSeparatedByString:@"://"];
-        
-        [self handleDeepLinking:latlngArray[1]];
-        
-        [FIRAnalytics logEventWithName:@"DeepLinking"
-                            parameters:@{
-                                         @"Link": [url absoluteString]
-                                         }];
-
-        return YES;
-        
-    }else
-    {
-        return [[GIDSignIn sharedInstance] handleURL:url
-                                   sourceApplication:sourceApplication
-                                          annotation:annotation];
-    }
+    
+    NSArray* latlngArray = [[url absoluteString] componentsSeparatedByString:@"://"];
+    
+    [self handleDeepLinking:latlngArray[1]];
+    
+    return YES;
+    
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void(^)(NSArray * __nullable restorableObjects))restorationHandler NS_AVAILABLE_IOS(8_0)
@@ -312,10 +269,6 @@
             tabBarContrler.selectedViewController = [tabBarContrler.viewControllers objectAtIndex:2];
             self.window.rootViewController = tabBarContrler;
             
-            [FIRAnalytics logEventWithName:@"INInteraction"
-                                parameters:@{
-                                             @"Contact": contactValue
-                                             }];
         }
 
         return YES;
