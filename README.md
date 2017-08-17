@@ -1,19 +1,24 @@
 **Plivo Voice Quickstart for iOS**
 
 
+
+![plivo-iOSsdk-2.0-example](ReadMeImages/app.png)
+
+
+
 To get started with the quickstart application follow these steps. Steps 1-3 will enable the application to make a call. The remaining steps 4-6 will enable the application to receive incoming calls in the form of push notifications using Apple’s VoIP Service.
 
-**Install the PlivoVoiceKit framework using Cocoapods**
+**1. Install the PlivoVoiceKit framework using Cocoapods**
 
-**Create Endpoints**
+**2. Create Endpoints**
 
-**Run the app**
+**3. Run the app**
 
-**Create a VoIP Service Certificate**
+**4. Create a VoIP Service Certificate**
 
-**Configure Xcode project settings for VoIP push notifications**
+**5. Configure Xcode project settings for VoIP push notifications**
 
-**Receive an incoming call**
+**6. Receive an incoming call**
 
 
 
@@ -62,7 +67,7 @@ It's easy to install the Voice framework if you manage your dependencies using C
         a. Make sure “Push Notifications” and “Background Modes” are set to on.
         b. Within “Background Modes” enable both “Audio, AirPlay and Picture in Picture” and “Voice over IP” settings.
 
-![plivo-websdk-2.0-example](ReadMeImages/image0.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image0.png)
 
       2. Create VoIP Service Certificate
         
@@ -75,41 +80,41 @@ It's easy to install the Voice framework if you manage your dependencies using C
             
             a. Open Keychain access by selecting “Open Keychain access” in utilities folder. You can select that as shown in the image.
 
-![plivo-websdk-2.0-example](ReadMeImages/image13.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image13.png)
 
             b. Once Keychain access opens click on “Keychain Access” from the Menu bar and select the following:  Keychain Access > Certificate Assistant > Request a Certificate From a Certificate Authority .
             
-![plivo-websdk-2.0-example](ReadMeImages/image12.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image12.png)
 
             c. Give your CSR a helpful descriptive name, such as iosplivoapp.certSigningRequest, and choose the location to save it on your hard drive, then click Save.
 
-![plivo-websdk-2.0-example](ReadMeImages/image4.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image4.png)
 
             d. Next, visit the  Apple Developer portal  and make sure that your App ID has the “Push Notifications” service enabled.
             e. Visit certificates section in  Apple Developer portal  upload .csr file and create certificate.
 
-![plivo-websdk-2.0-example](ReadMeImages/image8.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image8.png)
 
-![plivo-websdk-2.0-example](ReadMeImages/image1.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image1.png)
 
             f. Create a corresponding Provisioning Profile for your app ID and create an  Apple VoIP Services Certificate  for this app.
 
-![plivo-websdk-2.0-example](ReadMeImages/image11.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image11.png)
 
       3. Create a Push Credential with your VoIP Service Certificate
       
           Once you have generated the VoIP Services Certificate, you will need to update it in Plivo dashboard so that Plivo can send push notifications to your app on your behalf.
           a. Export your VoIP Service Certificate as a .p12 file from Keychain Access.
 
-![plivo-websdk-2.0-example](ReadMeImages/image7.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image7.png)
 
-![plivo-websdk-2.0-example](ReadMeImages/image10.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image10.png)
 
-![plivo-websdk-2.0-example](ReadMeImages/image2.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image2.png)
 
           You need not enter a password and create the .p12 file by clicking on OK.
 
-![plivo-websdk-2.0-example](ReadMeImages/image6.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image6.png)
 
       4. Updating the information in Plivo dashboard
       
@@ -134,9 +139,9 @@ It's easy to install the Voice framework if you manage your dependencies using C
 
             This text can be pasted into the UI that will be available in the Plivo Dashboard.
 
-![plivo-websdk-2.0-example](ReadMeImages/image5.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image5.png)
 
-![plivo-websdk-2.0-example](ReadMeImages/image3.png)
+![plivo-iOSsdk-2.0-example](ReadMeImages/image3.png)
 
 
             Please make sure to select the ‘Sandbox’ mode in case you have generated a sandbox certificate (similar to development mode).
@@ -159,6 +164,8 @@ It's easy to install the Voice framework if you manage your dependencies using C
       PushInfo is the NSDictionary object forwarded by the apple push notification.
 
 You are now ready to receive incoming calls. 
+
+![plivo-iOSsdk-2.0-example](ReadMeImages/callkit.png)
 
 License
 
