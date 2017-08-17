@@ -1,21 +1,22 @@
-Plivo Voice Quickstart for iOS
+**Plivo Voice Quickstart for iOS**
 
 
 To get started with the quickstart application follow these steps. Steps 1-3 will enable the application to make a call. The remaining steps 4-6 will enable the application to receive incoming calls in the form of push notifications using Apple’s VoIP Service.
 
-Install the PlivoVoiceKit framework using Cocoapods
-Create Endpoints
-Run the app
-Create a VoIP Service Certificate
-Configure Xcode project settings for VoIP push notifications
-Receive an incoming call
+**Install the PlivoVoiceKit framework using Cocoapods**
+**Create Endpoints**
+**Run the app**
+**Create a VoIP Service Certificate**
+**Configure Xcode project settings for VoIP push notifications**
+**Receive an incoming call**
 
-1. Install the PlivoVoiceKit framework using Cocoapods
+**1. Install the PlivoVoiceKit framework using Cocoapods**
 
 It's easy to install the Voice framework if you manage your dependencies using Cocoapods. Simply add the following to your Podfile:
 
 
 source 'https://github.com/cocoapods/specs'
+
 source 'https://github.com/plivo/cocoapod-specs'
 
 target 'TARGET_NAME' do
@@ -24,19 +25,19 @@ use_frameworks!
 pod 'PlivoVoiceKit'
 end
 
-2. Create Endpoints
+**2. Create Endpoints**
 
 Signup and create endpoints with Plivo using below url
 
 https://manage.plivo.com/accounts/login/
 
 
-3. Run the app
+**3. Run the app**
 
 Open ObjCVoiceCallingApp.xcworkspace or SwiftVoiceCallingApp.xcworkspace. Build and run the app. Enter sip endpoint username and password. After successful login make VoiceCalls. 
 
 
-4. Plivo iOS SDK V2 with Push Kit integration
+**4. Plivo iOS SDK V2 with Push Kit integration**
 
 The following section explains on how to receive incoming calls on the Plivo iOS SDK v2 using pushkit. Receiving an incoming call requires the following four steps:
 1. Enabling VoIP services in your application
@@ -96,17 +97,19 @@ This text can be pasted into the UI that will be available in the Plivo Dashboar
 Please make sure to select the ‘Sandbox’ mode in case you have generated a sandbox certificate (similar to development mode).
 The iOS application should register for Push Notifications and get the device token from APNS. This can be used with Plivo iOS SDK v2 using the following API.
 
-5. Configure Xcode project settings for push notifications
+**5. Configure Xcode project settings for push notifications**
 
 On the project’s Capabilities tab, enable “Push Notifications”, and enable both “Voice over IP” and “Audio, AirPlay and Picture in Picture” capabilities in the Background Modes
 
 
-6. Receive an incoming call
+**6. Receive an incoming call**
 
 - (void)registerToken:(NSData*)token;
+
 This will enable the application to receive incoming calls even the app is not in foreground.
 
 - (void)relayVoipPushNotification:(NSDictionary *)pushInfo;
+
 PushInfo is the NSDictionary object forwarded by the apple push notification.
 
 You are now ready to receive incoming calls. 
