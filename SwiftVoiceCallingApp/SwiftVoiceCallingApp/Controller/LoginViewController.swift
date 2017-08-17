@@ -17,8 +17,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    var apiMangerInstance = APIRequestManager.apiCallManagerSharedInstance
-
     override func viewDidLoad() {
         super.viewDidLoad()
 

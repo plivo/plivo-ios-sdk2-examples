@@ -48,8 +48,6 @@
 		474012541EA80D8200BE9E2E /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 474012391EA80D8200BE9E2E /* NSArray+NBAdditions.m */; };
 		474012571EA80D8200BE9E2E /* PhoneNumberMetaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 4740123A1EA80D8200BE9E2E /* PhoneNumberMetaData.json */; };
 		4740125A1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 4740123B1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json */; };
-		474012611EA80DC800BE9E2E /* APIRequestManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4740125E1EA80DC800BE9E2E /* APIRequestManager.m */; };
-		474012641EA80DC800BE9E2E /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 474012601EA80DC800BE9E2E /* STHTTPRequest.m */; };
 		4750FEBA1EB8C51E0091AD54 /* APAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 4750FEB91EB8C51E0091AD54 /* APAddressBook.m */; };
 		4750FED21EB8C54B0091AD54 /* APAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 4750FEBC1EB8C54B0091AD54 /* APAddress.m */; };
 		4750FED31EB8C54B0091AD54 /* APContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 4750FEBE1EB8C54B0091AD54 /* APContact.m */; };
@@ -75,7 +73,6 @@
 		4750FEFE1EB8C5DA0091AD54 /* APAddressBookRefWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4750FEFD1EB8C5DA0091AD54 /* APAddressBookRefWrapper.m */; };
 		47585F8F1E9DF40900DA1E6D /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47585F8E1E9DF40900DA1E6D /* CoreData.framework */; };
 		47AE100A1EAD1AD10090C37C /* UIView+Toast.m in Sources */ = {isa = PBXBuildFile; fileRef = 47AE10091EAD1AD10090C37C /* UIView+Toast.m */; };
-		47CDA1711EB0F8BB00D83BB6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47CDA1701EB0F8BB00D83BB6 /* GoogleService-Info.plist */; };
 		47CDA17B1EB1FC6900D83BB6 /* IntentHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 47CDA17A1EB1FC6900D83BB6 /* IntentHandler.m */; };
 		47CDA1911EB1FC6900D83BB6 /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47CDA1771EB1FC6900D83BB6 /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		47E635641E9E481300F3D222 /* ContactsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 47E635631E9E481300F3D222 /* ContactsViewController.m */; };
@@ -206,10 +203,6 @@
 		474012391EA80D8200BE9E2E /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+NBAdditions.m"; path = "ThirdParty/libPhoneNumber-iOS/NSArray+NBAdditions.m"; sourceTree = "<group>"; };
 		4740123A1EA80D8200BE9E2E /* PhoneNumberMetaData.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaData.json; path = "ThirdParty/libPhoneNumber-iOS/PhoneNumberMetaData.json"; sourceTree = "<group>"; };
 		4740123B1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaDataForTesting.json; path = "ThirdParty/libPhoneNumber-iOS/PhoneNumberMetaDataForTesting.json"; sourceTree = "<group>"; };
-		4740125D1EA80DC800BE9E2E /* APIRequestManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APIRequestManager.h; path = "API Managers/APIRequestManager.h"; sourceTree = "<group>"; };
-		4740125E1EA80DC800BE9E2E /* APIRequestManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APIRequestManager.m; path = "API Managers/APIRequestManager.m"; sourceTree = "<group>"; };
-		4740125F1EA80DC800BE9E2E /* STHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = STHTTPRequest.h; path = "API Managers/STHTTPRequest.h"; sourceTree = "<group>"; };
-		474012601EA80DC800BE9E2E /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = STHTTPRequest.m; path = "API Managers/STHTTPRequest.m"; sourceTree = "<group>"; };
 		4750FEB81EB8C51E0091AD54 /* APAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBook.h; path = ThirdParty/APContact/Public/APAddressBook.h; sourceTree = "<group>"; };
 		4750FEB91EB8C51E0091AD54 /* APAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBook.m; path = ThirdParty/APContact/Public/APAddressBook.m; sourceTree = "<group>"; };
 		4750FEBB1EB8C54B0091AD54 /* APAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddress.h; path = ThirdParty/APContact/Public/Models/APAddress.h; sourceTree = "<group>"; };
@@ -261,7 +254,6 @@
 		47585F8E1E9DF40900DA1E6D /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		47AE10081EAD1AD10090C37C /* UIView+Toast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Toast.h"; path = "View/UIView+Toast.h"; sourceTree = "<group>"; };
 		47AE10091EAD1AD10090C37C /* UIView+Toast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Toast.m"; path = "View/UIView+Toast.m"; sourceTree = "<group>"; };
-		47CDA1701EB0F8BB00D83BB6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		47CDA1771EB1FC6900D83BB6 /* IntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		47CDA1791EB1FC6900D83BB6 /* IntentHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntentHandler.h; sourceTree = "<group>"; };
 		47CDA17A1EB1FC6900D83BB6 /* IntentHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntentHandler.m; sourceTree = "<group>"; };
@@ -373,13 +365,11 @@
 		473EF9601E9D28690022AF4B /* ObjCVoiceCallingApp */ = {
 			isa = PBXGroup;
 			children = (
-				47CDA1701EB0F8BB00D83BB6 /* GoogleService-Info.plist */,
 				474012191EA79B5500BE9E2E /* ObjCVoiceCallingApp.entitlements */,
 				473EF9971E9D28A50022AF4B /* AppFiles */,
 				473EF9961E9D28980022AF4B /* Model */,
 				473EF9951E9D28920022AF4B /* View */,
 				473EF9941E9D28870022AF4B /* Controller */,
-				474012281EA80CBD00BE9E2E /* API Managers */,
 				47FF8F431EA50B44008A940C /* ThirdParty */,
 				47E6358E1E9F8A6600F3D222 /* Resources */,
 				473EF96A1E9D28690022AF4B /* Main.storyboard */,
@@ -494,17 +484,6 @@
 				F4D28495541F42D67273B2E4 /* Pods_ObjCVoiceCallingAppUITests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		474012281EA80CBD00BE9E2E /* API Managers */ = {
-			isa = PBXGroup;
-			children = (
-				4740125D1EA80DC800BE9E2E /* APIRequestManager.h */,
-				4740125E1EA80DC800BE9E2E /* APIRequestManager.m */,
-				4740125F1EA80DC800BE9E2E /* STHTTPRequest.h */,
-				474012601EA80DC800BE9E2E /* STHTTPRequest.m */,
-			);
-			name = "API Managers";
 			sourceTree = "<group>";
 		};
 		4750FEB31EB8C4DD0091AD54 /* APContacts */ = {
@@ -818,7 +797,6 @@
 			files = (
 				473EF9711E9D28690022AF4B /* LaunchScreen.storyboard in Resources */,
 				473EF96E1E9D28690022AF4B /* Assets.xcassets in Resources */,
-				47CDA1711EB0F8BB00D83BB6 /* GoogleService-Info.plist in Resources */,
 				4740125A1EA80D8200BE9E2E /* PhoneNumberMetaDataForTesting.json in Resources */,
 				471435371EAE37FF00B14584 /* plivo-gif-icon.gif in Resources */,
 				474012571EA80D8200BE9E2E /* PhoneNumberMetaData.json in Resources */,
@@ -1025,9 +1003,7 @@
 				4750FED21EB8C54B0091AD54 /* APAddress.m in Sources */,
 				4750FEFE1EB8C5DA0091AD54 /* APAddressBookRefWrapper.m in Sources */,
 				474012451EA80D8200BE9E2E /* NBPhoneNumber.m in Sources */,
-				474012641EA80DC800BE9E2E /* STHTTPRequest.m in Sources */,
 				4750FEE21EB8C57F0091AD54 /* APContactListBuilder.m in Sources */,
-				474012611EA80DC800BE9E2E /* APIRequestManager.m in Sources */,
 				473EF9631E9D28690022AF4B /* main.m in Sources */,
 				4750FEFB1EB8C5CB0091AD54 /* APThread.m in Sources */,
 				474012481EA80D8200BE9E2E /* NBPhoneNumberDesc.m in Sources */,
