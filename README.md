@@ -14,9 +14,9 @@ To get started with the quickstart application follow these steps. Steps 1-3 wil
 
 3. [Run the app](#bullet3)
 
-4. [Plivo iOS SDK V2 with Push Kit integration](#bullet5)
+4. [Plivo iOS SDK V2 with Push Kit integration](#bullet4)
 
-5. [Receive an incoming call](#bullet6)
+5. [Receive an incoming call](#bullet5)
 
 
 
@@ -56,9 +56,10 @@ After successful login make VoiceCalls.
 ### <a name="bullet4"></a>4. Plivo iOS SDK V2 with Push Kit integration
 
 To enable Pushkit Integration in the SDK, please refer to below link on Generating VoIP Certificate. 
+
 [Generating VoIP Certificate](https://docs.google.com/a/plivo.com/document/d/15v23XNIQviE3j6F_Ik457DMXnQE7H712tHzEYOgixdA/edit?usp=sharing)
 
-### <a name="bullet6"></a>5. Receive an incoming call
+### <a name="bullet5"></a>5. Receive an incoming call
 
     - (void)registerToken:(NSData*)token;
 
