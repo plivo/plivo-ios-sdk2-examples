@@ -6,7 +6,7 @@
 
 
 
-To get started with the quickstart application follow these steps. Steps 1-3 will enable the application to make a call. The remaining steps 4-6 will enable the application to receive incoming calls in the form of push notifications using Apple’s VoIP Service.
+To get started with the quickstart application follow these steps. Steps 1-3 will enable the application to make a call. The remaining steps 4-5 will enable the application to receive incoming calls in the form of push notifications using Apple’s VoIP Service.
 
 1. [Install the PlivoVoiceKit framework using Cocoapods](#bullet1)
 
@@ -34,6 +34,8 @@ It's easy to install the Voice framework if you manage your dependencies using C
 
     pod 'PlivoVoiceKit'
     end
+    
+    [Plivo Documentation](https://drive.google.com/open?id=17WK5fN6NJV_84TlmkyMbdbGR7Wb7cqQHsHsHeg1oPFI) - More documentation related to the Voice iOS SDK
 
 ### <a name="bullet2"></a>2. Create Endpoints
 
@@ -61,13 +63,31 @@ To enable Pushkit Integration in the SDK, please refer to below link on Generati
 
 ### <a name="bullet5"></a>5. Receive an incoming call
 
-    - (void)registerToken:(NSData*)token;
+    // MARK: PKPushRegistryDelegate
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, forType type: PKPushType) {
+                
+        if credentials.token.count == 0 {
+            print("VOIP token NULL")
+            return
+        }
+        
+        // This method is used to register the device token for VOIP push notifications.
+        endpoint.registerToken(credentials.token)
+    }
 
-      This will enable the application to receive incoming calls even the app is not in foreground.
+    //When the push arrives below delegate method will be called. 
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, forType type: PKPushType) {
+                
+        if (type == PKPushType.voIP) {
+            
+            DispatchQueue.main.async(execute: {() -> Void in
+                endpoint.relayVoipPushNotification(payload.dictionaryPayload)
+            })
+        }
+    }
+    
+    PushInfo is the NSDictionary object forwarded by the apple push notification. This will enable the application to receive incoming calls even the app is not in foreground.
 
-    - (void)relayVoipPushNotification:(NSDictionary *)pushInfo;
-
-      PushInfo is the NSDictionary object forwarded by the apple push notification.
 
 You are now ready to receive incoming calls. 
 
