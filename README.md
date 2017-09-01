@@ -35,7 +35,8 @@ It's easy to install the Voice framework if you manage your dependencies using C
     pod 'PlivoVoiceKit'
     end
     
-    [Plivo Documentation](https://drive.google.com/open?id=17WK5fN6NJV_84TlmkyMbdbGR7Wb7cqQHsHsHeg1oPFI) - More documentation related to the Voice iOS SDK
+   
+[Plivo Documentation](https://drive.google.com/open?id=17WK5fN6NJV_84TlmkyMbdbGR7Wb7cqQHsHsHeg1oPFI) - More documentation related to the Voice iOS SDK
 
 ### <a name="bullet2"></a>2. Create Endpoints
 
