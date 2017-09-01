@@ -25,15 +25,7 @@ To get started with the quickstart application follow these steps. Steps 1-3 wil
 It's easy to install the Voice framework if you manage your dependencies using Cocoapods. Simply add the following to your Podfile:
 
 
-    source 'https://github.com/cocoapods/specs'
-
-    source 'https://github.com/plivo/cocoapod-specs'
-
-    target 'TARGET_NAME' do
-    use_frameworks!
-
     pod 'PlivoVoiceKit'
-    end
     
    
 [Plivo Documentation](https://drive.google.com/open?id=17WK5fN6NJV_84TlmkyMbdbGR7Wb7cqQHsHsHeg1oPFI) - More documentation related to the Voice iOS SDK
