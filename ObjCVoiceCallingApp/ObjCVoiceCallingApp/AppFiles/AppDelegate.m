@@ -15,9 +15,7 @@
 #import "UIView+Toast.h"
 #import "ContactsViewController.h"
 #import <Intents/Intents.h>
-#import <Fabric/Fabric.h>
 #import <AVFoundation/AVFoundation.h>
-#import <Crashlytics/Crashlytics.h>
 #import <PushKit/PushKit.h>
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
@@ -30,8 +28,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
-    
-    [Fabric with:@[[Crashlytics class]]];
     
     // Override point for customization after application launch.
     if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0"))

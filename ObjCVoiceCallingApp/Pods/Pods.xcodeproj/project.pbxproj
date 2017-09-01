@@ -24,16 +24,12 @@
 		14A719F53844DD0E230C9A435813AC5B /* Pods-ObjCVoiceCallingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjCVoiceCallingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		16C47342CDB3CA4CFBA2EC5E5AAB6C79 /* Pods-ObjCVoiceCallingAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjCVoiceCallingAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		17BC5F02050C53EF3A38371018F5979F /* Pods-ObjCVoiceCallingApp-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ObjCVoiceCallingApp-frameworks.sh"; sourceTree = "<group>"; };
-		200C81134ACADBF4B01AF7F1C51DE9EC /* Crashlytics.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Crashlytics.h; path = iOS/Crashlytics.framework/Headers/Crashlytics.h; sourceTree = "<group>"; };
-		29DE526E5B1D3B37719460B12B391B91 /* CLSLogging.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSLogging.h; path = iOS/Crashlytics.framework/Headers/CLSLogging.h; sourceTree = "<group>"; };
 		36F9090F468429533596524C246BBA23 /* Pods-ObjCVoiceCallingApp.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ObjCVoiceCallingApp.modulemap"; sourceTree = "<group>"; };
 		3A2D36EDE3B0423712915D76688B1F85 /* Pods-ObjCVoiceCallingAppTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ObjCVoiceCallingAppTests.modulemap"; sourceTree = "<group>"; };
 		4490E20E7DAD34D879C3F7B74B450F2A /* Pods-ObjCVoiceCallingAppUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; path = "Pods-ObjCVoiceCallingAppUITests.modulemap"; sourceTree = "<group>"; };
 		44EA54C9A7CE3A87C0604D8AB4DD9BE0 /* Pods_ObjCVoiceCallingAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ObjCVoiceCallingAppUITests.framework; path = "Pods-ObjCVoiceCallingAppUITests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4561ED14A0B3EA13DEE108AA5404B4EE /* Pods-ObjCVoiceCallingApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ObjCVoiceCallingApp-dummy.m"; sourceTree = "<group>"; };
-		494C290BDBEAED23BA5743A3CE2FA0D1 /* FABAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FABAttributes.h; path = iOS/Fabric.framework/Headers/FABAttributes.h; sourceTree = "<group>"; };
 		50DD31DEBEF8135799077F1ADB7771B4 /* Pods-ObjCVoiceCallingAppTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ObjCVoiceCallingAppTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		5B0AC4555A08701A9F1760172610E0AF /* ANSCompatibility.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ANSCompatibility.h; path = iOS/Crashlytics.framework/Headers/ANSCompatibility.h; sourceTree = "<group>"; };
 		5B4C1CB662B5FF5B7695898C4974E3A3 /* Pods-ObjCVoiceCallingAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjCVoiceCallingAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		5D3C632F560656BD34C3964E601F0A7C /* Pods-ObjCVoiceCallingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjCVoiceCallingApp.release.xcconfig"; sourceTree = "<group>"; };
 		6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -42,25 +38,18 @@
 		75C70C4469C48570C72E8F806992CE54 /* Pods-ObjCVoiceCallingAppUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ObjCVoiceCallingAppUITests-umbrella.h"; sourceTree = "<group>"; };
 		76FC289C1386A1E6FDEED9879E2DB5F0 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78D53C955A3CC29606B41FE8273B67AD /* Pods-ObjCVoiceCallingAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjCVoiceCallingAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		82981FB005A4ED4C556297735FD4ACED /* Fabric.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Fabric.h; path = iOS/Fabric.framework/Headers/Fabric.h; sourceTree = "<group>"; };
 		840852F7AAF9FBE34EE404FB6E5B4EEF /* Pods-ObjCVoiceCallingApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ObjCVoiceCallingApp-umbrella.h"; sourceTree = "<group>"; };
-		856A7EF81F93DD33C78FA7140067110C /* CLSReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSReport.h; path = iOS/Crashlytics.framework/Headers/CLSReport.h; sourceTree = "<group>"; };
-		8DB331D62E03B90D571016097AB0A7E0 /* CLSAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSAttributes.h; path = iOS/Crashlytics.framework/Headers/CLSAttributes.h; sourceTree = "<group>"; };
-		92972CC1C216B42A9AB4B6EABB27FC16 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = iOS/Fabric.framework; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DE05C409BB61D403716FC1EE6E6C2BB /* Pods-ObjCVoiceCallingAppUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ObjCVoiceCallingAppUITests-acknowledgements.plist"; sourceTree = "<group>"; };
 		A2FD03D8123E68BA3CC70E5D7CFF70A1 /* Pods-ObjCVoiceCallingAppUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ObjCVoiceCallingAppUITests-frameworks.sh"; sourceTree = "<group>"; };
 		A40CEEC387797A94750990D2008224C5 /* Pods-ObjCVoiceCallingAppTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ObjCVoiceCallingAppTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		A61E08527EFC3DBEDD4BFA0B5C45104C /* Answers.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Answers.h; path = iOS/Crashlytics.framework/Headers/Answers.h; sourceTree = "<group>"; };
 		B5EB9C7BAAF8EA9ADF8F5CCA850D7274 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C13252C4D5BA46E8BAA202706B3D9E90 /* Pods_ObjCVoiceCallingAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ObjCVoiceCallingAppTests.framework; path = "Pods-ObjCVoiceCallingAppTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C3E21864301ED97E404DC41D1D7DBA54 /* Pods-ObjCVoiceCallingAppTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ObjCVoiceCallingAppTests-resources.sh"; sourceTree = "<group>"; };
 		CD22CC4F855439B7ADC4A40F71D72BDE /* Pods-ObjCVoiceCallingAppUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ObjCVoiceCallingAppUITests-resources.sh"; sourceTree = "<group>"; };
 		CDA9EA155E29A325D518DCE205218DE4 /* Pods-ObjCVoiceCallingAppUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ObjCVoiceCallingAppUITests-dummy.m"; sourceTree = "<group>"; };
-		DBA48C54AB315A7317F3DD387EF04883 /* CLSStackFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = CLSStackFrame.h; path = iOS/Crashlytics.framework/Headers/CLSStackFrame.h; sourceTree = "<group>"; };
 		DC55C70E78B1C8C33BE688C05A82EE6A /* Pods-ObjCVoiceCallingApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ObjCVoiceCallingApp-acknowledgements.markdown"; sourceTree = "<group>"; };
 		E24CA204E910DDD0722E78F95A50C32D /* Pods-ObjCVoiceCallingApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ObjCVoiceCallingApp.debug.xcconfig"; sourceTree = "<group>"; };
-		EAC88243AB9F702F3015F7068842116A /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = iOS/Crashlytics.framework; sourceTree = "<group>"; };
 		EE957F207CEED9FEFEA98326FFB4F6E2 /* Pods-ObjCVoiceCallingAppTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ObjCVoiceCallingAppTests-frameworks.sh"; sourceTree = "<group>"; };
 		EEF2280533B355C1F2BBC8789362E0F6 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F04BA1C04787182D18D37F1A762C8F30 /* Pods_ObjCVoiceCallingApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ObjCVoiceCallingApp.framework; path = "Pods-ObjCVoiceCallingApp.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,39 +84,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1DECF7299F0875E9BCB9492390207331 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				26F9D6AB1F30C869A5F58AF8EF5A99C8 /* Crashlytics */,
-				D479A0301687E2A8F6F67D392B8551D2 /* Fabric */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		26F9D6AB1F30C869A5F58AF8EF5A99C8 /* Crashlytics */ = {
-			isa = PBXGroup;
-			children = (
-				5B0AC4555A08701A9F1760172610E0AF /* ANSCompatibility.h */,
-				A61E08527EFC3DBEDD4BFA0B5C45104C /* Answers.h */,
-				8DB331D62E03B90D571016097AB0A7E0 /* CLSAttributes.h */,
-				29DE526E5B1D3B37719460B12B391B91 /* CLSLogging.h */,
-				856A7EF81F93DD33C78FA7140067110C /* CLSReport.h */,
-				DBA48C54AB315A7317F3DD387EF04883 /* CLSStackFrame.h */,
-				200C81134ACADBF4B01AF7F1C51DE9EC /* Crashlytics.h */,
-				E268B07786115FF5D5DFF396150E695F /* Frameworks */,
-			);
-			name = Crashlytics;
-			path = Crashlytics;
-			sourceTree = "<group>";
-		};
-		2DDA681774534EB985F60A3418A4C908 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				92972CC1C216B42A9AB4B6EABB27FC16 /* Fabric.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		2E6A2BA530613154DEDC62C4507207E8 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,7 +145,6 @@
 			children = (
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */,
-				1DECF7299F0875E9BCB9492390207331 /* Pods */,
 				3F3DECB6A29476916853E9C3120F682D /* Products */,
 				2E6A2BA530613154DEDC62C4507207E8 /* Targets Support Files */,
 			);
@@ -227,25 +182,6 @@
 				6604A7D69453B4569E4E4827FB9155A9 /* Foundation.framework */,
 			);
 			name = iOS;
-			sourceTree = "<group>";
-		};
-		D479A0301687E2A8F6F67D392B8551D2 /* Fabric */ = {
-			isa = PBXGroup;
-			children = (
-				494C290BDBEAED23BA5743A3CE2FA0D1 /* FABAttributes.h */,
-				82981FB005A4ED4C556297735FD4ACED /* Fabric.h */,
-				2DDA681774534EB985F60A3418A4C908 /* Frameworks */,
-			);
-			name = Fabric;
-			path = Fabric;
-			sourceTree = "<group>";
-		};
-		E268B07786115FF5D5DFF396150E695F /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				EAC88243AB9F702F3015F7068842116A /* Crashlytics.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -653,7 +653,6 @@
 				AAD1C790414CCD577B91D692 /* [CP] Embed Pods Frameworks */,
 				7D36F57B66155392C7E05342 /* [CP] Copy Pods Resources */,
 				47E637511EA022E700F3D222 /* Embed Frameworks */,
-				47CDA1721EB101AC00D83BB6 /* ShellScript */,
 				47CDA1981EB1FC6A00D83BB6 /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -877,19 +876,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-ObjCVoiceCallingAppUITests/Pods-ObjCVoiceCallingAppUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		47CDA1721EB101AC00D83BB6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 8724590774fd5788293202820f1353a9051ff88e e0b4dd01eace2c5e30af24d09def3116c5c91a640558bf8e71af3b37b5fae04b";
 		};
 		4F7BF4E5D84AEA71A42B9E04 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1227,7 +1213,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/ObjCVoiceCallingApp",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling;
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.sns;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -1256,7 +1242,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/ObjCVoiceCallingApp",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling;
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.sns;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = "arm64 armv7 armv7s";
@@ -1323,7 +1309,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling.IntentHandler;
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.sns.IntentHandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};
@@ -1338,7 +1324,7 @@
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = plivo.PlivoCalling.IntentHandler;
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.sns.IntentHandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 			};

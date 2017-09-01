@@ -22,7 +22,6 @@
 #import <UserNotifications/UserNotifications.h>
 #import <AVFoundation/AVFoundation.h>
 #import <PushKit/PushKit.h>
-#import <Crashlytics/Crashlytics.h>
 
 @interface PlivoCallController ()<CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate>
 {
@@ -154,9 +153,7 @@
         [UtilityClass makeToast:kLOGINSUCCESS];
         
         [UtilityClass hideToastActivity];
-        
-        [[Crashlytics sharedInstance] setUserIdentifier:[[NSUserDefaults standardUserDefaults] objectForKey:kUSERNAME]];
-        
+                
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         [appDelegate voipRegistration];
         

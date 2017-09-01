@@ -12,7 +12,6 @@
 #import "Constants.h"
 #import "UIView+Toast.h"
 #import "PlivoCallController.h"
-#import <Crashlytics/Crashlytics.h>
 
 @interface LoginViewController ()<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITextField *userNameTextField;
@@ -139,8 +138,6 @@
             [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField.text forKey:kPASSWORD];
             [[NSUserDefaults standardUserDefaults] synchronize];
             
-            [[Crashlytics sharedInstance] setUserIdentifier:self.userNameTextField.text];
-
         }
         
 
