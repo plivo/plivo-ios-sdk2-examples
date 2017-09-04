@@ -28,7 +28,7 @@ It's easy to install the Voice framework if you manage your dependencies using C
     pod 'PlivoVoiceKit'
     
    
-[Plivo Documentation](https://drive.google.com/open?id=17WK5fN6NJV_84TlmkyMbdbGR7Wb7cqQHsHsHeg1oPFI) - More documentation related to the Voice iOS SDK
+[Plivo Documentation](https://www.plivo.com/docs/sdk/ios/v2/reference) - More documentation related to the Voice iOS SDK
 
 ### <a name="bullet2"></a>2. Create Endpoints
 
@@ -52,7 +52,7 @@ After successful login make VoiceCalls.
 
 To enable Pushkit Integration in the SDK, please refer to below link on Generating VoIP Certificate. 
 
-[Generating VoIP Certificate](https://docs.google.com/a/plivo.com/document/d/15v23XNIQviE3j6F_Ik457DMXnQE7H712tHzEYOgixdA/edit?usp=sharing)
+[Generating VoIP Certificate](https://www.plivo.com/docs/sdk/iOS/setting-up-push-credentials)
 
 ### <a name="bullet5"></a>5. Receive an incoming call
 
