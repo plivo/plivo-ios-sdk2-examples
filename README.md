@@ -39,7 +39,7 @@ Signup and create endpoints with Plivo using below link
 
 ### <a name="bullet3"></a>3. Run the app
 
-Open `ObjCVoiceCallingApp.xcworkspace` or `SwiftVoiceCallingApp.xcworkspace`. 
+Open `SwiftVoiceCallingApp.xcworkspace`. 
 
 Build and run the app. 
 

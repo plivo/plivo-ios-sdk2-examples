@@ -1,6 +1,0 @@
-framework module Pods_ObjCVoiceCallingAppUITests {
-  umbrella header "Pods-ObjCVoiceCallingAppUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}
