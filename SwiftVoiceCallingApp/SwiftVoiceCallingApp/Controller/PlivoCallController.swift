@@ -9,7 +9,6 @@
 import UIKit
 import CallKit
 import AVFoundation
-import Crashlytics
 import PlivoVoiceKit
 import ReachabilitySwift
 
@@ -151,7 +150,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINSUCCESS)
-            Crashlytics.sharedInstance().setUserName(UserDefaults.standard.object(forKey: kUSERNAME) as? String)
             let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             appDelegate?.voipRegistration()
             
