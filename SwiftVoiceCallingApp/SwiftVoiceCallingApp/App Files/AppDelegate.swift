@@ -8,8 +8,6 @@
 
 import UIKit
 import PushKit
-import Crashlytics
-import Fabric
 import AVFoundation
 import Intents
 import UserNotifications
@@ -23,9 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-        Fabric.with([Crashlytics.self])
-        
+                
         //For VOIP Notificaitons
         if #available(iOS 10.0, *)
         {

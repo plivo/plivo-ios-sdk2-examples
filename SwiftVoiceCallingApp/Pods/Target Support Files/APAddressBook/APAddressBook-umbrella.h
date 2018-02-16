@@ -23,6 +23,7 @@
 #import "APThread.h"
 #import "APAddressBookRefWrapper.h"
 #import "APAddressBook.h"
+#import "APAddressBookFramework.h"
 #import "APAddress.h"
 #import "APContact.h"
 #import "APContactDate.h"

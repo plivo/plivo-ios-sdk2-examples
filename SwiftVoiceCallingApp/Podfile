@@ -3,8 +3,6 @@
 target 'SwiftVoiceCallingApp' do
 	
   use_frameworks!
-  pod 'Fabric'
-  pod 'Crashlytics'
   pod 'APAddressBook/Swift'
   pod 'ReachabilitySwift', '~> 3'
   

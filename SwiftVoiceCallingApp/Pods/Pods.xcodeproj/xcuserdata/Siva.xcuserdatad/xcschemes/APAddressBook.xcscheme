@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '8B20CAEEA320DAD747BB08D1128BDD90'
-               BlueprintName = 'APAddressBook'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'APAddressBook.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "01963CC65E7DFDB77EBF3479B0D52BFD"
+               BlueprintName = "APAddressBook"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "APAddressBook.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

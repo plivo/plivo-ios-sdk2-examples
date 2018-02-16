@@ -8,8 +8,6 @@
 //
 
 import UIKit
-import Crashlytics
-import Fabric
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
 
@@ -115,7 +113,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                 UserDefaults.standard.set(self.userNameTextField.text, forKey: kUSERNAME)
                 UserDefaults.standard.set(self.passwordTextField.text, forKey: kPASSWORD)
                 UserDefaults.standard.synchronize()
-                Crashlytics.sharedInstance().setUserName(self.userNameTextField.text)
             }
             
             UtilClass.setUserAuthenticationStatus(true)
