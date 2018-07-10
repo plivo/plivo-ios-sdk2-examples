@@ -36,7 +36,6 @@
 #import "APSocialProfile.h"
 #import "APSource.h"
 #import "APTypes.h"
-#import "APAddressBook-Bridging.h"
 
 FOUNDATION_EXPORT double APAddressBookVersionNumber;
 FOUNDATION_EXPORT const unsigned char APAddressBookVersionString[];

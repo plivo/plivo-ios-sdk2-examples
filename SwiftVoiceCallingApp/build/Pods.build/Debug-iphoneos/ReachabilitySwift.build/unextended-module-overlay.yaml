@@ -1,0 +1,13 @@
+{
+  'version': 0,
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': '/Users/altanaibisht/plivo-ios-sdk2-examples/SwiftVoiceCallingApp/build/Debug-iphoneos/ReachabilitySwift/ReachabilitySwift.framework/Modules'
+    'contents': [{
+      'type': 'file',
+      'name': 'module.modulemap',
+      'external-contents': '/Users/altanaibisht/plivo-ios-sdk2-examples/SwiftVoiceCallingApp/build/Pods.build/Debug-iphoneos/ReachabilitySwift.build/unextended-module.modulemap',
+    }]
+  }]
+}

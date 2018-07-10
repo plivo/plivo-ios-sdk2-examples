@@ -357,8 +357,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let finalCompoundPredicate:NSCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:andMatchPredicates as! [NSPredicate])
         phoneSearchResults = phoneSearchResults.filter { finalCompoundPredicate.evaluate(with: $0) }
         
-        
-        
         self.contactsTableView.reloadData()
         
     }

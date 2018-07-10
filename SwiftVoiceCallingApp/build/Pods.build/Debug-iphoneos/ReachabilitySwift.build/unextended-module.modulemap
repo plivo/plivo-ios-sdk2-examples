@@ -1,0 +1,10 @@
+framework module ReachabilitySwift {
+  umbrella header "ReachabilitySwift-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module ReachabilitySwift.__Swift {
+    exclude header "ReachabilitySwift-Swift.h"
+}

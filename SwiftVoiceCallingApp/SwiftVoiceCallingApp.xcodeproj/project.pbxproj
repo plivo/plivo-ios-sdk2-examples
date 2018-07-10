@@ -84,7 +84,6 @@
 		47F226BA1ED598310057A39F /* CallKitInstance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226B91ED598310057A39F /* CallKitInstance.swift */; };
 		47F226C11ED5C2CD0057A39F /* PhoneNumberMetaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226BF1ED5C2CD0057A39F /* PhoneNumberMetaData.json */; };
 		47F226C21ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */; };
-		47F226CF1ED720210057A39F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226CE1ED720210057A39F /* IntentHandler.swift */; };
 		47F226D31ED720210057A39F /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47F226CC1ED720210057A39F /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		F841B3501E870444B1780268 /* Pods_SwiftVoiceCallingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */; };
 /* End PBXBuildFile section */
@@ -264,8 +263,6 @@
 		47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = PhoneNumberMetaDataForTesting.json; path = "Third party/libPhoneNumber-iOS/PhoneNumberMetaDataForTesting.json"; sourceTree = "<group>"; };
 		47F226C71ED71E570057A39F /* SwiftVoiceCallingApp-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SwiftVoiceCallingApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		47F226CC1ED720210057A39F /* IntentHandler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = IntentHandler.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		47F226CE1ED720210057A39F /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		47F226D01ED720210057A39F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		483897A3509F2E88E477A9FF /* Pods-SwiftVoiceCallingApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp.debug.xcconfig"; sourceTree = "<group>"; };
 		5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVoiceCallingAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DECAA91E9E4D3BB6174A99B /* Pods_SwiftVoiceCallingAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVoiceCallingAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -334,7 +331,6 @@
 				47332D2D1EB92B02003FB887 /* SwiftVoiceCallingApp */,
 				47332D421EB92B02003FB887 /* SwiftVoiceCallingAppTests */,
 				47332D4D1EB92B02003FB887 /* SwiftVoiceCallingAppUITests */,
-				47F226CD1ED720210057A39F /* IntentHandler */,
 				47332D2C1EB92B02003FB887 /* Products */,
 				47F226831ED58FF00057A39F /* Frameworks */,
 				B9BE5D7A6251FA8CB3519523 /* Pods */,
@@ -566,15 +562,6 @@
 			path = SwiftVoiceCallingApp;
 			sourceTree = "<group>";
 		};
-		47F226CD1ED720210057A39F /* IntentHandler */ = {
-			isa = PBXGroup;
-			children = (
-				47F226CE1ED720210057A39F /* IntentHandler.swift */,
-				47F226D01ED720210057A39F /* Info.plist */,
-			);
-			path = IntentHandler;
-			sourceTree = "<group>";
-		};
 		B9BE5D7A6251FA8CB3519523 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -601,7 +588,6 @@
 				47332D291EB92B02003FB887 /* Resources */,
 				47F226881ED590200057A39F /* Embed Frameworks */,
 				7EE5DC6B14621A1794511FD0 /* [CP] Embed Pods Frameworks */,
-				E7CBE815A5884C27749078B1 /* [CP] Copy Pods Resources */,
 				47F226D71ED720210057A39F /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -622,8 +608,6 @@
 				47332D3B1EB92B02003FB887 /* Sources */,
 				47332D3C1EB92B02003FB887 /* Frameworks */,
 				47332D3D1EB92B02003FB887 /* Resources */,
-				B1A5C3445F4A4E22CD44F850 /* [CP] Embed Pods Frameworks */,
-				8701BC7B9A8567A75F67E684 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -643,8 +627,6 @@
 				47332D461EB92B02003FB887 /* Sources */,
 				47332D471EB92B02003FB887 /* Frameworks */,
 				47332D481EB92B02003FB887 /* Resources */,
-				D35634D126EB8501226017AE /* [CP] Embed Pods Frameworks */,
-				E1FC7AFB81E60CC5A7D80922 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -789,31 +771,16 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APAddressBook/APAddressBook.framework",
-				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/ReachabilitySwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReachabilitySwift/Reachability.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APAddressBook.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReachabilitySwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Reachability.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8701BC7B9A8567A75F67E684 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		9782F842F3298AED8A22F24C /* [CP] Check Pods Manifest.lock */ = {
@@ -834,21 +801,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B1A5C3445F4A4E22CD44F850 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C07A4DAF01FF1B623061AF54 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -865,54 +817,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D35634D126EB8501226017AE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1FC7AFB81E60CC5A7D80922 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E7CBE815A5884C27749078B1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ED380866705337B343D61856 /* [CP] Check Pods Manifest.lock */ = {
@@ -1007,7 +911,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				47F226CF1ED720210057A39F /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1152,7 +1055,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483897A3509F2E88E477A9FF /* Pods-SwiftVoiceCallingApp.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SwiftVoiceCallingApp/SwiftVoiceCallingApp.entitlements;
@@ -1165,6 +1067,13 @@
 				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"$(inherited)",
+					"-framework",
+					"\"APAddressBook\"",
+					"-framework",
+					"\"ReachabilitySwift\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.voiptest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";
@@ -1177,7 +1086,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SwiftVoiceCallingApp/SwiftVoiceCallingApp.entitlements;
@@ -1190,6 +1098,13 @@
 				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"$(inherited)",
+					"-framework",
+					"\"APAddressBook\"",
+					"-framework",
+					"\"ReachabilitySwift\"",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.voiptest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";

@@ -1,0 +1,6 @@
+framework module Pods_SwiftVoiceCallingAppUITests {
+  umbrella header "Pods-SwiftVoiceCallingAppUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

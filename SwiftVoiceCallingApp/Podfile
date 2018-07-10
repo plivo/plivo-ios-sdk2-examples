@@ -3,8 +3,9 @@
 target 'SwiftVoiceCallingApp' do
 	
   use_frameworks!
-  pod 'APAddressBook/Swift'
-  pod 'ReachabilitySwift', '~> 3'
+#  pod 'APAddressBook/Swift'
+    pod 'APAddressBook'
+    pod 'ReachabilitySwift'
   
   # Pods for SwiftVoiceCallingApp
 

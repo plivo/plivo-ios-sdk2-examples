@@ -10,7 +10,8 @@ import UIKit
 import CallKit
 import AVFoundation
 import PlivoVoiceKit
-import ReachabilitySwift
+//import ReachabilitySwift
+import Reachability
 
 class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate {
 
@@ -104,7 +105,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.appWillTerminate), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
         
         //To check Network Reachability
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
+        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged),name: Notification.Name.reachabilityChanged,object: reachability)
         do{
             try reachability.startNotifier()
         }catch{
