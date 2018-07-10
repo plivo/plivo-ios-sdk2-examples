@@ -237,8 +237,8 @@ class UtilClass: NSObject
     
     
     func addBoldText(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!) -> NSAttributedString {
-        let nonBoldFontAttribute = [NSAttributedStringKey.font.rawValue:font!, NSAttributedStringKey.foregroundColor: textColor] as! [String : Any]
-        let boldFontAttribute = [NSAttributedStringKey.font.rawValue:boldFont!, NSAttributedStringKey.foregroundColor: textColor] as! [String : Any]
+        let nonBoldFontAttribute = [NSAttributedStringKey.font:font!, NSAttributedStringKey.foregroundColor: textColor] as! [NSAttributedStringKey : Any]
+        let boldFontAttribute = [NSAttributedStringKey.font:boldFont!, NSAttributedStringKey.foregroundColor: textColor] as! [NSAttributedStringKey : Any]
         let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
         for i in 0 ..< boldPartsOfString.count {
             boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
@@ -248,14 +248,12 @@ class UtilClass: NSObject
     
     func alertTextAttributeString(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!, boldTextColor: UIColor!) -> NSAttributedString {
         
-        let nonBoldFontAttribute = [NSAttributedStringKey.font.rawValue:font!, NSAttributedStringKey.foregroundColor: textColor] as! [String : Any]
-        let boldFontAttribute = [NSAttributedStringKey.font.rawValue:boldFont!, NSAttributedStringKey.foregroundColor: boldTextColor] as! [String : Any]
-        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute as NSAttributedString)
+        let nonBoldFontAttribute = [NSAttributedStringKey.font:font!, NSAttributedStringKey.foregroundColor: textColor] as! [NSAttributedString : Any]
+        let boldFontAttribute = [NSAttributedStringKey.font:boldFont!, NSAttributedStringKey.foregroundColor: boldTextColor] as! [NSAttributedString : Any]
+        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
         
         for i in 0 ..< boldPartsOfString.count {
-            
             boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
-            
         }
         return boldString
     }
