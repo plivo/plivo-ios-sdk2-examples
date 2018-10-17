@@ -405,8 +405,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let noButton = UIAlertAction(title: "No", style: .default, handler: {(_ action: UIAlertAction) -> Void in
             //Handle no, thanks button
         })
-        alert.addAction(yesButton)
         alert.addAction(noButton)
+        alert.addAction(yesButton)
         present(alert, animated: true, completion: { _ in })
     }
     
