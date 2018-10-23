@@ -947,7 +947,16 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         dialPadView.alpha = 1.0
         dialPadView.backgroundColor = UIColor.white
         
-        handleSpeaker()
+        //handleSpeaker()
+        resetCallButtons()
+    }
+    
+    func resetCallButtons() {
+        self.speakerButton.setImage(UIImage(named: "Speaker.png"), for: .normal)
+        isSpeakerOn = false
+        muteButton.setImage(UIImage(named: "Unmute.png"), for: .normal)
+        self.holdButton.setImage(UIImage(named: "UnholdIcon.png"), for: .normal)
+
     }
     
     func unhideActiveCallView() {
