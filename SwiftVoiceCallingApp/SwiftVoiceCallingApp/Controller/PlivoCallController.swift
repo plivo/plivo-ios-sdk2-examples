@@ -319,10 +319,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         print("Call id in Hangup is:")
         print(call.callId)
-
-        self.isItUserAction = true
-
-        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
+        if (outCall != nil) {
+            self.isItUserAction = true
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
+        }
     }
     
     func onCalling(_ call: PlivoOutgoing) {
