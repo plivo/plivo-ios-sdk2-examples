@@ -1095,8 +1095,14 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // return NO to disallow editing.
-        userNameTextField.text = ""
-        return true
+        let img: UIImage? = callButton.image(for: .normal)
+        let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
+        if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "EndCall.png")!)))! {
+            return false
+        } else {
+            userNameTextField.text = ""
+            return true
+        }
     }
     
     /**
