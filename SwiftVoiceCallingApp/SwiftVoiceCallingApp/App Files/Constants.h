@@ -25,7 +25,7 @@
 #define kINVALIDENTRIESTITLE @"Invalid data"
 #define kINVALIDENTRIESMSG @"Please enter SIP Endpoint Username and password"
 #define kINVALIDENTRIESPSWDMSG @"Please enter SIP Endpoint password"
-#define kINVALIDSIPENDPOINTMSG @"Please enter SIP Endpoint or Phone numner"
+#define kINVALIDSIPENDPOINTMSG @"Please enter SIP Endpoint or Phone number"
 
 
 #define kREQUESTFAILED @"Request failed"
