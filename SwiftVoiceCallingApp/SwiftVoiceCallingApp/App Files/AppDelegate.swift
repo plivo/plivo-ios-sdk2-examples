@@ -54,14 +54,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         }
         
         //Request Siri authorization
-        INPreferences.requestSiriAuthorization({(_ status: INSiriAuthorizationStatus) -> Void in
-            if status == .authorized {
-                print("User gave permission to use Siri")
-            }
-            else {
-                print("User did not give permission to use Siri")
-            }
-        })
+//        INPreferences.requestSiriAuthorization({(_ status: INSiriAuthorizationStatus) -> Void in
+//            if status == .authorized {
+//                print("User gave permission to use Siri")
+//            }
+//            else {
+//                print("User did not give permission to use Siri")
+//            }
+//        })
         //One time signIn
         //Save User's credentials in NSUserDefaults
         //Check Authenticaiton status

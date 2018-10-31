@@ -232,6 +232,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 if !(incCall != nil) && !(outCall != nil) {
                     /* log it */
                     print("Incoming Call from %@", incoming.fromContact);
+                    print("Call id in incoming is:")
+                    print(incoming.callId)
                     /* assign incCall var */
                     incCall = incoming
                     outCall = nil
@@ -269,6 +271,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func onIncomingCallHangup(_ incoming: PlivoIncoming) {
         print("- Incoming call ended");
+        print("Call id in incoming hangup is:")
+        print(incoming.callId)
         if (incCall != nil) {
             self.isItUserAction = true
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
@@ -281,6 +285,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func onIncomingCallRejected(_ incoming: PlivoIncoming) {
         /* log it */
+        print("Call id in incoming rejected is:")
+        print(incoming.callId)
         self.isItUserAction = true
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
         incCall = nil
@@ -319,10 +325,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         print("Call id in Hangup is:")
         print(call.callId)
-
-        self.isItUserAction = true
-
-        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
+        if (outCall != nil) {
+            self.isItUserAction = true
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
+            outCall = nil
+        }
     }
     
     func onCalling(_ call: PlivoOutgoing) {
@@ -462,6 +469,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 //[UtilityClass makeToast:kREQUESTFAILED];
                 Phone.sharedInstance.stopAudioDevice()
                 if (self.incCall != nil) {
+                    print("Call id in incoming call error is:")
+                    print(self.incCall?.callId as Any)
                     if self.incCall?.state != Ongoing {
                         print("Incoming call - Reject");
                         self.incCall?.reject()
@@ -1086,8 +1095,14 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // return NO to disallow editing.
-        userNameTextField.text = ""
-        return true
+        let img: UIImage? = callButton.image(for: .normal)
+        let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
+        if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "EndCall.png")!)))! {
+            return false
+        } else {
+            userNameTextField.text = ""
+            return true
+        }
     }
     
     /**

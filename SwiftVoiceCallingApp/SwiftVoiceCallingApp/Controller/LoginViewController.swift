@@ -74,9 +74,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-        
-        if false == UtilClass.isEmpty(userNameTextField.text!) && false == UtilClass.isEmpty(passwordTextField.text!) && !(userNameTextField.text! == "SIP Username")
-        {
+        if UtilClass.isEmpty(userNameTextField.text!) == true {
+            UtilClass.makeToast(kINVALIDENTRIESMSG)
+        } else if UtilClass.isEmpty(passwordTextField.text!) == true {
+            UtilClass.makeToast(kINVALIDENTRIESPSWDMSG)
+        } else {
             if UtilClass.isNetworkAvailable() {
                 view.isUserInteractionEnabled = false
                 UtilClass.makeToastActivity()
@@ -85,9 +87,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             else {
                 UtilClass.makeToast(kNOINTERNETMSG)
             }
-        }
-        else {
-            UtilClass.makeToast(kINVALIDENTRIESMSG)
         }
     }
 

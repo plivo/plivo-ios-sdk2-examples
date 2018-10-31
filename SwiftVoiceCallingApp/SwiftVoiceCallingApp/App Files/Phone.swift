@@ -13,7 +13,7 @@ class Phone {
     
     static let sharedInstance = Phone()
 
-    var endpoint: PlivoEndpoint = PlivoEndpoint(debug: false)
+    var endpoint: PlivoEndpoint = PlivoEndpoint(debug: true)
     private var outCall: PlivoOutgoing?
     
     // To register with SIP Server
