@@ -1069,13 +1069,20 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func getDtmfText(_ dtmfText: String, withAppendStirng appendText: String) {
-        if (incCall != nil) {
-            incCall?.sendDigits(dtmfText)
-            userNameTextField.text = appendText
-        }
-        if (outCall != nil) {
-            outCall?.sendDigits(dtmfText)
-            userNameTextField.text = appendText
+        if incCall == nil && outCall == nil {
+            if appendText == "" {
+                userNameTextField.isEnabled = true
+                userNameTextField.text = "SIP URI or Phone Number"
+            }
+        } else {
+            if (incCall != nil) {
+                incCall?.sendDigits(dtmfText)
+                userNameTextField.text = appendText
+            }
+            if (outCall != nil) {
+                outCall?.sendDigits(dtmfText)
+                userNameTextField.text = appendText
+            }
         }
     }
     
@@ -1085,6 +1092,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func textFieldShouldReturn(_ theTextField: UITextField) -> Bool {
         if theTextField == userNameTextField {
+            if theTextField.text == "" {
+                theTextField.text = "SIP URI or Phone Number"
+            }
             theTextField.resignFirstResponder()
         }
         return true
