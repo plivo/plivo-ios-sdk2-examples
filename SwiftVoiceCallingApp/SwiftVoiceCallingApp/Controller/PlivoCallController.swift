@@ -160,11 +160,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     /**
      * onLoginFailed delegate implementation.
      */
-    func onLoginFailed() {
+    func onLoginFailedWithError(_ error: Error!) {
         DispatchQueue.main.async(execute: {() -> Void in
-            UtilClass.makeToast("408:Timedout Error")
+            UtilClass.makeToast(error.localizedDescription)
             UtilClass.hideToastActivity()
-            print("%@",kLOGINFAILMSG);
+            print(error.localizedDescription)
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)

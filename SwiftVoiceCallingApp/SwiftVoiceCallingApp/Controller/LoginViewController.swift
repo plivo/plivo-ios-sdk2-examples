@@ -132,7 +132,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     /**
      * onLoginFailed delegate implementation.
      */
-    func onLoginFailed() {
+    func onLoginFailedWithError(_ error: Error!) {
         DispatchQueue.main.async(execute: {() -> Void in
             
             self.userNameTextField.delegate = self
@@ -145,7 +145,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             UserDefaults.standard.synchronize()
             
             UtilClass.hideToastActivity()
-            UtilClass.makeToast(kLOGINFAILMSG)
+            UtilClass.makeToast(error.localizedDescription)
             self.view.isUserInteractionEnabled = true
         })
     }
