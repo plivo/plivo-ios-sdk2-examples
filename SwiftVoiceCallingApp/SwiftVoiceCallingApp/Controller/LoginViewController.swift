@@ -75,7 +75,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func loginButtonTapped(_ sender: Any) {
         if UtilClass.isEmpty(userNameTextField.text!) == true {
-            UtilClass.makeToast(kINVALIDENTRIESMSG)
+            if UtilClass.isEmpty(passwordTextField.text!) == true {
+                UtilClass.makeToast(kINVALIDENTRIESMSG)
+            } else {
+                UtilClass.makeToast(kINVALIDENTRIESUSNMSG)
+            }
         } else if UtilClass.isEmpty(passwordTextField.text!) == true {
             UtilClass.makeToast(kINVALIDENTRIESPSWDMSG)
         } else {
