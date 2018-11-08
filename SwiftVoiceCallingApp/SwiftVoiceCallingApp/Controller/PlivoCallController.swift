@@ -160,11 +160,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     /**
      * onLoginFailed delegate implementation.
      */
-    func onLoginFailed() {
+    func onLoginFailedWithError(_ error: Error!) {
         DispatchQueue.main.async(execute: {() -> Void in
-            UtilClass.makeToast("408:Timedout Error")
+            UtilClass.makeToast(error.localizedDescription)
             UtilClass.hideToastActivity()
-            print("%@",kLOGINFAILMSG);
+            print(error.localizedDescription)
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
@@ -540,17 +540,15 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     // MARK: - CXCallObserverDelegate
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
-        if call == nil || call.hasEnded == true {
+        if call.hasEnded == true {
             print("CXCallState : Disconnected");
-        }
-        if call.isOutgoing == true && call.hasConnected == false {
-            print("CXCallState : Dialing");
-        }
-        if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false && call != nil {
-            print("CXCallState : Incoming");
-        }
-        if call.hasConnected == true && call.hasEnded == false {
+            CallKitInstance.sharedInstance.callUUID = nil
+        } else  if call.hasConnected == true {
             print("CXCallState : Connected");
+        } else if call.isOutgoing == true {
+            print("CXCallState : Dialing");
+        } else {
+            print("CXCallState : Incoming");
         }
     }
     
@@ -589,12 +587,13 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         let dest: String = action.handle.value
         //Make the call
-        outCall = Phone.sharedInstance.call(withDest: dest, andHeaders: extraHeaders)
-        if (outCall != nil) {
-            action.fulfill(withDateStarted: Date())
-        }
-        else {
-            action.fail()
+        var error: NSError? = nil
+        outCall = Phone.sharedInstance.call(withDest: dest, andHeaders: extraHeaders, error: &error)
+        action.fulfill(withDateStarted: Date())
+        if (error != nil) {
+            outCall = nil
+            UtilClass.makeToast((error?.localizedDescription)!)
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
         }
     }
     

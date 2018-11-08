@@ -39,13 +39,13 @@ class Phone {
         endpoint.relayVoipPushNotification(pushdata)
     }
 
-    func call(withDest dest: String, andHeaders headers: [AnyHashable: Any]) -> PlivoOutgoing {
+    func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing {
         /* construct SIP URI */
         let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
         /* create PlivoOutgoing object */
         outCall = (endpoint.createOutgoingCall())!
         /* do the call */
-        outCall?.call(sipUri, headers: headers)
+        outCall?.call(sipUri, headers: headers, error: &error)
         return outCall!
     }
     

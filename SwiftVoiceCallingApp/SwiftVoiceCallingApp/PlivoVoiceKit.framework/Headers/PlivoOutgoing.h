@@ -30,7 +30,7 @@
  Calling this method on the PlivoOutgoing object with the SIP URI
  would initiate an outbound call.
  */
-- (void)call:(NSString *)sipURI;
+- (void)call:(NSString *)sipURI error:(NSError **)error;
 
 
 /* Make an outbound call with custom SIP headers
@@ -38,7 +38,7 @@
  Calling this method on the PlivoOutgoing object with the SIP URI
  would initiate an outbound call with custom SIP headers.
  */
-- (void)call:(NSString *)sipURI headers:(NSDictionary *)headers;
+- (void)call:(NSString *)sipURI headers:(NSDictionary *)headers error:(NSError **)error;
 
 /* Mutes the call
  
