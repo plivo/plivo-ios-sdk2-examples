@@ -601,7 +601,6 @@
 				47332D291EB92B02003FB887 /* Resources */,
 				47F226881ED590200057A39F /* Embed Frameworks */,
 				7EE5DC6B14621A1794511FD0 /* [CP] Embed Pods Frameworks */,
-				E7CBE815A5884C27749078B1 /* [CP] Copy Pods Resources */,
 				47F226D71ED720210057A39F /* Embed App Extensions */,
 			);
 			buildRules = (
@@ -622,8 +621,6 @@
 				47332D3B1EB92B02003FB887 /* Sources */,
 				47332D3C1EB92B02003FB887 /* Frameworks */,
 				47332D3D1EB92B02003FB887 /* Resources */,
-				B1A5C3445F4A4E22CD44F850 /* [CP] Embed Pods Frameworks */,
-				8701BC7B9A8567A75F67E684 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -643,8 +640,6 @@
 				47332D461EB92B02003FB887 /* Sources */,
 				47332D471EB92B02003FB887 /* Frameworks */,
 				47332D481EB92B02003FB887 /* Resources */,
-				D35634D126EB8501226017AE /* [CP] Embed Pods Frameworks */,
-				E1FC7AFB81E60CC5A7D80922 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -801,21 +796,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8701BC7B9A8567A75F67E684 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9782F842F3298AED8A22F24C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -834,21 +814,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B1A5C3445F4A4E22CD44F850 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppTests/Pods-SwiftVoiceCallingAppTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		C07A4DAF01FF1B623061AF54 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -865,54 +830,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D35634D126EB8501226017AE /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1FC7AFB81E60CC5A7D80922 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E7CBE815A5884C27749078B1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		ED380866705337B343D61856 /* [CP] Check Pods Manifest.lock */ = {
@@ -1165,7 +1082,7 @@
 				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.voiptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ovilp.develop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1190,7 +1107,7 @@
 				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.voiptest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ovilp.develop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
@@ -1267,7 +1184,7 @@
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.voiptest.IntentHandler;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ovilp.develop.intenthandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;
@@ -1282,7 +1199,7 @@
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.voiptest.IntentHandler;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ovilp.develop.intenthandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 3.0;

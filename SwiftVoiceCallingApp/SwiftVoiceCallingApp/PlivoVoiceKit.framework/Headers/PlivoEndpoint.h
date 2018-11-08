@@ -27,7 +27,7 @@ typedef enum
 
 /* This delegate gets called when registration to an endpoint fails.
  */
-- (void)onLoginFailed;
+- (void)onLoginFailedWithError:(NSError *)error;
 
 /**
  * This delegate gets called when endpoint logged out.
@@ -172,7 +172,7 @@ typedef enum
 
 /* Notifications */
 - (void)onLoginNotification;
-- (void)onLoginFailedNotification;
+- (void)onLoginFailedNotificationWithError:(NSError *)error;
 - (void)onLogoutNotification;
 
 - (void)onIncomingCallNotification:(PlivoIncoming *)incoming;
