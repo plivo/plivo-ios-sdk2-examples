@@ -209,7 +209,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     func onIncomingCall(_ incoming: PlivoIncoming) {
-        
+        isItUserAction = true
         switch AVAudioSession.sharedInstance().recordPermission()
         {
             case AVAudioSessionRecordPermission.granted:
