@@ -216,20 +216,20 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                
                 print("Permission granted")
                 
-                DispatchQueue.main.async(execute: {() -> Void in
-                    self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
-                    self.userNameTextField.text = ""
-                    self.pad?.digitsTextField.text = ""
-                    self.pad?.rawText = ""
-                    self.callerNameLabel.text = incoming.fromUser
-                    self.callStateLabel.text = "Incoming call..."
-                })
                 CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
                 CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
                 CallInfo.addCallsInfo(callInfo:[incoming.fromUser,Date()])
                 
                 //Added by Siva on Tue 11th, 2017
                 if !(incCall != nil) && !(outCall != nil) {
+                    DispatchQueue.main.async(execute: {() -> Void in
+                        self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
+                        self.userNameTextField.text = ""
+                        self.pad?.digitsTextField.text = ""
+                        self.pad?.rawText = ""
+                        self.callerNameLabel.text = incoming.fromUser
+                        self.callStateLabel.text = "Incoming call..."
+                    })
                     /* log it */
                     print("Incoming Call from %@", incoming.fromContact);
                     print("Call id in incoming is:")
