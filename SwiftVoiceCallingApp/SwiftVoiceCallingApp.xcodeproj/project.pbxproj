@@ -27,31 +27,6 @@
 		47F225D61ED58D0B0057A39F /* NBPhoneNumberMetadataForTesting.plist in Resources */ = {isa = PBXBuildFile; fileRef = 47F225C91ED58D0B0057A39F /* NBPhoneNumberMetadataForTesting.plist */; };
 		47F225D71ED58D0B0057A39F /* NBPhoneNumberUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225CB1ED58D0B0057A39F /* NBPhoneNumberUtil.m */; };
 		47F225D81ED58D0B0057A39F /* NSArray+NBAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F225CD1ED58D0B0057A39F /* NSArray+NBAdditions.m */; };
-		47F2265A1ED58DD30057A39F /* APAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226281ED58DD30057A39F /* APAddress.m */; };
-		47F2265B1ED58DD30057A39F /* APAddressBookAccessRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226291ED58DD30057A39F /* APAddressBookAccessRoutine.m */; };
-		47F2265C1ED58DD30057A39F /* APAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2262C1ED58DD30057A39F /* APAddressBook.m */; };
-		47F2265D1ED58DD30057A39F /* APImageExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2262D1ED58DD30057A39F /* APImageExtractor.m */; };
-		47F2265E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2262E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m */; };
-		47F2265F1ED58DD30057A39F /* APContactBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226331ED58DD30057A39F /* APContactBuilder.m */; };
-		47F226601ED58DD30057A39F /* APAddressBookRefWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226341ED58DD30057A39F /* APAddressBookRefWrapper.m */; };
-		47F226611ED58DD30057A39F /* APContactDataExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226361ED58DD30057A39F /* APContactDataExtractor.m */; };
-		47F226621ED58DD30057A39F /* APSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226371ED58DD30057A39F /* APSource.m */; };
-		47F226631ED58DD30057A39F /* APContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226381ED58DD30057A39F /* APContact.m */; };
-		47F226641ED58DD30057A39F /* APContactDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2263E1ED58DD30057A39F /* APContactDate.m */; };
-		47F226651ED58DD30057A39F /* APAddressBookContactsRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226401ED58DD30057A39F /* APAddressBookContactsRoutine.m */; };
-		47F226661ED58DD30057A39F /* APThread.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226411ED58DD30057A39F /* APThread.m */; };
-		47F226671ED58DD30057A39F /* APContactListBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226421ED58DD30057A39F /* APContactListBuilder.m */; };
-		47F226681ED58DD30057A39F /* APEmail.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226431ED58DD30057A39F /* APEmail.m */; };
-		47F226691ED58DD30057A39F /* APPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226451ED58DD30057A39F /* APPhone.m */; };
-		47F2266A1ED58DD30057A39F /* APSocialProfile.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226461ED58DD30057A39F /* APSocialProfile.m */; };
-		47F2266B1ED58DD30057A39F /* APJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226491ED58DD30057A39F /* APJob.m */; };
-		47F2266C1ED58DD30057A39F /* APName.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2264A1ED58DD30057A39F /* APName.m */; };
-		47F2266D1ED58DD30057A39F /* APAddressBookBaseRoutine.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F2264D1ED58DD30057A39F /* APAddressBookBaseRoutine.m */; };
-		47F2266E1ED58DD30057A39F /* APRecordDate.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226501ED58DD30057A39F /* APRecordDate.m */; };
-		47F2266F1ED58DD30057A39F /* APSocialServiceHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226521ED58DD30057A39F /* APSocialServiceHelper.m */; };
-		47F226701ED58DD30057A39F /* APRelatedPerson.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226531ED58DD30057A39F /* APRelatedPerson.m */; };
-		47F226711ED58DD30057A39F /* Private in Resources */ = {isa = PBXBuildFile; fileRef = 47F226581ED58DD30057A39F /* Private */; };
-		47F226721ED58DD30057A39F /* Public in Resources */ = {isa = PBXBuildFile; fileRef = 47F226591ED58DD30057A39F /* Public */; };
 		47F2267C1ED58E090057A39F /* JCDialPad.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226751ED58E090057A39F /* JCDialPad.m */; };
 		47F2267D1ED58E090057A39F /* JCPadButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226771ED58E090057A39F /* JCPadButton.m */; };
 		47F2267E1ED58E090057A39F /* MZTimerLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 47F226791ED58E090057A39F /* MZTimerLabel.m */; };
@@ -177,56 +152,6 @@
 		47F225CB1ED58D0B0057A39F /* NBPhoneNumberUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NBPhoneNumberUtil.m; path = "Third party/libPhoneNumber-iOS/NBPhoneNumberUtil.m"; sourceTree = "<group>"; };
 		47F225CC1ED58D0B0057A39F /* NSArray+NBAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+NBAdditions.h"; path = "Third party/libPhoneNumber-iOS/NSArray+NBAdditions.h"; sourceTree = "<group>"; };
 		47F225CD1ED58D0B0057A39F /* NSArray+NBAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+NBAdditions.m"; path = "Third party/libPhoneNumber-iOS/NSArray+NBAdditions.m"; sourceTree = "<group>"; };
-		47F226281ED58DD30057A39F /* APAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddress.m; path = "Third party/AP Contacts/APAddress.m"; sourceTree = "<group>"; };
-		47F226291ED58DD30057A39F /* APAddressBookAccessRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookAccessRoutine.m; path = "Third party/AP Contacts/APAddressBookAccessRoutine.m"; sourceTree = "<group>"; };
-		47F2262A1ED58DD30057A39F /* APAddressBookBaseRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookBaseRoutine.h; path = "Third party/AP Contacts/APAddressBookBaseRoutine.h"; sourceTree = "<group>"; };
-		47F2262B1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookExternalChangeRoutine.h; path = "Third party/AP Contacts/APAddressBookExternalChangeRoutine.h"; sourceTree = "<group>"; };
-		47F2262C1ED58DD30057A39F /* APAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBook.m; path = "Third party/AP Contacts/APAddressBook.m"; sourceTree = "<group>"; };
-		47F2262D1ED58DD30057A39F /* APImageExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APImageExtractor.m; path = "Third party/AP Contacts/APImageExtractor.m"; sourceTree = "<group>"; };
-		47F2262E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookExternalChangeRoutine.m; path = "Third party/AP Contacts/APAddressBookExternalChangeRoutine.m"; sourceTree = "<group>"; };
-		47F2262F1ED58DD30057A39F /* APName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APName.h; path = "Third party/AP Contacts/APName.h"; sourceTree = "<group>"; };
-		47F226301ED58DD30057A39F /* APAddressBookAccessRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookAccessRoutine.h; path = "Third party/AP Contacts/APAddressBookAccessRoutine.h"; sourceTree = "<group>"; };
-		47F226311ED58DD30057A39F /* APContactBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactBuilder.h; path = "Third party/AP Contacts/APContactBuilder.h"; sourceTree = "<group>"; };
-		47F226321ED58DD30057A39F /* APAddressBookRefWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookRefWrapper.h; path = "Third party/AP Contacts/APAddressBookRefWrapper.h"; sourceTree = "<group>"; };
-		47F226331ED58DD30057A39F /* APContactBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactBuilder.m; path = "Third party/AP Contacts/APContactBuilder.m"; sourceTree = "<group>"; };
-		47F226341ED58DD30057A39F /* APAddressBookRefWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookRefWrapper.m; path = "Third party/AP Contacts/APAddressBookRefWrapper.m"; sourceTree = "<group>"; };
-		47F226351ED58DD30057A39F /* APContactDataExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactDataExtractor.h; path = "Third party/AP Contacts/APContactDataExtractor.h"; sourceTree = "<group>"; };
-		47F226361ED58DD30057A39F /* APContactDataExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactDataExtractor.m; path = "Third party/AP Contacts/APContactDataExtractor.m"; sourceTree = "<group>"; };
-		47F226371ED58DD30057A39F /* APSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APSource.m; path = "Third party/AP Contacts/APSource.m"; sourceTree = "<group>"; };
-		47F226381ED58DD30057A39F /* APContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContact.m; path = "Third party/AP Contacts/APContact.m"; sourceTree = "<group>"; };
-		47F226391ED58DD30057A39F /* APImageExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APImageExtractor.h; path = "Third party/AP Contacts/APImageExtractor.h"; sourceTree = "<group>"; };
-		47F2263A1ED58DD30057A39F /* APSocialServiceHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APSocialServiceHelper.h; path = "Third party/AP Contacts/APSocialServiceHelper.h"; sourceTree = "<group>"; };
-		47F2263B1ED58DD30057A39F /* APAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddress.h; path = "Third party/AP Contacts/APAddress.h"; sourceTree = "<group>"; };
-		47F2263C1ED58DD30057A39F /* APPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APPhone.h; path = "Third party/AP Contacts/APPhone.h"; sourceTree = "<group>"; };
-		47F2263D1ED58DD30057A39F /* APContactDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactDate.h; path = "Third party/AP Contacts/APContactDate.h"; sourceTree = "<group>"; };
-		47F2263E1ED58DD30057A39F /* APContactDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactDate.m; path = "Third party/AP Contacts/APContactDate.m"; sourceTree = "<group>"; };
-		47F2263F1ED58DD30057A39F /* APSocialProfile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APSocialProfile.h; path = "Third party/AP Contacts/APSocialProfile.h"; sourceTree = "<group>"; };
-		47F226401ED58DD30057A39F /* APAddressBookContactsRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookContactsRoutine.m; path = "Third party/AP Contacts/APAddressBookContactsRoutine.m"; sourceTree = "<group>"; };
-		47F226411ED58DD30057A39F /* APThread.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APThread.m; path = "Third party/AP Contacts/APThread.m"; sourceTree = "<group>"; };
-		47F226421ED58DD30057A39F /* APContactListBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APContactListBuilder.m; path = "Third party/AP Contacts/APContactListBuilder.m"; sourceTree = "<group>"; };
-		47F226431ED58DD30057A39F /* APEmail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APEmail.m; path = "Third party/AP Contacts/APEmail.m"; sourceTree = "<group>"; };
-		47F226441ED58DD30057A39F /* APAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBook.h; path = "Third party/AP Contacts/APAddressBook.h"; sourceTree = "<group>"; };
-		47F226451ED58DD30057A39F /* APPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APPhone.m; path = "Third party/AP Contacts/APPhone.m"; sourceTree = "<group>"; };
-		47F226461ED58DD30057A39F /* APSocialProfile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APSocialProfile.m; path = "Third party/AP Contacts/APSocialProfile.m"; sourceTree = "<group>"; };
-		47F226471ED58DD30057A39F /* APJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APJob.h; path = "Third party/AP Contacts/APJob.h"; sourceTree = "<group>"; };
-		47F226481ED58DD30057A39F /* APContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContact.h; path = "Third party/AP Contacts/APContact.h"; sourceTree = "<group>"; };
-		47F226491ED58DD30057A39F /* APJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APJob.m; path = "Third party/AP Contacts/APJob.m"; sourceTree = "<group>"; };
-		47F2264A1ED58DD30057A39F /* APName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APName.m; path = "Third party/AP Contacts/APName.m"; sourceTree = "<group>"; };
-		47F2264B1ED58DD30057A39F /* APAddressBookExternalChangeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookExternalChangeDelegate.h; path = "Third party/AP Contacts/APAddressBookExternalChangeDelegate.h"; sourceTree = "<group>"; };
-		47F2264C1ED58DD30057A39F /* APRecordDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APRecordDate.h; path = "Third party/AP Contacts/APRecordDate.h"; sourceTree = "<group>"; };
-		47F2264D1ED58DD30057A39F /* APAddressBookBaseRoutine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APAddressBookBaseRoutine.m; path = "Third party/AP Contacts/APAddressBookBaseRoutine.m"; sourceTree = "<group>"; };
-		47F2264E1ED58DD30057A39F /* APAddressBookContactsRoutine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APAddressBookContactsRoutine.h; path = "Third party/AP Contacts/APAddressBookContactsRoutine.h"; sourceTree = "<group>"; };
-		47F2264F1ED58DD30057A39F /* APEmail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APEmail.h; path = "Third party/AP Contacts/APEmail.h"; sourceTree = "<group>"; };
-		47F226501ED58DD30057A39F /* APRecordDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APRecordDate.m; path = "Third party/AP Contacts/APRecordDate.m"; sourceTree = "<group>"; };
-		47F226511ED58DD30057A39F /* APRelatedPerson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APRelatedPerson.h; path = "Third party/AP Contacts/APRelatedPerson.h"; sourceTree = "<group>"; };
-		47F226521ED58DD30057A39F /* APSocialServiceHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APSocialServiceHelper.m; path = "Third party/AP Contacts/APSocialServiceHelper.m"; sourceTree = "<group>"; };
-		47F226531ED58DD30057A39F /* APRelatedPerson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = APRelatedPerson.m; path = "Third party/AP Contacts/APRelatedPerson.m"; sourceTree = "<group>"; };
-		47F226541ED58DD30057A39F /* APContactListBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APContactListBuilder.h; path = "Third party/AP Contacts/APContactListBuilder.h"; sourceTree = "<group>"; };
-		47F226551ED58DD30057A39F /* APSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APSource.h; path = "Third party/AP Contacts/APSource.h"; sourceTree = "<group>"; };
-		47F226561ED58DD30057A39F /* APThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APThread.h; path = "Third party/AP Contacts/APThread.h"; sourceTree = "<group>"; };
-		47F226571ED58DD30057A39F /* APTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = APTypes.h; path = "Third party/AP Contacts/APTypes.h"; sourceTree = "<group>"; };
-		47F226581ED58DD30057A39F /* Private */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Private; path = "Third party/AP Contacts/Private"; sourceTree = "<group>"; };
-		47F226591ED58DD30057A39F /* Public */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Public; path = "Third party/AP Contacts/Public"; sourceTree = "<group>"; };
 		47F226741ED58E090057A39F /* JCDialPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCDialPad.h; path = "Third party/Other/JCDialPad.h"; sourceTree = "<group>"; };
 		47F226751ED58E090057A39F /* JCDialPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JCDialPad.m; path = "Third party/Other/JCDialPad.m"; sourceTree = "<group>"; };
 		47F226761ED58E090057A39F /* JCPadButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JCPadButton.h; path = "Third party/Other/JCPadButton.h"; sourceTree = "<group>"; };
@@ -391,7 +316,6 @@
 			isa = PBXGroup;
 			children = (
 				47F2259E1ED58C8B0057A39F /* libPhoneNumber-iOS */,
-				47F2259D1ED58C820057A39F /* APContacts */,
 				47F226731ED58DDA0057A39F /* Miscelleneous */,
 			);
 			name = "Third Party";
@@ -434,63 +358,6 @@
 				47F226C71ED71E570057A39F /* SwiftVoiceCallingApp-Bridging-Header.h */,
 			);
 			name = "App Files";
-			sourceTree = "<group>";
-		};
-		47F2259D1ED58C820057A39F /* APContacts */ = {
-			isa = PBXGroup;
-			children = (
-				47F226281ED58DD30057A39F /* APAddress.m */,
-				47F226291ED58DD30057A39F /* APAddressBookAccessRoutine.m */,
-				47F2262A1ED58DD30057A39F /* APAddressBookBaseRoutine.h */,
-				47F2262B1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.h */,
-				47F2262C1ED58DD30057A39F /* APAddressBook.m */,
-				47F2262D1ED58DD30057A39F /* APImageExtractor.m */,
-				47F2262E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m */,
-				47F2262F1ED58DD30057A39F /* APName.h */,
-				47F226301ED58DD30057A39F /* APAddressBookAccessRoutine.h */,
-				47F226311ED58DD30057A39F /* APContactBuilder.h */,
-				47F226321ED58DD30057A39F /* APAddressBookRefWrapper.h */,
-				47F226331ED58DD30057A39F /* APContactBuilder.m */,
-				47F226341ED58DD30057A39F /* APAddressBookRefWrapper.m */,
-				47F226351ED58DD30057A39F /* APContactDataExtractor.h */,
-				47F226361ED58DD30057A39F /* APContactDataExtractor.m */,
-				47F226371ED58DD30057A39F /* APSource.m */,
-				47F226381ED58DD30057A39F /* APContact.m */,
-				47F226391ED58DD30057A39F /* APImageExtractor.h */,
-				47F2263A1ED58DD30057A39F /* APSocialServiceHelper.h */,
-				47F2263B1ED58DD30057A39F /* APAddress.h */,
-				47F2263C1ED58DD30057A39F /* APPhone.h */,
-				47F2263D1ED58DD30057A39F /* APContactDate.h */,
-				47F2263E1ED58DD30057A39F /* APContactDate.m */,
-				47F2263F1ED58DD30057A39F /* APSocialProfile.h */,
-				47F226401ED58DD30057A39F /* APAddressBookContactsRoutine.m */,
-				47F226411ED58DD30057A39F /* APThread.m */,
-				47F226421ED58DD30057A39F /* APContactListBuilder.m */,
-				47F226431ED58DD30057A39F /* APEmail.m */,
-				47F226441ED58DD30057A39F /* APAddressBook.h */,
-				47F226451ED58DD30057A39F /* APPhone.m */,
-				47F226461ED58DD30057A39F /* APSocialProfile.m */,
-				47F226471ED58DD30057A39F /* APJob.h */,
-				47F226481ED58DD30057A39F /* APContact.h */,
-				47F226491ED58DD30057A39F /* APJob.m */,
-				47F2264A1ED58DD30057A39F /* APName.m */,
-				47F2264B1ED58DD30057A39F /* APAddressBookExternalChangeDelegate.h */,
-				47F2264C1ED58DD30057A39F /* APRecordDate.h */,
-				47F2264D1ED58DD30057A39F /* APAddressBookBaseRoutine.m */,
-				47F2264E1ED58DD30057A39F /* APAddressBookContactsRoutine.h */,
-				47F2264F1ED58DD30057A39F /* APEmail.h */,
-				47F226501ED58DD30057A39F /* APRecordDate.m */,
-				47F226511ED58DD30057A39F /* APRelatedPerson.h */,
-				47F226521ED58DD30057A39F /* APSocialServiceHelper.m */,
-				47F226531ED58DD30057A39F /* APRelatedPerson.m */,
-				47F226541ED58DD30057A39F /* APContactListBuilder.h */,
-				47F226551ED58DD30057A39F /* APSource.h */,
-				47F226561ED58DD30057A39F /* APThread.h */,
-				47F226571ED58DD30057A39F /* APTypes.h */,
-				47F226581ED58DD30057A39F /* Private */,
-				47F226591ED58DD30057A39F /* Public */,
-			);
-			name = APContacts;
 			sourceTree = "<group>";
 		};
 		47F2259E1ED58C8B0057A39F /* libPhoneNumber-iOS */ = {
@@ -742,9 +609,7 @@
 			files = (
 				47332D391EB92B02003FB887 /* LaunchScreen.storyboard in Resources */,
 				47F225D51ED58D0B0057A39F /* NBPhoneNumberMetadata.plist in Resources */,
-				47F226711ED58DD30057A39F /* Private in Resources */,
 				47F226C21ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json in Resources */,
-				47F226721ED58DD30057A39F /* Public in Resources */,
 				47332D361EB92B02003FB887 /* Assets.xcassets in Resources */,
 				47F226C11ED5C2CD0057A39F /* PhoneNumberMetaData.json in Resources */,
 				47332D341EB92B02003FB887 /* Main.storyboard in Resources */,
@@ -859,47 +724,24 @@
 			files = (
 				47F226B21ED597580057A39F /* LoginViewController.swift in Sources */,
 				47F226B61ED597850057A39F /* ContactsViewController.swift in Sources */,
-				47F226651ED58DD30057A39F /* APAddressBookContactsRoutine.m in Sources */,
 				47F225D31ED58D0B0057A39F /* NBPhoneNumber.m in Sources */,
 				47F225D11ED58D0B0057A39F /* NBNumberFormat.m in Sources */,
-				47F2266C1ED58DD30057A39F /* APName.m in Sources */,
 				47966B381EDBF5CF00FA2160 /* UIView+Toast.m in Sources */,
 				47F2258A1ED58A5A0057A39F /* Phone.swift in Sources */,
-				47F2265C1ED58DD30057A39F /* APAddressBook.m in Sources */,
-				47F2265A1ED58DD30057A39F /* APAddress.m in Sources */,
 				47F226B41ED597700057A39F /* CallHistoryViewController.swift in Sources */,
-				47F226641ED58DD30057A39F /* APContactDate.m in Sources */,
-				47F2265B1ED58DD30057A39F /* APAddressBookAccessRoutine.m in Sources */,
 				47F2267E1ED58E090057A39F /* MZTimerLabel.m in Sources */,
 				47F225D21ED58D0B0057A39F /* NBPhoneMetaData.m in Sources */,
-				47F226671ED58DD30057A39F /* APContactListBuilder.m in Sources */,
 				47F2267D1ED58E090057A39F /* JCPadButton.m in Sources */,
-				47F2266B1ED58DD30057A39F /* APJob.m in Sources */,
 				47F226BA1ED598310057A39F /* CallKitInstance.swift in Sources */,
-				47F226601ED58DD30057A39F /* APAddressBookRefWrapper.m in Sources */,
 				47F2267C1ED58E090057A39F /* JCDialPad.m in Sources */,
-				47F226691ED58DD30057A39F /* APPhone.m in Sources */,
 				47F225811ED5882C0057A39F /* AppDelegate.swift in Sources */,
 				47F225D71ED58D0B0057A39F /* NBPhoneNumberUtil.m in Sources */,
 				47F226B81ED5979A0057A39F /* PlivoCallController.swift in Sources */,
-				47F2265F1ED58DD30057A39F /* APContactBuilder.m in Sources */,
-				47F2265D1ED58DD30057A39F /* APImageExtractor.m in Sources */,
-				47F226661ED58DD30057A39F /* APThread.m in Sources */,
-				47F226681ED58DD30057A39F /* APEmail.m in Sources */,
 				47F225D81ED58D0B0057A39F /* NSArray+NBAdditions.m in Sources */,
-				47F2266F1ED58DD30057A39F /* APSocialServiceHelper.m in Sources */,
-				47F226621ED58DD30057A39F /* APSource.m in Sources */,
-				47F226701ED58DD30057A39F /* APRelatedPerson.m in Sources */,
-				47F2266A1ED58DD30057A39F /* APSocialProfile.m in Sources */,
 				47F225D01ED58D0B0057A39F /* NBAsYouTypeFormatter.m in Sources */,
-				47F2266D1ED58DD30057A39F /* APAddressBookBaseRoutine.m in Sources */,
-				47F226631ED58DD30057A39F /* APContact.m in Sources */,
 				47F225D41ED58D0B0057A39F /* NBPhoneNumberDesc.m in Sources */,
 				47F2258C1ED58BA80057A39F /* UtilClass.swift in Sources */,
-				47F226611ED58DD30057A39F /* APContactDataExtractor.m in Sources */,
 				47F2267F1ED58E090057A39F /* UIView+FrameAccessor.m in Sources */,
-				47F2266E1ED58DD30057A39F /* APRecordDate.m in Sources */,
-				47F2265E1ED58DD30057A39F /* APAddressBookExternalChangeRoutine.m in Sources */,
 				47F226AE1ED595770057A39F /* CallInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -209,27 +209,27 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     func onIncomingCall(_ incoming: PlivoIncoming) {
-        
+        isItUserAction = true
         switch AVAudioSession.sharedInstance().recordPermission()
         {
             case AVAudioSessionRecordPermission.granted:
                
                 print("Permission granted")
                 
-                DispatchQueue.main.async(execute: {() -> Void in
-                    self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
-                    self.userNameTextField.text = ""
-                    self.pad?.digitsTextField.text = ""
-                    self.pad?.rawText = ""
-                    self.callerNameLabel.text = incoming.fromUser
-                    self.callStateLabel.text = "Incoming call..."
-                })
                 CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
                 CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
                 CallInfo.addCallsInfo(callInfo:[incoming.fromUser,Date()])
                 
                 //Added by Siva on Tue 11th, 2017
                 if !(incCall != nil) && !(outCall != nil) {
+                    DispatchQueue.main.async(execute: {() -> Void in
+                        self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
+                        self.userNameTextField.text = ""
+                        self.pad?.digitsTextField.text = ""
+                        self.pad?.rawText = ""
+                        self.callerNameLabel.text = incoming.fromUser
+                        self.callStateLabel.text = "Incoming call..."
+                    })
                     /* log it */
                     print("Incoming Call from %@", incoming.fromContact);
                     print("Call id in incoming is:")
@@ -542,7 +542,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         if call.hasEnded == true {
             print("CXCallState : Disconnected");
-            CallKitInstance.sharedInstance.callUUID = nil
         } else  if call.hasConnected == true {
             print("CXCallState : Connected");
         } else if call.isOutgoing == true {
@@ -1020,6 +1019,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 if nil != error {
                     print("AVAudioSession set active failed with error")
                     Phone.sharedInstance.startAudioDevice()
+                    if incCall != nil && incCall?.state == Ongoing {
+                        incCall?.unhold()
+                    }
+                    if outCall != nil && outCall?.state == Ongoing {
+                        outCall?.unhold()
+                    }
                 }
                 print("----------AVAudioSessionInterruptionTypeEnded-------------")
                 break
