@@ -542,7 +542,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         if call.hasEnded == true {
             print("CXCallState : Disconnected");
-            CallKitInstance.sharedInstance.callUUID = nil
         } else  if call.hasConnected == true {
             print("CXCallState : Connected");
         } else if call.isOutgoing == true {
@@ -1020,6 +1019,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 if nil != error {
                     print("AVAudioSession set active failed with error")
                     Phone.sharedInstance.startAudioDevice()
+                    if incCall != nil && incCall?.state == Ongoing {
+                        incCall?.unhold()
+                    }
+                    if outCall != nil && outCall?.state == Ongoing {
+                        outCall?.unhold()
+                    }
                 }
                 print("----------AVAudioSessionInterruptionTypeEnded-------------")
                 break
