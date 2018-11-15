@@ -51,7 +51,7 @@ Signup and create endpoints with Plivo using below link
 Implement SIP register to Plivo Communication Server
 
 To register with Plivo's SIP and Media server , use a valid sip uri account from plivo web console 
-
+```
 var endpoint: PlivoEndpoint = PlivoEndpoint(debug: true)
 
 // To register with SIP Server
@@ -64,7 +64,7 @@ endpoint.login(userName, andPassword: password)
 func logout() {
 endpoint.logout()
 }
-
+```
 
 
 ### <a name="bullet4"></a>4. Run the app
@@ -81,7 +81,7 @@ After successful login make VoiceCalls.
 ### <a name="bullet5"></a>5. Plivo iOS SDK V2 with Push Kit integration
 
 To enable Pushkit Integration in the SDK the registerToken and relayVoipPushNotification are implemented 
-
+```
 //Register pushkit token
 func registerToken(_ token: Data) {
 endpoint.registerToken(token)
@@ -91,7 +91,7 @@ endpoint.registerToken(token)
 func relayVoipPushNotification(_ pushdata: [AnyHashable: Any]) {
 endpoint.relayVoipPushNotification(pushdata)
 }
-
+```
 please refer to below link on Generating VoIP Certificate. 
 
 [Generating VoIP Certificate](https://www.plivo.com/docs/sdk/ios/setting-up-push-credentials/)
@@ -100,7 +100,7 @@ please refer to below link on Generating VoIP Certificate.
 ### <a name="bullet6"></a>6. Making an outgoing call
 
 Create PlivoOutgoingCall object , then make a call with destination and headers 
-
+```
 func call( withDest dest: String, andHeaders headers: [AnyHashable: Any]) -> PlivoOutgoing {
 outCall = (endpoint.createOutgoingCall())!
 outCall?.call(dest, headers: headers)
@@ -111,11 +111,13 @@ return outCall!
 func configureAudioSession() {
 endpoint.configureAudioDevice()
 }
+```
 configureAudioSession - use this callkit method to set up the AVAudioSession with desired configuration.
 
 
 ### <a name="bullet7"></a>7. Receive an incoming call
 
+```
 // MARK: PKPushRegistryDelegate
 func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, forType type: PKPushType) {
 
@@ -138,7 +140,7 @@ endpoint.relayVoipPushNotification(payload.dictionaryPayload)
 })
 }
 }
-
+```
 PushInfo is the NSDictionary object forwarded by the apple push notification. This will enable the application to receive incoming calls even the app is not in foreground.
 
 
