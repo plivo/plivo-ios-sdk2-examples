@@ -314,6 +314,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             else {
                 self.timer?.start()
             }
+        CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: CallKitInstance.sharedInstance.callUUID!, connectedAt: Date())
         })
     }
     
@@ -429,7 +430,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                             self.callerNameLabel.text = handle
                             self.callStateLabel.text = "Calling..."
                             self.unhideActiveCallView()
-                            CallKitInstance.sharedInstance.callKitProvider?.reportCall(with: uuid, updated: callUpdate)
+                            CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: uuid, startedConnectingAt: Date())
+//                            CallKitInstance.sharedInstance.callKitProvider?.reportCall(with: uuid, updated: callUpdate)
                         })
                     }
                 })
@@ -542,6 +544,16 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
         if call.hasEnded == true {
             print("CXCallState : Disconnected");
+            if (incCall != nil && incCall?.state == Ongoing) || (outCall != nil && outCall?.state == Ongoing) {
+                let setHeldCallAction = CXSetHeldCallAction(call: CallKitInstance.sharedInstance.callUUID!, onHold: false)
+                let transaction = CXTransaction()
+                transaction.addAction(setHeldCallAction)
+                CallKitInstance.sharedInstance.callKitCallController?.request(transaction, completion: {(_ error: Error?) -> Void in
+                    if error != nil {
+                        print("Unhold error", error.debugDescription)
+                    }
+                })
+            }
         } else  if call.hasConnected == true {
             print("CXCallState : Connected");
         } else if call.isOutgoing == true {
@@ -668,7 +680,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
 
         DispatchQueue.main.async(execute: {() -> Void in
             
-            if !self.isItGSMCall || self.isItUserAction {
+          //  if !self.isItGSMCall || self.isItUserAction {
             
                 print("provider:performEndCallAction:");
                 
@@ -693,10 +705,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 self.isItUserAction = false
                 self.tabBarController?.tabBar.isHidden = false
                 self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
-            }
-            else {
-                print("GSM - provider:performEndCallAction:");
-            }
+       //     }
+       //     else {
+       //         print("GSM - provider:performEndCallAction:");
+       //     }
         })
     }
     
