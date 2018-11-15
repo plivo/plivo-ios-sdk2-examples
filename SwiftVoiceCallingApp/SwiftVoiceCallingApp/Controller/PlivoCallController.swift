@@ -603,6 +603,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         else {
             Phone.sharedInstance.startAudioDevice()
         }
+        action.fulfill()
     }
     
     func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
