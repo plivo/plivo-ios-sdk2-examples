@@ -74,9 +74,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-        
-        if false == UtilClass.isEmpty(userNameTextField.text!) && false == UtilClass.isEmpty(passwordTextField.text!) && !(userNameTextField.text! == "SIP Username")
-        {
+        if UtilClass.isEmpty(userNameTextField.text!) == true {
+            if UtilClass.isEmpty(passwordTextField.text!) == true {
+                UtilClass.makeToast(kINVALIDENTRIESMSG)
+            } else {
+                UtilClass.makeToast(kINVALIDENTRIESUSNMSG)
+            }
+        } else if UtilClass.isEmpty(passwordTextField.text!) == true {
+            UtilClass.makeToast(kINVALIDENTRIESPSWDMSG)
+        } else {
             if UtilClass.isNetworkAvailable() {
                 view.isUserInteractionEnabled = false
                 UtilClass.makeToastActivity()
@@ -85,9 +91,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             else {
                 UtilClass.makeToast(kNOINTERNETMSG)
             }
-        }
-        else {
-            UtilClass.makeToast(kINVALIDENTRIESMSG)
         }
     }
 
@@ -133,7 +136,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     /**
      * onLoginFailed delegate implementation.
      */
-    func onLoginFailed() {
+    func onLoginFailedWithError(_ error: Error!) {
         DispatchQueue.main.async(execute: {() -> Void in
             
             self.userNameTextField.delegate = self
@@ -146,7 +149,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             UserDefaults.standard.synchronize()
             
             UtilClass.hideToastActivity()
-            UtilClass.makeToast(kLOGINFAILMSG)
+            UtilClass.makeToast(error.localizedDescription)
             self.view.isUserInteractionEnabled = true
         })
     }

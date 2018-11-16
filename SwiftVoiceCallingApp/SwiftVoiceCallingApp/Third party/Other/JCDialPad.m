@@ -236,6 +236,7 @@
     
     if (!self.rawText.length) {
         [self toggleDeleteButtonVisible:NO animated:YES];
+        [self.delegate getDtmfText:@"" withAppendStirng:@""];
     }
 }
 

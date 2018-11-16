@@ -127,9 +127,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             
             UtilClass.makeToast(kNOINTERNETMSG)
 
-            self.isItUserAction = true
-            self.performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
-
         }
     }
     
@@ -160,11 +157,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     /**
      * onLoginFailed delegate implementation.
      */
-    func onLoginFailed() {
+    func onLoginFailedWithError(_ error: Error!) {
         DispatchQueue.main.async(execute: {() -> Void in
-            UtilClass.makeToast("408:Timedout Error")
+            UtilClass.makeToast(error.localizedDescription)
             UtilClass.hideToastActivity()
-            print("%@",kLOGINFAILMSG);
+            print(error.localizedDescription)
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
@@ -209,29 +206,31 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     func onIncomingCall(_ incoming: PlivoIncoming) {
-        
+        isItUserAction = true
         switch AVAudioSession.sharedInstance().recordPermission()
         {
             case AVAudioSessionRecordPermission.granted:
                
                 print("Permission granted")
                 
-                DispatchQueue.main.async(execute: {() -> Void in
-                    self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
-                    self.userNameTextField.text = ""
-                    self.pad?.digitsTextField.text = ""
-                    self.pad?.rawText = ""
-                    self.callerNameLabel.text = incoming.fromUser
-                    self.callStateLabel.text = "Incoming call..."
-                })
                 CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
                 CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
                 CallInfo.addCallsInfo(callInfo:[incoming.fromUser,Date()])
                 
                 //Added by Siva on Tue 11th, 2017
                 if !(incCall != nil) && !(outCall != nil) {
+                    DispatchQueue.main.async(execute: {() -> Void in
+                        self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
+                        self.userNameTextField.text = ""
+                        self.pad?.digitsTextField.text = ""
+                        self.pad?.rawText = ""
+                        self.callerNameLabel.text = incoming.fromUser
+                        self.callStateLabel.text = "Incoming call..."
+                    })
                     /* log it */
                     print("Incoming Call from %@", incoming.fromContact);
+                    print("Call id in incoming is:")
+                    print(incoming.callId)
                     /* assign incCall var */
                     incCall = incoming
                     outCall = nil
@@ -269,6 +268,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func onIncomingCallHangup(_ incoming: PlivoIncoming) {
         print("- Incoming call ended");
+        print("Call id in incoming hangup is:")
+        print(incoming.callId)
         if (incCall != nil) {
             self.isItUserAction = true
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
@@ -281,6 +282,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func onIncomingCallRejected(_ incoming: PlivoIncoming) {
         /* log it */
+        print("Call id in incoming rejected is:")
+        print(incoming.callId)
         self.isItUserAction = true
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
         incCall = nil
@@ -308,6 +311,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             else {
                 self.timer?.start()
             }
+        CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: CallKitInstance.sharedInstance.callUUID!, connectedAt: Date())
         })
     }
     
@@ -319,10 +323,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         print("Call id in Hangup is:")
         print(call.callId)
-
-        self.isItUserAction = true
-
-        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
+        if (outCall != nil) {
+            self.isItUserAction = true
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
+            outCall = nil
+        }
     }
     
     func onCalling(_ call: PlivoOutgoing) {
@@ -422,7 +427,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                             self.callerNameLabel.text = handle
                             self.callStateLabel.text = "Calling..."
                             self.unhideActiveCallView()
-                            CallKitInstance.sharedInstance.callKitProvider?.reportCall(with: uuid, updated: callUpdate)
+                            CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: uuid, startedConnectingAt: Date())
+//                            CallKitInstance.sharedInstance.callKitProvider?.reportCall(with: uuid, updated: callUpdate)
                         })
                     }
                 })
@@ -462,6 +468,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 //[UtilityClass makeToast:kREQUESTFAILED];
                 Phone.sharedInstance.stopAudioDevice()
                 if (self.incCall != nil) {
+                    print("Call id in incoming call error is:")
+                    print(self.incCall?.callId as Any)
                     if self.incCall?.state != Ongoing {
                         print("Incoming call - Reject");
                         self.incCall?.reject()
@@ -531,17 +539,24 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     // MARK: - CXCallObserverDelegate
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
-        if call == nil || call.hasEnded == true {
+        if call.hasEnded == true {
             print("CXCallState : Disconnected");
-        }
-        if call.isOutgoing == true && call.hasConnected == false {
-            print("CXCallState : Dialing");
-        }
-        if call.isOutgoing == false && call.hasConnected == false && call.hasEnded == false && call != nil {
-            print("CXCallState : Incoming");
-        }
-        if call.hasConnected == true && call.hasEnded == false {
+            if (incCall != nil && incCall?.state == Ongoing) || (outCall != nil && outCall?.state == Ongoing) {
+                let setHeldCallAction = CXSetHeldCallAction(call: CallKitInstance.sharedInstance.callUUID!, onHold: false)
+                let transaction = CXTransaction()
+                transaction.addAction(setHeldCallAction)
+                CallKitInstance.sharedInstance.callKitCallController?.request(transaction, completion: {(_ error: Error?) -> Void in
+                    if error != nil {
+                        print("Unhold error", error.debugDescription)
+                    }
+                })
+            }
+        } else  if call.hasConnected == true {
             print("CXCallState : Connected");
+        } else if call.isOutgoing == true {
+            print("CXCallState : Dialing");
+        } else {
+            print("CXCallState : Incoming");
         }
     }
     
@@ -580,12 +595,13 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         let dest: String = action.handle.value
         //Make the call
-        outCall = Phone.sharedInstance.call(withDest: dest, andHeaders: extraHeaders)
-        if (outCall != nil) {
-            action.fulfill(withDateStarted: Date())
-        }
-        else {
-            action.fail()
+        var error: NSError? = nil
+        outCall = Phone.sharedInstance.call(withDest: dest, andHeaders: extraHeaders, error: &error)
+        action.fulfill(withDateStarted: Date())
+        if (error != nil) {
+            outCall = nil
+            UtilClass.makeToast((error?.localizedDescription)!)
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
         }
     }
     
@@ -596,6 +612,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         else {
             Phone.sharedInstance.startAudioDevice()
         }
+        action.fulfill()
     }
     
     func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
@@ -660,7 +677,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
 
         DispatchQueue.main.async(execute: {() -> Void in
             
-            if !self.isItGSMCall || self.isItUserAction {
+          //  if !self.isItGSMCall || self.isItUserAction {
             
                 print("provider:performEndCallAction:");
                 
@@ -685,10 +702,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 self.isItUserAction = false
                 self.tabBarController?.tabBar.isHidden = false
                 self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
-            }
-            else {
-                print("GSM - provider:performEndCallAction:");
-            }
+       //     }
+       //     else {
+       //         print("GSM - provider:performEndCallAction:");
+       //     }
         })
     }
     
@@ -947,7 +964,16 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         dialPadView.alpha = 1.0
         dialPadView.backgroundColor = UIColor.white
         
-        handleSpeaker()
+        //handleSpeaker()
+        resetCallButtons()
+    }
+    
+    func resetCallButtons() {
+        self.speakerButton.setImage(UIImage(named: "Speaker.png"), for: .normal)
+        isSpeakerOn = false
+        muteButton.setImage(UIImage(named: "Unmute.png"), for: .normal)
+        self.holdButton.setImage(UIImage(named: "UnholdIcon.png"), for: .normal)
+
     }
     
     func unhideActiveCallView() {
@@ -1003,6 +1029,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 if nil != error {
                     print("AVAudioSession set active failed with error")
                     Phone.sharedInstance.startAudioDevice()
+                    if incCall != nil && incCall?.state == Ongoing {
+                        incCall?.unhold()
+                    }
+                    if outCall != nil && outCall?.state == Ongoing {
+                        outCall?.unhold()
+                    }
                 }
                 print("----------AVAudioSessionInterruptionTypeEnded-------------")
                 break
@@ -1051,13 +1083,20 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func getDtmfText(_ dtmfText: String, withAppendStirng appendText: String) {
-        if (incCall != nil) {
-            incCall?.sendDigits(dtmfText)
-            userNameTextField.text = appendText
-        }
-        if (outCall != nil) {
-            outCall?.sendDigits(dtmfText)
-            userNameTextField.text = appendText
+        if incCall == nil && outCall == nil {
+            if appendText == "" {
+                userNameTextField.isEnabled = true
+                userNameTextField.text = "SIP URI or Phone Number"
+            }
+        } else {
+            if (incCall != nil) {
+                incCall?.sendDigits(dtmfText)
+                userNameTextField.text = appendText
+            }
+            if (outCall != nil) {
+                outCall?.sendDigits(dtmfText)
+                userNameTextField.text = appendText
+            }
         }
     }
     
@@ -1067,6 +1106,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func textFieldShouldReturn(_ theTextField: UITextField) -> Bool {
         if theTextField == userNameTextField {
+            if theTextField.text == "" {
+                theTextField.text = "SIP URI or Phone Number"
+            }
             theTextField.resignFirstResponder()
         }
         return true
@@ -1077,8 +1119,14 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // return NO to disallow editing.
-        userNameTextField.text = ""
-        return true
+        let img: UIImage? = callButton.image(for: .normal)
+        let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
+        if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "EndCall.png")!)))! {
+            return false
+        } else {
+            userNameTextField.text = ""
+            return true
+        }
     }
     
     /**
