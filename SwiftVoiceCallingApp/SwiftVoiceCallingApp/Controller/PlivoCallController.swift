@@ -127,9 +127,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             
             UtilClass.makeToast(kNOINTERNETMSG)
 
-            self.isItUserAction = true
-            self.performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
-
         }
     }
     
