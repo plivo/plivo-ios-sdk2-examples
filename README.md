@@ -65,7 +65,10 @@ func logout() {
 endpoint.logout()
 }
 ```
-
+If the registration to an endpoint fails the following delegate gets called 
+```
+(void)onLoginFailedWithError:(NSError *)error;
+```
 
 ### <a name="bullet4"></a>4. Run the app
 
@@ -101,9 +104,13 @@ please refer to below link on Generating VoIP Certificate.
 
 Create PlivoOutgoingCall object , then make a call with destination and headers 
 ```
-func call( withDest dest: String, andHeaders headers: [AnyHashable: Any]) -> PlivoOutgoing {
+func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing {
+/* construct SIP URI , where kENDPOINTURL is a contant contaning domain name details*/
+let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
+/* create PlivoOutgoing object */
 outCall = (endpoint.createOutgoingCall())!
-outCall?.call(dest, headers: headers)
+/* do the call */
+outCall?.call(sipUri, headers: headers, error: &error)
 return outCall!
 }
 
@@ -113,6 +120,22 @@ endpoint.configureAudioDevice()
 }
 ```
 configureAudioSession - use this callkit method to set up the AVAudioSession with desired configuration.
+
+Make an outbound call
+
+Calling this method on the PlivoOutgoing object with the SIP URI
+would initiate an outbound call.
+```
+(void)call:(NSString *)sipURI error:(NSError **)error;
+```
+
+Make an outbound call with custom SIP headers
+
+Calling this method on the PlivoOutgoing object with the SIP URI
+would initiate an outbound call with custom SIP headers.
+```
+(void)call:(NSString *)sipURI headers:(NSDictionary *)headers error:(NSError **)error;
+```
 
 
 ### <a name="bullet7"></a>7. Receive an incoming call
