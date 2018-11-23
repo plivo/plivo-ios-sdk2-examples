@@ -162,15 +162,15 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             UtilClass.makeToast(error.localizedDescription)
             UtilClass.hideToastActivity()
             print(error.localizedDescription)
-            UtilClass.setUserAuthenticationStatus(false)
-            UserDefaults.standard.removeObject(forKey: kUSERNAME)
-            UserDefaults.standard.removeObject(forKey: kPASSWORD)
-            UserDefaults.standard.synchronize()
-            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
-            Phone.sharedInstance.setDelegate(loginVC!)
-            let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            _appDelegate?.window?.rootViewController = loginVC
+//            UtilClass.setUserAuthenticationStatus(false)
+//            UserDefaults.standard.removeObject(forKey: kUSERNAME)
+//            UserDefaults.standard.removeObject(forKey: kPASSWORD)
+//            UserDefaults.standard.synchronize()
+//            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//            let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
+//            Phone.sharedInstance.setDelegate(loginVC!)
+//            let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+//            _appDelegate?.window?.rootViewController = loginVC
         })
     }
     

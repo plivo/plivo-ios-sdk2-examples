@@ -76,7 +76,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             tabBarContrler?.selectedViewController = tabBarContrler?.viewControllers?[1]
             window?.rootViewController = tabBarContrler
             //Get Username and Password from NSUserDefaults and Login
-            Phone.sharedInstance.login(withUserName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, andPassword: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
+            if UtilClass.isNetworkAvailable() {
+                Phone.sharedInstance.login(withUserName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, andPassword: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
+            }
         }
         else {
             //First time Log-In setup
