@@ -162,15 +162,28 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             UtilClass.makeToast(error.localizedDescription)
             UtilClass.hideToastActivity()
             print(error.localizedDescription)
-            UtilClass.setUserAuthenticationStatus(false)
-            UserDefaults.standard.removeObject(forKey: kUSERNAME)
-            UserDefaults.standard.removeObject(forKey: kPASSWORD)
-            UserDefaults.standard.synchronize()
-            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
-            Phone.sharedInstance.setDelegate(loginVC!)
-            let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            _appDelegate?.window?.rootViewController = loginVC
+            
+            switch (error! as NSError).code {
+            case 502:
+                //Bad Gateway
+                break
+                
+            case 503:
+                //Service Unavailable
+                break
+                
+            default:
+                UtilClass.setUserAuthenticationStatus(false)
+                UserDefaults.standard.removeObject(forKey: kUSERNAME)
+                UserDefaults.standard.removeObject(forKey: kPASSWORD)
+                UserDefaults.standard.synchronize()
+                let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
+                Phone.sharedInstance.setDelegate(loginVC!)
+                let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+                _appDelegate?.window?.rootViewController = loginVC
+                break
+            }
         })
     }
     
@@ -219,14 +232,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 
                 //Added by Siva on Tue 11th, 2017
                 if !(incCall != nil) && !(outCall != nil) {
-                    DispatchQueue.main.async(execute: {() -> Void in
-                        self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
-                        self.userNameTextField.text = ""
-                        self.pad?.digitsTextField.text = ""
-                        self.pad?.rawText = ""
-                        self.callerNameLabel.text = incoming.fromUser
-                        self.callStateLabel.text = "Incoming call..."
-                    })
                     /* log it */
                     print("Incoming Call from %@", incoming.fromContact);
                     print("Call id in incoming is:")
@@ -236,6 +241,14 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                     outCall = nil
                     CallKitInstance.sharedInstance.callUUID = UUID()
                     reportIncomingCall(from: incoming.fromUser, with: CallKitInstance.sharedInstance.callUUID!)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)) {
+                        self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
+                        self.userNameTextField.text = ""
+                        self.pad?.digitsTextField.text = ""
+                        self.pad?.rawText = ""
+                        self.callerNameLabel.text = incoming.fromUser
+                        self.callStateLabel.text = "Incoming call..."
+                    }
                 }
                 else {
                     /*
