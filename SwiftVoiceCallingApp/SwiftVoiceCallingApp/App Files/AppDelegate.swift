@@ -18,10 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     var window: UIWindow?
     var viewController: ContactsViewController?
-
+    var plivoUserName = ""
+    var plivoPassword = ""
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-                
+        
         //For VOIP Notificaitons
         if #available(iOS 10.0, *)
         {
@@ -75,9 +77,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             Phone.sharedInstance.setDelegate(viewController!)
             tabBarContrler?.selectedViewController = tabBarContrler?.viewControllers?[1]
             window?.rootViewController = tabBarContrler
+            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             //Get Username and Password from NSUserDefaults and Login
             if UtilClass.isNetworkAvailable() {
-                Phone.sharedInstance.login(withUserName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, andPassword: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
+                appDelegate?.voipRegistration(userName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, password: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
             }
         }
         else {
@@ -92,8 +95,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     }
     
     // Register for VoIP notifications
-    func voipRegistration() {
-        
+    func voipRegistration(userName: String, password: String) {
+        plivoUserName = userName
+        plivoPassword = password
         let mainQueue = DispatchQueue.main
         // Create a push registry object
         let voipResistry = PKPushRegistry(queue: mainQueue)
@@ -113,7 +117,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             return
         }
         print("Credentials token: \(credentials.token)")
-        Phone.sharedInstance.registerToken(credentials.token)
+        Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, credentials.token)
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenForType type: PKPushType) {

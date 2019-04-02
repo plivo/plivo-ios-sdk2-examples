@@ -147,8 +147,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINSUCCESS)
-            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            appDelegate?.voipRegistration()
             
         })
         print("Ready to make a call");
