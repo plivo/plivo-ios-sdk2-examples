@@ -112,7 +112,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
     }
     
-    func reachabilityChanged(note: Notification) {
+    @objc func reachabilityChanged(note: Notification) {
         
         let reachability = note.object as! Reachability
         
@@ -1010,7 +1010,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * AVAudioSessionInterruptionTypeEnded
      */
     
-    func handleInterruption(_ notification: Notification)
+    @objc func handleInterruption(_ notification: Notification)
     {
         
         if self.incCall != nil || self.outCall != nil
@@ -1054,12 +1054,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
     }
     
-    func handleRouteChange(_ notification: Notification)
+    @objc func handleRouteChange(_ notification: Notification)
     {
         
     }
     
-    func handleMediaServerReset(_ notification: Notification) {
+    @objc func handleMediaServerReset(_ notification: Notification) {
         print("Media server has reset");
         // rebuild the audio chain
         Phone.sharedInstance.configureAudioSession()
@@ -1071,7 +1071,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * End on going calls(If any)
      */
     
-    func appWillTerminate() {
+    @objc func appWillTerminate() {
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
     }
     

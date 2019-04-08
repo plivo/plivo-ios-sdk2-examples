@@ -95,7 +95,7 @@ class CallHistoryViewController: UIViewController, UITableViewDelegate, UITableV
         })
         alert.addAction(noButton)
         alert.addAction(yesButton)
-        present(alert, animated: true, completion: { _ in })
+        present(alert, animated: true, completion: { })
         
     }
     
