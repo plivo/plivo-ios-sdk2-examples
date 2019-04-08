@@ -21,6 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     var plivoUserName = ""
     var plivoPassword = ""
     
+    struct Platform {
+        static let isSimulator: Bool = {
+            var isSim = false
+            #if arch(i386) || arch(x86_64)
+            isSim = true
+            #endif
+            return isSim
+        }()
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -98,6 +108,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     func voipRegistration(userName: String, password: String) {
         plivoUserName = userName
         plivoPassword = password
+        if Platform.isSimulator {
+            Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword)
+        }
+        else {
         let mainQueue = DispatchQueue.main
         // Create a push registry object
         let voipResistry = PKPushRegistry(queue: mainQueue)
@@ -105,6 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         voipResistry.delegate = (self as? PKPushRegistryDelegate)
         //Set the push type to VOIP
         voipResistry.desiredPushTypes = Set<AnyHashable>([PKPushType.voIP]) as? Set<PKPushType>
+        }
     }
     
     // MARK: PKPushRegistryDelegate
