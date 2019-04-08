@@ -117,7 +117,7 @@ class UtilClass: NSObject
         loadingView.layer.cornerRadius = 10
         
         activityIndicator.frame = CGRect(x: 0, y: 0, width: 40, height: 40);
-        activityIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        activityIndicator.style = UIActivityIndicatorView.Style.whiteLarge
         activityIndicator.center = CGPoint(x: loadingView.frame.size.width / 2, y: loadingView.frame.size.height / 2)
         
         loadingView.addSubview(activityIndicator)
@@ -182,7 +182,7 @@ class UtilClass: NSObject
     }
     
     func displayAlertView(titleText: String, message: String, viewController: UIViewController) {
-        let errorAlert = UIAlertController(title: titleText, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        let errorAlert = UIAlertController(title: titleText, message: message, preferredStyle: UIAlertController.Style.alert)
         
         viewController.present(errorAlert, animated: true, completion: nil)
         
@@ -237,8 +237,8 @@ class UtilClass: NSObject
     
     
     func addBoldText(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!) -> NSAttributedString {
-        let nonBoldFontAttribute = [NSAttributedStringKey.font.rawValue:font!, NSAttributedStringKey.foregroundColor: textColor] as! [NSAttributedStringKey : Any]
-        let boldFontAttribute = [NSAttributedStringKey.font.rawValue:boldFont!, NSAttributedStringKey.foregroundColor: textColor] as! [NSAttributedStringKey : Any]
+        let nonBoldFontAttribute = [NSAttributedString.Key.font.rawValue:font!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
+        let boldFontAttribute = [NSAttributedString.Key.font.rawValue:boldFont!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
         let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
         for i in 0 ..< boldPartsOfString.count {
             boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
@@ -248,8 +248,8 @@ class UtilClass: NSObject
     
     func alertTextAttributeString(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!, boldTextColor: UIColor!) -> NSAttributedString {
         
-        let nonBoldFontAttribute = [NSAttributedStringKey.font.rawValue:font!, NSAttributedStringKey.foregroundColor: textColor] as! [NSAttributedStringKey : Any]
-        let boldFontAttribute = [NSAttributedStringKey.font.rawValue:boldFont!, NSAttributedStringKey.foregroundColor: boldTextColor] as! [NSAttributedStringKey : Any]
+        let nonBoldFontAttribute = [NSAttributedString.Key.font.rawValue:font!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
+        let boldFontAttribute = [NSAttributedString.Key.font.rawValue:boldFont!, NSAttributedString.Key.foregroundColor: boldTextColor] as! [NSAttributedString.Key : Any]
         let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
         
         for i in 0 ..< boldPartsOfString.count {
@@ -263,12 +263,12 @@ class UtilClass: NSObject
     func setNavbarBGImage(navgationBar:UINavigationBar)
     {
         let image =  UIImage(named:"Nav_BG")!
-        navgationBar.setBackgroundImage(image.resizableImage(withCapInsets: UIEdgeInsetsMake(0, 0, 0, 0), resizingMode: .stretch), for: .default)
+        navgationBar.setBackgroundImage(image.resizableImage(withCapInsets: UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0), resizingMode: .stretch), for: .default)
     }
     func setComNavbarBGImage(navgationBar:UINavigationBar)
     {
         let image =  UIImage(named:"com_nav_bg")!
-        navgationBar.setBackgroundImage(image.resizableImage(withCapInsets: UIEdgeInsetsMake(0, 0, 0, 0), resizingMode: .stretch), for: .default)
+        navgationBar.setBackgroundImage(image.resizableImage(withCapInsets: UIEdgeInsets.init(top: 0, left: 0, bottom: 0, right: 0), resizingMode: .stretch), for: .default)
     }
     // Round Corner UIVIEW
     class func setViewRoundCorner(cornerView : UIView) {

@@ -29,12 +29,12 @@ class CallHistoryViewController: UIViewController, UITableViewDelegate, UITableV
         if !(CallInfo.getCallsInfoArray().count > 0) {
             callHistoryTableView.isHidden = true
             noRecentCallsLabel.isHidden = false
-            view.bringSubview(toFront: noRecentCallsLabel)
+            view.bringSubviewToFront(noRecentCallsLabel)
         }
         else {
             callHistoryTableView.isHidden = false
             noRecentCallsLabel.isHidden = true
-            view.bringSubview(toFront: callHistoryTableView)
+            view.bringSubviewToFront(callHistoryTableView)
             callHistoryTableView.reloadData()
         }
     }

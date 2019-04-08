@@ -96,12 +96,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func addObservers() {
         // add interruption handler
-        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleInterruption), name: NSNotification.Name.AVAudioSessionInterruption, object: AVAudioSession.sharedInstance())
+        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleInterruption), name: AVAudioSession.interruptionNotification, object: AVAudioSession.sharedInstance())
         // we don't do anything special in the route change notification
-        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleRouteChange), name: NSNotification.Name.AVAudioSessionRouteChange, object: AVAudioSession.sharedInstance())
+        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleRouteChange), name: AVAudioSession.routeChangeNotification, object: AVAudioSession.sharedInstance())
         // if media services are reset, we need to rebuild our audio chain
-        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleMediaServerReset), name: NSNotification.Name.AVAudioSessionMediaServicesWereReset, object: AVAudioSession.sharedInstance())
-        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.appWillTerminate), name: NSNotification.Name.UIApplicationWillTerminate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleMediaServerReset), name: AVAudioSession.mediaServicesWereResetNotification, object: AVAudioSession.sharedInstance())
+        NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.appWillTerminate), name: UIApplication.willTerminateNotification, object: nil)
         
         //To check Network Reachability
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
@@ -218,9 +218,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func onIncomingCall(_ incoming: PlivoIncoming) {
         isItUserAction = true
-        switch AVAudioSession.sharedInstance().recordPermission()
+        switch AVAudioSession.sharedInstance().recordPermission
         {
-            case AVAudioSessionRecordPermission.granted:
+            case AVAudioSession.RecordPermission.granted:
                
                 print("Permission granted")
                 
@@ -257,13 +257,13 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 }
                 break
             
-            case AVAudioSessionRecordPermission.denied:
+            case AVAudioSession.RecordPermission.denied:
                 print("Pemission denied")
                 UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
                 incoming.reject()
                 break
             
-            case AVAudioSessionRecordPermission.undetermined:
+            case AVAudioSession.RecordPermission.undetermined:
                 print("Request permission here")
                 break
             
@@ -394,9 +394,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         if UtilClass.isNetworkAvailable(){
             
-            switch AVAudioSession.sharedInstance().recordPermission() {
+            switch AVAudioSession.sharedInstance().recordPermission {
                 
-            case AVAudioSessionRecordPermission.granted:
+            case AVAudioSession.RecordPermission.granted:
                 print("Permission granted");
                 hideActiveCallView()
                 unhideActiveCallView()
@@ -444,10 +444,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                     }
                 })
                 break
-            case AVAudioSessionRecordPermission.denied:
+            case AVAudioSession.RecordPermission.denied:
                 UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
                 break
-            case AVAudioSessionRecordPermission.undetermined:
+            case AVAudioSession.RecordPermission.undetermined:
                 // This is the initial state before a user has made any choice
                 // You can use this spot to request permission here if you want
                 break
@@ -725,16 +725,16 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         if UtilClass.isNetworkAvailable(){
 
-        switch AVAudioSession.sharedInstance().recordPermission() {
+        switch AVAudioSession.sharedInstance().recordPermission {
             
-        case AVAudioSessionRecordPermission.granted:
+        case AVAudioSession.RecordPermission.granted:
             
             if (!(userNameTextField.text! == "SIP URI or Phone Number") && !UtilClass.isEmpty(userNameTextField.text!)) || !UtilClass.isEmpty(pad!.digitsTextField.text!) || (incCall != nil) || (outCall != nil) {
                 
                 let img: UIImage? = (sender as AnyObject).image(for: .normal)
-                let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
+                let data1: NSData? = img!.pngData() as NSData?
                 
-                if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "MakeCall.png")!)))! {
+                if (data1?.isEqual(UIImage(named: "MakeCall.png")!.pngData()))! {
  
                     callStateLabel.text = "Calling..."
                     callerNameLabel.text = pad?.digitsTextField.text
@@ -759,7 +759,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                     performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: handle)
                     
                 }
-                else if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "EndCall.png")!)))! {
+                else if (data1?.isEqual(UIImage(named: "EndCall.png")!.pngData()))! {
 
                     isItUserAction = true
                     performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!)
@@ -769,10 +769,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 UtilClass.makeToast(kINVALIDSIPENDPOINTMSG)
             }
             break
-        case AVAudioSessionRecordPermission.denied:
+        case AVAudioSession.RecordPermission.denied:
             UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
             break
-        case AVAudioSessionRecordPermission.undetermined:
+        case AVAudioSession.RecordPermission.undetermined:
             // This is the initial state before a user has made any choice
             // You can use this spot to request permission here if you want
             break
@@ -800,7 +800,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         speakerButton.isHidden = true
         activeCallImageView.isHidden = true
         userNameTextField.text = ""
-        view.bringSubview(toFront: hideButton)
+        view.bringSubviewToFront(hideButton)
         userNameTextField.isHidden = false
         userNameTextField.textColor = UIColor.white
         dialPadView.isHidden = false
@@ -844,9 +844,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     @IBAction func muteButtonTapped(_ sender: Any) {
         let img: UIImage? = (sender as AnyObject).image(for: .normal)
         
-        let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
+        let data1: NSData? = img!.pngData() as NSData?
         
-        if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "Unmute.png")!)))! {
+        if (data1?.isEqual(UIImage(named: "Unmute.png")!.pngData()))! {
 
             DispatchQueue.main.async(execute: {() -> Void in
                 self.muteButton.setImage(UIImage(named: "MuteIcon.png"), for: .normal)
@@ -879,9 +879,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         
         let img: UIImage? = (sender as AnyObject).image(for: .normal)
         
-        let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
+        let data1: NSData? = img!.pngData() as NSData?
         
-        if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "UnholdIcon.png")!)))! {
+        if (data1?.isEqual(UIImage(named: "UnholdIcon.png")!.pngData()))! {
 
             DispatchQueue.main.async(execute: {() -> Void in
                 self.holdButton.setImage(UIImage(named: "HoldIcon.png"), for: .normal)
@@ -928,7 +928,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             self.speakerButton.setImage(UIImage(named: "Speaker.png"), for: .normal)
             
             do {
-                try audioSession.overrideOutputAudioPort(AVAudioSessionPortOverride.none)
+                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.none)
             } catch let error as NSError {
                 print("audioSession error: \(error.localizedDescription)")
             }
@@ -941,7 +941,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             /* Enable Speaker Phone mode */
             
             do {
-                try audioSession.overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
+                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
             } catch let error as NSError {
                 print("audioSession error: \(error.localizedDescription)")
             }
@@ -1017,7 +1017,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         {
             guard let userInfo = notification.userInfo,
                 let interruptionTypeRawValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-                let interruptionType = AVAudioSessionInterruptionType(rawValue: interruptionTypeRawValue) else {
+                let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeRawValue) else {
                     return
             }
             
@@ -1131,8 +1131,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // return NO to disallow editing.
         let img: UIImage? = callButton.image(for: .normal)
-        let data1: NSData? = UIImagePNGRepresentation(img!) as NSData?
-        if (data1?.isEqual(UIImagePNGRepresentation(UIImage(named: "EndCall.png")!)))! {
+        let data1: NSData? = img!.pngData() as NSData?
+        if (data1?.isEqual(UIImage(named: "EndCall.png")!.pngData()))! {
             return false
         } else {
             userNameTextField.text = ""

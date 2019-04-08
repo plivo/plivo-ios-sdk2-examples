@@ -98,7 +98,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      * onLogin delegate implementation.
      */
     
-    func onLogin() {
+    @objc func onLogin() {
         
         DispatchQueue.main.async(execute: {() -> Void in
             
