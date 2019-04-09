@@ -1128,7 +1128,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     /**
      * Hide keyboard when text filed being clicked
      */
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+    @objc func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         // return NO to disallow editing.
         let img: UIImage? = callButton.image(for: .normal)
         let data1: NSData? = img!.pngData() as NSData?
