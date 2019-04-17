@@ -132,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             return
         }
         print("Credentials token: \(credentials.token)")
-        Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, credentials.token)
+        Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, deviceToken: credentials.token)
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
