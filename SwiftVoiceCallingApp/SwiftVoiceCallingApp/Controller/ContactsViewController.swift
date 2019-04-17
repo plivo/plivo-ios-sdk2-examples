@@ -153,7 +153,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     self.phoneContacts = contacts
                     
                     self.noContactsLabel.isHidden = true
-                    self.view.bringSubview(toFront: self.contactsTableView)
+                    self.view.bringSubviewToFront(self.contactsTableView)
                     self.contactsTableView.reloadData()
                     var contctArray = [Any]() /* capacity: contacts.count */
 
@@ -407,7 +407,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         })
         alert.addAction(noButton)
         alert.addAction(yesButton)
-        present(alert, animated: true, completion: { _ in })
+        present(alert, animated: true, completion: { })
     }
     
 }
