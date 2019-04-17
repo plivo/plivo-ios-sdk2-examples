@@ -18,10 +18,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     var window: UIWindow?
     var viewController: ContactsViewController?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    var plivoUserName = ""
+    var plivoPassword = ""
+    
+    struct Platform {
+        static let isSimulator: Bool = {
+            var isSim = false
+            #if arch(i386) || arch(x86_64)
+            isSim = true
+            #endif
+            return isSim
+        }()
+    }
+    
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-                
+        
         //For VOIP Notificaitons
         if #available(iOS 10.0, *)
         {
@@ -40,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
                     print("granted")
                     
                     do {
-                        try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+                        try session.setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playAndRecord)), mode: AVAudioSession.Mode.default)
                         try session.setActive(true)
                     }
                     catch {
@@ -75,9 +87,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             Phone.sharedInstance.setDelegate(viewController!)
             tabBarContrler?.selectedViewController = tabBarContrler?.viewControllers?[1]
             window?.rootViewController = tabBarContrler
+            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             //Get Username and Password from NSUserDefaults and Login
             if UtilClass.isNetworkAvailable() {
-                Phone.sharedInstance.login(withUserName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, andPassword: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
+                appDelegate?.voipRegistration(userName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, password: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
             }
         }
         else {
@@ -92,8 +105,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     }
     
     // Register for VoIP notifications
-    func voipRegistration() {
-        
+    func voipRegistration(userName: String, password: String) {
+        plivoUserName = userName
+        plivoPassword = password
+        if Platform.isSimulator {
+            Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword)
+        }
+        else {
         let mainQueue = DispatchQueue.main
         // Create a push registry object
         let voipResistry = PKPushRegistry(queue: mainQueue)
@@ -101,10 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         voipResistry.delegate = (self as? PKPushRegistryDelegate)
         //Set the push type to VOIP
         voipResistry.desiredPushTypes = Set<AnyHashable>([PKPushType.voIP]) as? Set<PKPushType>
+        }
     }
     
     // MARK: PKPushRegistryDelegate
-    func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, forType type: PKPushType) {
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, for type: PKPushType) {
         
         NSLog("pushRegistry:didUpdatePushCredentials:forType:");
         
@@ -113,16 +132,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             return
         }
         print("Credentials token: \(credentials.token)")
-        Phone.sharedInstance.registerToken(credentials.token)
+        Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, credentials.token)
     }
     
-    func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenForType type: PKPushType) {
+    func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
         NSLog("pushRegistry:didInvalidatePushTokenForType:")
         
         
     }
     
-    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, forType type: PKPushType) {
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
         
         NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
         
@@ -170,7 +189,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     @nonobjc func application(_ app: UIApplication, open url: URL, options: [String: Any]) -> Bool {
         
-        return application(app, processOpenURLAction: url, sourceApplication:UIApplicationOpenURLOptionsKey.sourceApplication.rawValue, annotation: UIApplicationOpenURLOptionsKey.annotation, iosVersion: 9)
+        return application(app, processOpenURLAction: url, sourceApplication:UIApplication.OpenURLOptionsKey.sourceApplication.rawValue, annotation: UIApplication.OpenURLOptionsKey.annotation, iosVersion: 9)
         
     }
     
@@ -185,7 +204,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             return true
     }
 
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping (_ restorableObjects: [Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping (_ restorableObjects: [UIUserActivityRestoring]?) -> Void) -> Bool {
         if UtilClass.getUserAuthenticationStatus() {
             //When user taps on iPhone's native call list
             //This method will be called only if the call is related to Plivo
@@ -249,3 +268,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     }
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
+	return input.rawValue
+}

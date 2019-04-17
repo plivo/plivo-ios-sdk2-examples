@@ -86,8 +86,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if UtilClass.isNetworkAvailable() {
                 view.isUserInteractionEnabled = false
                 UtilClass.makeToastActivity()
-                Phone.sharedInstance.login(withUserName: userNameTextField.text!, andPassword: passwordTextField.text!)
-            }
+                let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+                appDelegate?.voipRegistration(userName: userNameTextField.text!, password: passwordTextField.text!)            }
             else {
                 UtilClass.makeToast(kNOINTERNETMSG)
             }
@@ -98,7 +98,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
      * onLogin delegate implementation.
      */
     
-    func onLogin() {
+    @objc func onLogin() {
         
         DispatchQueue.main.async(execute: {() -> Void in
             
@@ -128,8 +128,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             Phone.sharedInstance.setDelegate(plivoVC!)
             tabbarControler?.selectedViewController = tabbarControler?.viewControllers?[1]
             _appDelegate?.window?.rootViewController = tabbarControler
-            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            appDelegate?.voipRegistration()
         })
     }
     

@@ -120,14 +120,33 @@ typedef enum
  */
 - (void)login:(NSString *)username AndPassword:(NSString *)password;
 
-/*  
+/* Registers an endpoint with timeout in seconds
  
-    This method is used to register the device token for VOIP push notifications.
-    @param token
-    Register for Push Notifications and get the device token from APNS and tell the PlivoVoiceKit about the push token
-
+ Calling this method with the username, password and timeout of your SIP endpoint would
+ register the endpoint.
  */
-- (void)registerToken:(NSData*)token;
+- (void)login:(NSString *)username AndPassword:(NSString *)password RegTimeout:(int)regTimeout;
+
+/*
+ 
+ This method is used for registering an endpoint with device token for VOIP push notifications.
+
+ Calling this method with the username, password and device token would register the endpoint and get
+ the device token from APNS and tell the PlivoVoiceKit about the push token
+ 
+ */
+
+- (void)login:(NSString *)username AndPassword:(NSString *)password DeviceToken:(NSData*)token;
+
+/*
+ 
+ This method is used to register the device token for VOIP push notifications.
+ @param token
+ Register for Push Notifications and get the device token from APNS and tell the PlivoVoiceKit about the push token
+ 
+ */
+
+- (void)registerToken:(NSData*)token __deprecated_msg("registerToken will be deprecated in upcoming release. Use login(username, password, token) instead");
 
 /* 
     @param pushInfo is NSDictionary object, this is forwarded by the apple push notification.
