@@ -140,6 +140,17 @@ typedef enum
 
 /*
  
+ This method is used for registering an endpoint with device token and certificate ID for VOIP push notifications.
+ 
+ Calling this method with the username, password, device token and certificate ID would register the endpoint and get
+ the device token from APNS and tell the PlivoVoiceKit about the push token
+ 
+ */
+
+- (void)login:(NSString *)username AndPassword:(NSString *)password DeviceToken:(NSData*)token CertificateId:(NSString*)certificateId;
+
+/*
+ 
  This method is used to register the device token for VOIP push notifications.
  @param token
  Register for Push Notifications and get the device token from APNS and tell the PlivoVoiceKit about the push token

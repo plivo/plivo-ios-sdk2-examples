@@ -27,7 +27,7 @@ class Phone {
     func login(withUserName userName: String, andPassword password: String, deviceToken token: Data) {
         
         UtilClass.makeToastActivity()
-        endpoint.login(userName, andPassword: password, deviceToken: token)
+        endpoint.login(userName, andPassword: password, deviceToken: token, certificateId: "testid")
     }
     
     //To unregister with SIP Server
