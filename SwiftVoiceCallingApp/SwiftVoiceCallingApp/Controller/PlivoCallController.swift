@@ -338,7 +338,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         print(call.callId)
         if (outCall != nil) {
             self.isItUserAction = true
-            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: false)
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
             outCall = nil
         }
         callSubmitFeddbackUI()
@@ -1108,7 +1108,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     @objc func appWillTerminate() {
-        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!,isFeedback: true)
+        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!,isFeedback: false)
     }
     
     
