@@ -406,7 +406,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         print("Validation error  :  ",validationErrorMessage)
     }
     
-    func onSubmitCallQualityFeedbackFailure(_ error: Error!) {
+    func onFeedbackFailure(_ error: Error!) {
         print("Submit Feedback Failure ")
     }
     
