@@ -82,7 +82,8 @@ class Phone {
         endpoint.stopAudioDevice()
     }
     
-    func submitFeedback(starRating: Int , issueList: [AnyObject], comments: String, addConsoleLog: Bool) {
-        endpoint.submitCallQualityFeedback(starRating,  issueList, comments, addConsoleLog)
+    func submitFeedback(starRating: Int , issueList: [AnyObject], notes: String, sendConsoleLog: Bool) {
+        let callUUID:String? = endpoint.getLastCallUUID();
+        endpoint.submitCallQualityFeedback(callUUID, starRating,  issueList, notes, sendConsoleLog)
     }
 }

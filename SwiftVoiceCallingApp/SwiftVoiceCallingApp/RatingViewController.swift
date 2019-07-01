@@ -93,7 +93,7 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
             self.present(alert, animated: true, completion: nil)
         }
         else{
-            Phone.sharedInstance.submitFeedback(starRating: self.starRating, issueList: issueList,comments : comments.text, addConsoleLog : sendConsoleLog.isOn)
+            Phone.sharedInstance.submitFeedback(starRating: self.starRating, issueList: issueList, notes : comments.text, sendConsoleLog : sendConsoleLog.isOn)
             let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             let tabbarControler: UITabBarController? = _mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
