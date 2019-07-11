@@ -90,6 +90,13 @@ typedef enum
 - (void)onOutgoingCallHangup:(PlivoOutgoing *)call;
 
 
+- (void)onFeedbackSuccess: (int) statusCode;
+
+- (void)onFeedbackFailure: (NSError*) error;
+
+- (void)onFeedbackValidationError:(NSString *) validationErrorMessage;
+
+
 @end
 
 
@@ -137,6 +144,17 @@ typedef enum
  */
 
 - (void)login:(NSString *)username AndPassword:(NSString *)password DeviceToken:(NSData*)token;
+
+/*
+ 
+ This method is used for registering an endpoint with device token and certificate ID for VOIP push notifications.
+ 
+ Calling this method with the username, password, device token and certificate ID would register the endpoint and get
+ the device token from APNS and tell the PlivoVoiceKit about the push token
+ 
+ */
+
+- (void)login:(NSString *)username AndPassword:(NSString *)password DeviceToken:(NSData*)token CertificateId:(NSString*)certificateId;
 
 /*
  
@@ -189,6 +207,12 @@ typedef enum
  */
 - (PlivoOutgoing *)createOutgoingCall;
 
+- (void)submitCallQualityFeedback : (NSString *) callUUID : (NSInteger) startRating : (NSArray *) issues : (NSString *) notes : (BOOL) sendConsoleLog;
+
+- (NSString *)getLastCallUUID;
+
+
+
 /* Calling this method resets the endpoint */
 
 + (void)resetEndpoint;
@@ -211,7 +235,10 @@ typedef enum
 - (void)onOutgoingCallRejectedNotification:(PlivoOutgoing *)outgoing;
 - (void)onOutgoingCallInvalidNotification:(PlivoOutgoing *)outgoing;
 - (void)onOutgoingCallHangupNotification:(PlivoOutgoing *)outgoing;
-
+- (void)onSubmitCallQualityFeedbackSuccess : (int) statusCode;
+- (void)onSubmitCallQualityFeedbackFailure : (NSError *) error;
+- (void)onSubmitCallQualityFeedbackValidationError:(NSString *) errorMessage;
+- (NSMutableDictionary *) validateInputs : (NSString *) callUUID : (NSInteger) rating : (NSArray *) issues : (NSString *) note;
 @end
 
 
