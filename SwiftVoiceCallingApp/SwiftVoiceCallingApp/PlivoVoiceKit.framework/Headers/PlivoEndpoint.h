@@ -90,6 +90,13 @@ typedef enum
 - (void)onOutgoingCallHangup:(PlivoOutgoing *)call;
 
 
+- (void)onFeedbackSuccess: (int) statusCode;
+
+- (void)onFeedbackFailure: (NSError*) error;
+
+- (void)onFeedbackValidationError:(NSString *) validationErrorMessage;
+
+
 @end
 
 
@@ -200,6 +207,14 @@ typedef enum
  */
 - (PlivoOutgoing *)createOutgoingCall;
 
+- (void)submitCallQualityFeedback : (NSString *) callUUID : (NSInteger) startRating : (NSArray *) issues : (NSString *) notes : (Boolean) sendConsoleLog;
+
+- (NSString *)getLastCallUUID;
+
+- (NSString *)getCallUUID;
+
+
+
 /* Calling this method resets the endpoint */
 
 + (void)resetEndpoint;
@@ -222,7 +237,10 @@ typedef enum
 - (void)onOutgoingCallRejectedNotification:(PlivoOutgoing *)outgoing;
 - (void)onOutgoingCallInvalidNotification:(PlivoOutgoing *)outgoing;
 - (void)onOutgoingCallHangupNotification:(PlivoOutgoing *)outgoing;
-
+- (void)onSubmitCallQualityFeedbackSuccess : (int) statusCode;
+- (void)onSubmitCallQualityFeedbackFailure : (NSError *) error;
+- (void)onSubmitCallQualityFeedbackValidationError:(NSString *) errorMessage;
+- (NSMutableDictionary *) validateInputs : (NSString *) callUUID : (NSInteger) rating : (NSArray *) issues : (NSString *) note;
 @end
 
 
