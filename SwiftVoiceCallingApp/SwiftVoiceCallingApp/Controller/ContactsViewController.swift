@@ -22,6 +22,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var contactsTableView: UITableView!
     @IBOutlet weak var noContactsLabel: UILabel!
     
+    
     // MARK: - Life cycle
     
     required init?(coder aDecoder: NSCoder)
@@ -390,6 +391,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     
+    }
+    @IBAction func feedbackButtonTapped(_ sender: Any) {
     }
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
