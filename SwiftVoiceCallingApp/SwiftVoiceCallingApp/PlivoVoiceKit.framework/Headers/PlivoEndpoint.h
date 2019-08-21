@@ -106,7 +106,7 @@ typedef enum
 
 /* The delegate object on which events will be received.
  */
-@property (nonatomic, assign) id delegate;
+@property (nonatomic, weak) id delegate;
 @property (nonatomic, readwrite) PlivoAccId accId;
 
 /**
