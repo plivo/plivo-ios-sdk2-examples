@@ -928,7 +928,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             if (outCall != nil) {
                 outCall?.hold()
             }
-            Phone.sharedInstance.stopAudioDevice()
+//            Phone.sharedInstance.stopAudioDevice()
             
         }
         else {
@@ -942,7 +942,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             if (outCall != nil) {
                 outCall?.unhold()
             }
-            Phone.sharedInstance.startAudioDevice()
+//            Phone.sharedInstance.startAudioDevice()
             
         }
     }
