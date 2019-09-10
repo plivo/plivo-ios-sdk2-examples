@@ -303,6 +303,14 @@ class UtilClass: NSObject
         appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg)
     }
     
+    class func makeToastWithStyle(_ toastMsg: String) {
+        let style = CSToastStyle.init(defaultStyle: {}())
+        _ = style?.messageColor = UIColor.red
+        let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+        let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
+        appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg, duration: 2.0, position: CGPoint(x: frame.maxX-125, y: frame.minY+50), style: style)
+    }
+    
     /**
      *  User's authentication status
      *

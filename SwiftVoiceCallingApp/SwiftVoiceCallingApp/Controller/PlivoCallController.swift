@@ -410,6 +410,19 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         print("Submit Feedback Failure ")
     }
     
+    /**
+     * mediaMetrics delegate implementation
+     */
+    func mediaMetrics(_ metricdata: [AnyHashable: Any]) {
+        let active = metricdata["active"] as! Bool
+        let type = metricdata["type"] as! String
+        if active == true {
+            UtilClass.makeToastWithStyle(String(format:"warning | %@", type))
+        } else {
+            
+        }
+    }
+    
     // MARK: - CallKit Actions
     func performStartCallAction(with uuid: UUID, handle: String) {
         
