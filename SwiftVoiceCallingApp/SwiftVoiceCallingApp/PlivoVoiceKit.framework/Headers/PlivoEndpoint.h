@@ -116,9 +116,19 @@ typedef enum
 - (id)init;
 
 /**
+ * Init endpoint object and specify it's options like "enableTracking, debug etc."
+ */
+- (id)init:(NSDictionary *)initOptions;
+
+/**
  * Init endpoint object and specify it's debug flag
  */
-- (id)initWithDebug:(BOOL)isDebug;
+- (id)initWithDebug:(BOOL)isDebug __deprecated_msg("'initWithDebug:isDebug' is deprecated. Use `init:initOptions` or `init:` instead");
+
+/**
+ * Init endpoint object and specify it's debug flag and options like "enableTracking etc."
+ */
+- (id)initWithDebug:(BOOL)isDebug :(NSDictionary *)initOptions __deprecated_msg("'initWithDebug:isDebug:initOptions' is deprecated. Use `init:initOptions` or `init:` instead");
 
 /* Registers an endpoint
  
@@ -164,7 +174,7 @@ typedef enum
  
  */
 
-- (void)registerToken:(NSData*)token __deprecated_msg("registerToken will be deprecated in upcoming release. Use login(username, password, token) instead");
+- (void)registerToken:(NSData*)token __deprecated_msg("'registerToken:token' is deprecated. Use `login:username:password:token` instead");
 
 /* 
     @param pushInfo is NSDictionary object, this is forwarded by the apple push notification.
