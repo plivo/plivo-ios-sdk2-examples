@@ -146,10 +146,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
         
         if (type == PKPushType.voIP) {
+            Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
             
-            DispatchQueue.main.async(execute: {() -> Void in
-                Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
-            })
+//            DispatchQueue.main.async(execute: {() -> Void in
+//                Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
+//            })
         }
     }
     

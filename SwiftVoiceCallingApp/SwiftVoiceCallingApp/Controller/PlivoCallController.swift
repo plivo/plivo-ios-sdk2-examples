@@ -28,6 +28,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
 
     var pad: JCDialPad?
     var timer: MZTimerLabel?
+    var answerTimer: Timer?
     var callObserver: CXCallObserver?
     
     var isItUserAction: Bool = false
@@ -37,6 +38,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     var incCall: PlivoIncoming?
     
     var isSpeakerOn: Bool = false
+    var isIncomingCallAnswered: Bool = false
 
     let reachability = Reachability()!
     
@@ -272,6 +274,33 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
         
     }
+    
+    
+    /**
+     * onIncomingCallAnswered delegate implementation.
+     */
+    
+    func onIncomingCallAnswered(_ incoming: PlivoIncoming) {
+        print("- Incoming call answered");
+        print("Call id in incoming answered is:")
+        print(incoming.callId)
+        isIncomingCallAnswered = true
+    }
+    
+    /**
+     * onIncomingCallInvalid delegate implementation.
+     */
+    
+    func onIncomingCallInvalid(_ incoming: PlivoIncoming) {
+        print("- Incoming call is invalid");
+        print("Call id in incoming answered is:")
+        print(incoming.callId)
+        self.isItUserAction = true
+        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
+        incCall = nil
+        callSubmitFeddbackUI()
+    }
+    
     
     /**
      * onIncomingCallHangup delegate implementation.
@@ -698,15 +727,27 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             self.muteButton.isEnabled = true
             self.holdButton.isEnabled = true
             self.keypadButton.isEnabled = true
-            if !(self.timer != nil) {
-                self.timer = MZTimerLabel(label: self.callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
-                self.timer?.timeFormat = "HH:mm:ss"
-                self.timer?.start()
-            }
-            else {
-                self.timer?.start()
-            }
         })
+        answerTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(invalidateTimerWhenAnswered), userInfo: nil, repeats: true)
+    }
+    
+    @objc func invalidateTimerWhenAnswered(){
+        if (isIncomingCallAnswered) {
+            DispatchQueue.main.async(execute: {() -> Void in
+                self.callStateLabel.text = "Answered..."
+                if !(self.timer != nil) {
+                    self.timer = MZTimerLabel(label: self.callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
+                    self.timer?.timeFormat = "HH:mm:ss"
+                    self.timer?.start()
+                }
+                else {
+                    self.timer?.start()
+                }
+            })
+            self.answerTimer?.invalidate()
+        } else {
+            self.callStateLabel.text = "Connecting..."
+        }
     }
     
     func provider(_ provider: CXProvider, perform action: CXPlayDTMFCallAction) {
