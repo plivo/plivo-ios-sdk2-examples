@@ -295,9 +295,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         print("- Incoming call is invalid");
         print("Call id in incoming answered is:")
         print(incoming.callId)
-        self.isItUserAction = true
-        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
-        incCall = nil
+        if (incCall != nil) {
+            self.isItUserAction = true
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
+            incCall = nil
+        }
         callSubmitFeddbackUI()
     }
     
