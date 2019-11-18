@@ -30,8 +30,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         
-        userNameTextField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
-        passwordTextField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
+//        userNameTextField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
+//        passwordTextField.setValue(UIColor.white, forKeyPath: "_placeholderLabel.textColor")
         
     }
 
