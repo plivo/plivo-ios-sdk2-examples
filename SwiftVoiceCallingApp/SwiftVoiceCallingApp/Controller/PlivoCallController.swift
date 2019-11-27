@@ -291,8 +291,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onIncomingCallInvalid delegate implementation.
      */
     
-    func onIncomingCallInvalid() {
+    func onIncomingCallInvalid(_ incoming: PlivoIncoming) {
         print("- Incoming call is invalid");
+        print("Call id in incoming call invalid is:")
+        print(incoming.callId)
         if (incCall != nil) {
             self.isItUserAction = true
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
