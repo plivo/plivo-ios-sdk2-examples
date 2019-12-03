@@ -1081,18 +1081,18 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func unhideActiveCallView() {
         UIDevice.current.isProximityMonitoringEnabled = true
-        callerNameLabel.isHidden = false
-        callStateLabel.isHidden = false
-        activeCallImageView.isHidden = false
-        muteButton.isHidden = false
-        keypadButton.isHidden = false
-        holdButton.isHidden = false
-        dialPadView.isHidden = true
-        userNameTextField.isHidden = true
+        callerNameLabel?.isHidden = false
+        callStateLabel?.isHidden = false
+        activeCallImageView?.isHidden = false
+        muteButton?.isHidden = false
+        keypadButton?.isHidden = false
+        holdButton?.isHidden = false
+        dialPadView?.isHidden = true
+        userNameTextField?.isHidden = true
         pad?.digitsTextField.isHidden = true
         pad?.showDeleteButton = false
         tabBarController?.tabBar.isHidden = true
-        callButton.setImage(UIImage(named: "EndCall.png"), for: .normal)
+        callButton?.setImage(UIImage(named: "EndCall.png"), for: .normal)
     }
     
     
