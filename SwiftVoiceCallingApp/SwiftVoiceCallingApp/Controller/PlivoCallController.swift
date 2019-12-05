@@ -62,7 +62,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
         //Add Call Interruption observers
         addObservers()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -801,10 +800,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func callSubmitFeddbackUI(){
-        let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let ratingVC: RatingViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController
-        Phone.sharedInstance.setDelegate(ratingVC!)
         DispatchQueue.main.async{
+            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let ratingVC: RatingViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController
+            Phone.sharedInstance.setDelegate(ratingVC!)
             let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             _appDelegate?.window?.rootViewController = ratingVC
         }
