@@ -45,10 +45,20 @@ typedef enum
  */
 - (void)onIncomingCall:(PlivoIncoming *)incoming;
 
+/* On an incoming call, if the call is answered by the caller, this delegate
+ would be triggered with the PlivoIncoming object.
+ */
+- (void)onIncomingCallAnswered:(PlivoIncoming *)incoming;
+
 /* On an incoming call, if the call is disconnected by the caller, this delegate
  would be triggered with the PlivoIncoming object.
  */
 - (void)onIncomingCallRejected:(PlivoIncoming *)incoming;
+
+/* On an incoming call, if the call gets timed out, this delegate
+ would be triggered with the PlivoIncoming object.
+ */
+- (void)onIncomingCallInvalid:(PlivoIncoming *)incoming;
 
 /* On an incoming call, if the call is disconnected by the caller after being answered,
  this delegate would be triggered with the PlivoIncoming object.
@@ -96,6 +106,7 @@ typedef enum
 
 - (void)onFeedbackValidationError:(NSString *) validationErrorMessage;
 
+- (void)mediaMetrics:(NSDictionary *)mediaInfo;
 
 @end
 
@@ -236,7 +247,9 @@ typedef enum
 - (void)onLogoutNotification;
 
 - (void)onIncomingCallNotification:(PlivoIncoming *)incoming;
+- (void)onIncomingCallAnsweredNotification:(PlivoIncoming *)incoming;
 - (void)onIncomingCallRejectedNotification:(PlivoIncoming *)incoming;
+- (void)onIncomingCallInvalidNotification:(PlivoIncoming *)incoming;
 - (void)onIncomingCallHangupNotification:(PlivoIncoming *)incoming;
 
 - (void)onIncomingDigitNotification:(NSString *)digit;
@@ -251,6 +264,7 @@ typedef enum
 - (void)onSubmitCallQualityFeedbackFailure : (NSError *) error;
 - (void)onSubmitCallQualityFeedbackValidationError:(NSString *) errorMessage;
 - (NSMutableDictionary *) validateInputs : (NSString *) callUUID : (NSInteger) rating : (NSArray *) issues : (NSString *) note;
++ (void)emitMediaMetrics:(NSString *)group :(NSString *)level :(NSString *)type :(float)value :(BOOL)active :(NSString *)desc :(NSString *)stream;
 @end
 
 

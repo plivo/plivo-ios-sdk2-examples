@@ -121,9 +121,22 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
+    
+    func onIncomingCall(_ incoming: PlivoIncoming) {
+        let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+        let tabbarControler: UITabBarController? = _mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
+        let plivoVC: PlivoCallController? = (tabbarControler?.viewControllers?[2] as? PlivoCallController)
+        Phone.sharedInstance.setDelegate(plivoVC!)
+        tabbarControler?.selectedViewController = tabbarControler?.viewControllers?[2]
+        _appDelegate?.window?.rootViewController = tabbarControler
+        plivoVC!.onIncomingCall(incoming)
+    }
+    
+    
     /**
      * onSubmitFeedback
      */

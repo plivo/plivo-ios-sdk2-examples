@@ -28,6 +28,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
 
     var pad: JCDialPad?
     var timer: MZTimerLabel?
+    var answerTimer: Timer?
     var callObserver: CXCallObserver?
     
     var isItUserAction: Bool = false
@@ -37,6 +38,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     var incCall: PlivoIncoming?
     
     var isSpeakerOn: Bool = false
+    var isIncomingCallAnswered: Bool = false
 
     let reachability = Reachability()!
     
@@ -60,7 +62,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
         //Add Call Interruption observers
         addObservers()
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -272,6 +273,35 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
         
     }
+    
+    
+    /**
+     * onIncomingCallAnswered delegate implementation.
+     */
+    
+    func onIncomingCallAnswered(_ incoming: PlivoIncoming) {
+        print("- Incoming call answered");
+        print("Call id in incoming answered is:")
+        print(incoming.callId)
+        isIncomingCallAnswered = true
+    }
+    
+    /**
+     * onIncomingCallInvalid delegate implementation.
+     */
+    
+    func onIncomingCallInvalid(_ incoming: PlivoIncoming) {
+        print("- Incoming call is invalid");
+        print("Call id in incoming call invalid is:")
+        print(incoming.callId)
+        if (incCall != nil) {
+            self.isItUserAction = true
+            performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
+            incCall = nil
+        }
+        callSubmitFeddbackUI()
+    }
+    
     
     /**
      * onIncomingCallHangup delegate implementation.
@@ -698,15 +728,27 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             self.muteButton.isEnabled = true
             self.holdButton.isEnabled = true
             self.keypadButton.isEnabled = true
-            if !(self.timer != nil) {
-                self.timer = MZTimerLabel(label: self.callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
-                self.timer?.timeFormat = "HH:mm:ss"
-                self.timer?.start()
-            }
-            else {
-                self.timer?.start()
-            }
         })
+        answerTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(invalidateTimerWhenAnswered), userInfo: nil, repeats: true)
+    }
+    
+    @objc func invalidateTimerWhenAnswered(){
+        if (isIncomingCallAnswered) {
+            DispatchQueue.main.async(execute: {() -> Void in
+                self.callStateLabel.text = "Answered..."
+                if !(self.timer != nil) {
+                    self.timer = MZTimerLabel(label: self.callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
+                    self.timer?.timeFormat = "HH:mm:ss"
+                    self.timer?.start()
+                }
+                else {
+                    self.timer?.start()
+                }
+            })
+            self.answerTimer?.invalidate()
+        } else {
+            self.callStateLabel.text = "Connecting..."
+        }
     }
     
     func provider(_ provider: CXProvider, perform action: CXPlayDTMFCallAction) {
@@ -758,10 +800,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func callSubmitFeddbackUI(){
-        let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let ratingVC: RatingViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController
-        Phone.sharedInstance.setDelegate(ratingVC!)
         DispatchQueue.main.async{
+            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let ratingVC: RatingViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController
+            Phone.sharedInstance.setDelegate(ratingVC!)
             let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             _appDelegate?.window?.rootViewController = ratingVC
         }
@@ -1038,18 +1080,18 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func unhideActiveCallView() {
         UIDevice.current.isProximityMonitoringEnabled = true
-        callerNameLabel.isHidden = false
-        callStateLabel.isHidden = false
-        activeCallImageView.isHidden = false
-        muteButton.isHidden = false
-        keypadButton.isHidden = false
-        holdButton.isHidden = false
-        dialPadView.isHidden = true
-        userNameTextField.isHidden = true
+        callerNameLabel?.isHidden = false
+        callStateLabel?.isHidden = false
+        activeCallImageView?.isHidden = false
+        muteButton?.isHidden = false
+        keypadButton?.isHidden = false
+        holdButton?.isHidden = false
+        dialPadView?.isHidden = true
+        userNameTextField?.isHidden = true
         pad?.digitsTextField.isHidden = true
         pad?.showDeleteButton = false
         tabBarController?.tabBar.isHidden = true
-        callButton.setImage(UIImage(named: "EndCall.png"), for: .normal)
+        callButton?.setImage(UIImage(named: "EndCall.png"), for: .normal)
     }
     
     
