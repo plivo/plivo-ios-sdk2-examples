@@ -56,7 +56,7 @@ typedef enum
 - (void)onIncomingCallRejected:(PlivoIncoming *)incoming;
 
 /* On an incoming call, if the call gets timed out, this delegate
- would be triggered with the PlivoIncoming object.
+ would be triggered.
  */
 - (void)onIncomingCallInvalid:(PlivoIncoming *)incoming;
 
