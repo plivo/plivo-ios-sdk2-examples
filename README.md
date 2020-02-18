@@ -97,7 +97,7 @@ endpoint.relayVoipPushNotification(pushdata)
 ```
 please refer to below link on Generating VoIP Certificate. 
 
-[Generating VoIP Certificate](https://www.plivo.com/docs/sdk/ios/setting-up-push-credentials/)
+[Generating VoIP Certificate](https://www.plivo.com/docs/sdk/client/ios/setting-up-push-credentials/)
 
 
 ### <a name="bullet6"></a>6. Making an outgoing call
