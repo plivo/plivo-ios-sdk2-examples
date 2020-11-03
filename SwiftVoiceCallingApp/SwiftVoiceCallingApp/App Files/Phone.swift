@@ -24,7 +24,7 @@ class Phone {
         endpoint.login(userName, andPassword: password)
     }
     
-    func login(withUserName userName: String, andPassword password: String, deviceToken token: Data) {
+    func login(withUserName userName: String, andPassword password: String, deviceToken token: Data?) {
         
         UtilClass.makeToastActivity()
         endpoint.login(userName, andPassword: password, deviceToken: token)

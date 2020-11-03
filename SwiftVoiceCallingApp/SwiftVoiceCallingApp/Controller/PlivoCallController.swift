@@ -1163,7 +1163,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     @objc func appWillTerminate() {
-        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!,isFeedback: false)
+        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID ?? UUID() ,isFeedback: false)
     }
     
     
