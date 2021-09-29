@@ -280,7 +280,7 @@ class UtilClass: NSObject
     func removeSpecialCharactersFromPhNum(number : String) -> String {
         
         let numericSet = "0123456789"
-        let filteredCharacters = number.characters.filter {
+        let filteredCharacters = number.filter {
             return numericSet.contains(String($0))
         }
         return String(filteredCharacters)

@@ -11,11 +11,9 @@ import UIKit
 import CallKit
 import AVFoundation
 import PlivoVoiceKit
-import ReachabilitySwift
 
-class RatingViewController: UIViewController , PlivoEndpointDelegate{
-    var viewController: ContactsViewController?
-    
+class RatingViewController: UIViewController {
+
     @IBOutlet weak var fiveStarHiddenView: UIView!
     @IBOutlet weak var sendConsoleLog: UISwitch!
     @IBOutlet weak var comments: UITextView!
@@ -23,9 +21,11 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
     @IBOutlet var issues: [UIButton]!
     var starRating=0;
     @IBOutlet var starButtons: [UIButton]!
+    
     @IBAction func startButtonTapped(_ sender: UIButton) {
         self.starRating=sender.tag+1
         let tag = sender.tag
+        
         for button in starButtons{
             if button.tag<=tag{
                 button.setTitle("★", for: .normal)
@@ -33,10 +33,10 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
                 button.setTitle("☆", for: .normal)
             }
         }
+        
         if (sender.tag == 4){
             fiveStarHiddenView.isHidden = true
-        }
-        else{
+        }else{
             fiveStarHiddenView.isHidden = false
         }
     }
@@ -47,21 +47,14 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
     @IBAction func onIssueTapped(_ sender: UIButton) {
         if sender.backgroundColor == UIColor.blue {
             sender.backgroundColor=UIColor.lightGray
-        }
-        else{
+        }else{
             sender.backgroundColor=UIColor.blue
         }
     }
     
     
     @IBAction func onSkipTapped(_ sender: Any) {
-        let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-        let tabbarControler: UITabBarController? = _mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
-        let plivoVC: PlivoCallController? = (tabbarControler?.viewControllers?[2] as? PlivoCallController)
-        Phone.sharedInstance.setDelegate(plivoVC!)
-        tabbarControler?.selectedViewController = tabbarControler?.viewControllers?[1]
-        _appDelegate?.window?.rootViewController = tabbarControler
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func onSubmitButtonTapped(_ sender: Any) {
@@ -72,36 +65,29 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
                 issueList.append(issueName as AnyObject)
             }
         }
+        
         var validationMessage = ""
         var validationFlag = false
+        
         if (starRating==0){
             validationFlag = true
             validationMessage = "Rating cannot be empty"
-        }
-        
-        else if (starRating<5 && issueList.count==0){
+        }else if (starRating<5 && issueList.count==0){
             validationFlag = true
             validationMessage = "You need to choose at least one issue"
-        }
-        else if(comments.text.count>280){
+        }else if(comments.text.count>280){
             validationFlag = true
             validationMessage = "Maximum 280 characters allowed in comment section"
         }
+        
         if (validationFlag){
             let alert = UIAlertController(title: "Validation", message: validationMessage , preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
-        }
-        else{
+        }else{
             Phone.sharedInstance.submitFeedback(starRating: self.starRating, issueList: issueList, notes : comments.text, sendConsoleLog : sendConsoleLog.isOn)
-            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            let tabbarControler: UITabBarController? = _mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
-            let plivoVC: PlivoCallController? = (tabbarControler?.viewControllers?[2] as? PlivoCallController)
-            Phone.sharedInstance.setDelegate(plivoVC!)
-            tabbarControler?.selectedViewController = tabbarControler?.viewControllers?[1]
-            _appDelegate?.window?.rootViewController = tabbarControler
-            }
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     /**
@@ -110,9 +96,7 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
      */
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let touch = touches.first {
-            // ...
-            if touch.phase == .began
-            {
+            if touch.phase == .began{
                 comments.resignFirstResponder()
             }
         }
@@ -121,21 +105,6 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    func onIncomingCall(_ incoming: PlivoIncoming) {
-        DispatchQueue.main.async{
-            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            let tabbarControler: UITabBarController? = _mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
-            let plivoVC: PlivoCallController? = (tabbarControler?.viewControllers?[2] as? PlivoCallController)
-            Phone.sharedInstance.setDelegate(plivoVC!)
-            tabbarControler?.selectedViewController = tabbarControler?.viewControllers?[2]
-            _appDelegate?.window?.rootViewController = tabbarControler
-            plivoVC!.onIncomingCall(incoming)
-        }
     }
     
     

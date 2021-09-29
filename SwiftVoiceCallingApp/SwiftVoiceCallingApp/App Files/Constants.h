@@ -1,6 +1,6 @@
 
-#define kUSERNAME  @"UserName"
-#define kPASSWORD @"Password"
+#define kUSERNAME  @"ios1275035942759481486828"
+#define kPASSWORD @"plivo"
 #define kAUTHENTICATIONSTATUS  @"AuthenticationStatus"
 #define kCALLSINFO  @"CallsInfo"
 #define kREACHABILITYURL "www.google.com"

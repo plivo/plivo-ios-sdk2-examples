@@ -10,119 +10,45 @@ import UIKit
 import PushKit
 import AVFoundation
 import Intents
-import UserNotifications
+import CallKit
 
 @UIApplicationMain
 
-class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
 
     var window: UIWindow?
     var viewController: ContactsViewController?
-    var plivoUserName = ""
-    var plivoPassword = ""
     var deviceToken: Data?
     var didUpdatePushCredentials = false
-    
-    struct Platform {
-        static let isSimulator: Bool = {
-            var isSim = false
-            #if arch(i386) || arch(x86_64)
-            isSim = true
-            #endif
-            return isSim
-        }()
-    }
+    let pushRegistry = PKPushRegistry(queue: DispatchQueue.main)
+
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         NSLog("application:didFinishLaunchingWithOptions:launchOptions:")
+        self.voipRegistration()
         
-        //For VOIP Notificaitons
-        if #available(iOS 10.0, *)
-        {
-            let center = UNUserNotificationCenter.current()
-            center.requestAuthorization(options:[.badge, .alert, .sound]) { (granted, error) in
-                // Enable or disable features based on authorization.
-            }
-            application.registerForRemoteNotifications()
-        }
-        
-        //Request Record permission
-        let session = AVAudioSession.sharedInstance()
-        if (session.responds(to: #selector(AVAudioSession.requestRecordPermission(_:)))) {
-            AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
-                if granted {
-                    print("granted")
-                    
-                    do {
-                        try session.setCategory(AVAudioSession.Category(rawValue: convertFromAVAudioSessionCategory(AVAudioSession.Category.playAndRecord)), mode: AVAudioSession.Mode.default)
-                        try session.setActive(true)
-                    }
-                    catch {
-                        
-                        print("Couldn't set Audio session category")
-                    }
-                } else{
-                    print("not granted")
-                }
-            })
-        }
-        
-        //Request Siri authorization
-//        INPreferences.requestSiriAuthorization({(_ status: INSiriAuthorizationStatus) -> Void in
-//            if status == .authorized {
-//                print("User gave permission to use Siri")
-//            }
-//            else {
-//                print("User did not give permission to use Siri")
-//            }
-//        })
-        //One time signIn
-        //Save User's credentials in NSUserDefaults
-        //Check Authenticaiton status
-        if let user = UserDefaults.standard.object(forKey: kUSERNAME) as? String,  let password = UserDefaults.standard.object(forKey: kPASSWORD) as? String, UtilClass.getUserAuthenticationStatus() {
-            //Default View Controller: ContactsViewController
-            //Landing page
-            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let tabBarContrler: UITabBarController? = _mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
+        if UtilClass.getUserAuthenticationStatus() {
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let tabBarContrler: UITabBarController? = mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
             viewController = tabBarContrler?.viewControllers?[1] as? ContactsViewController
-            //ContactsViewController
             Phone.sharedInstance.setDelegate(viewController!)
             tabBarContrler?.selectedViewController = tabBarContrler?.viewControllers?[1]
             window?.rootViewController = tabBarContrler
-            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            //Get Username and Password from NSUserDefaults and Login
-            if UtilClass.isNetworkAvailable() {
-                appDelegate?.voipRegistration(userName: user, password: password)
-            }
         } else {
-            //First time Log-In setup
-            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
+            let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC: LoginViewController? = mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
             Phone.sharedInstance.setDelegate(loginVC!)
             window?.rootViewController = loginVC
         }
-        
         return true
     }
     
     // Register for VoIP notifications
-    func voipRegistration(userName: String, password: String) {
-        plivoUserName = userName
-        plivoPassword = password
-        if Platform.isSimulator {
-            Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword)
-        }
-        else {
-        let mainQueue = DispatchQueue.main
-        // Create a push registry object
-        let voipRegistry = PKPushRegistry(queue: mainQueue)
-        // Set the registry's delegate to self
-        voipRegistry.delegate = (self as? PKPushRegistryDelegate)
-        //Set the push type to VOIP
-        voipRegistry.desiredPushTypes = Set<AnyHashable>([PKPushType.voIP]) as? Set<PKPushType>
-        useVoipToken(voipRegistry.pushToken(for: .voIP))
-        }
+    func voipRegistration() {
+        pushRegistry.delegate = self
+        pushRegistry.desiredPushTypes = [.voIP]
+        useVoipToken(pushRegistry.pushToken(for: .voIP))
     }
     
     func useVoipToken(_ tokenData: Data?) {
@@ -131,56 +57,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     
     // MARK: PKPushRegistryDelegate
     func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, for type: PKPushType) {
-        
         NSLog("pushRegistry:didUpdatePushCredentials:forType:");
         
         if credentials.token.count == 0 {
             print("VOIP token NULL")
             return
         }
+        
         print("Credentials token: \(credentials.token)")
         useVoipToken(credentials.token)
-        didUpdatePushCredentials = true
-        Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, deviceToken: credentials.token)
+        
+        if UtilClass.getUserAuthenticationStatus(){
+            Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: credentials.token)
+            didUpdatePushCredentials = true
+        }
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
         NSLog("pushRegistry:didInvalidatePushTokenForType:")
-        
-        
     }
-    
-//    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
-//
-//        NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
-//
-//        if (type == PKPushType.voIP) {
-//            if (!didUpdatePushCredentials) {
-//                Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, deviceToken: deviceToken)
-//            }
-//            Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
-//
-////            DispatchQueue.main.async(execute: {() -> Void in
-////                Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
-////            })
-//        }
-//    }
     
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
         NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
         
         if (type == PKPushType.voIP) {
             if (!didUpdatePushCredentials) {
-                Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, deviceToken: deviceToken)
+                Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: deviceToken)
             }
             Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
-            
-//            DispatchQueue.main.async(execute: {() -> Void in
-//                Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
-//            })
         }
         
-        completion()
+        DispatchQueue.main.async {
+            completion()
+        }
     }
     
 
@@ -296,10 +205,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
         window?.rootViewController = tabBarContrler
     }
-}
-
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVAudioSessionCategory(_ input: AVAudioSession.Category) -> String {
-	return input.rawValue
 }

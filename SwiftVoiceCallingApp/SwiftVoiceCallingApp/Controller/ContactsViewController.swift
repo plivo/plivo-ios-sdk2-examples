@@ -10,7 +10,7 @@ import UIKit
 import APAddressBook
 
 class ContactsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UISearchControllerDelegate, UISearchResultsUpdating {
-
+    
     var phoneContacts = [APContact]()
     var searchController: UISearchController?
     var contactsSegmentControl: UISegmentedControl?
@@ -31,8 +31,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         addressBook.sortDescriptors = [NSSortDescriptor(key: "name.firstName", ascending: true),
                                        NSSortDescriptor(key: "name.lastName", ascending: true)]
         addressBook.filterBlock = { (contact: APContact) -> Bool in
-            if let phones = contact.phones
-            {
+            if let phones = contact.phones{
                 return phones.count > 0
             }
             return false
@@ -46,14 +45,9 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        loadContacts()
-        
-        
+        self.loadContacts()
         self.contactsTableView.delegate = self
         self.contactsTableView.dataSource = self
-        
         
         let label = UILabel(frame: CGRect(x: CGFloat(UIScreen.main.bounds.size.width * 0.28125), y: CGFloat(27), width: CGFloat(UIScreen.main.bounds.size.width * 0.4375), height: CGFloat(29)))
         label.text = "Contacts"
@@ -62,14 +56,14 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         view.addSubview(label)
         
         searchController = UISearchController(searchResultsController: nil)
-        searchController?.searchResultsUpdater = self as? UISearchResultsUpdating
+        searchController?.searchResultsUpdater = self
         searchController?.searchBar.sizeToFit()
         contactsTableView.tableHeaderView = searchController?.searchBar
         // We want ourselves to be the delegate for this filtered table so didSelectRowAtIndexPath is called for both tables.
-        searchController?.delegate = self as? UISearchControllerDelegate
+        searchController?.delegate = self
         searchController?.dimsBackgroundDuringPresentation = false
         // default is YES
-        searchController?.searchBar.delegate = self as? UISearchBarDelegate
+        searchController?.searchBar.delegate = self
         // so we can monitor text changes + others
         // Search is now just presenting a view controller. As such, normal view controller
         // presentation semantics apply. Namely that presentation will walk up the view controller
@@ -80,9 +74,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         // know where you want UISearchController to be displayed
         let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
         Phone.sharedInstance.setDelegate(plivoVC!)
-        
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         contactsTableView.reloadData()
@@ -160,9 +153,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                     contctDict["Number"] = selfObj.contactPhones(selfObj.phoneContacts[i])
                     contctArray.append(contctDict)
                 }
-                
                 UserDefaults.standard.set(contctArray, forKey: "PhoneContacts")
-                
             }else if let error = error{
                 print(error)
             }
@@ -186,9 +177,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func contactPhones(_ contact :APContact) -> String {
         if let phones = contact.phones {
-            
             return (phones.first?.number)!;
-            
         }
         return "No phone"
     }
@@ -204,25 +193,16 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
      * Actual array
      * Search results array
      */
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int
-    {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int{
         if isSearchControllerActive {
-            
             return phoneSearchResults.count
-
-        }
-        else
-        {
+        }else{
             return phoneContacts.count
-            
         }
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        if isSearchControllerActive
-        {
-            
+        if isSearchControllerActive{
             let editprofileIdentifier: String = "CallHistory"
             var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
             if cell == nil {
@@ -233,9 +213,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             cell?.detailTextLabel?.text = contactPhones(contact!)
             cell?.imageView?.image = UIImage(named: "TabbarIcon1")
             return cell!
-        }
-        else {
-            
+        }else {
             let editprofileIdentifier: String = "CallHistory"
             var cell: UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: editprofileIdentifier)
             if cell == nil {
@@ -246,22 +224,17 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             cell?.detailTextLabel?.text = contactPhones(contact!)
             cell?.imageView?.image = UIImage(named: "TabbarIcon1")
             return cell!
-            
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if isSearchControllerActive
-        {
+        if isSearchControllerActive{
             self.searchController?.dismiss(animated: false, completion: nil)
-            
-            
             let contactDetails: APContact? = phoneSearchResults[Int(indexPath.row)] as? APContact
             
             let apPhoneObj: APPhone? = contactDetails?.phones?[0]
             
-            var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+            var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.count )!))
             phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
             phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
             phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
@@ -271,15 +244,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
             Phone.sharedInstance.setDelegate(plivoVC!)
             CallKitInstance.sharedInstance.callUUID = UUID()
             plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
-            
-        }
-        else
-        {
+        }else{
             
             let contactDetails: APContact? = phoneContacts[Int(indexPath.row)]
             let apPhoneObj: APPhone? = contactDetails?.phones?[0]
             
-            var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.characters.count )!))
+            var phoneNumber: String = (apPhoneObj!.number! as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length: (apPhoneObj?.number!.count )!))
             phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
             phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
             phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
@@ -304,15 +274,14 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         let strippedString: String = searchText.trimmingCharacters(in: CharacterSet.whitespaces)
         // break up the search terms (separated by spaces)
         var searchItems: [String]? = nil
-        if (strippedString.characters.count ) > 0 {
+        if (strippedString.count ) > 0 {
             searchItems = strippedString.components(separatedBy: " ")
         }
         // build all the "AND" expressions for each value in the searchString
         //
         var andMatchPredicates = [Any]()
         
-        if(searchItems != nil)
-        {
+        if(searchItems != nil){
             
             for searchString: String in searchItems! {
                 // each searchString creates an OR predicate for: name, yearIntroduced, introPrice
@@ -349,11 +318,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         // match up the fields of the Product object
         let finalCompoundPredicate:NSCompoundPredicate = NSCompoundPredicate(andPredicateWithSubpredicates:andMatchPredicates as! [NSPredicate])
         phoneSearchResults = phoneSearchResults.filter { finalCompoundPredicate.evaluate(with: $0) }
-        
-        
-        
         self.contactsTableView.reloadData()
-        
     }
     
     /*
@@ -361,11 +326,8 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
      */
     
     func makeCall(withSiriName name: String) {
-        
         let contactsArray: [Any] = (UserDefaults.standard.object(forKey: "PhoneContacts") as! [Any])
-        
-        for i in 0..<contactsArray.count
-        {
+        for i in 0..<contactsArray.count{
             let contact: [AnyHashable: String] = contactsArray[i] as! [AnyHashable : String]
             if (contact["Name"]?.contains(name))! {
                 let contactNumber: String = contact["Number"]!
@@ -374,7 +336,7 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 Phone.sharedInstance.setDelegate(plivoVC!)
                 CallKitInstance.sharedInstance.callUUID = UUID()
                 
-                var phoneNumber: String = (contactNumber as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length:contactNumber.characters.count))
+                var phoneNumber: String = (contactNumber as NSString).replacingOccurrences(of: "\\s", with: "", options: .regularExpression, range: NSRange(location: 0, length:contactNumber.count))
                 phoneNumber = phoneNumber.replacingOccurrences(of: "(", with: "")
                 phoneNumber = phoneNumber.replacingOccurrences(of: ")", with: "")
                 phoneNumber = phoneNumber.replacingOccurrences(of: "-", with: "")
@@ -382,13 +344,12 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
                 plivoVC?.performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: phoneNumber)
             }
         }
-    
     }
+    
     @IBAction func feedbackButtonTapped(_ sender: Any) {
     }
     
     @IBAction func logoutButtonTapped(_ sender: Any) {
-        
         let alert = UIAlertController(title: "Logout", message: "Are you sure you want to logout?", preferredStyle: .alert)
         let yesButton = UIAlertAction(title: "Yes", style: .default, handler: {(_ action: UIAlertAction) -> Void in
             //Handle your yes please button action here

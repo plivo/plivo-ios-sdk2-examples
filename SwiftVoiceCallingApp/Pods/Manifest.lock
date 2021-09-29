@@ -2,21 +2,17 @@ PODS:
   - APAddressBook/Core (0.3.2)
   - APAddressBook/Swift (0.3.2):
     - APAddressBook/Core
-  - ReachabilitySwift (3)
 
 DEPENDENCIES:
   - APAddressBook/Swift
-  - ReachabilitySwift (~> 3)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - APAddressBook
-    - ReachabilitySwift
 
 SPEC CHECKSUMS:
   APAddressBook: e68ecaf95f2c323b625ae585a0d25fe505291286
-  ReachabilitySwift: f5b9bb30a0777fac8f09ce8b067e32faeb29bb64
 
-PODFILE CHECKSUM: cd475a02c45d917ca093cf6205fe1b2a4629017f
+PODFILE CHECKSUM: 16e192495d0a79ee273d92b5cbad9970853a1c1f
 
-COCOAPODS: 1.5.3
+COCOAPODS: 1.11.0.beta.2
