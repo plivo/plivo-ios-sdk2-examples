@@ -24,6 +24,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
         self.userNameTextField.delegate = self
         self.passwordTextField.delegate = self
+        
+        self.userNameTextField.text = "ios1275035942759481486828"
+        self.passwordTextField.text = "plivo"
 
     }
     
@@ -100,7 +103,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     @objc func onLogin() {
         
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async{
             
             self.userNameTextField.delegate = nil
             self.passwordTextField.delegate = nil
@@ -128,14 +131,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             Phone.sharedInstance.setDelegate(plivoVC!)
             tabbarControler?.selectedViewController = tabbarControler?.viewControllers?[1]
             _appDelegate?.window?.rootViewController = tabbarControler
-        })
+        }
     }
     
     /**
      * onLoginFailed delegate implementation.
      */
     func onLoginFailedWithError(_ error: Error!) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async{
             
             self.userNameTextField.delegate = self
             self.passwordTextField.delegate = self
@@ -149,7 +152,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             UtilClass.hideToastActivity()
             UtilClass.makeToast(error.localizedDescription)
             self.view.isUserInteractionEnabled = true
-        })
+        }
     }
 
 }

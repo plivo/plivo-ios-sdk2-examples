@@ -25,25 +25,22 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     
     // MARK: - Life cycle
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder){
         super.init(coder: aDecoder);
         addressBook.fieldsMask = [APContactField.default, APContactField.thumbnail]
         addressBook.sortDescriptors = [NSSortDescriptor(key: "name.firstName", ascending: true),
                                        NSSortDescriptor(key: "name.lastName", ascending: true)]
-        addressBook.filterBlock =
+        addressBook.filterBlock = { (contact: APContact) -> Bool in
+            if let phones = contact.phones
             {
-                (contact: APContact) -> Bool in
-                if let phones = contact.phones
-                {
-                    return phones.count > 0
-                }
-                return false
+                return phones.count > 0
+            }
+            return false
         }
-        addressBook.startObserveChanges
-            {
-                [unowned self] in
-                self.loadContacts()
+        
+        addressBook.startObserveChanges{
+            [weak self] in
+            self?.loadContacts()
         }
     }
     
@@ -141,39 +138,34 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     // MARK: - APContacts
-    func loadContacts()
-    {
-        addressBook.loadContacts
-            {
-                [unowned self] (contacts: [APContact]?, error: Error?) in
-
-                self.phoneContacts = [APContact]()
-
-                if let contacts = contacts
-                {
-                    self.phoneContacts = contacts
-                    
-                    self.noContactsLabel.isHidden = true
-                    self.view.bringSubviewToFront(self.contactsTableView)
-                    self.contactsTableView.reloadData()
-                    var contctArray = [Any]() /* capacity: contacts.count */
-
-                    for i in 0..<self.phoneContacts.count {
-                        
-                        var contctDict = [AnyHashable: Any]()
-                        contctDict["Name"] = self.contactName(self.phoneContacts[i])
-                        contctDict["Number"] = self.contactPhones(self.phoneContacts[i])
-                        contctArray.append(contctDict)
-                        
-                    }
-                    
-                    UserDefaults.standard.set(contctArray, forKey: "PhoneContacts")
-
+    func loadContacts(){
+        addressBook.loadContacts{
+            [weak self] (contacts: [APContact]?, error: Error?) in
+            
+            guard let selfObj = self else {
+                return
+            }
+            selfObj.phoneContacts = [APContact]()
+            
+            if let contacts = contacts{
+                selfObj.phoneContacts = contacts
+                selfObj.noContactsLabel.isHidden = true
+                selfObj.view.bringSubviewToFront(selfObj.contactsTableView)
+                selfObj.contactsTableView.reloadData()
+                var contctArray = [Any]() /* capacity: contacts.count */
+                
+                for i in 0..<selfObj.phoneContacts.count{
+                    var contctDict = [AnyHashable: Any]()
+                    contctDict["Name"] = selfObj.contactName(selfObj.phoneContacts[i])
+                    contctDict["Number"] = selfObj.contactPhones(selfObj.phoneContacts[i])
+                    contctArray.append(contctDict)
                 }
-                else if let error = error
-                {
-                    print(error)
-                }
+                
+                UserDefaults.standard.set(contctArray, forKey: "PhoneContacts")
+                
+            }else if let error = error{
+                print(error)
+            }
         }
     }
     

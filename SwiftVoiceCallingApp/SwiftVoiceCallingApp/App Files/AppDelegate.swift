@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         //One time signIn
         //Save User's credentials in NSUserDefaults
         //Check Authenticaiton status
-        if UtilClass.getUserAuthenticationStatus() {
+        if let user = UserDefaults.standard.object(forKey: kUSERNAME) as? String,  let password = UserDefaults.standard.object(forKey: kPASSWORD) as? String, UtilClass.getUserAuthenticationStatus() {
             //Default View Controller: ContactsViewController
             //Landing page
             let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
@@ -93,10 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
             let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             //Get Username and Password from NSUserDefaults and Login
             if UtilClass.isNetworkAvailable() {
-                appDelegate?.voipRegistration(userName: UserDefaults.standard.object(forKey: kUSERNAME) as! String, password: UserDefaults.standard.object(forKey: kPASSWORD) as! String)
+                appDelegate?.voipRegistration(userName: user, password: password)
             }
-        }
-        else {
+        } else {
             //First time Log-In setup
             let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC: LoginViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController
@@ -151,8 +150,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         
     }
     
-    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
-        
+//    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType) {
+//
+//        NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
+//
+//        if (type == PKPushType.voIP) {
+//            if (!didUpdatePushCredentials) {
+//                Phone.sharedInstance.login(withUserName: plivoUserName, andPassword: plivoPassword, deviceToken: deviceToken)
+//            }
+//            Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
+//
+////            DispatchQueue.main.async(execute: {() -> Void in
+////                Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
+////            })
+//        }
+//    }
+    
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
         NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
         
         if (type == PKPushType.voIP) {
@@ -165,6 +179,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 //                Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
 //            })
         }
+        
+        completion()
     }
     
 

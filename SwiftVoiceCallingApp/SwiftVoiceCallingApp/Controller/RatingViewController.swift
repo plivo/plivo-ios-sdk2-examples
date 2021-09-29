@@ -126,7 +126,7 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
     }
     
     func onIncomingCall(_ incoming: PlivoIncoming) {
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async{
             let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
             let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             let tabbarControler: UITabBarController? = _mainStoryboard.instantiateViewController(withIdentifier: "tabBarViewController") as? UITabBarController
@@ -135,7 +135,7 @@ class RatingViewController: UIViewController , PlivoEndpointDelegate{
             tabbarControler?.selectedViewController = tabbarControler?.viewControllers?[2]
             _appDelegate?.window?.rootViewController = tabbarControler
             plivoVC!.onIncomingCall(incoming)
-        })
+        }
     }
     
     

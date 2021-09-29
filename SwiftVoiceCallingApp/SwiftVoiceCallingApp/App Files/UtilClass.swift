@@ -287,28 +287,36 @@ class UtilClass: NSObject
     }
     
     class func makeToastActivity() {
+        DispatchQueue.main.async {
         let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
         appDelegate?.window?.rootViewController?.view?.isUserInteractionEnabled = false
         appDelegate?.window?.rootViewController?.view?.makeToastActivity(CSToastPositionCenter)
+        }
     }
     
     class func hideToastActivity() {
+        DispatchQueue.main.async {
         let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
         appDelegate?.window?.rootViewController?.view?.isUserInteractionEnabled = true
         appDelegate?.window?.rootViewController?.view?.hideToastActivity()
+        }
     }
     
     class func makeToast(_ toastMsg: String) {
-        let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-        appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg)
+        DispatchQueue.main.async {
+            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+            appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg)
+        }
     }
     
     class func makeToastWithStyle(_ toastMsg: String) {
+        DispatchQueue.main.async {
         let style = CSToastStyle.init(defaultStyle: {}())
         _ = style?.messageColor = UIColor.red
         let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
         let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
         appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg, duration: 2.0, position: CGPoint(x: frame.maxX-125, y: frame.minY+50), style: style)
+        }
     }
     
     /**
