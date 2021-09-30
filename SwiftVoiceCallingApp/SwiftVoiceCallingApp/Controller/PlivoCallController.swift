@@ -43,12 +43,12 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pad = JCDialPad(frame: dialPadView.bounds)
+        pad = JCDialPad(frame: self.view.bounds)
         pad?.buttons = JCDialPad.defaultButtons()
         pad?.delegate = self
         pad?.showDeleteButton = true
         pad?.formatTextToPhoneNumber = false
-        dialPadView.backgroundColor = UIColor.white
+        
         dialPadView.addSubview(pad!)
         timer = MZTimerLabel(label: callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
         timer?.timeFormat = "HH:mm:ss"
@@ -127,7 +127,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     // MARK: - Handling IBActions
     @IBAction func callButtonTapped(_ sender: Any) {
         if UtilClass.isNetworkAvailable(){
-            if (!(userNameTextField.text! == "SIP URI or Phone Number") && !UtilClass.isEmpty(userNameTextField.text!)) || !UtilClass.isEmpty(pad!.digitsTextField.text!) || (incCall != nil) || (outCall != nil) {
+            if (!(userNameTextField.text! == "") && !UtilClass.isEmpty(userNameTextField.text!)) || !UtilClass.isEmpty(pad!.digitsTextField.text!) || (incCall != nil) || (outCall != nil) {
                 
                 let img: UIImage? = (sender as AnyObject).image(for: .normal)
                 let data1: NSData? = img!.pngData() as NSData?
@@ -339,7 +339,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         pad?.showDeleteButton = true
         pad?.rawText = ""
         userNameTextField?.text = "SIP URI or Phone Number"
-        tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isTranslucent = false
         callButton?.setImage(UIImage(named: "MakeCall.png"), for: .normal)
         timer?.reset()
         timer?.removeFromSuperview()
@@ -372,7 +373,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         userNameTextField?.isHidden = true
         pad?.digitsTextField.isHidden = true
         pad?.showDeleteButton = false
-        tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isTranslucent = true
         callButton?.setImage(UIImage(named: "EndCall.png"), for: .normal)
     }
     
@@ -419,6 +421,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 }
                 print("----------AVAudioSessionInterruptionTypeEnded-------------")
                 break
+            @unknown default:
+                fatalError("issue here")
             }
             
         }
@@ -466,7 +470,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         if incCall == nil && outCall == nil {
             if appendText == "" {
                 userNameTextField.isEnabled = true
-                userNameTextField.text = "SIP URI or Phone Number"
+                userNameTextField.text = ""
             }
         } else {
             if (incCall != nil) {
@@ -816,7 +820,7 @@ extension PlivoCallController{
         CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
         CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
         print("provider:performStartCallActionWithUUID:");
-        if uuid == nil || handle == nil {
+        if uuid.uuidString == "" || handle == "" {
             print("UUID or Handle nil");
             return
         }
@@ -930,6 +934,7 @@ extension PlivoCallController{
                         }
                         
                         self.tabBarController?.tabBar.isHidden = false
+                        self.tabBarController?.tabBar.isTranslucent = false
                         self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
                         
                     })
@@ -1103,6 +1108,7 @@ extension PlivoCallController{
             action.fulfill()
             self.isItUserAction = false
             self.tabBarController?.tabBar.isHidden = false
+            self.tabBarController?.tabBar.isTranslucent = false
             self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
         }
     }

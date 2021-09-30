@@ -61,7 +61,6 @@ class ContactsViewController: UIViewController, UITableViewDelegate, UITableView
         contactsTableView.tableHeaderView = searchController?.searchBar
         // We want ourselves to be the delegate for this filtered table so didSelectRowAtIndexPath is called for both tables.
         searchController?.delegate = self
-        searchController?.dimsBackgroundDuringPresentation = false
         // default is YES
         searchController?.searchBar.delegate = self
         // so we can monitor text changes + others

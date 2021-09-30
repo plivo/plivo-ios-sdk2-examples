@@ -235,31 +235,6 @@ class UtilClass: NSObject
         return val
     }
     
-    
-    func addBoldText(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!) -> NSAttributedString {
-        let nonBoldFontAttribute = [NSAttributedString.Key.font.rawValue:font!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
-        let boldFontAttribute = [NSAttributedString.Key.font.rawValue:boldFont!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
-        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
-        for i in 0 ..< boldPartsOfString.count {
-            boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
-        }
-        return boldString
-    }
-    
-    func alertTextAttributeString(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!, boldTextColor: UIColor!) -> NSAttributedString {
-        
-        let nonBoldFontAttribute = [NSAttributedString.Key.font.rawValue:font!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
-        let boldFontAttribute = [NSAttributedString.Key.font.rawValue:boldFont!, NSAttributedString.Key.foregroundColor: boldTextColor] as! [NSAttributedString.Key : Any]
-        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
-        
-        for i in 0 ..< boldPartsOfString.count {
-            
-            boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
-            
-        }
-        return boldString
-    }
-    
     func setNavbarBGImage(navgationBar:UINavigationBar)
     {
         let image =  UIImage(named:"Nav_BG")!
