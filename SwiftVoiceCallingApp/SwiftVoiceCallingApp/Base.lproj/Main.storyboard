@@ -619,7 +619,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="mJa-Jc-6JU">
-                                <rect key="frame" x="0.0" y="-200" width="320" height="968"/>
+                                <rect key="frame" x="0.0" y="-120" width="320" height="808"/>
                             </imageView>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.75" translatesAutoresizingMaskIntoConstraints="NO" id="KaR-re-pzf">
                                 <rect key="frame" x="8" y="32" width="303" height="45"/>
@@ -643,21 +643,22 @@
                                     <constraint firstAttribute="height" constant="84" id="MDh-8w-vPz"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleAspectFit" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aq4-6n-R3O">
-                                <rect key="frame" x="20" y="228" width="80" height="80"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aq4-6n-R3O">
+                                <rect key="frame" x="20" y="244" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="N5g-vv-4s6"/>
-                                    <constraint firstAttribute="height" constant="80" id="jdf-iO-hvL"/>
+                                    <constraint firstAttribute="width" constant="80" id="22e-C1-8xb"/>
+                                    <constraint firstAttribute="height" constant="80" id="6fi-v9-SbO"/>
                                 </constraints>
                                 <state key="normal" image="UnholdIcon"/>
                                 <connections>
                                     <action selector="holdButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="vwC-Q0-IWH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleAspectFit" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crM-gv-zft">
-                                <rect key="frame" x="120" y="236" width="80" height="64"/>
+                            <button opaque="NO" contentMode="scaleAspectFit" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crM-gv-zft">
+                                <rect key="frame" x="120" y="244" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="8ln-Iw-r0n"/>
+                                    <constraint firstAttribute="width" constant="80" id="k1o-Kt-r6H"/>
+                                    <constraint firstAttribute="height" constant="80" id="p7I-sj-ryt"/>
                                 </constraints>
                                 <state key="normal" image="KeyPadIcon"/>
                                 <connections>
@@ -665,21 +666,21 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKo-zU-ymM" userLabel="Speaker Button">
-                                <rect key="frame" x="120" y="328" width="80" height="80"/>
+                                <rect key="frame" x="120" y="342" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="Boh-Td-xcv"/>
-                                    <constraint firstAttribute="width" constant="80" id="Y84-0q-foT"/>
+                                    <constraint firstAttribute="width" constant="80" id="h0x-Fd-EjZ"/>
+                                    <constraint firstAttribute="height" constant="80" id="vHh-de-Vbl"/>
                                 </constraints>
                                 <state key="normal" image="Speaker"/>
                                 <connections>
                                     <action selector="speakerButtonTapped:" destination="4Cm-hv-q5e" eventType="touchUpInside" id="Fwb-yu-G1L"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" enabled="NO" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-JK-dYb" userLabel="MuteButton">
-                                <rect key="frame" x="220" y="228" width="80" height="80"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleAspectFit" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bYp-JK-dYb" userLabel="MuteButton">
+                                <rect key="frame" x="220" y="244" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="Et6-c0-Hfh"/>
-                                    <constraint firstAttribute="width" constant="80" id="UYk-tI-fLS"/>
+                                    <constraint firstAttribute="width" constant="80" id="XTr-LL-lk9"/>
+                                    <constraint firstAttribute="height" constant="80" id="vok-Cd-Iq1"/>
                                 </constraints>
                                 <state key="normal" image="Unmute"/>
                                 <connections>
@@ -728,31 +729,31 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="cTt-Pt-26O" firstAttribute="top" secondItem="KaR-re-pzf" secondAttribute="bottom" constant="-3" id="1Hg-jd-e1T"/>
-                            <constraint firstItem="wB2-7N-eaR" firstAttribute="centerX" secondItem="crM-gv-zft" secondAttribute="centerX" id="4be-b2-DWI"/>
+                            <constraint firstItem="crM-gv-zft" firstAttribute="centerY" secondItem="IC0-ZR-I3f" secondAttribute="centerY" id="22c-q7-MMe"/>
+                            <constraint firstItem="DKo-zU-ymM" firstAttribute="top" secondItem="crM-gv-zft" secondAttribute="bottom" constant="18" id="4GG-2N-4OC"/>
+                            <constraint firstItem="crM-gv-zft" firstAttribute="centerX" secondItem="IC0-ZR-I3f" secondAttribute="centerX" id="5hk-NT-rFN"/>
                             <constraint firstAttribute="bottom" secondItem="Gv7-r2-ClQ" secondAttribute="bottom" constant="90" id="5zh-xG-nKR"/>
                             <constraint firstItem="cTt-Pt-26O" firstAttribute="centerX" secondItem="IC0-ZR-I3f" secondAttribute="centerX" id="CpY-wd-3er"/>
                             <constraint firstItem="btK-uY-zt7" firstAttribute="top" secondItem="KYH-Wu-hiC" secondAttribute="bottom" constant="28" id="FhQ-4U-dzI"/>
-                            <constraint firstItem="crM-gv-zft" firstAttribute="leading" secondItem="aq4-6n-R3O" secondAttribute="trailing" constant="20" id="Ggq-5d-47U"/>
-                            <constraint firstItem="crM-gv-zft" firstAttribute="centerX" secondItem="IC0-ZR-I3f" secondAttribute="centerX" id="IBE-VS-1wh"/>
-                            <constraint firstItem="bYp-JK-dYb" firstAttribute="centerY" secondItem="crM-gv-zft" secondAttribute="centerY" id="IL6-Ce-RPu"/>
+                            <constraint firstItem="crM-gv-zft" firstAttribute="leading" secondItem="aq4-6n-R3O" secondAttribute="trailing" constant="20" id="ILs-Tu-PRs"/>
                             <constraint firstAttribute="trailing" secondItem="r3M-Cs-SmQ" secondAttribute="trailing" constant="16" id="IhT-NQ-tsF"/>
                             <constraint firstAttribute="trailing" secondItem="mJa-Jc-6JU" secondAttribute="trailing" id="Lig-W5-gOo"/>
-                            <constraint firstItem="bYp-JK-dYb" firstAttribute="leading" secondItem="crM-gv-zft" secondAttribute="trailing" constant="20" id="OZW-Yw-Y6l"/>
-                            <constraint firstItem="DKo-zU-ymM" firstAttribute="top" secondItem="aq4-6n-R3O" secondAttribute="bottom" constant="20" id="RJW-sU-AE2"/>
-                            <constraint firstAttribute="bottom" secondItem="mJa-Jc-6JU" secondAttribute="bottom" constant="-200" id="X5g-f7-Mh8"/>
+                            <constraint firstAttribute="bottom" secondItem="mJa-Jc-6JU" secondAttribute="bottom" constant="-120" id="X5g-f7-Mh8"/>
                             <constraint firstItem="btK-uY-zt7" firstAttribute="leading" secondItem="IC0-ZR-I3f" secondAttribute="leadingMargin" constant="8" id="bIq-C1-0uB"/>
+                            <constraint firstItem="DKo-zU-ymM" firstAttribute="centerX" secondItem="crM-gv-zft" secondAttribute="centerX" id="fOn-Fq-bBM"/>
+                            <constraint firstItem="bYp-JK-dYb" firstAttribute="centerY" secondItem="crM-gv-zft" secondAttribute="centerY" id="fk7-z9-LNa"/>
                             <constraint firstItem="mJa-Jc-6JU" firstAttribute="leading" secondItem="IC0-ZR-I3f" secondAttribute="leading" id="gbY-ri-whS"/>
                             <constraint firstItem="r3M-Cs-SmQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Gv7-r2-ClQ" secondAttribute="trailing" constant="8" symbolic="YES" id="hAz-k8-AUx"/>
                             <constraint firstItem="Gv7-r2-ClQ" firstAttribute="centerX" secondItem="IC0-ZR-I3f" secondAttribute="centerX" id="onR-L1-XXJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="btK-uY-zt7" secondAttribute="trailing" constant="8" id="ovu-LN-TYc"/>
-                            <constraint firstItem="DKo-zU-ymM" firstAttribute="centerX" secondItem="crM-gv-zft" secondAttribute="centerX" id="s4m-ju-e9Z"/>
                             <constraint firstItem="KaR-re-pzf" firstAttribute="top" secondItem="KYH-Wu-hiC" secondAttribute="bottom" constant="32" id="sX5-51-pbO"/>
-                            <constraint firstItem="crM-gv-zft" firstAttribute="top" secondItem="wB2-7N-eaR" secondAttribute="bottom" constant="20" id="sXZ-9J-Re4"/>
                             <constraint firstItem="wB2-7N-eaR" firstAttribute="top" secondItem="cTt-Pt-26O" secondAttribute="bottom" constant="34" id="sf7-Um-g2Y"/>
                             <constraint firstAttribute="trailing" secondItem="KaR-re-pzf" secondAttribute="trailing" constant="8" id="ss4-rv-71w"/>
+                            <constraint firstItem="bYp-JK-dYb" firstAttribute="leading" secondItem="crM-gv-zft" secondAttribute="trailing" constant="20" id="vg8-YV-SJ7"/>
                             <constraint firstItem="KaR-re-pzf" firstAttribute="leading" secondItem="IC0-ZR-I3f" secondAttribute="leading" constant="8" id="wJf-Wl-WWR"/>
-                            <constraint firstItem="aq4-6n-R3O" firstAttribute="centerY" secondItem="crM-gv-zft" secondAttribute="centerY" id="xMB-MG-TDS"/>
-                            <constraint firstItem="mJa-Jc-6JU" firstAttribute="top" secondItem="IC0-ZR-I3f" secondAttribute="top" constant="-200" id="ydf-tx-Ykk"/>
+                            <constraint firstItem="wB2-7N-eaR" firstAttribute="centerX" secondItem="cTt-Pt-26O" secondAttribute="centerX" id="wuP-Dj-yKd"/>
+                            <constraint firstItem="aq4-6n-R3O" firstAttribute="centerY" secondItem="crM-gv-zft" secondAttribute="centerY" id="x5H-Qp-Jsd"/>
+                            <constraint firstItem="mJa-Jc-6JU" firstAttribute="top" secondItem="IC0-ZR-I3f" secondAttribute="top" constant="-120" id="ydf-tx-Ykk"/>
                             <constraint firstItem="r3M-Cs-SmQ" firstAttribute="centerY" secondItem="Gv7-r2-ClQ" secondAttribute="centerY" id="zB1-4y-4uf"/>
                         </constraints>
                     </view>
@@ -779,15 +780,15 @@
     </scenes>
     <resources>
         <image name="CallerImage" width="84.5" height="84.5"/>
-        <image name="KeyPadIcon" width="64" height="64"/>
-        <image name="MakeCall" width="61.5" height="61.5"/>
+        <image name="KeyPadIcon" width="75" height="76"/>
+        <image name="MakeCall" width="72" height="72"/>
         <image name="PlivoIconWhite" width="185" height="54"/>
-        <image name="Speaker" width="65" height="83.5"/>
+        <image name="Speaker" width="75" height="76"/>
         <image name="TabbarIcon0" width="25" height="25"/>
         <image name="TabbarIcon1" width="25" height="25"/>
         <image name="TabbarIcon2" width="25" height="25"/>
-        <image name="UnholdIcon" width="64" height="64"/>
-        <image name="Unmute" width="64" height="64"/>
+        <image name="UnholdIcon" width="75" height="76"/>
+        <image name="Unmute" width="75" height="76"/>
         <image name="wallpaper" width="2688" height="1242"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
