@@ -607,8 +607,9 @@ extension PlivoCallController:PlivoEndpointDelegate{
      */
     
     func onIncomingCall(_ incoming: PlivoIncoming) {
-        self.ratingVC?.dismiss(animated: true, completion: nil)
-        
+        DispatchQueue.main.async{
+            self.ratingVC?.dismiss(animated: true, completion: nil)
+        }
         print("Call id in incoming is:")
         isItUserAction = true
         
