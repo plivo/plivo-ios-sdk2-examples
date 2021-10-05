@@ -1021,10 +1021,19 @@ extension PlivoCallController{
     
     func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction) {
         if action.isOnHold {
-            Phone.sharedInstance.stopAudioDevice()
-        }
-        else {
-            Phone.sharedInstance.startAudioDevice()
+            if (incCall != nil) {
+                incCall?.hold()
+            }
+            if (outCall != nil) {
+                outCall?.hold()
+            }
+        }else {
+            if (incCall != nil) {
+                incCall?.unhold()
+            }
+            if (outCall != nil) {
+                outCall?.unhold()
+            }
         }
         action.fulfill()
     }
