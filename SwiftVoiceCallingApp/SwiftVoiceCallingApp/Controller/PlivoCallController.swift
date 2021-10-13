@@ -617,32 +617,22 @@ extension PlivoCallController:PlivoEndpointDelegate{
         CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
         CallInfo.addCallsInfo(callInfo:[incoming.fromUser,Date()])
         
-        //Added by Siva on Tue 11th, 2017
-        if !(incCall != nil) && !(outCall != nil) {
-            /* log it */
-            print("Incoming Call from %@", incoming.fromContact);
-            print("Call id in incoming is: \(String(describing: incoming.callId))")
-            /* assign incCall var */
-            incCall = incoming
-            outCall = nil
-            CallKitInstance.sharedInstance.callUUID = UUID()
-            reportIncomingCall(from: incoming.fromUser, with: CallKitInstance.sharedInstance.callUUID!)
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)) {
-                DispatchQueue.main.async {
-                    self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
-                    self.userNameTextField.text = ""
-                    self.pad?.digitsTextField.text = ""
-                    self.pad?.rawText = ""
-                    self.callerNameLabel.text = incoming.fromUser
-                    self.callStateLabel.text = "Incoming call..."
-                }
+        print("Incoming Call from %@", incoming.fromContact);
+        print("Call id in incoming is: \(String(describing: incoming.callId))")
+        /* assign incCall var */
+        incCall = incoming
+        outCall = nil
+        CallKitInstance.sharedInstance.callUUID = UUID()
+        reportIncomingCall(from: incoming.fromUser, with: CallKitInstance.sharedInstance.callUUID!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)) {
+            DispatchQueue.main.async {
+                self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
+                self.userNameTextField.text = ""
+                self.pad?.digitsTextField.text = ""
+                self.pad?.rawText = ""
+                self.callerNameLabel.text = incoming.fromUser
+                self.callStateLabel.text = "Incoming call..."
             }
-        }else {
-            /*
-             * Reject the call when we already have active ongoing call
-             */
-            incoming.reject()
-            return
         }
     }
     
