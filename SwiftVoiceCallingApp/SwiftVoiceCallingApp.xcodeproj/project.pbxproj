@@ -44,8 +44,6 @@
 		5AAF7B3A22A54A5700EE9C05 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF7B3922A54A5700EE9C05 /* RatingViewController.swift */; };
 		C78B6F6B27025224005C04EF /* PlivoVoiceKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */; };
 		C78B6F6C27025224005C04EF /* PlivoVoiceKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C78B6F6F27025249005C04EF /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78B6F6D27025240005C04EF /* WebRTC.xcframework */; };
-		C78B6F7027025249005C04EF /* WebRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C78B6F6D27025240005C04EF /* WebRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F841B3501E870444B1780268 /* Pods_SwiftVoiceCallingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,7 +78,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C78B6F7027025249005C04EF /* WebRTC.xcframework in Embed Frameworks */,
 				C78B6F6C27025224005C04EF /* PlivoVoiceKit.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -165,7 +162,6 @@
 		5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp.release.xcconfig"; sourceTree = "<group>"; };
 		60D97E76CFDD69FCDC48BC6B /* Pods-SwiftVoiceCallingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PlivoVoiceKit.xcframework; sourceTree = SOURCE_ROOT; };
-		C78B6F6D27025240005C04EF /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = WebRTC.xcframework; sourceTree = SOURCE_ROOT; };
 		E146EF47870C8EF27CE5A02F /* Pods-SwiftVoiceCallingAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -176,7 +172,6 @@
 			files = (
 				C78B6F6B27025224005C04EF /* PlivoVoiceKit.xcframework in Frameworks */,
 				1E02D4E39DEB53E922DB7416 /* Pods_SwiftVoiceCallingApp.framework in Frameworks */,
-				C78B6F6F27025249005C04EF /* WebRTC.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,7 +347,6 @@
 		47F226831ED58FF00057A39F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C78B6F6D27025240005C04EF /* WebRTC.xcframework */,
 				C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */,
 				280E7CB41FF6D0DB84B30F45 /* Pods_SwiftVoiceCallingApp.framework */,
 				5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */,
@@ -580,10 +574,12 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APAddressBook/APAddressBook.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/PlivoWebRTC/WebRTC.framework/WebRTC",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/APAddressBook.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

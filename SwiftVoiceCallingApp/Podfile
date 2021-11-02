@@ -1,9 +1,10 @@
-platform :ios, '10.0'
+platform :ios, '12.0'
 
 target 'SwiftVoiceCallingApp' do
 	
   use_frameworks!
   pod 'APAddressBook/Swift'
+  pod 'PlivoWebRTC'
   
   # Pods for SwiftVoiceCallingApp
 
