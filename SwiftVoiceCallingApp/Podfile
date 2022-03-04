@@ -4,7 +4,8 @@ target 'SwiftVoiceCallingApp' do
 	
   use_frameworks!
   pod 'APAddressBook/Swift'
-  pod 'PlivoWebRTC'
+  pod 'PlivoWebRTC', '1.1.5-beta'
+  pod 'PlivoVoiceKit', '2.2.3-beta'
   
   # Pods for SwiftVoiceCallingApp
 
