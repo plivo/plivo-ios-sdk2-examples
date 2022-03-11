@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -40,10 +40,10 @@
 		47F226C11ED5C2CD0057A39F /* PhoneNumberMetaData.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226BF1ED5C2CD0057A39F /* PhoneNumberMetaData.json */; };
 		47F226C21ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json in Resources */ = {isa = PBXBuildFile; fileRef = 47F226C01ED5C2CD0057A39F /* PhoneNumberMetaDataForTesting.json */; };
 		47F226CF1ED720210057A39F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226CE1ED720210057A39F /* IntentHandler.swift */; };
-		47F226D31ED720210057A39F /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47F226CC1ED720210057A39F /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5AAF7B3A22A54A5700EE9C05 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF7B3922A54A5700EE9C05 /* RatingViewController.swift */; };
-		C78B6F6B27025224005C04EF /* PlivoVoiceKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */; };
-		C78B6F6C27025224005C04EF /* PlivoVoiceKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		880867D027D9D69800A706DC /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47F226CC1ED720210057A39F /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		880867D427D9D92600A706DC /* PlivoVoiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 880867C927D9D58E00A706DC /* PlivoVoiceKit.framework */; };
+		880867D527D9D92600A706DC /* PlivoVoiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 880867C927D9D58E00A706DC /* PlivoVoiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F841B3501E870444B1780268 /* Pods_SwiftVoiceCallingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -62,7 +62,7 @@
 			remoteGlobalIDString = 47332D2A1EB92B02003FB887;
 			remoteInfo = SwiftVoiceCallingApp;
 		};
-		47F226D11ED720210057A39F /* PBXContainerItemProxy */ = {
+		880867D127D9D69800A706DC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 47332D231EB92B02003FB887 /* Project object */;
 			proxyType = 1;
@@ -72,26 +72,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		47F226881ED590200057A39F /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C78B6F6C27025224005C04EF /* PlivoVoiceKit.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		47F226D71ED720210057A39F /* Embed App Extensions */ = {
+		880867D327D9D69800A706DC /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				47F226D31ED720210057A39F /* IntentHandler.appex in Embed App Extensions */,
+				880867D027D9D69800A706DC /* IntentHandler.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		880867D627D9D92600A706DC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				880867D527D9D92600A706DC /* PlivoVoiceKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -161,7 +161,8 @@
 		5DECAA91E9E4D3BB6174A99B /* Pods_SwiftVoiceCallingAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftVoiceCallingAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp.release.xcconfig"; sourceTree = "<group>"; };
 		60D97E76CFDD69FCDC48BC6B /* Pods-SwiftVoiceCallingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
-		C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = PlivoVoiceKit.xcframework; sourceTree = SOURCE_ROOT; };
+		880867BF27D7801400A706DC /* PlivoVoiceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PlivoVoiceKit.framework; sourceTree = "<group>"; };
+		880867C927D9D58E00A706DC /* PlivoVoiceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PlivoVoiceKit.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/PlivoVoiceKit-fswowjvqgypgfqepoxzcvifmdwoi/Build/Products/Release-iphoneos/PlivoVoiceKit.framework"; sourceTree = "<group>"; };
 		E146EF47870C8EF27CE5A02F /* Pods-SwiftVoiceCallingAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -170,8 +171,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C78B6F6B27025224005C04EF /* PlivoVoiceKit.xcframework in Frameworks */,
 				1E02D4E39DEB53E922DB7416 /* Pods_SwiftVoiceCallingApp.framework in Frameworks */,
+				880867D427D9D92600A706DC /* PlivoVoiceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,7 +348,8 @@
 		47F226831ED58FF00057A39F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C78B6F6927025217005C04EF /* PlivoVoiceKit.xcframework */,
+				880867BF27D7801400A706DC /* PlivoVoiceKit.framework */,
+				880867C927D9D58E00A706DC /* PlivoVoiceKit.framework */,
 				280E7CB41FF6D0DB84B30F45 /* Pods_SwiftVoiceCallingApp.framework */,
 				5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */,
 				5DECAA91E9E4D3BB6174A99B /* Pods_SwiftVoiceCallingAppUITests.framework */,
@@ -389,14 +391,14 @@
 				47332D271EB92B02003FB887 /* Sources */,
 				47332D281EB92B02003FB887 /* Frameworks */,
 				47332D291EB92B02003FB887 /* Resources */,
-				47F226881ED590200057A39F /* Embed Frameworks */,
 				7EE5DC6B14621A1794511FD0 /* [CP] Embed Pods Frameworks */,
-				47F226D71ED720210057A39F /* Embed App Extensions */,
+				880867D327D9D69800A706DC /* Embed App Extensions */,
+				880867D627D9D92600A706DC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				47F226D21ED720210057A39F /* PBXTargetDependency */,
+				880867D227D9D69800A706DC /* PBXTargetDependency */,
 			);
 			name = SwiftVoiceCallingApp;
 			productName = SwiftVoiceCallingApp;
@@ -472,7 +474,7 @@
 						CreatedOnToolsVersion = 8.3;
 						DevelopmentTeam = A277824BB5;
 						LastSwiftMigration = 1300;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -501,7 +503,7 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = A277824BB5;
 						LastSwiftMigration = 1300;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -709,10 +711,10 @@
 			target = 47332D2A1EB92B02003FB887 /* SwiftVoiceCallingApp */;
 			targetProxy = 47332D4B1EB92B02003FB887 /* PBXContainerItemProxy */;
 		};
-		47F226D21ED720210057A39F /* PBXTargetDependency */ = {
+		880867D227D9D69800A706DC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 47F226CB1ED720210057A39F /* IntentHandler */;
-			targetProxy = 47F226D11ED720210057A39F /* PBXContainerItemProxy */;
+			targetProxy = 880867D127D9D69800A706DC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -847,8 +849,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -858,25 +859,24 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 483897A3509F2E88E477A9FF /* Pods-SwiftVoiceCallingApp.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SwiftVoiceCallingApp/SwiftVoiceCallingApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = A277824BB5;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SwiftVoiceCallingApp",
 				);
 				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.4.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rtcsip.RtcSipDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivotest.reactnative;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = latest_client_phone_development;
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
@@ -889,25 +889,24 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = SwiftVoiceCallingApp/SwiftVoiceCallingApp.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = A277824BB5;
-				ENABLE_BITCODE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SwiftVoiceCallingApp",
 				);
 				INFOPLIST_FILE = SwiftVoiceCallingApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.4.11;
-				PRODUCT_BUNDLE_IDENTIFIER = com.rtcsip.RtcSipDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivotest.reactnative;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = latest_client_phone_domain3;
 				SWIFT_OBJC_BRIDGING_HEADER = "SwiftVoiceCallingApp/SwiftVoiceCallingApp-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
@@ -923,11 +922,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = A277824BB5;
 				INFOPLIST_FILE = SwiftVoiceCallingAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -943,11 +938,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = A277824BB5;
 				INFOPLIST_FILE = SwiftVoiceCallingAppTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -962,11 +953,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = A277824BB5;
 				INFOPLIST_FILE = SwiftVoiceCallingAppUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -981,11 +968,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				DEVELOPMENT_TEAM = A277824BB5;
 				INFOPLIST_FILE = SwiftVoiceCallingAppUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.plivo.SwiftVoiceCallingAppUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -997,17 +980,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = A277824BB5;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rtcsip.RtcSipDemo.intenthandler;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivotest.reactnative.intenthandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = latest_client_phone_intent_development;
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;
@@ -1018,17 +1000,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = A277824BB5;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = IntentHandler/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.rtcsip.RtcSipDemo.intenthandler;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.plivotest.reactnative.intenthandler;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = local_client_phone_intenthandler1;
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 5.0;

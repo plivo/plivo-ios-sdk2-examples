@@ -105,11 +105,16 @@ extension LoginViewController: PlivoEndpointDelegate{
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINSUCCESS)
             
-            if !(UserDefaults.standard.object(forKey: kUSERNAME) != nil) {
+            if (self.userNameTextField.text != nil && !self.userNameTextField.text!.isEmpty) {
                 UserDefaults.standard.set(self.userNameTextField.text, forKey: kUSERNAME)
                 UserDefaults.standard.set(self.passwordTextField.text, forKey: kPASSWORD)
                 UserDefaults.standard.synchronize()
             }
+//            if !(UserDefaults.standard.object(forKey: kUSERNAME) != nil) {
+//                UserDefaults.standard.set(self.userNameTextField.text, forKey: kUSERNAME)
+//                UserDefaults.standard.set(self.passwordTextField.text, forKey: kPASSWORD)
+//                UserDefaults.standard.synchronize()
+//            }
             
             UtilClass.setUserAuthenticationStatus(true)
             let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)

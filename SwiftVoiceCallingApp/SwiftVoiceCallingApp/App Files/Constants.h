@@ -1,5 +1,5 @@
 
-#define kUSERNAME  @"ios1275035942759481486828"
+#define kUSERNAME  @"chandresh1"
 #define kPASSWORD @"plivo"
 #define kAUTHENTICATIONSTATUS  @"AuthenticationStatus"
 #define kCALLSINFO  @"CallsInfo"

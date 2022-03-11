@@ -1,0 +1,11 @@
+framework module PlivoVoiceKit {
+  umbrella header "PlivoVoiceKit.h"
+
+  export *
+  module * { export * }
+}
+
+module PlivoVoiceKit.Swift {
+    header "PlivoVoiceKit-Swift.h"
+    requires objc
+}
