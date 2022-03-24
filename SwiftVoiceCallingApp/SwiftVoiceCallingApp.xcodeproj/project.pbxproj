@@ -42,6 +42,8 @@
 		47F226CF1ED720210057A39F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47F226CE1ED720210057A39F /* IntentHandler.swift */; };
 		5AAF7B3A22A54A5700EE9C05 /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AAF7B3922A54A5700EE9C05 /* RatingViewController.swift */; };
 		880867D027D9D69800A706DC /* IntentHandler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 47F226CC1ED720210057A39F /* IntentHandler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8808683327E9AEF100A706DC /* PlivoVoiceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8808683027E9AEEB00A706DC /* PlivoVoiceKit.framework */; };
+		8808683427E9AEF100A706DC /* PlivoVoiceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8808683027E9AEEB00A706DC /* PlivoVoiceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F841B3501E870444B1780268 /* Pods_SwiftVoiceCallingAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D7CBDBF11A10A1188928A6D /* Pods_SwiftVoiceCallingAppTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -67,6 +69,20 @@
 			remoteGlobalIDString = 47F226CB1ED720210057A39F;
 			remoteInfo = IntentHandler;
 		};
+		8808682F27E9AEEB00A706DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8808682A27E9AEEB00A706DC /* PlivoVoiceKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C7004FE326CEDA7C001BC7C1;
+			remoteInfo = PlivoVoiceKit;
+		};
+		8808683127E9AEEB00A706DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8808682A27E9AEEB00A706DC /* PlivoVoiceKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C70410FB26D4C16000FA1718;
+			remoteInfo = PlivoVoiceKitTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -87,6 +103,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8808683427E9AEF100A706DC /* PlivoVoiceKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -159,6 +176,7 @@
 		5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp.release.xcconfig"; sourceTree = "<group>"; };
 		60D97E76CFDD69FCDC48BC6B /* Pods-SwiftVoiceCallingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8808681327E5E73900A706DC /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = ../Pods/PlivoWebRTC/WebRTC.xcframework; sourceTree = "<group>"; };
+		8808682A27E9AEEB00A706DC /* PlivoVoiceKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PlivoVoiceKit.xcodeproj; path = "../../plivo-ios-sdk-webrtc/PlivoVoiceKit.xcodeproj"; sourceTree = "<group>"; };
 		E146EF47870C8EF27CE5A02F /* Pods-SwiftVoiceCallingAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E02D4E39DEB53E922DB7416 /* Pods_SwiftVoiceCallingApp.framework in Frameworks */,
+				8808683327E9AEF100A706DC /* PlivoVoiceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +219,7 @@
 		47332D221EB92B02003FB887 = {
 			isa = PBXGroup;
 			children = (
+				8808682A27E9AEEB00A706DC /* PlivoVoiceKit.xcodeproj */,
 				47332D2D1EB92B02003FB887 /* SwiftVoiceCallingApp */,
 				47332D421EB92B02003FB887 /* SwiftVoiceCallingAppTests */,
 				47332D4D1EB92B02003FB887 /* SwiftVoiceCallingAppUITests */,
@@ -361,6 +381,15 @@
 			path = IntentHandler;
 			sourceTree = "<group>";
 		};
+		8808682B27E9AEEB00A706DC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8808683027E9AEEB00A706DC /* PlivoVoiceKit.framework */,
+				8808683227E9AEEB00A706DC /* PlivoVoiceKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B9BE5D7A6251FA8CB3519523 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -513,6 +542,12 @@
 			mainGroup = 47332D221EB92B02003FB887;
 			productRefGroup = 47332D2C1EB92B02003FB887 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8808682B27E9AEEB00A706DC /* Products */;
+					ProjectRef = 8808682A27E9AEEB00A706DC /* PlivoVoiceKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				47332D2A1EB92B02003FB887 /* SwiftVoiceCallingApp */,
@@ -522,6 +557,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8808683027E9AEEB00A706DC /* PlivoVoiceKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PlivoVoiceKit.framework;
+			remoteRef = 8808682F27E9AEEB00A706DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		8808683227E9AEEB00A706DC /* PlivoVoiceKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PlivoVoiceKitTests.xctest;
+			remoteRef = 8808683127E9AEEB00A706DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		47332D291EB92B02003FB887 /* Resources */ = {
