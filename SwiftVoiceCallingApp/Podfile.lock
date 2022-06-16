@@ -1,0 +1,22 @@
+PODS:
+  - APAddressBook/Core (0.3.2)
+  - APAddressBook/Swift (0.3.2):
+    - APAddressBook/Core
+  - PlivoWebRTC (1.1.5-beta)
+
+DEPENDENCIES:
+  - APAddressBook/Swift
+  - PlivoWebRTC (= 1.1.5-beta)
+
+SPEC REPOS:
+  trunk:
+    - APAddressBook
+    - PlivoWebRTC
+
+SPEC CHECKSUMS:
+  APAddressBook: e68ecaf95f2c323b625ae585a0d25fe505291286
+  PlivoWebRTC: fe070bcd100d2ede9e72318e703a9794cd83ffc7
+
+PODFILE CHECKSUM: 50d28db8e7c70b84e475cc0f6385e696f77dd7ab
+
+COCOAPODS: 1.11.2
