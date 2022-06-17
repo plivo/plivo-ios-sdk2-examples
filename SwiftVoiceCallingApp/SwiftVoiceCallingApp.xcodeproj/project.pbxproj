@@ -159,7 +159,6 @@
 		5F37C1029CD90A22898CC534 /* Pods-SwiftVoiceCallingApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp.release.xcconfig"; sourceTree = "<group>"; };
 		60D97E76CFDD69FCDC48BC6B /* Pods-SwiftVoiceCallingAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8808681327E5E73900A706DC /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = ../Pods/PlivoWebRTC/WebRTC.xcframework; sourceTree = "<group>"; };
-
 		E146EF47870C8EF27CE5A02F /* Pods-SwiftVoiceCallingAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftVoiceCallingAppUITests/Pods-SwiftVoiceCallingAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -523,7 +522,6 @@
 			);
 		};
 /* End PBXProject section */
-
 
 /* Begin PBXResourcesBuildPhase section */
 		47332D291EB92B02003FB887 /* Resources */ = {
