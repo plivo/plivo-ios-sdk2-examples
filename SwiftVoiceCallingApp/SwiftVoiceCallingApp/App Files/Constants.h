@@ -1,6 +1,9 @@
 
-#define kUSERNAME  @"abcdefg"
-#define kPASSWORD @"12345678"
+#define kUSERNAME  @"sandbox1806462278789963824891"
+#define kPASSWORD @"12345"
+#define kACCESSTOKEN @"eyJhbGciOiJIUzI1NiIsImN0eSI6InBsaXZvO3Y9MSIsInR5cCI6IkpXVCJ9.eyJhcHAiOiIiLCJleHAiOjE2NTY2NjMyMTgsImlzcyI6Ik1BWTJSSk5aS1pOSk1XT1RHNE5UIiwibmJmIjoxNjU2NTc2ODE4LCJwZXIiOnsidm9pY2UiOnsiaW5jb21pbmdfYWxsb3ciOnRydWUsIm91dGdvaW5nX2FsbG93Ijp0cnVlfX0sInN1YiI6InNhbnlhbSJ9.rgWYJZvuqAlEdcaTKHyeFMl5Mlhdr4Le6z9NwrZefzc"
+#define kLOGINWITHTOKENGENERATOR FALSE
+#define kAUTHENTICATIONSTATUS  @"AuthenticationStatus"
 #define kAUTHENTICATIONSTATUS  @"AuthenticationStatus"
 #define kCALLSINFO  @"CallsInfo"
 #define kREACHABILITYURL "www.google.com"

@@ -8,11 +8,12 @@
 
 import Foundation
 import PlivoVoiceKit
+import Alamofire
 
 class Phone {
     
     static let sharedInstance = Phone()
-
+    var deviceToken: Data?
     var endpoint: PlivoEndpoint = PlivoEndpoint(["debug":true,"enableTracking":true])
     private var outCall: PlivoOutgoing?
     
@@ -30,6 +31,34 @@ class Phone {
         endpoint.login(userName, andPassword: password, deviceToken: token)
     }
     
+    func login(withAccessToken accessToken: String, deviceToken token: Data?) {
+        UtilClass.makeToastActivity()
+        
+        if (kLOGINWITHTOKENGENERATOR != 0) {
+            loginWithTokenGenerator(deviceToken: token)
+        } else {
+            endpoint.loginWithAccessToken(accessToken, deviceToken: token)
+        }
+        
+    }
+    
+    func login(withAccessToken accessToken: String) {
+        UtilClass.makeToastActivity()
+        if (kLOGINWITHTOKENGENERATOR != 0) {
+            loginWithTokenGenerator(deviceToken: nil)
+        } else {
+            endpoint.loginWithAccessToken(accessToken)
+        }
+        endpoint.loginWithAccessToken(accessToken)
+    }
+    
+    func loginWithTokenGenerator(deviceToken token: Data?) {
+        
+        UtilClass.makeToastActivity()
+        deviceToken = token
+        endpoint.loginWithAccessTokenGenerator(jwtDelegate: self)
+    }
+    
     //To unregister with SIP Server
     func logout() {
         endpoint.logout()
@@ -45,14 +74,18 @@ class Phone {
         endpoint.relayVoipPushNotification(pushdata)
     }
 
-    func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing {
+    func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing? {
         /* construct SIP URI */
         let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
         /* create PlivoOutgoing object */
-        outCall = (endpoint.createOutgoingCall())!
+        outCall = (endpoint.createOutgoingCall())
         /* do the call */
-        outCall?.call(sipUri, headers: headers, error: &error)
-        return outCall!
+        if outCall == nil {
+            error = NSError(domain: "outgoingCall", code: 0, userInfo: [NSLocalizedDescriptionKey: "Something went wrong"])
+            return nil
+        }
+        outCall?.call(sipUri, headers: headers)
+        return outCall
     }
     
     func setDelegate(_ controllerDelegate: AnyObject) {
@@ -86,4 +119,63 @@ class Phone {
         let callUUID:String? = endpoint.getLastCallUUID();
         endpoint.submitCallQualityFeedback(callUUID, starRating,  issueList, notes, sendConsoleLog)
     }
+}
+
+
+
+
+extension Phone: JWTDelegate {
+    func getAccessToken() {
+        
+        
+        let Url = String(format: "https://api.plivo.com/v1/Account/MAY2RJNZKZNJMWOTG4NT/JWT/Token")
+           guard let serviceUrl = URL(string: Url) else { return }
+            let timeInterval = Int(Date().timeIntervalSince1970)
+            let parameterDictionary: [String: Any] = [
+                "iss": "MAY2RJNZKZNJMWOTG4NT",
+                "exp": timeInterval + 240,
+                "sub": "sanyam",
+                "per": ["voice": ["incoming_allow": false, "outgoing_allow": true]]
+            ]
+//           let parameterDictionary = ["username" : "Test", "password" : "123456"]
+           var request = URLRequest(url: serviceUrl)
+           request.httpMethod = "POST"
+           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+           guard let httpBody = try? JSONSerialization.data(withJSONObject: parameterDictionary, options: []) else {
+               return
+           }
+           request.httpBody = httpBody
+            request.headers =  ["Authorization": "Basic TUFZMlJKTlpLWk5KTVdPVEc0TlQ6WWpJM1pXVmpPV0poTW1Kak5USXhNakJtTkdJeVlUUmtZVGd3TUdSaA=="]
+           let session = URLSession.shared
+           session.dataTask(with: request) { (data, response, error) in
+               if let response = response {
+                   print(response)
+               }
+               if let data = data {
+                   do {
+                       var dataAsString:String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
+
+                       let token: JWTDecoder = try JSONDecoder().decode(JWTDecoder.self, from: data)
+                       if let deviceToken = self.deviceToken {
+                           print(token.token)
+                           self.endpoint.loginWithAccessToken(token.token, deviceToken: deviceToken)
+                       
+                       } else {
+                           self.endpoint.loginWithAccessToken(token.token)
+                       }
+                   } catch let decoderError {
+                       print(decoderError)
+                   }
+               }
+              
+           }.resume()
+    }
+}
+
+
+
+
+struct JWTDecoder: Codable {
+    var api_id: String
+    var token: String
 }

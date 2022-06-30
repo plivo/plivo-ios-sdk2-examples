@@ -10,19 +10,28 @@
 import UIKit
 import PlivoVoiceKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var jwtSwitch: UISwitch!
+    @IBOutlet weak var jwtTextView: UITextView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loginButton.layer.cornerRadius = 10
-        
+        jwtSwitch.isOn = false
         self.userNameTextField.delegate = self
-        self.passwordTextField.delegate = self
         
+        self.passwordTextField.delegate = self
+        jwtTextView.text = "Paste your Access Token here"
+        jwtTextView.textColor = UIColor.lightGray
+        jwtTextView.delegate = self
+        jwtTextView.layer.cornerRadius = 10
+        
+        jwtTextView.text = kACCESSTOKEN
         self.userNameTextField.text = kUSERNAME
         self.passwordTextField.text = kPASSWORD
     }
@@ -36,28 +45,79 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func loginButtonTapped(_ sender: Any) {
-        guard let userName = userNameTextField.text, UtilClass.isEmpty(userName) == false else {
-            return UtilClass.makeToast(kINVALIDENTRIESUSNMSG)
-        }
-        
-        guard let password = passwordTextField.text, UtilClass.isEmpty(password) == false else {
-            return UtilClass.makeToast(kINVALIDENTRIESPSWDMSG)
-        }
-        
-        if UtilClass.isNetworkAvailable() {
-            view.isUserInteractionEnabled = false
-            UtilClass.makeToastActivity()
-            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            if let token = appDelegate?.deviceToken{
-                appDelegate?.didUpdatePushCredentials = true
-                Phone.sharedInstance.login(withUserName: userName, andPassword: password, deviceToken: token)
-            }else{
-                Phone.sharedInstance.login(withUserName: userName, andPassword: password)
+        if jwtSwitch.isOn {
+            guard let accessToken = jwtTextView.text, UtilClass.isEmpty(accessToken) == false else {
+                return UtilClass.makeToast(kINVALIDENTRIESUSNMSG)
             }
-        }else {
-            UtilClass.makeToast(kNOINTERNETMSG)
+            
+            
+            if UtilClass.isNetworkAvailable() {
+                view.isUserInteractionEnabled = false
+                UtilClass.makeToastActivity()
+                let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+                if let token = appDelegate?.deviceToken{
+                    appDelegate?.didUpdatePushCredentials = true
+                    Phone.sharedInstance.login(withAccessToken: accessToken, deviceToken: token)
+                }else{
+                    Phone.sharedInstance.login(withAccessToken: accessToken)
+                }
+            }else {
+                UtilClass.makeToast(kNOINTERNETMSG)
+            }
+        } else {
+            guard let userName = userNameTextField.text, UtilClass.isEmpty(userName) == false else {
+                return UtilClass.makeToast(kINVALIDENTRIESUSNMSG)
+            }
+            
+            guard let password = passwordTextField.text, UtilClass.isEmpty(password) == false else {
+                return UtilClass.makeToast(kINVALIDENTRIESPSWDMSG)
+            }
+            
+            if UtilClass.isNetworkAvailable() {
+                view.isUserInteractionEnabled = false
+                UtilClass.makeToastActivity()
+                let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+                if let token = appDelegate?.deviceToken{
+                    appDelegate?.didUpdatePushCredentials = true
+                    Phone.sharedInstance.login(withUserName: userName, andPassword: password, deviceToken: token)
+                }else{
+                    Phone.sharedInstance.login(withUserName: userName, andPassword: password)
+                }
+            }else {
+                UtilClass.makeToast(kNOINTERNETMSG)
+            }
+        }
+       
+    }
+    
+    @IBAction func jwtToggle(_ sender: UISwitch) {
+
+        if sender.isOn {
+            userNameTextField.isHidden = true
+            passwordTextField.isHidden = true
+            jwtTextView.isHidden = false
+        } else {
+            userNameTextField.isHidden = false
+            passwordTextField.isHidden = false
+            jwtTextView.isHidden = true
+        }
+        print("jwt switch status is \(jwtSwitch.isOn)")
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if jwtTextView.textColor == UIColor.lightGray {
+            jwtTextView.text = nil
+            jwtTextView.textColor = UIColor.black
         }
     }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if jwtTextView.text.isEmpty {
+            jwtTextView.text = "Paste your Access Token here"
+            jwtTextView.textColor = UIColor.lightGray
+        }
+    }
+    
     
     /**
      * Hide keyboard after user press 'return' key
@@ -84,6 +144,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             if touch.phase == .began{
                 userNameTextField.resignFirstResponder()
                 passwordTextField.resignFirstResponder()
+                jwtTextView.resignFirstResponder()
             }
         }
         super.touchesBegan(touches, with: event)
