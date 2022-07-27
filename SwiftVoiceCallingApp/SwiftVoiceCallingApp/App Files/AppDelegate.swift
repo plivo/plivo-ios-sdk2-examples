@@ -68,7 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
         useVoipToken(credentials.token)
         
         if UtilClass.getUserAuthenticationStatus(){
-            if !kACCESSTOKEN.isEmpty {
+            if !kACCESSTOKEN.isEmpty && UserDefaults.standard.string(forKey: kACCESSTOKEN) != nil && !UserDefaults.standard.string(forKey: kACCESSTOKEN)!.isEmpty {
                 Phone.sharedInstance.login(withAccessToken: kACCESSTOKEN, deviceToken: credentials.token)
             } else {
                 Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: credentials.token)
@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
         
         if (type == PKPushType.voIP) {
             if (!didUpdatePushCredentials) {
-                if !kACCESSTOKEN.isEmpty {
+                if !kACCESSTOKEN.isEmpty && UserDefaults.standard.string(forKey: kACCESSTOKEN) != nil && !UserDefaults.standard.string(forKey: kACCESSTOKEN)!.isEmpty {
                     Phone.sharedInstance.login(withAccessToken: kACCESSTOKEN, deviceToken: deviceToken)
                 } else {
                     Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: deviceToken)

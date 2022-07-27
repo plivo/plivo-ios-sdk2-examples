@@ -159,14 +159,17 @@ extension LoginViewController: PlivoEndpointDelegate{
      */
     
     @objc func onLogin() {
-        DispatchQueue.main.async{
+        DispatchQueue.main.async{ [self] in
             self.userNameTextField.delegate = nil
             self.passwordTextField.delegate = nil
             
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINSUCCESS)
             
-            if (self.userNameTextField.text != nil && !self.userNameTextField.text!.isEmpty) {
+            if (self.jwtSwitch.isOn && self.jwtTextView.text != nil && !self.userNameTextField.text!.isEmpty) {
+                UserDefaults.standard.set(self.jwtTextView.text, forKey: kACCESSTOKEN)
+                UserDefaults.standard.synchronize()
+            } else if (!self.jwtSwitch.isOn && self.userNameTextField.text != nil && !self.userNameTextField.text!.isEmpty) {
                 UserDefaults.standard.set(self.userNameTextField.text, forKey: kUSERNAME)
                 UserDefaults.standard.set(self.passwordTextField.text, forKey: kPASSWORD)
                 UserDefaults.standard.synchronize()

@@ -135,7 +135,7 @@ extension Phone: JWTDelegate {
                 "iss": "MAY2RJNZKZNJMWOTG4NT",
                 "exp": timeInterval + 240,
                 "sub": "sanyam",
-                "per": ["voice": ["incoming_allow": false, "outgoing_allow": true]]
+                "per": ["voice": ["incoming_allow": true, "outgoing_allow": true]]
             ]
 //           let parameterDictionary = ["username" : "Test", "password" : "123456"]
            var request = URLRequest(url: serviceUrl)

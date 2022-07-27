@@ -595,6 +595,7 @@ extension PlivoCallController:PlivoEndpointDelegate{
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
+            UserDefaults.standard.removeObject(forKey: kACCESSTOKEN)
             UserDefaults.standard.synchronize()
             UtilClass.hideToastActivity()
             
