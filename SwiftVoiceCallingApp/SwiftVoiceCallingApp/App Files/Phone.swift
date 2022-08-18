@@ -28,7 +28,11 @@ class Phone {
     func login(withUserName userName: String, andPassword password: String, deviceToken token: Data?) {
         
         UtilClass.makeToastActivity()
-        endpoint.login(userName, andPassword: password, deviceToken: token)
+        
+//        if (endpoint.setRegTimeout(regTimeout: 10000)) {
+            endpoint.login(userName, andPassword: password, deviceToken: token)
+//        }
+        
     }
     
     func login(withAccessToken accessToken: String, deviceToken token: Data?) {
@@ -75,7 +79,7 @@ class Phone {
         if (kLOGINWITHTOKENGENERATOR != 0) {
             loginWithTokenGenerator(deviceToken: deviceToken)
         } else {
-            endpoint.loginForIncomingWithToken(withAccessToken: accessToken, withDeviceToken: deviceToken, withCertificateId: certificateId, withNotificationInfo: pushInfo)
+            endpoint.loginForIncomingWithJWT(withAccessToken: accessToken, withDeviceToken: deviceToken, withCertificateId: certificateId, withNotificationInfo: pushInfo)
         }
     }
     
@@ -87,7 +91,7 @@ class Phone {
 
     func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing? {
         /* construct SIP URI */
-        let sipUri: String = "sip:sanyam_MAY2RJNZKZNJMWOTG4NT\(kENDPOINTURL)"
+        let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
         /* create PlivoOutgoing object */
         outCall = (endpoint.createOutgoingCall())
         /* do the call */
