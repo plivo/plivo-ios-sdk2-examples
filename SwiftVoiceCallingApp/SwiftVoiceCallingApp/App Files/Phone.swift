@@ -28,7 +28,11 @@ class Phone {
     func login(withUserName userName: String, andPassword password: String, deviceToken token: Data?) {
         
         UtilClass.makeToastActivity()
-        endpoint.login(userName, andPassword: password, deviceToken: token)
+        
+//        if (endpoint.setRegTimeout(regTimeout: 10000)) {
+            endpoint.login(userName, andPassword: password, deviceToken: token)
+//        }
+        
     }
     
     func login(withAccessToken accessToken: String, deviceToken token: Data?) {
@@ -70,8 +74,19 @@ class Phone {
     }
     
     //receive and pass on (information or a message)
-    func relayVoipPushNotification(_ pushdata: [AnyHashable: Any]) {
-        endpoint.relayVoipPushNotification(pushdata)
+    func loginForIncomingWithToken(withAccessToken accessToken: String, withDeviceToken deviceToken: Data?, withCertificateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
+        UtilClass.makeToastActivity()
+        if (kLOGINWITHTOKENGENERATOR != 0) {
+            loginWithTokenGenerator(deviceToken: deviceToken)
+        } else {
+            endpoint.loginForIncomingWithJWT(withAccessToken: accessToken, withDeviceToken: deviceToken, withCertificateId: certificateId, withNotificationInfo: pushInfo)
+        }
+    }
+    
+    //receive and pass on (information or a message)
+    func loginForIncomingWithUsername(withUserName username: String, withPassword password: String, withDeviceToken deviceToken: Data?, withCertifateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
+        UtilClass.makeToastActivity()
+        endpoint.loginForIncomingWithUsername(withUserName: username, withPassword: password, withDeviceToken: deviceToken, withCertifateId: certificateId, withNotificationInfo: pushInfo)
     }
 
     func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing? {
