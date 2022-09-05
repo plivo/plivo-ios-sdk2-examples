@@ -91,7 +91,7 @@ class Phone {
 
     func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing? {
         /* construct SIP URI */
-        let sipUri: String = "sip:sanyam_MAY2RJNZKZNJMWOTG4NT\(kENDPOINTURL)"
+        let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
         /* create PlivoOutgoing object */
         outCall = (endpoint.createOutgoingCall())
         /* do the call */
