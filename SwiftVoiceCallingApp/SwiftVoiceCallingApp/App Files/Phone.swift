@@ -14,7 +14,7 @@ class Phone {
     
     static let sharedInstance = Phone()
     var deviceToken: Data?
-    var endpoint: PlivoEndpoint = PlivoEndpoint(["debug":true,"enableTracking":true])
+    var endpoint: PlivoEndpoint = PlivoEndpoint(["debug":true,"enableTracking":true,"enableQualityTracking": CallAndMediaMetrics.ALL])
     private var outCall: PlivoOutgoing?
     
     // To register with SIP Server
@@ -91,7 +91,7 @@ class Phone {
 
     func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing? {
         /* construct SIP URI */
-        let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
+        let sipUri: String = "sip:sanyam_MAY2RJNZKZNJMWOTG4NT\(kENDPOINTURL)"
         /* create PlivoOutgoing object */
         outCall = (endpoint.createOutgoingCall())
         /* do the call */
