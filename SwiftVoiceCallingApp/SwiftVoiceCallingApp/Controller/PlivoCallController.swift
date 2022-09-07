@@ -536,6 +536,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
 
 extension PlivoCallController:PlivoEndpointDelegate{
     
+    func onPermissionDenied(_ error: Error) {
+        print(error.localizedDescription)
+    }
+    
     func onLogin() {
         DispatchQueue.main.async{
             UtilClass.hideToastActivity()
@@ -591,6 +595,7 @@ extension PlivoCallController:PlivoEndpointDelegate{
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
+            UserDefaults.standard.removeObject(forKey: kACCESSTOKEN)
             UserDefaults.standard.synchronize()
             UtilClass.hideToastActivity()
             
