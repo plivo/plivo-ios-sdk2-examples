@@ -5,7 +5,7 @@
 ![plivo-iOSsdk-2.0-example](ReadMeImages/app.png)
 
 
-The Plivo iOS SDK v2 allows you to make outgoing and receive incoming calls in your iOS application.
+The Plivo iOS SDK v3 allows you to make outgoing and receive incoming calls in your iOS application.
 
 Supports Pushkit and Callkit. Eliminates the need for persistent connections to recieve incoming calls.
 
@@ -23,7 +23,7 @@ To get started with the quickstart application follow these steps. Steps 1-3 wil
 
 4. [Run the app](#bullet4)
 
-5. [Plivo iOS SDK V2 with Push Kit integration](#bullet5)
+5. [Plivo iOS SDK V3 with Push Kit integration](#bullet5)
 
 6. [Making an outgoing call](#bullet6)
 
@@ -50,7 +50,7 @@ Signup and create endpoints with Plivo using below link
 
 Implement SIP register to Plivo Communication Server
 
-To register with Plivo's SIP and Media server , use a valid sip uri account from plivo web console 
+To register with Plivo's SIP and Media server , use a valid sip uri account from plivo web console
 ```
 var endpoint: PlivoEndpoint = PlivoEndpoint(debug: true)
 
@@ -65,25 +65,76 @@ func logout() {
 endpoint.logout()
 }
 ```
-If the registration to an endpoint fails the following delegate gets called 
+#### With Access Tokens/ JWT
+You can register an endpoint using:
+
+- Access Token, device token, and certificate ID
+
+```
+func loginWithAccessToken(accessToken: String, deviceToken token: Data, certificateId certificateId: String) {
+    endpoint.loginWithAccessToken(accessToken: String, deviceToken: token, certificateId: certificateId)
+}
+```
+
+- Access Token, and device token
+
+```
+func loginWithAccessToken(accessToken: String, deviceToken token: Data) {
+    endpoint.loginWithAccessToken(accessToken: String, deviceToken: token)
+}
+```
+
+- Access Token
+
+```
+func loginWithAccessToken(accessToken: String) {
+    endpoint.loginWithAccessToken(accessToken: String)
+}
+```
+- Access Token Generator
+
+```
+func login(jwtDelegate: JWTDelegate) {
+    endpoint.loginWithAccessTokenGenerator(jwtDelegate: JWTDelegate)
+}
+```
+
+>Check out our [Github example](https://github.com/plivo/plivo-ios-sdk2-examples/tree/beta) for implementation.
+
+If the registration to an endpoint fails the following delegate gets called
 ```
 (void)onLoginFailedWithError:(NSError *)error;
 ```
+Possible error events for JWT:
+- INVALID_ACCESS_TOKEN
+- INVALID_ACCESS_TOKEN_HEADER
+- INVALID_ACCESS_TOKEN_ISSUER
+- INVALID_ACCESS_TOKEN_SUBJECT
+- ACCESS_TOKEN_NOT_VALID_YET
+- ACCESS_TOKEN_EXPIRED
+- INVALID_ACCESS_TOKEN_SIGNATURE
+- INVALID_ACCESS_TOKEN_GRANTS
+- EXPIRATION_EXCEEDS_MAX_ALLOWED_TIME
+- MAX_ALLOWED_LOGIN_REACHED
 
+This delegate is called when the user logs in with JWT and does have the permision to make outgoing/receive incoming calls. Parameters: Error Return Value: None
+```
+(void)onPermissionDenied:
+```
 ### <a name="bullet4"></a>4. Run the app
 
-Open `SwiftVoiceCallingApp.xcworkspace`. 
+Open `SwiftVoiceCallingApp.xcworkspace`.
 
-Build and run the app. 
+Build and run the app.
 
-Enter sip endpoint username and password. 
+Enter sip endpoint username and password.
 
-After successful login make VoiceCalls. 
+After successful login make VoiceCalls.
 
 
-### <a name="bullet5"></a>5. Plivo iOS SDK V2 with Push Kit integration
+### <a name="bullet5"></a>5. Plivo iOS SDK V3 with Push Kit integration
 
-To enable Pushkit Integration in the SDK the registerToken and relayVoipPushNotification are implemented 
+To enable Pushkit Integration in the SDK the registerToken and relayVoipPushNotification are implemented
 ```
 //Register pushkit token
 func registerToken(_ token: Data) {
@@ -95,14 +146,14 @@ func relayVoipPushNotification(_ pushdata: [AnyHashable: Any]) {
 endpoint.relayVoipPushNotification(pushdata)
 }
 ```
-please refer to below link on Generating VoIP Certificate. 
+please refer to below link on Generating VoIP Certificate.
 
 [Generating VoIP Certificate](https://www.plivo.com/docs/sdk/client/ios/setting-up-push-credentials/)
 
 
 ### <a name="bullet6"></a>6. Making an outgoing call
 
-Create PlivoOutgoingCall object , then make a call with destination and headers 
+Create PlivoOutgoingCall object , then make a call with destination and headers
 ```
 func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing {
 /* construct SIP URI , where kENDPOINTURL is a contant contaning domain name details*/
@@ -167,7 +218,7 @@ endpoint.relayVoipPushNotification(payload.dictionaryPayload)
 PushInfo is the NSDictionary object forwarded by the apple push notification. This will enable the application to receive incoming calls even the app is not in foreground.
 
 
-You are now ready to receive incoming calls. 
+You are now ready to receive incoming calls.
 
 ![plivo-iOSsdk-2.0-example](ReadMeImages/callkit.png)
 
