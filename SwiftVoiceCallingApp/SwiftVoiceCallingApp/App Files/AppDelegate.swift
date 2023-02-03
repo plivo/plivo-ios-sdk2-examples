@@ -68,7 +68,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
         useVoipToken(credentials.token)
         
         if UtilClass.getUserAuthenticationStatus(){
-            Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: credentials.token)
+            if !kACCESSTOKEN.isEmpty && UserDefaults.standard.string(forKey: kACCESSTOKEN) != nil && !UserDefaults.standard.string(forKey: kACCESSTOKEN)!.isEmpty {
+                Phone.sharedInstance.login(withAccessToken: kACCESSTOKEN, deviceToken: credentials.token)
+            } else {
+                Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: credentials.token)
+            }
+            
             didUpdatePushCredentials = true
         }
     }
@@ -81,10 +86,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
         NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
         
         if (type == PKPushType.voIP) {
-            if (!didUpdatePushCredentials) {
-                Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: deviceToken)
+            if !kACCESSTOKEN.isEmpty && UserDefaults.standard.string(forKey: kACCESSTOKEN) != nil && !UserDefaults.standard.string(forKey: kACCESSTOKEN)!.isEmpty {
+                Phone.sharedInstance.loginForIncomingWithToken(withAccessToken: kACCESSTOKEN, withDeviceToken: deviceToken, withCertificateId: "NA", withNotificationInfo: payload.dictionaryPayload)
+            } else {
+                Phone.sharedInstance.loginForIncomingWithUsername(withUserName: kUSERNAME, withPassword: kPASSWORD, withDeviceToken: deviceToken, withCertifateId: "NA", withNotificationInfo: payload.dictionaryPayload)
             }
-            Phone.sharedInstance.relayVoipPushNotification(payload.dictionaryPayload)
         }
         
         DispatchQueue.main.async {

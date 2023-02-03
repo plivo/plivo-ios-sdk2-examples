@@ -1,6 +1,9 @@
 
-#define kUSERNAME  @"abcdefg"
-#define kPASSWORD @"12345678"
+#define kUSERNAME  @""
+#define kPASSWORD @""
+#define kACCESSTOKEN @""
+#define kLOGINWITHTOKENGENERATOR FALSE
+#define kAUTHENTICATIONSTATUS  @"AuthenticationStatus"
 #define kAUTHENTICATIONSTATUS  @"AuthenticationStatus"
 #define kCALLSINFO  @"CallsInfo"
 #define kREACHABILITYURL "www.google.com"

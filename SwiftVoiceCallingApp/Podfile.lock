@@ -2,21 +2,25 @@ PODS:
   - APAddressBook/Core (0.3.2)
   - APAddressBook/Swift (0.3.2):
     - APAddressBook/Core
+  - PlivoVoiceKit (3.0.1-beta)
   - PlivoWebRTC (1.1.5-beta)
 
 DEPENDENCIES:
   - APAddressBook/Swift
+  - PlivoVoiceKit (= 3.0.1-beta)
   - PlivoWebRTC (= 1.1.5-beta)
 
 SPEC REPOS:
   trunk:
     - APAddressBook
+    - PlivoVoiceKit
     - PlivoWebRTC
 
 SPEC CHECKSUMS:
   APAddressBook: e68ecaf95f2c323b625ae585a0d25fe505291286
+  PlivoVoiceKit: b360b889f1e4fbafa8d234787da71699431013c8
   PlivoWebRTC: fe070bcd100d2ede9e72318e703a9794cd83ffc7
 
-PODFILE CHECKSUM: 50d28db8e7c70b84e475cc0f6385e696f77dd7ab
+PODFILE CHECKSUM: 3bc29fe5c048da350ada9551e0adef1cede12b05
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
