@@ -143,13 +143,12 @@ extension Phone: JWTDelegate {
     func getAccessToken() {
         
         
-        let Url = String(format: "https://api.plivo.com/v1/Account/MAY2RJNZKZNJMWOTG4NT/JWT/Token")
+        let Url = String(format: "") // TODO: Add your url here
            guard let serviceUrl = URL(string: Url) else { return }
             let timeInterval = Int(Date().timeIntervalSince1970)
             let parameterDictionary: [String: Any] = [
-                "iss": "MAY2RJNZKZNJMWOTG4NT",
-                "exp": timeInterval + 240,
-                "sub": "sanyam",
+                "iss": "",  // TODO: Enter you auth id here
+                "sub": "test",
                 "per": ["voice": ["incoming_allow": true, "outgoing_allow": true]]
             ]
 //           let parameterDictionary = ["username" : "Test", "password" : "123456"]
@@ -160,7 +159,7 @@ extension Phone: JWTDelegate {
                return
            }
            request.httpBody = httpBody
-            request.headers =  ["Authorization": "Basic TUFZMlJKTlpLWk5KTVdPVEc0TlQ6WWpJM1pXVmpPV0poTW1Kak5USXhNakJtTkdJeVlUUmtZVGd3TUdSaA=="]
+            request.headers =  ["Authorization": ""]  // TODO: Add authorization here
            let session = URLSession.shared
            session.dataTask(with: request) { (data, response, error) in
                if let response = response {
