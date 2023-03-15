@@ -9,9 +9,9 @@ The Plivo iOS SDK v3 allows you to make outgoing and receive incoming calls in y
 
 Supports Pushkit and Callkit. Eliminates the need for persistent connections to recieve incoming calls.
 
-Compatible with iOS version 8 and above.
+Compatible with iOS version 12 and above.
 
-Plivo iOS SDK now supports IPv6 networks. Users can make and receive calls when their device is connected to a network that uses IPv4, IPv6, or both versions of the protocol.
+Plivo iOS SDK supports IPv4 networks only. Users can make and receive calls when their device is connected to a network that uses IPv4, IPv6, or both versions of the protocol.
 
 To get started with the quickstart application follow these steps. Steps 1-3 will enable the application to make a call. The remaining steps 4-5 will enable the application to receive incoming calls in the form of push notifications using Apple’s VoIP Service.
 
@@ -48,64 +48,62 @@ Signup and create endpoints with Plivo using below link
 
 ### <a name="bullet3"></a>3. Rgister and Unregister Endpoints
 
-Implement SIP register to Plivo Communication Server
 
-To register with Plivo's SIP and Media server , use a valid sip uri account from plivo web console
+
+- Register with Plivo's SIP and Media server , use a valid sip uri account from plivo web console 
 ```
 var endpoint: PlivoEndpoint = PlivoEndpoint(debug: true)
+```
 
-// To register with SIP Server
-func login( withUserName userName: String, andPassword password: String) {
-UtilClass.makeToastActivity()
+- Implement SIP register to Plivo Communication Server using username and password
+
+```
+// To register with SIP Server using username and password
 endpoint.login(userName, andPassword: password)
-}
 
-//To unregister with SIP Server
-func logout() {
+// To register with SIP Server using username, password and deviceToken
+endpoint.login(userName, andPassword: password, deviceToken: token)
+
+// To register with SIP Server using username, password, deviceToken and certificate ID
+endpoint.login(userName, andPassword: password, deviceToken: token, certificateId: certId)
+```
+- Implement SIP register to Plivo Communication Server using AccessToken
+
+```
+// To register with SIP Server using AccessToken
+endpoint.loginWithAccessToken(accessToken)
+
+// To register with SIP Server using AccessToken and deviceToken
+endpoint.loginWithAccessToken(accessToken, deviceToken: token)
+
+// To register with SIP Server using AccessToken, deviceToken and certificateId
+endpoint.loginWithAccessToken(accessToken, deviceToken: token, certificateId: certiId)
+
+// To register with SIP Server using AccessTokenGenerator
+// implement the JWTDelegate's getAccessToken() method to fetch
+// the token at real time and call the loginWithAccessToken() method
+// once the token is fetched.
+endpoint.loginWithAccessTokenGenerator(jwtDelegate: self)
+```
+
+- Unregister and logout from the  SIP Server
+```
 endpoint.logout()
-}
-```
-#### With Access Tokens/ JWT
-You can register an endpoint using:
-
-- Access Token, device token, and certificate ID
-
-```
-func loginWithAccessToken(accessToken: String, deviceToken token: Data, certificateId certificateId: String) {
-    endpoint.loginWithAccessToken(accessToken: String, deviceToken: token, certificateId: certificateId)
-}
 ```
 
-- Access Token, and device token
-
+If the registration to an endpoint is succeessfull the following delegate gets called 
 ```
-func loginWithAccessToken(accessToken: String, deviceToken token: Data) {
-    endpoint.loginWithAccessToken(accessToken: String, deviceToken: token)
-}
+onLogin(): Void
 ```
 
-- Access Token
 
-```
-func loginWithAccessToken(accessToken: String) {
-    endpoint.loginWithAccessToken(accessToken: String)
-}
-```
-- Access Token Generator
 
+If the registration to an endpoint fails the following delegate gets called 
 ```
-func login(jwtDelegate: JWTDelegate) {
-    endpoint.loginWithAccessTokenGenerator(jwtDelegate: JWTDelegate)
-}
+onLoginFailedWithError(_ error: Error): Void
 ```
 
->Check out our [Github example](https://github.com/plivo/plivo-ios-sdk2-examples/tree/beta) for implementation.
-
-If the registration to an endpoint fails the following delegate gets called
-```
-(void)onLoginFailedWithError:(NSError *)error;
-```
-Possible error events for JWT:
+Possible error events when login with Access Token:
 - INVALID_ACCESS_TOKEN
 - INVALID_ACCESS_TOKEN_HEADER
 - INVALID_ACCESS_TOKEN_ISSUER
@@ -117,60 +115,79 @@ Possible error events for JWT:
 - EXPIRATION_EXCEEDS_MAX_ALLOWED_TIME
 - MAX_ALLOWED_LOGIN_REACHED
 
-This delegate is called when the user logs in with JWT and does have the permision to make outgoing/receive incoming calls. Parameters: Error Return Value: None
+
+When the user logs in with AcessToken and does not have the permission to make outgoing/receive incoming calls.
 ```
-(void)onPermissionDenied:
+void onPermissionDenied(_ error: Error)
 ```
+
 ### <a name="bullet4"></a>4. Run the app
+
+ PlivoVoiceKit Framework and its required dependencies are already added in the Podfile. Run ```pod install``` to install those dependencies.
 
 Open `SwiftVoiceCallingApp.xcworkspace`.
 
-Build and run the app.
+Build and run the app. 
 
-Enter sip endpoint username and password.
+Enter sip endpoint username and password OR AccessToken. 
 
-After successful login make VoiceCalls.
+After successful login make VoiceCalls. 
 
 
 ### <a name="bullet5"></a>5. Plivo iOS SDK V3 with Push Kit integration
 
-To enable Pushkit Integration in the SDK the registerToken and relayVoipPushNotification are implemented
+To enable Pushkit Integration in the SDK the ```loginForIncomingWithUsername```  and ```loginForIncomingWithJWT``` are implemented 
 ```
-//Register pushkit token
-func registerToken(_ token: Data) {
-endpoint.registerToken(token)
-}
 
-//receive and pass on (information or a message)
-func relayVoipPushNotification(_ pushdata: [AnyHashable: Any]) {
-endpoint.relayVoipPushNotification(pushdata)
-}
+//receive and pass on the notification payload when logging with username and password(information or a message)
+
+endpoint.loginForIncomingWithUsername(withUserName: username, withPassword: password, withDeviceToken: deviceToken, withNotificationInfo: payload.dictionaryPayload)
+
+
+//receive and pass on the notification payload when logging with AccessToken
+endpoint.loginForIncomingWithToken(withAccessToken: accessToken, withDeviceToken: deviceToken, withNotificationInfo: payload.dictionaryPayload)
+
 ```
-please refer to below link on Generating VoIP Certificate.
+Note: ```relayVoipPushNotification``` method has been deprecated.
+
+please refer to below link on Generating VoIP Certificate. 
 
 [Generating VoIP Certificate](https://www.plivo.com/docs/sdk/client/ios/setting-up-push-credentials/)
 
 
 ### <a name="bullet6"></a>6. Making an outgoing call
 
-Create PlivoOutgoingCall object , then make a call with destination and headers
+Create PlivoOutgoingCall object , then make a call with destination and headers 
 ```
 func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing {
-/* construct SIP URI , where kENDPOINTURL is a contant contaning domain name details*/
-let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
-/* create PlivoOutgoing object */
-outCall = (endpoint.createOutgoingCall())!
-/* do the call */
-outCall?.call(sipUri, headers: headers, error: &error)
-return outCall!
+
+    // construct SIP URI , where kENDPOINTURL is a contant contaning
+    //domain name details
+    let sipUri: String = "sip:\(dest)\(kENDPOINTURL)"
+
+    /* create PlivoOutgoing object */
+    outCall = (endpoint.createOutgoingCall())!
+
+    /* do the call */
+    outCall?.call(sipUri, headers: headers, error: &error)
+
+    return outCall!
 }
 
 //To Configure Audio
-func configureAudioSession() {
 endpoint.configureAudioDevice()
-}
+
+//To start Audio
+endpoint.startAudioDevice()
+
+//To stop Audio
+endpoint.stopAudioDevice()
 ```
 configureAudioSession - use this callkit method to set up the AVAudioSession with desired configuration.
+
+startAudioDevice - use this callkit method to start the AVAudioSession with desired configuration.
+
+stopAudioDevice - use this callkit method to stop the AVAudioSession with desired configuration.
 
 Make an outbound call
 
@@ -195,30 +212,28 @@ would initiate an outbound call with custom SIP headers.
 // MARK: PKPushRegistryDelegate
 func pushRegistry(_ registry: PKPushRegistry, didUpdate credentials: PKPushCredentials, forType type: PKPushType) {
 
-if credentials.token.count == 0 {
-print("VOIP token NULL")
-return
-}
+    if credentials.token.count == 0 {
+        print("VOIP token NULL")
+        return
+    }
 
-// This method is used to register the device token for VOIP push notifications.
-endpoint.registerToken(credentials.token)
 }
 
 //When the push arrives below delegate method will be called. 
 func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, forType type: PKPushType) {
 
-if (type == PKPushType.voIP) {
+    if (type == PKPushType.voIP) {
 
-DispatchQueue.main.async(execute: {() -> Void in
-endpoint.relayVoipPushNotification(payload.dictionaryPayload)
-})
-}
+        DispatchQueue.main.async(execute: {() -> Void in
+            endpoint.loginForIncomingWithUsername(withUserName: username, withPassword: password, withDeviceToken: deviceToken, withNotificationInfo: payload.dictionaryPayload)
+        })
+    }
 }
 ```
 PushInfo is the NSDictionary object forwarded by the apple push notification. This will enable the application to receive incoming calls even the app is not in foreground.
 
 
-You are now ready to receive incoming calls.
+You are now ready to receive incoming calls. 
 
 ![plivo-iOSsdk-2.0-example](ReadMeImages/callkit.png)
 
