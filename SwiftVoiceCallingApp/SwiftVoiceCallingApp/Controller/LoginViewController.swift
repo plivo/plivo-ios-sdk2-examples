@@ -9,6 +9,8 @@
 
 import UIKit
 import PlivoVoiceKit
+import AVFAudio
+
 
 class LoginViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate {
     
@@ -174,6 +176,21 @@ extension LoginViewController: PlivoEndpointDelegate{
                 UserDefaults.standard.set(self.passwordTextField.text, forKey: kPASSWORD)
                 UserDefaults.standard.synchronize()
             }
+            
+            switch AVAudioSession.sharedInstance().recordPermission {
+            case .granted:
+                print("Permission granted")
+            case .denied:
+                print("Permission denied")
+            case .undetermined:
+                print("Request permission here")
+                AVAudioSession.sharedInstance().requestRecordPermission({ granted in
+                    print("Requested microphone permission")
+                })
+            @unknown default:
+                print("Unknown case")
+            }
+            
 //            if !(UserDefaults.standard.object(forKey: kUSERNAME) != nil) {
 //                UserDefaults.standard.set(self.userNameTextField.text, forKey: kUSERNAME)
 //                UserDefaults.standard.set(self.passwordTextField.text, forKey: kPASSWORD)
