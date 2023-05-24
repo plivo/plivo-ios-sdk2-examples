@@ -1,11 +1,3 @@
-//
-//  Phone.swift
-//  SwiftVoiceCallingApp
-//
-//  Created by Siva  on 24/05/17.
-//  Copyright © 2017 Plivo. All rights reserved.
-//
-
 import Foundation
 import PlivoVoiceKit
 import Alamofire
@@ -16,6 +8,7 @@ class Phone {
     var deviceToken: Data?
     var endpoint: PlivoEndpoint = PlivoEndpoint(["debug":true,"enableTracking":true,"enableQualityTracking": CallAndMediaMetrics.ALL])
     private var outCall: PlivoOutgoing?
+    private var pushInfo: Any?
     
     // To register with SIP Server
     
@@ -77,6 +70,7 @@ class Phone {
     func loginForIncomingWithToken(withAccessToken accessToken: String, withDeviceToken deviceToken: Data?, withCertificateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
         UtilClass.makeToastActivity()
         if (kLOGINWITHTOKENGENERATOR != 0) {
+            self.pushInfo = pushInfo
             loginWithTokenGenerator(deviceToken: deviceToken)
         } else {
             endpoint.loginForIncomingWithJWT(withAccessToken: accessToken, withDeviceToken: deviceToken, withCertificateId: certificateId, withNotificationInfo: pushInfo)
@@ -172,7 +166,17 @@ extension Phone: JWTDelegate {
                        let token: JWTDecoder = try JSONDecoder().decode(JWTDecoder.self, from: data)
                        if let deviceToken = self.deviceToken {
                            print(token.token)
-                           self.endpoint.loginWithAccessToken(token.token, deviceToken: deviceToken)
+                           DispatchQueue.main.async {
+                               if let pushInfo = self.pushInfo {
+                                   self.endpoint.loginForIncomingWithJWT(withAccessToken: token.token, withDeviceToken: deviceToken, withCertificateId: "", withNotificationInfo: pushInfo as! [AnyHashable : Any])
+                                   self.pushInfo = nil
+                               } else {
+                                   self.endpoint.loginWithAccessToken(token.token, deviceToken: deviceToken)
+
+                               }
+                           }
+                           
+                           
                        
                        } else {
                            self.endpoint.loginWithAccessToken(token.token)
