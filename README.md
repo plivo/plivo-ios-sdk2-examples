@@ -31,6 +31,8 @@ To get started with the quickstart application follow these steps. Steps 1-3 wil
 
 7. [Receive an incoming call](#bullet7)
 
+8. [Configuring Audio Session](#bullet8)
+
 
 ### <a name="bullet1"></a>1. Install the PlivoVoiceKit framework using Cocoapods
 
@@ -193,20 +195,8 @@ func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: 
     return outCall!
 }
 
-//To Configure Audio
-endpoint.configureAudioDevice()
-
-//To start Audio
-endpoint.startAudioDevice()
-
-//To stop Audio
-endpoint.stopAudioDevice()
 ```
-configureAudioSession - use this callkit method to set up the AVAudioSession with desired configuration.
 
-startAudioDevice - use this callkit method to start the AVAudioSession with desired configuration.
-
-stopAudioDevice - use this callkit method to stop the AVAudioSession with desired configuration.
 
 Make an outbound call
 
@@ -255,6 +245,28 @@ PushInfo is the NSDictionary object forwarded by the apple push notification. Th
 You are now ready to receive incoming calls. 
 
 ![plivo-iOSsdk-2.0-example](ReadMeImages/callkit.png)
+
+### <a name="bullet8"></a>8. Configuring Audio Sessions
+Configuring and starting/stopping audio session before making an outgoing or receiving an incoming is necessary for a smooth transfer of audio. For more info, please check the code implementation in this repo.
+
+**Note:** Not configuring audio sessions will result in no audio.
+
+```
+//To Configure Audio
+endpoint.configureAudioDevice()
+
+//To start Audio
+endpoint.startAudioDevice()
+
+//To stop Audio
+endpoint.stopAudioDevice()
+```
+
+configureAudioSession - use this callkit method to set up the AVAudioSession with desired configuration before outgoing/incoming calls.
+
+startAudioDevice - use this callkit method to start the AVAudioSession with desired configuration after the audio session is configured.
+
+stopAudioDevice - use this callkit method to stop the AVAudioSession with desired configuration once the call is over.
 
 License
 
