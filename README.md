@@ -11,7 +11,7 @@ Supports Pushkit and Callkit. Eliminates the need for persistent connections to 
 
 Compatible with iOS version 12 and above.
 
-Plivo iOS SDK supports IPv4 networks only. Users can make and receive calls when their device is connected to a network that uses IPv4, IPv6, or both versions of the protocol.
+Plivo iOS SDK supports IPv4 networks only. Users can make and receive calls when their device is connected to a network that uses IPv4 version of the protocol.
 
 Handles network change internally.
 
