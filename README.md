@@ -13,6 +13,8 @@ Compatible with iOS version 12 and above.
 
 Plivo iOS SDK supports IPv4 networks only. Users can make and receive calls when their device is connected to a network that uses IPv4, IPv6, or both versions of the protocol.
 
+Handles network change internally.
+
 To get started with the quickstart application follow these steps. Steps 1-3 will enable the application to make a call. The remaining steps 4-5 will enable the application to receive incoming calls in the form of push notifications using Apple’s VoIP Service.
 
 1. [Install the PlivoVoiceKit framework using Cocoapods](#bullet1)
@@ -35,16 +37,33 @@ To get started with the quickstart application follow these steps. Steps 1-3 wil
 It's easy to install the Voice framework if you manage your dependencies using Cocoapods. Simply add the following to your Podfile:
 
 
-pod 'PlivoVoiceKit'
+pod 'PlivoWebRTC', '1.1.6-beta'
+
+pod 'PlivoVoiceKit', '3.1.1-beta'
 
 
-[SDK Reference](https://www.plivo.com/docs/sdk/client/ios/reference) - More documentation related to the Voice iOS SDK
+[SDK Reference](https://www.plivo.com/docs/sdk/client/ios/reference-v3/) - More documentation related to the Voice iOS SDK
+
+### Sign up for an account
+Register [here](https://console.plivo.com/accounts/register/) to get your free Plivo account today.
+
+Below are the steps that are to be followed to successfully Sign up for a free trial account.
+1. Sign up with your corporate email address
+2. You will receive an activation email from Plivo. Click on the link mentioned in the email to activate your account.
+3. Enter an sms enabled, non-VOIP number to complete the phone verification.
+
+Sign up with your corporate email address
+
+![plivo-ios-sdk2-examples](ReadMeImages/signup.png)
+
+If you are facing any issues while creating a Plivo account, you can reach out to our [Support Team](https://support.plivo.com/support/home)
 
 ### <a name="bullet2"></a>2. Create Endpoints
 
-Signup and create endpoints with Plivo using below link
+You can create an endpoint from the Plivo Console and assign an application to make and receive calls after configuring the endpoint in the quickstart app.
+![plivo-ios-sdk2-examples](ReadMeImages/endpoints.png)
 
-[Plivo Dashboard](https://manage.plivo.com/accounts/login/)
+**Note:** You can make use of the demo 'Direct Dial' app in your account for the endpoint which will allow you to make and receive calls for testing purposes.
 
 ### <a name="bullet3"></a>3. Rgister and Unregister Endpoints
 
@@ -129,7 +148,7 @@ Open `SwiftVoiceCallingApp.xcworkspace`.
 
 Build and run the app. 
 
-Enter sip endpoint username and password OR AccessToken. 
+Enter sip endpoint username and password OR AccessToken in constant.h file. 
 
 After successful login make VoiceCalls. 
 
@@ -139,7 +158,7 @@ After successful login make VoiceCalls.
 To enable Pushkit Integration in the SDK the ```loginForIncomingWithUsername```  and ```loginForIncomingWithJWT``` are implemented 
 ```
 
-//receive and pass on the notification payload when logging with username and password(information or a message)
+//receive and pass on the notification payload when logging with username and password
 
 endpoint.loginForIncomingWithUsername(withUserName: username, withPassword: password, withDeviceToken: deviceToken, withNotificationInfo: payload.dictionaryPayload)
 
