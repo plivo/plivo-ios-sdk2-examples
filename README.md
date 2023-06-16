@@ -89,6 +89,7 @@ endpoint.login(userName, andPassword: password, deviceToken: token)
 endpoint.login(userName, andPassword: password, deviceToken: token, certificateId: certId)
 ```
 - Implement SIP register to Plivo Communication Server using AccessToken
+- ![plivo-iOSsdk-2.0-example](ReadMeImages/JWTLoginScreen.png)
 
 ```
 // To register with SIP Server using AccessToken
