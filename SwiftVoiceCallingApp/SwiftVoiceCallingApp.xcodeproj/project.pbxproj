@@ -582,7 +582,7 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SwiftVoiceCallingApp/Pods-SwiftVoiceCallingApp-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/APAddressBook/APAddressBook.framework",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/PlivoVoiceKit/PlivoVoiceKit.framework/PlivoVoiceKit",
+				"${PODS_ROOT}/PlivoVoiceKit/PlivoVoiceKit.framework",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/PlivoWebRTC/WebRTC.framework/WebRTC",
 			);
 			name = "[CP] Embed Pods Frameworks";

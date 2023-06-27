@@ -6,7 +6,7 @@ class Phone {
     
     static let sharedInstance = Phone()
     var deviceToken: Data?
-    var endpoint: PlivoEndpoint = PlivoEndpoint(["debug":true,"enableTracking":true,"enableQualityTracking": CallAndMediaMetrics.ALL])
+    var endpoint: PlivoEndpoint = PlivoEndpoint(["debug":true,"enableTracking":true])
     private var outCall: PlivoOutgoing?
     private var pushInfo: Any?
     
@@ -28,34 +28,6 @@ class Phone {
         
     }
     
-    func login(withAccessToken accessToken: String, deviceToken token: Data?) {
-        UtilClass.makeToastActivity()
-        
-        if (kLOGINWITHTOKENGENERATOR != 0) {
-            loginWithTokenGenerator(deviceToken: token)
-        } else {
-            endpoint.loginWithAccessToken(accessToken, deviceToken: token)
-        }
-        
-    }
-    
-    func login(withAccessToken accessToken: String) {
-        UtilClass.makeToastActivity()
-        if (kLOGINWITHTOKENGENERATOR != 0) {
-            loginWithTokenGenerator(deviceToken: nil)
-        } else {
-            endpoint.loginWithAccessToken(accessToken)
-        }
-        endpoint.loginWithAccessToken(accessToken)
-    }
-    
-    func loginWithTokenGenerator(deviceToken token: Data?) {
-        
-        UtilClass.makeToastActivity()
-        deviceToken = token
-        endpoint.loginWithAccessTokenGenerator(jwtDelegate: self)
-    }
-    
     //To unregister with SIP Server
     func logout() {
         endpoint.logout()
@@ -66,21 +38,11 @@ class Phone {
         endpoint.registerToken(token)
     }
     
-    //receive and pass on (information or a message)
-    func loginForIncomingWithToken(withAccessToken accessToken: String, withDeviceToken deviceToken: Data?, withCertificateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
-        UtilClass.makeToastActivity()
-        if (kLOGINWITHTOKENGENERATOR != 0) {
-            self.pushInfo = pushInfo
-            loginWithTokenGenerator(deviceToken: deviceToken)
-        } else {
-            endpoint.loginForIncomingWithJWT(withAccessToken: accessToken, withDeviceToken: deviceToken, withCertificateId: certificateId, withNotificationInfo: pushInfo)
-        }
-    }
     
     //receive and pass on (information or a message)
     func loginForIncomingWithUsername(withUserName username: String, withPassword password: String, withDeviceToken deviceToken: Data?, withCertifateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
-        UtilClass.makeToastActivity()
-        endpoint.loginForIncomingWithUsername(withUserName: username, withPassword: password, withDeviceToken: deviceToken, withCertifateId: certificateId, withNotificationInfo: pushInfo)
+//        UtilClass.makeToastActivity()
+        endpoint.relayVoipPushNotification(pushInfo)
     }
 
     func call(withDest dest: String, andHeaders headers: [AnyHashable: Any], error: inout NSError?) -> PlivoOutgoing? {
@@ -129,67 +91,6 @@ class Phone {
         endpoint.submitCallQualityFeedback(callUUID, starRating,  issueList, notes, sendConsoleLog)
     }
 }
-
-
-
-
-extension Phone: JWTDelegate {
-    func getAccessToken() {
-        
-        
-        let Url = String(format: "") // TODO: Add your url here
-           guard let serviceUrl = URL(string: Url) else { return }
-            let timeInterval = Int(Date().timeIntervalSince1970)
-            let parameterDictionary: [String: Any] = [
-                "iss": "",  // TODO: Enter you auth id here
-                "sub": "test",
-                "per": ["voice": ["incoming_allow": true, "outgoing_allow": true]]
-            ]
-//           let parameterDictionary = ["username" : "Test", "password" : "123456"]
-           var request = URLRequest(url: serviceUrl)
-           request.httpMethod = "POST"
-           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-           guard let httpBody = try? JSONSerialization.data(withJSONObject: parameterDictionary, options: []) else {
-               return
-           }
-           request.httpBody = httpBody
-            request.headers =  ["Authorization": ""]  // TODO: Add authorization here
-           let session = URLSession.shared
-           session.dataTask(with: request) { (data, response, error) in
-               if let response = response {
-                   print(response)
-               }
-               if let data = data {
-                   do {
-                       var dataAsString:String = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as! String
-
-                       let token: JWTDecoder = try JSONDecoder().decode(JWTDecoder.self, from: data)
-                       if let deviceToken = self.deviceToken {
-                           print(token.token)
-                           DispatchQueue.main.async {
-                               if let pushInfo = self.pushInfo {
-                                   self.endpoint.loginForIncomingWithJWT(withAccessToken: token.token, withDeviceToken: deviceToken, withCertificateId: "", withNotificationInfo: pushInfo as! [AnyHashable : Any])
-                                   self.pushInfo = nil
-                               } else {
-                                   self.endpoint.loginWithAccessToken(token.token, deviceToken: deviceToken)
-
-                               }
-                           }
-                           
-                           
-                       
-                       } else {
-                           self.endpoint.loginWithAccessToken(token.token)
-                       }
-                   } catch let decoderError {
-                       print(decoderError)
-                   }
-               }
-              
-           }.resume()
-    }
-}
-
 
 
 

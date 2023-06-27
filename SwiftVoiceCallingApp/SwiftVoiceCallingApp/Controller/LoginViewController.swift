@@ -59,9 +59,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UITextViewDele
                 let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
                 if let token = appDelegate?.deviceToken{
                     appDelegate?.didUpdatePushCredentials = true
-                    Phone.sharedInstance.login(withAccessToken: accessToken, deviceToken: token)
-                }else{
-                    Phone.sharedInstance.login(withAccessToken: accessToken)
                 }
             }else {
                 UtilClass.makeToast(kNOINTERNETMSG)

@@ -68,14 +68,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
         useVoipToken(credentials.token)
         
         if UtilClass.getUserAuthenticationStatus(){
-            if !kACCESSTOKEN.isEmpty && UserDefaults.standard.string(forKey: kACCESSTOKEN) != nil && !UserDefaults.standard.string(forKey: kACCESSTOKEN)!.isEmpty {
-                Phone.sharedInstance.login(withAccessToken: kACCESSTOKEN, deviceToken: credentials.token)
-            } else {
-                Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: credentials.token)
-            }
-            
-            didUpdatePushCredentials = true
+            Phone.sharedInstance.login(withUserName: kUSERNAME, andPassword: kPASSWORD, deviceToken: credentials.token)
         }
+        didUpdatePushCredentials = true
+
     }
     
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
@@ -86,11 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
         NSLog("pushRegistry:didReceiveIncomingPushWithPayload:forType:")
         
         if (type == PKPushType.voIP) {
-            if !kACCESSTOKEN.isEmpty && UserDefaults.standard.string(forKey: kACCESSTOKEN) != nil && !UserDefaults.standard.string(forKey: kACCESSTOKEN)!.isEmpty {
-                Phone.sharedInstance.loginForIncomingWithToken(withAccessToken: kACCESSTOKEN, withDeviceToken: deviceToken, withCertificateId: "NA", withNotificationInfo: payload.dictionaryPayload)
-            } else {
-                Phone.sharedInstance.loginForIncomingWithUsername(withUserName: kUSERNAME, withPassword: kPASSWORD, withDeviceToken: deviceToken, withCertifateId: "NA", withNotificationInfo: payload.dictionaryPayload)
-            }
+            Phone.sharedInstance.loginForIncomingWithUsername(withUserName: kUSERNAME, withPassword: kPASSWORD, withDeviceToken: self.deviceToken, withCertifateId: "NA", withNotificationInfo: payload.dictionaryPayload)
         }
         
         DispatchQueue.main.async {
