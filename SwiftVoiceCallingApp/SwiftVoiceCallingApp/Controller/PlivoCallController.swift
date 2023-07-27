@@ -641,6 +641,12 @@ extension PlivoCallController:PlivoEndpointDelegate{
         }
     }
     
+    func onIncomingCallConnected(_ incoming: PlivoIncoming) {
+        print("- Incoming call answered");
+        print("Call id in incoming answered is: \(String(describing: incoming.callId)) and voice flow is started")
+        isIncomingCallAnswered = true
+    }
+    
     
     /**
      * onIncomingCallAnswered delegate implementation.
@@ -649,7 +655,6 @@ extension PlivoCallController:PlivoEndpointDelegate{
     func onIncomingCallAnswered(_ incoming: PlivoIncoming) {
         print("- Incoming call answered");
         print("Call id in incoming answered is: \(String(describing: incoming.callId))")
-        isIncomingCallAnswered = true
     }
     
     /**
@@ -680,6 +685,7 @@ extension PlivoCallController:PlivoEndpointDelegate{
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
             incCall = nil
         }
+        isIncomingCallAnswered = false
         callSubmitFeddbackUI()
     }
     
