@@ -61,6 +61,14 @@
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
+    <key>BGTaskSchedulerPermittedIdentifiers</key>
+    <array>
+        <string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+    </array>
+    <key>NSCameraUsageDescription</key>
+    <string>This app requires camera access</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>This app requires access to photos</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

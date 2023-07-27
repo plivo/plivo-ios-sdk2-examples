@@ -87,9 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
         
         if (type == PKPushType.voIP) {
             if !kACCESSTOKEN.isEmpty && UserDefaults.standard.string(forKey: kACCESSTOKEN) != nil && !UserDefaults.standard.string(forKey: kACCESSTOKEN)!.isEmpty {
-                Phone.sharedInstance.loginForIncomingWithToken(withAccessToken: kACCESSTOKEN, withDeviceToken: deviceToken, withCertificateId: "NA", withNotificationInfo: payload.dictionaryPayload)
+                Phone.sharedInstance.loginForIncomingWithToken(withAccessToken: kACCESSTOKEN, withDeviceToken: deviceToken, withCertificateId: "", withNotificationInfo: payload.dictionaryPayload)
             } else {
-                Phone.sharedInstance.loginForIncomingWithUsername(withUserName: kUSERNAME, withPassword: kPASSWORD, withDeviceToken: deviceToken, withCertifateId: "NA", withNotificationInfo: payload.dictionaryPayload)
+                Phone.sharedInstance.loginForIncomingWithUsername(withUserName: kUSERNAME, withPassword: kPASSWORD, withDeviceToken: deviceToken, withCertifateId: "", withNotificationInfo: payload.dictionaryPayload)
             }
         }
         
