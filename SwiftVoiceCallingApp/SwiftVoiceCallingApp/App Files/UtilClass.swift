@@ -235,31 +235,6 @@ class UtilClass: NSObject
         return val
     }
     
-    
-    func addBoldText(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!) -> NSAttributedString {
-        let nonBoldFontAttribute = [NSAttributedString.Key.font.rawValue:font!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
-        let boldFontAttribute = [NSAttributedString.Key.font.rawValue:boldFont!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
-        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
-        for i in 0 ..< boldPartsOfString.count {
-            boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
-        }
-        return boldString
-    }
-    
-    func alertTextAttributeString(fullString: NSString, boldPartsOfString: Array<NSString>, font: UIFont!, boldFont: UIFont!, textColor: UIColor!, boldTextColor: UIColor!) -> NSAttributedString {
-        
-        let nonBoldFontAttribute = [NSAttributedString.Key.font.rawValue:font!, NSAttributedString.Key.foregroundColor: textColor] as! [NSAttributedString.Key : Any]
-        let boldFontAttribute = [NSAttributedString.Key.font.rawValue:boldFont!, NSAttributedString.Key.foregroundColor: boldTextColor] as! [NSAttributedString.Key : Any]
-        let boldString = NSMutableAttributedString(string: fullString as String, attributes:nonBoldFontAttribute)
-        
-        for i in 0 ..< boldPartsOfString.count {
-            
-            boldString.addAttributes(boldFontAttribute, range: fullString.range(of: boldPartsOfString[i] as String))
-            
-        }
-        return boldString
-    }
-    
     func setNavbarBGImage(navgationBar:UINavigationBar)
     {
         let image =  UIImage(named:"Nav_BG")!
@@ -280,35 +255,43 @@ class UtilClass: NSObject
     func removeSpecialCharactersFromPhNum(number : String) -> String {
         
         let numericSet = "0123456789"
-        let filteredCharacters = number.characters.filter {
+        let filteredCharacters = number.filter {
             return numericSet.contains(String($0))
         }
         return String(filteredCharacters)
     }
     
     class func makeToastActivity() {
+        DispatchQueue.main.async {
         let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
         appDelegate?.window?.rootViewController?.view?.isUserInteractionEnabled = false
         appDelegate?.window?.rootViewController?.view?.makeToastActivity(CSToastPositionCenter)
+        }
     }
     
     class func hideToastActivity() {
+        DispatchQueue.main.async {
         let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
         appDelegate?.window?.rootViewController?.view?.isUserInteractionEnabled = true
         appDelegate?.window?.rootViewController?.view?.hideToastActivity()
+        }
     }
     
     class func makeToast(_ toastMsg: String) {
-        let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-        appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg)
+        DispatchQueue.main.async {
+            let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
+            appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg)
+        }
     }
     
     class func makeToastWithStyle(_ toastMsg: String) {
+        DispatchQueue.main.async {
         let style = CSToastStyle.init(defaultStyle: {}())
         _ = style?.messageColor = UIColor.red
         let appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
         let frame = CGRect(origin: CGPoint(x: 0, y: 0), size: UIScreen.main.bounds.size)
         appDelegate?.window?.rootViewController?.view?.makeToast(toastMsg, duration: 2.0, position: CGPoint(x: frame.maxX-125, y: frame.minY+50), style: style)
+        }
     }
     
     /**

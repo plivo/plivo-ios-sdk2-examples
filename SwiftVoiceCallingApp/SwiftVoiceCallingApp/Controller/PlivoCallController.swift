@@ -10,10 +10,9 @@ import UIKit
 import CallKit
 import AVFoundation
 import PlivoVoiceKit
-import ReachabilitySwift
 
-class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate, PlivoEndpointDelegate {
-
+class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate {
+    
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var callerNameLabel: UILabel!
     @IBOutlet weak var callStateLabel: UILabel!
@@ -25,7 +24,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     @IBOutlet weak var keypadButton: UIButton!
     @IBOutlet weak var speakerButton: UIButton!
     @IBOutlet weak var activeCallImageView: UIImageView!
-
+    
+    var ratingVC: RatingViewController?
+    
     var pad: JCDialPad?
     var timer: MZTimerLabel?
     var answerTimer: Timer?
@@ -39,31 +40,21 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     var isSpeakerOn: Bool = false
     var isIncomingCallAnswered: Bool = false
-
-    let reachability = Reachability()!
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        
-        //Dial pad to enter phone number or to Enter DTMF Text
-        pad = JCDialPad(frame: dialPadView.bounds)
+        pad = JCDialPad(frame: self.view.bounds)
         pad?.buttons = JCDialPad.defaultButtons()
         pad?.delegate = self
         pad?.showDeleteButton = true
         pad?.formatTextToPhoneNumber = false
-        dialPadView.backgroundColor = UIColor.white
+        
         dialPadView.addSubview(pad!)
         timer = MZTimerLabel(label: callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
         timer?.timeFormat = "HH:mm:ss"
-        CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
-        CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
-        //Add Call Interruption observers
         addObservers()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         Phone.sharedInstance.setDelegate(self)
@@ -86,11 +77,6 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         hideActiveCallView()
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
     override var prefersStatusBarHidden : Bool {
         return true
     }
@@ -103,66 +89,475 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         // if media services are reset, we need to rebuild our audio chain
         NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.handleMediaServerReset), name: AVAudioSession.mediaServicesWereResetNotification, object: AVAudioSession.sharedInstance())
         NotificationCenter.default.addObserver(self, selector: #selector(PlivoCallController.appWillTerminate), name: UIApplication.willTerminateNotification, object: nil)
-        
-        //To check Network Reachability
-        NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
-        do{
-            try reachability.startNotifier()
-        }catch{
-            print("could not start reachability notifier")
-        }
-    }
-    
-    @objc func reachabilityChanged(note: Notification) {
-        
-        let reachability = note.object as! Reachability
-        
-        if reachability.isReachable {
-            if reachability.isReachableViaWiFi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        } else {
-            print("Network not reachable")
-            
-            UtilClass.makeToast(kNOINTERNETMSG)
-
-        }
     }
     
     //To unregister with SIP Server
-    
     func unRegisterSIPEndpoit() {
         Phone.sharedInstance.logout()
     }
     
-    // MARK: - PlivoSDK Delegate Methods
-
-    /**
-     * onLogin delegate implementation.
+    @objc func invalidateTimerWhenAnswered(){
+        if (isIncomingCallAnswered) {
+            DispatchQueue.main.async{
+                self.callStateLabel.text = "Answered..."
+                if !(self.timer != nil) {
+                    self.timer = MZTimerLabel(label: self.callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
+                    self.timer?.timeFormat = "HH:mm:ss"
+                    self.timer?.start()
+                }
+                else {
+                    self.timer?.start()
+                }
+            }
+            self.answerTimer?.invalidate()
+        } else {
+            self.callStateLabel.text = "Connecting..."
+        }
+    }
+  
+    
+    func callSubmitFeddbackUI(){
+        DispatchQueue.main.async{
+            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            self.ratingVC = _mainStoryboard.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController
+            self.present(self.ratingVC!, animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - Handling IBActions
+    @IBAction func callButtonTapped(_ sender: Any) {
+        if UtilClass.isNetworkAvailable(){
+            if (!(userNameTextField.text! == "") && !UtilClass.isEmpty(userNameTextField.text!)) || !UtilClass.isEmpty(pad!.digitsTextField.text!) || (incCall != nil) || (outCall != nil) {
+                
+                let img: UIImage? = (sender as AnyObject).image(for: .normal)
+                let data1: NSData? = img!.pngData() as NSData?
+                
+                if (data1?.isEqual(UIImage(named: "MakeCall.png")!.pngData()))! {
+                    
+                    callStateLabel.text = "Calling..."
+                    callerNameLabel.text = pad?.digitsTextField.text
+                    unhideActiveCallView()
+                    var handle: String
+                    if !(pad?.digitsTextField.text == "") {
+                        handle = (pad?.digitsTextField.text!)!
+                    }else if !(userNameTextField.text == "") {
+                        handle = userNameTextField.text!
+                    }else {
+                        UtilClass.makeToast(kINVALIDSIPENDPOINTMSG)
+                        return
+                    }
+                    
+                    userNameTextField.text = ""
+                    pad?.digitsTextField.text = ""
+                    pad?.rawText = ""
+                    CallKitInstance.sharedInstance.callUUID = UUID()
+                    /* outgoing call */
+                    performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: handle)
+                    
+                }else if (data1?.isEqual(UIImage(named: "EndCall.png")!.pngData()))! {
+                    isItUserAction = true
+                    performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
+                }
+            }else {
+                UtilClass.makeToast(kINVALIDSIPENDPOINTMSG)
+            }
+        }else{
+            UtilClass.makeToast("Please connect to internet")
+        }
+    }
+    
+    /*
+     * Display Dial pad to enter DTMF text
+     * Hide Mute/Unmute button
+     * Hide Hold/Unhold button
      */
-    func onLogin() {
+    @IBAction func keypadButtonTapped(_ sender: Any) {
+        UserDefaults.standard.set(true, forKey: "Keypad Enabled")
+        UserDefaults.standard.synchronize()
+        holdButton.isHidden = true
+        muteButton.isHidden = true
+        keypadButton.isHidden = true
+        hideButton.isHidden = false
+        speakerButton.isHidden = true
+        activeCallImageView.isHidden = true
+        userNameTextField.text = ""
+        view.bringSubviewToFront(hideButton)
+        userNameTextField.isHidden = false
+        userNameTextField.textColor = UIColor.white
+        dialPadView.isHidden = false
+        dialPadView.backgroundColor = UIColor(red: CGFloat(0.0 / 255.0), green: CGFloat(75.0 / 255.0), blue: CGFloat(58.0 / 255.0), alpha: CGFloat(1.0))
+        dialPadView.alpha = 0.7
+        pad?.buttons = JCDialPad.defaultButtons()
+        pad?.layoutSubviews()
+        callerNameLabel.isHidden = true
+        callStateLabel.isHidden = true
+    }
+    
+    /*
+     * Hide Dial pad view
+     * UnHide Mute/Unmute button
+     * UnHide Hold/Unhold button
+     */
+    
+    @IBAction func hideButtonTapped(_ sender: Any) {
+        UserDefaults.standard.set(false, forKey: "Keypad Enabled")
+        UserDefaults.standard.synchronize()
+        holdButton.isHidden = false
+        muteButton.isHidden = false
+        speakerButton.isHidden = false
+        keypadButton.isHidden = false
+        dialPadView.isHidden = true
+        hideButton.isHidden = true
+        activeCallImageView.isHidden = false
+        userNameTextField.isHidden = true
+        userNameTextField.textColor = UIColor.darkGray
+        pad?.rawText = ""
+        callerNameLabel.isHidden = false
+        callStateLabel.isHidden = false
+        dialPadView.backgroundColor = UIColor.white
+        pad?.buttons = JCDialPad.defaultButtons()
+        pad?.layoutSubviews()
+    }
+    
+    /*
+     * Mute/Unmute calls
+     */
+    @IBAction func muteButtonTapped(_ sender: Any) {
+        let img: UIImage? = (sender as AnyObject).image(for: .normal)
         
-        DispatchQueue.main.async(execute: {() -> Void in
+        let data1: NSData? = img!.pngData() as NSData?
+        
+        if (data1?.isEqual(UIImage(named: "Unmute.png")!.pngData()))! {
             
+            DispatchQueue.main.async{
+                self.muteButton.setImage(UIImage(named: "MuteIcon.png"), for: .normal)
+            }
+            
+            if (incCall != nil) {
+                incCall?.mute()
+            }
+            if (outCall != nil) {
+                outCall?.mute()
+            }
+        }
+        else {
+            
+            DispatchQueue.main.async{
+                self.muteButton.setImage(UIImage(named: "Unmute.png"), for: .normal)
+            }
+            
+            if (incCall != nil) {
+                incCall?.unmute()
+            }
+            if (outCall != nil) {
+                outCall?.unmute()
+            }
+        }
+    }
+    
+    /*
+     * Hold/Unhold calls
+     */
+    @IBAction func holdButtonTapped(_ sender: Any) {
+        let img: UIImage? = (sender as AnyObject).image(for: .normal)
+        
+        let data1: NSData? = img!.pngData() as NSData?
+        
+        if (data1?.isEqual(UIImage(named: "UnholdIcon.png")!.pngData()))! {
+            
+            DispatchQueue.main.async{
+                self.holdButton.setImage(UIImage(named: "HoldIcon.png"), for: .normal)
+            }
+            
+            if (incCall != nil) {
+                incCall?.hold()
+            }
+            if (outCall != nil) {
+                outCall?.hold()
+            }
+        }
+        else {
+            
+            DispatchQueue.main.async{
+                self.holdButton.setImage(UIImage(named: "UnholdIcon.png"), for: .normal)
+            }
+            
+            if (incCall != nil) {
+                incCall?.unhold()
+            }
+            if (outCall != nil) {
+                outCall?.unhold()
+            }
+        }
+    }
+    
+    
+    @IBAction func speakerButtonTapped(_ sender: Any) {
+        handleSpeaker()
+    }
+    
+    
+    func handleSpeaker() {
+        let audioSession = AVAudioSession.sharedInstance()
+        if(isSpeakerOn){
+            self.speakerButton.setImage(UIImage(named: "Speaker.png"), for: .normal)
+            
+            do {
+                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.none)
+            } catch let error as NSError {
+                print("audioSession error: \(error.localizedDescription)")
+            }
+            
+            isSpeakerOn = false
+        }else{
+            self.speakerButton.setImage(UIImage(named: "Speaker_Selected.png"), for: .normal)
+            
+            /* Enable Speaker Phone mode */
+            
+            do {
+                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
+            } catch let error as NSError {
+                print("audioSession error: \(error.localizedDescription)")
+            }
+
+            isSpeakerOn = true
+        }
+    }
+    
+    func hideActiveCallView() {
+        UIDevice.current.isProximityMonitoringEnabled = false
+        callerNameLabel?.isHidden = true
+        callStateLabel?.isHidden = true
+        activeCallImageView?.isHidden = true
+        muteButton?.isHidden = true
+        keypadButton?.isHidden = true
+        holdButton?.isHidden = true
+        dialPadView?.isHidden = false
+        userNameTextField?.isHidden = false
+        userNameTextField?.isEnabled = true
+        pad?.digitsTextField.isHidden = false
+        pad?.showDeleteButton = true
+        pad?.rawText = ""
+        userNameTextField?.text = "SIP URI or Phone Number"
+        self.tabBarController?.tabBar.isHidden = false
+        self.tabBarController?.tabBar.isTranslucent = false
+        callButton?.setImage(UIImage(named: "MakeCall.png"), for: .normal)
+        timer?.reset()
+        timer?.removeFromSuperview()
+        timer = nil
+        callStateLabel?.text = "Calling..."
+        dialPadView?.alpha = 1.0
+        dialPadView?.backgroundColor = UIColor.white
+        
+        //handleSpeaker()
+        resetCallButtons()
+    }
+    
+    func resetCallButtons() {
+        self.speakerButton?.setImage(UIImage(named: "Speaker.png"), for: .normal)
+        isSpeakerOn = false
+        muteButton?.setImage(UIImage(named: "Unmute.png"), for: .normal)
+        self.holdButton?.setImage(UIImage(named: "UnholdIcon.png"), for: .normal)
+        
+    }
+    
+    func unhideActiveCallView() {
+        UIDevice.current.isProximityMonitoringEnabled = true
+        callerNameLabel?.isHidden = false
+        callStateLabel?.isHidden = false
+        activeCallImageView?.isHidden = false
+        muteButton?.isHidden = false
+        keypadButton?.isHidden = false
+        holdButton?.isHidden = false
+        dialPadView?.isHidden = true
+        userNameTextField?.isHidden = true
+        pad?.digitsTextField.isHidden = true
+        pad?.showDeleteButton = false
+        self.tabBarController?.tabBar.isHidden = true
+        self.tabBarController?.tabBar.isTranslucent = true
+        callButton?.setImage(UIImage(named: "EndCall.png"), for: .normal)
+    }
+    
+    
+    /*
+     * Handle audio interruptions
+     * AVAudioSessionInterruptionTypeBegan
+     * AVAudioSessionInterruptionTypeEnded
+     */
+    
+    @objc func handleInterruption(_ notification: Notification){
+        if self.incCall != nil || self.outCall != nil{
+            guard let userInfo = notification.userInfo,
+                  let interruptionTypeRawValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+                  let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeRawValue) else {
+                      return
+                  }
+            
+            switch interruptionType {
+                
+            case .began:
+                
+                self.isItGSMCall = true
+                Phone.sharedInstance.stopAudioDevice()
+                print("----------AVAudioSessionInterruptionTypeBegan-------------")
+                break
+                
+            case .ended:
+                
+                self.isItGSMCall = false
+                
+                // make sure to activate the session
+                let error: Error? = nil
+                try? AVAudioSession.sharedInstance().setActive(true)
+                if nil != error {
+                    print("AVAudioSession set active failed with error")
+                    Phone.sharedInstance.startAudioDevice()
+                    if incCall != nil && incCall?.state == Ongoing {
+                        incCall?.unhold()
+                    }
+                    if outCall != nil && outCall?.state == Ongoing {
+                        outCall?.unhold()
+                    }
+                }
+                print("----------AVAudioSessionInterruptionTypeEnded-------------")
+                break
+            @unknown default:
+                fatalError("issue here")
+            }
+            
+        }
+    }
+    
+    @objc func handleRouteChange(_ notification: Notification){
+        
+    }
+    
+    @objc func handleMediaServerReset(_ notification: Notification) {
+        print("Media server has reset");
+        //        // rebuild the audio chain
+        Phone.sharedInstance.configureAudioSession()
+        Phone.sharedInstance.startAudioDevice()
+    }
+    
+    /*
+     * Will be called when app terminates
+     * End on going calls(If any)
+     */
+    
+    @objc func appWillTerminate() {
+        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID ?? UUID() ,isFeedback: false)
+    }
+    
+    
+    // MARK: - JCDialPadDelegates
+    func dialPad(_ dialPad: JCDialPad, shouldInsertText text: String, forButtonPress button: JCPadButton) -> Bool {
+        if !(incCall != nil) && !(outCall != nil) {
+            userNameTextField.isEnabled = false
+            userNameTextField.text = ""
+        }
+        return true
+    }
+    
+    func dialPad(_ dialPad: JCDialPad, shouldInsertText text: String, forLongButtonPress button: JCPadButton) -> Bool {
+        if !(incCall != nil) && !(outCall != nil) {
+            userNameTextField.text = ""
+            userNameTextField.isEnabled = false
+        }
+        return true
+    }
+    
+    func getDtmfText(_ dtmfText: String, withAppendStirng appendText: String) {
+        if incCall == nil && outCall == nil {
+            if appendText == "" {
+                userNameTextField.isEnabled = true
+                userNameTextField.text = ""
+            }
+        } else {
+            if (incCall != nil) {
+                incCall?.sendDigits(dtmfText)
+                userNameTextField.text = appendText
+            }
+            if (outCall != nil) {
+                outCall?.sendDigits(dtmfText)
+                userNameTextField.text = appendText
+            }
+        }
+    }
+    
+    // MARK: - Handling TextField
+    /**
+     * Hide keyboard after user press 'return' key
+     */
+    func textFieldShouldReturn(_ theTextField: UITextField) -> Bool {
+        if theTextField == userNameTextField {
+            if theTextField.text == "" {
+                theTextField.text = "SIP URI or Phone Number"
+            }
+            theTextField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    /**
+     * Hide keyboard when text filed being clicked
+     */
+    @objc func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        // return NO to disallow editing.
+        let img: UIImage? = callButton.image(for: .normal)
+        let data1: NSData? = img!.pngData() as NSData?
+        if (data1?.isEqual(UIImage(named: "EndCall.png")!.pngData()))! {
+            return false
+        } else {
+            userNameTextField.text = ""
+            return true
+        }
+    }
+    
+    /**
+     *  Hide keyboard when user touches on UI
+     *
+     */
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let touch = touches.first {
+            // ...
+            if touch.phase == .began
+            {
+                userNameTextField.resignFirstResponder()
+                
+            }
+        }
+        super.touchesBegan(touches, with: event)
+    }
+    
+}
+
+
+
+
+extension PlivoCallController:PlivoEndpointDelegate{
+    
+    func onPermissionDenied(_ error: Error) {
+        print(error.localizedDescription)
+    }
+    
+    func onLogin() {
+        DispatchQueue.main.async{
             UtilClass.hideToastActivity()
             UtilClass.makeToast(kLOGINSUCCESS)
-            
-        })
+        }
         print("Ready to make a call");
     }
     
     /**
      * onLoginFailed delegate implementation.
      */
-    func onLoginFailedWithError(_ error: Error!) {
-        DispatchQueue.main.async(execute: {() -> Void in
+    func onLoginFailedWithError(_ error: Error) {
+        DispatchQueue.main.async{
             UtilClass.makeToast(error.localizedDescription)
             UtilClass.hideToastActivity()
             print(error.localizedDescription)
             
-            switch (error! as NSError).code {
+            switch error._code {
             case 502:
                 //Bad Gateway
                 break
@@ -183,25 +578,24 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                 _appDelegate?.window?.rootViewController = loginVC
                 break
             }
-        })
+        }
     }
     
     /**
      * onLogout delegate implementation.
      */
     func onLogout() {
-        
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async{
             
             if (CallKitInstance.sharedInstance.callUUID != nil){
                 self.performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: false)
             }
             
-            
             UtilClass.makeToast(kLOGOUTSUCCESS)
             UtilClass.setUserAuthenticationStatus(false)
             UserDefaults.standard.removeObject(forKey: kUSERNAME)
             UserDefaults.standard.removeObject(forKey: kPASSWORD)
+            UserDefaults.standard.removeObject(forKey: kACCESSTOKEN)
             UserDefaults.standard.synchronize()
             UtilClass.hideToastActivity()
             
@@ -210,68 +604,47 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             Phone.sharedInstance.setDelegate(loginVC!)
             let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
             _appDelegate?.window?.rootViewController = loginVC
-        })
+        }
     }
-
+    
     /**
      * onIncomingCall delegate implementation
      */
     
     func onIncomingCall(_ incoming: PlivoIncoming) {
-        isItUserAction = true
-        switch AVAudioSession.sharedInstance().recordPermission
-        {
-            case AVAudioSession.RecordPermission.granted:
-               
-                print("Permission granted")
-                
-                CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
-                CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
-                CallInfo.addCallsInfo(callInfo:[incoming.fromUser,Date()])
-                
-                //Added by Siva on Tue 11th, 2017
-                if !(incCall != nil) && !(outCall != nil) {
-                    /* log it */
-                    print("Incoming Call from %@", incoming.fromContact);
-                    print("Call id in incoming is:")
-                    print(incoming.callId)
-                    /* assign incCall var */
-                    incCall = incoming
-                    outCall = nil
-                    CallKitInstance.sharedInstance.callUUID = UUID()
-                    reportIncomingCall(from: incoming.fromUser, with: CallKitInstance.sharedInstance.callUUID!)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)) {
-                        self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
-                        self.userNameTextField.text = ""
-                        self.pad?.digitsTextField.text = ""
-                        self.pad?.rawText = ""
-                        self.callerNameLabel.text = incoming.fromUser
-                        self.callStateLabel.text = "Incoming call..."
-                    }
-                }
-                else {
-                    /*
-                     * Reject the call when we already have active ongoing call
-                     */
-                    incoming.reject()
-                    return
-                }
-                break
-            
-            case AVAudioSession.RecordPermission.denied:
-                print("Pemission denied")
-                UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
-                incoming.reject()
-                break
-            
-            case AVAudioSession.RecordPermission.undetermined:
-                print("Request permission here")
-                break
-            
-            default:
-                break
+        DispatchQueue.main.async{
+            self.ratingVC?.dismiss(animated: true, completion: nil)
         }
+        print("Call id in incoming is:")
+        isItUserAction = true
         
+        CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
+        CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
+        CallInfo.addCallsInfo(callInfo:[incoming.fromUser,Date()])
+        
+        print("Incoming Call from %@", incoming.fromContact);
+        print("Call id in incoming is: \(String(describing: incoming.callId))")
+        /* assign incCall var */
+        incCall = incoming
+        outCall = nil
+        CallKitInstance.sharedInstance.callUUID = UUID()
+        reportIncomingCall(from: incoming.fromUser, with: CallKitInstance.sharedInstance.callUUID!)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(1000)) {
+            DispatchQueue.main.async {
+                self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[2]
+                self.userNameTextField.text = ""
+                self.pad?.digitsTextField.text = ""
+                self.pad?.rawText = ""
+                self.callerNameLabel.text = incoming.fromUser
+                self.callStateLabel.text = "Incoming call..."
+            }
+        }
+    }
+    
+    func onIncomingCallConnected(_ incoming: PlivoIncoming) {
+        print("- Incoming call answered");
+        print("Call id in incoming answered is: \(String(describing: incoming.callId)) and voice flow is started")
+        isIncomingCallAnswered = true
     }
     
     
@@ -281,9 +654,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func onIncomingCallAnswered(_ incoming: PlivoIncoming) {
         print("- Incoming call answered");
-        print("Call id in incoming answered is:")
-        print(incoming.callId)
-        isIncomingCallAnswered = true
+        print("Call id in incoming answered is: \(String(describing: incoming.callId))")
     }
     
     /**
@@ -292,8 +663,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func onIncomingCallInvalid(_ incoming: PlivoIncoming) {
         print("- Incoming call is invalid");
-        print("Call id in incoming call invalid is:")
-        print(incoming.callId)
+        print("Call id in incoming call invalid is: \(String(describing: incoming.callId))")
         if (incCall != nil) {
             self.isItUserAction = true
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
@@ -309,13 +679,13 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func onIncomingCallHangup(_ incoming: PlivoIncoming) {
         print("- Incoming call ended");
-        print("Call id in incoming hangup is:")
-        print(incoming.callId)
+        print("Call id in incoming hangup is: \(String(describing: incoming.callId))")
         if (incCall != nil) {
             self.isItUserAction = true
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
             incCall = nil
         }
+        isIncomingCallAnswered = false
         callSubmitFeddbackUI()
     }
     
@@ -324,8 +694,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     func onIncomingCallRejected(_ incoming: PlivoIncoming) {
         /* log it */
-        print("Call id in incoming rejected is:")
-        print(incoming.callId)
+        print("Call id in incoming rejected is: \(String(describing: incoming.callId))")
         self.isItUserAction = true
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
         incCall = nil
@@ -336,12 +705,11 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onOutgoingCallAnswered delegate implementation
      */
     func onOutgoingCallAnswered(_ call: PlivoOutgoing) {
-        
-        print("Call id in Answerd is:")
-        print(call.callId)
+        print("Call id in Answerd is: \(String(describing: call.callId))")
         
         print("- On outgoing call answered");
-        DispatchQueue.main.async(execute: {() -> Void in
+        
+        DispatchQueue.main.async{
             self.muteButton.isEnabled = true
             self.keypadButton.isEnabled = true
             self.holdButton.isEnabled = true
@@ -354,8 +722,8 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             else {
                 self.timer?.start()
             }
-        CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: CallKitInstance.sharedInstance.callUUID!, connectedAt: Date())
-        })
+            CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: CallKitInstance.sharedInstance.callUUID!, connectedAt: Date())
+        }
     }
     
     /**
@@ -363,9 +731,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      */
     
     func onOutgoingCallHangup(_ call: PlivoOutgoing) {
-        
-        print("Call id in Hangup is:")
-        print(call.callId)
+        print("Call id in Hangup is: \(String(describing: call.callId))")
         if (outCall != nil) {
             self.isItUserAction = true
             performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
@@ -375,10 +741,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func onCalling(_ call: PlivoOutgoing) {
-        
-        print("Call id in onCalling is:")
-        print(call.callId)
-
+        print("Call id in onCalling is: \(String(describing: call.callId))")
         print("On Caling");
     }
     
@@ -386,25 +749,32 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onOutgoingCallRinging delegate implementation.
      */
     func onOutgoingCallRinging(_ call: PlivoOutgoing) {
+        print("Call id in Ringing is: \(String(describing: call.callId))")
         
-        print("Call id in Ringing is:")
-        print(call.callId)
-
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async{
             self.callStateLabel.text = "Ringing..."
-        })
+        }
+    }
+    
+    /**
+     * mediaMetrics delegate implementation
+     */
+    func mediaMetrics(_ metricdata: [AnyHashable: Any]) {
+        let active = metricdata["active"] as! Bool
+        let type = metricdata["type"] as! String
+        if active == true {
+            UtilClass.makeToastWithStyle(String(format:"warning | %@", type))
+        }
     }
     
     /**
      * onOutgoingCallrejected delegate implementation.
      */
     func onOutgoingCallRejected(_ call: PlivoOutgoing) {
+        print("Call id in Rejected is: \(String(describing: call.callId))")
         
-        print("Call id in Rejected is:")
-        print(call.callId)
-
         self.isItUserAction = true
-
+        
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
         callSubmitFeddbackUI()
     }
@@ -413,12 +783,10 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
      * onOutgoingCallInvalid delegate implementation.
      */
     func onOutgoingCallInvalid(_ call: PlivoOutgoing) {
+        print("Call id in Invalid is: \(String(describing: call.callId))")
         
-        print("Call id in Invalid is:")
-        print(call.callId)
-
         self.isItUserAction = true
-
+        
         performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
         callSubmitFeddbackUI()
     }
@@ -436,94 +804,62 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         print("Validation error  :  ",validationErrorMessage)
     }
     
-    func onFeedbackFailure(_ error: Error!) {
+    func onFeedbackFailure(_ error: Error) {
         print("Submit Feedback Failure ")
     }
     
-    /**
-     * mediaMetrics delegate implementation
-     */
-    func mediaMetrics(_ metricdata: [AnyHashable: Any]) {
-        let active = metricdata["active"] as! Bool
-        let type = metricdata["type"] as! String
-        if active == true {
-            UtilClass.makeToastWithStyle(String(format:"warning | %@", type))
-        } else {
-            
-        }
-    }
+}
+
+
+extension PlivoCallController{
     
     // MARK: - CallKit Actions
     func performStartCallAction(with uuid: UUID, handle: String) {
+        hideActiveCallView()
+        unhideActiveCallView()
         
-        if UtilClass.isNetworkAvailable(){
-            
-            switch AVAudioSession.sharedInstance().recordPermission {
-                
-            case AVAudioSession.RecordPermission.granted:
-                print("Permission granted");
-                hideActiveCallView()
-                unhideActiveCallView()
-                print("Outgoing call uuid is: %@", uuid);
-                CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
-                CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
-                print("provider:performStartCallActionWithUUID:");
-                if uuid == nil || handle == nil {
-                    print("UUID or Handle nil");
-                    return
-                }
-                
-                CallInfo.addCallsInfo(callInfo:[handle,Date()])
-                
-                var newHandleString: String = handle.replacingOccurrences(of: "-", with: "")
-                if (newHandleString as NSString).range(of: "+91").location == NSNotFound && (newHandleString.characters.count) == 10 {
-                    newHandleString = "+91\(newHandleString)"
-                }
-                let callHandle = CXHandle(type: .generic, value: newHandleString)
-                let startCallAction = CXStartCallAction(call: uuid, handle: callHandle)
-                let transaction = CXTransaction(action:startCallAction)
-                CallKitInstance.sharedInstance.callKitCallController?.request(transaction, completion: {(_ error: Error?) -> Void in
-                    if error != nil {
-                        print("StartCallAction transaction request failed: %@", error.debugDescription);
-                        DispatchQueue.main.async(execute: {() -> Void in
-                            UtilClass.makeToast(kSTARTACTIONFAILED)
-                        })
-                    }
-                    else {
-                        print("StartCallAction transaction request successful");
-                        let callUpdate = CXCallUpdate()
-                        callUpdate.remoteHandle = callHandle
-                        callUpdate.supportsDTMF = true
-                        callUpdate.supportsHolding = true
-                        callUpdate.supportsGrouping = false
-                        callUpdate.supportsUngrouping = false
-                        callUpdate.hasVideo = false
-                        DispatchQueue.main.async(execute: {() -> Void in
-                            self.callerNameLabel.text = handle
-                            self.callStateLabel.text = "Calling..."
-                            self.unhideActiveCallView()
-                            CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: uuid, startedConnectingAt: Date())
-//                            CallKitInstance.sharedInstance.callKitProvider?.reportCall(with: uuid, updated: callUpdate)
-                        })
-                    }
-                })
-                break
-            case AVAudioSession.RecordPermission.denied:
-                UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
-                break
-            case AVAudioSession.RecordPermission.undetermined:
-                // This is the initial state before a user has made any choice
-                // You can use this spot to request permission here if you want
-                break
-            default:
-                break
-            }
-            
-        }else{
-            
-            UtilClass.makeToast("Please connect to internet")
+        print("Outgoing call uuid is: %@", uuid);
+        CallKitInstance.sharedInstance.callKitProvider?.setDelegate(self, queue: DispatchQueue.main)
+        CallKitInstance.sharedInstance.callObserver?.setDelegate(self, queue: DispatchQueue.main)
+        print("provider:performStartCallActionWithUUID:");
+        if uuid.uuidString == "" || handle == "" {
+            print("UUID or Handle nil");
+            return
         }
         
+        CallInfo.addCallsInfo(callInfo:[handle,Date()])
+        
+        var newHandleString: String = handle.replacingOccurrences(of: "-", with: "")
+        if (newHandleString as NSString).range(of: "+91").location == NSNotFound && (newHandleString.count) == 10 {
+            newHandleString = "+91\(newHandleString)"
+        }
+        let callHandle = CXHandle(type: .generic, value: newHandleString)
+        let startCallAction = CXStartCallAction(call: uuid, handle: callHandle)
+        let transaction = CXTransaction(action:startCallAction)
+        CallKitInstance.sharedInstance.callKitCallController?.request(transaction, completion: {(_ error: Error?) -> Void in
+            if error != nil {
+                print("StartCallAction transaction request failed: %@", error.debugDescription);
+                DispatchQueue.main.async {
+                    UtilClass.makeToast(kSTARTACTIONFAILED)
+                }
+            }
+            else {
+                print("StartCallAction transaction request successful");
+                let callUpdate = CXCallUpdate()
+                callUpdate.remoteHandle = callHandle
+                callUpdate.supportsDTMF = true
+                callUpdate.supportsHolding = true
+                callUpdate.supportsGrouping = false
+                callUpdate.supportsUngrouping = false
+                callUpdate.hasVideo = false
+                DispatchQueue.main.async{
+                    self.callerNameLabel.text = handle
+                    self.callStateLabel.text = "Calling..."
+                    self.unhideActiveCallView()
+                    CallKitInstance.sharedInstance.callKitProvider?.reportOutgoingCall(with: uuid, startedConnectingAt: Date())
+                }
+            }
+        })
     }
     
     func reportIncomingCall(from: String, with uuid: UUID) {
@@ -600,8 +936,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
                         }
                         
                         self.tabBarController?.tabBar.isHidden = false
+                        self.tabBarController?.tabBar.isTranslucent = false
                         self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
-                       
+                        
                     })
                 }
                 else {
@@ -613,7 +950,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             })
         })
     }
-
+    
     
     // MARK: - CXCallObserverDelegate
     func callObserver(_ callObserver: CXCallObserver, callChanged call: CXCall) {
@@ -640,7 +977,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     
     // MARK: - CXProvider Handling
-
+    
     func providerDidReset(_ provider: CXProvider) {
         print("ProviderDidReset");
     }
@@ -685,17 +1022,28 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     
     func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction) {
         if action.isOnHold {
-            Phone.sharedInstance.stopAudioDevice()
-        }
-        else {
-            Phone.sharedInstance.startAudioDevice()
+            if (incCall != nil) {
+                incCall?.hold()
+            }
+            if (outCall != nil) {
+                outCall?.hold()
+            }
+        }else {
+            if (incCall != nil) {
+                incCall?.unhold()
+            }
+            if (outCall != nil) {
+                outCall?.unhold()
+            }
         }
         action.fulfill()
     }
     
     func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
         if action.isMuted {
-            muteButton.setImage(UIImage(named: "Unmute.png"), for: .normal)
+            DispatchQueue.main.async {
+                self.muteButton.setImage(UIImage(named: "Unmute.png"), for: .normal)
+            }
             if (incCall != nil) {
                 incCall?.unmute()
             }
@@ -704,7 +1052,9 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
             }
         }
         else {
-            muteButton.setImage(UIImage(named: "MuteIcon.png"), for: .normal)
+            DispatchQueue.main.async {
+                self.muteButton.setImage(UIImage(named: "MuteIcon.png"), for: .normal)
+            }
             if (incCall != nil) {
                 incCall?.mute()
             }
@@ -723,33 +1073,15 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
         }
         outCall = nil
         action.fulfill()
-        DispatchQueue.main.async(execute: {() -> Void in
+        DispatchQueue.main.async{
             self.unhideActiveCallView()
             self.muteButton.isEnabled = true
             self.holdButton.isEnabled = true
             self.keypadButton.isEnabled = true
-        })
+        }
         answerTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(invalidateTimerWhenAnswered), userInfo: nil, repeats: true)
     }
     
-    @objc func invalidateTimerWhenAnswered(){
-        if (isIncomingCallAnswered) {
-            DispatchQueue.main.async(execute: {() -> Void in
-                self.callStateLabel.text = "Answered..."
-                if !(self.timer != nil) {
-                    self.timer = MZTimerLabel(label: self.callStateLabel, andTimerType: MZTimerLabelTypeStopWatch)
-                    self.timer?.timeFormat = "HH:mm:ss"
-                    self.timer?.start()
-                }
-                else {
-                    self.timer?.start()
-                }
-            })
-            self.answerTimer?.invalidate()
-        } else {
-            self.callStateLabel.text = "Connecting..."
-        }
-    }
     
     func provider(_ provider: CXProvider, perform action: CXPlayDTMFCallAction) {
         print("provider:performPlayDTMFCallAction:");
@@ -764,487 +1096,31 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
     }
     
     func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
-
-        DispatchQueue.main.async(execute: {() -> Void in
-            
-          //  if !self.isItGSMCall || self.isItUserAction {
-            
-                print("provider:performEndCallAction:");
-                
-                Phone.sharedInstance.stopAudioDevice()
-                if (self.incCall != nil) {
-                    if self.incCall?.state != Ongoing {
-                        print("Incoming call - Reject");
-                        self.incCall?.reject()
-                    }
-                    else {
-                        print("Incoming call - Hangup");
-                        self.incCall?.hangup()
-                    }
-                    self.incCall = nil
-                }
-                if (self.outCall != nil) {
-                    print("Outgoing call - Hangup");
-                    self.outCall?.hangup()
-                    self.outCall = nil
-                }
-                action.fulfill()
-                self.isItUserAction = false
-                self.tabBarController?.tabBar.isHidden = false
-                self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
-       //     }
-       //     else {
-       //         print("GSM - provider:performEndCallAction:");
-       //     }
-        })
-    }
-    
-    func callSubmitFeddbackUI(){
         DispatchQueue.main.async{
-            let _mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let ratingVC: RatingViewController? = _mainStoryboard.instantiateViewController(withIdentifier: "RatingViewController") as? RatingViewController
-            Phone.sharedInstance.setDelegate(ratingVC!)
-            let _appDelegate: AppDelegate? = (UIApplication.shared.delegate as? AppDelegate)
-            _appDelegate?.window?.rootViewController = ratingVC
-        }
-}
-    
-    // MARK: - Handling IBActions
-    @IBAction func callButtonTapped(_ sender: Any) {
-        
-        if UtilClass.isNetworkAvailable(){
+            print("provider:performEndCallAction:");
             
-        switch AVAudioSession.sharedInstance().recordPermission {
-            
-            
-        case AVAudioSession.RecordPermission.granted:
-            
-            if (!(userNameTextField.text! == "SIP URI or Phone Number") && !UtilClass.isEmpty(userNameTextField.text!)) || !UtilClass.isEmpty(pad!.digitsTextField.text!) || (incCall != nil) || (outCall != nil) {
-                
-                let img: UIImage? = (sender as AnyObject).image(for: .normal)
-                let data1: NSData? = img!.pngData() as NSData?
-                
-                if (data1?.isEqual(UIImage(named: "MakeCall.png")!.pngData()))! {
- 
-                    callStateLabel.text = "Calling..."
-                    callerNameLabel.text = pad?.digitsTextField.text
-                    unhideActiveCallView()
-                    var handle: String
-                    if !(pad?.digitsTextField.text == "") {
-                        handle = (pad?.digitsTextField.text!)!
-                    }
-                    else if !(userNameTextField.text == "") {
-                        handle = userNameTextField.text!
-                    }
-                    else {
-                        UtilClass.makeToast(kINVALIDSIPENDPOINTMSG)
-                        return
-                    }
-                    
-                    userNameTextField.text = ""
-                    pad?.digitsTextField.text = ""
-                    pad?.rawText = ""
-                    CallKitInstance.sharedInstance.callUUID = UUID()
-                    /* outgoing call */
-                    performStartCallAction(with: CallKitInstance.sharedInstance.callUUID!, handle: handle)
-                    
+            Phone.sharedInstance.stopAudioDevice()
+            if (self.incCall != nil) {
+                if self.incCall?.state != Ongoing {
+                    print("Incoming call - Reject");
+                    self.incCall?.reject()
                 }
-                else if (data1?.isEqual(UIImage(named: "EndCall.png")!.pngData()))! {
-
-                    isItUserAction = true
-                    performEndCallAction(with: CallKitInstance.sharedInstance.callUUID!, isFeedback: true)
+                else {
+                    print("Incoming call - Hangup");
+                    self.incCall?.hangup()
                 }
+                self.incCall = nil
             }
-            else {
-                UtilClass.makeToast(kINVALIDSIPENDPOINTMSG)
+            if (self.outCall != nil) {
+                print("Outgoing call - Hangup");
+                self.outCall?.hangup()
+                self.outCall = nil
             }
-            break
-        case AVAudioSession.RecordPermission.denied:
-            UtilClass.makeToast("Please go to settings and turn on Microphone service for incoming/outgoing calls.")
-            break
-        case AVAudioSession.RecordPermission.undetermined:
-            // This is the initial state before a user has made any choice
-            // You can use this spot to request permission here if you want
-            break
-        default:
-            break
-        }
-        }else{
-            UtilClass.makeToast("Please connect to internet")
-        }
-        
-        
-    }
-    
-    /*
-     * Display Dial pad to enter DTMF text
-     * Hide Mute/Unmute button
-     * Hide Hold/Unhold button
-     */
-    @IBAction func keypadButtonTapped(_ sender: Any) {
-        UserDefaults.standard.set(true, forKey: "Keypad Enabled")
-        UserDefaults.standard.synchronize()
-        holdButton.isHidden = true
-        muteButton.isHidden = true
-        keypadButton.isHidden = true
-        hideButton.isHidden = false
-        speakerButton.isHidden = true
-        activeCallImageView.isHidden = true
-        userNameTextField.text = ""
-        view.bringSubviewToFront(hideButton)
-        userNameTextField.isHidden = false
-        userNameTextField.textColor = UIColor.white
-        dialPadView.isHidden = false
-        dialPadView.backgroundColor = UIColor(red: CGFloat(0.0 / 255.0), green: CGFloat(75.0 / 255.0), blue: CGFloat(58.0 / 255.0), alpha: CGFloat(1.0))
-        dialPadView.alpha = 0.7
-        pad?.buttons = JCDialPad.defaultButtons()
-        pad?.layoutSubviews()
-        callerNameLabel.isHidden = true
-        callStateLabel.isHidden = true
-    }
-    
-    /*
-     * Hide Dial pad view
-     * UnHide Mute/Unmute button
-     * UnHide Hold/Unhold button
-     */
-    
-    @IBAction func hideButtonTapped(_ sender: Any) {
-        UserDefaults.standard.set(false, forKey: "Keypad Enabled")
-        UserDefaults.standard.synchronize()
-        holdButton.isHidden = false
-        muteButton.isHidden = false
-        speakerButton.isHidden = false
-        keypadButton.isHidden = false
-        dialPadView.isHidden = true
-        hideButton.isHidden = true
-        activeCallImageView.isHidden = false
-        userNameTextField.isHidden = true
-        userNameTextField.textColor = UIColor.darkGray
-        pad?.rawText = ""
-        callerNameLabel.isHidden = false
-        callStateLabel.isHidden = false
-        dialPadView.backgroundColor = UIColor.white
-        pad?.buttons = JCDialPad.defaultButtons()
-        pad?.layoutSubviews()
-    }
-    
-    /*
-     * Mute/Unmute calls
-     */
-    @IBAction func muteButtonTapped(_ sender: Any) {
-        let img: UIImage? = (sender as AnyObject).image(for: .normal)
-        
-        let data1: NSData? = img!.pngData() as NSData?
-        
-        if (data1?.isEqual(UIImage(named: "Unmute.png")!.pngData()))! {
-
-            DispatchQueue.main.async(execute: {() -> Void in
-                self.muteButton.setImage(UIImage(named: "MuteIcon.png"), for: .normal)
-            })
-            if (incCall != nil) {
-                incCall?.mute()
-            }
-            if (outCall != nil) {
-                outCall?.mute()
-            }
-        }
-        else {
-            
-            DispatchQueue.main.async(execute: {() -> Void in
-                self.muteButton.setImage(UIImage(named: "Unmute.png"), for: .normal)
-            })
-            if (incCall != nil) {
-                incCall?.unmute()
-            }
-            if (outCall != nil) {
-                outCall?.unmute()
-            }
+            action.fulfill()
+            self.isItUserAction = false
+            self.tabBarController?.tabBar.isHidden = false
+            self.tabBarController?.tabBar.isTranslucent = false
+            self.tabBarController?.selectedViewController = self.tabBarController?.viewControllers?[1]
         }
     }
-    
-    /*
-     * Hold/Unhold calls
-     */
-    @IBAction func holdButtonTapped(_ sender: Any) {
-        
-        let img: UIImage? = (sender as AnyObject).image(for: .normal)
-        
-        let data1: NSData? = img!.pngData() as NSData?
-        
-        if (data1?.isEqual(UIImage(named: "UnholdIcon.png")!.pngData()))! {
-
-            DispatchQueue.main.async(execute: {() -> Void in
-                self.holdButton.setImage(UIImage(named: "HoldIcon.png"), for: .normal)
-            })
-            if (incCall != nil) {
-                incCall?.hold()
-            }
-            if (outCall != nil) {
-                outCall?.hold()
-            }
-//            Phone.sharedInstance.stopAudioDevice()
-            
-        }
-        else {
-            
-            DispatchQueue.main.async(execute: {() -> Void in
-                self.holdButton.setImage(UIImage(named: "UnholdIcon.png"), for: .normal)
-            })
-            if (incCall != nil) {
-                incCall?.unhold()
-            }
-            if (outCall != nil) {
-                outCall?.unhold()
-            }
-//            Phone.sharedInstance.startAudioDevice()
-            
-        }
-    }
-    
-    
-    @IBAction func speakerButtonTapped(_ sender: Any) {
-    
-        handleSpeaker()
-        
-    }
-    
-    
-    func handleSpeaker() {
-
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        if(isSpeakerOn)
-        {
-            self.speakerButton.setImage(UIImage(named: "Speaker.png"), for: .normal)
-            
-            do {
-                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.none)
-            } catch let error as NSError {
-                print("audioSession error: \(error.localizedDescription)")
-            }
-            isSpeakerOn = false
-        }
-        else
-        {
-            self.speakerButton.setImage(UIImage(named: "Speaker_Selected.png"), for: .normal)
-
-            /* Enable Speaker Phone mode */
-            
-            do {
-                try audioSession.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker)
-            } catch let error as NSError {
-                print("audioSession error: \(error.localizedDescription)")
-            }
-            
-            isSpeakerOn = true
-            
-        }
-    }
-    
-    func hideActiveCallView() {
-        UIDevice.current.isProximityMonitoringEnabled = false
-        callerNameLabel?.isHidden = true
-        callStateLabel?.isHidden = true
-        activeCallImageView?.isHidden = true
-        muteButton?.isHidden = true
-        keypadButton?.isHidden = true
-        holdButton?.isHidden = true
-        dialPadView?.isHidden = false
-        userNameTextField?.isHidden = false
-        userNameTextField?.isEnabled = true
-        pad?.digitsTextField.isHidden = false
-        pad?.showDeleteButton = true
-        pad?.rawText = ""
-        userNameTextField?.text = "SIP URI or Phone Number"
-        tabBarController?.tabBar.isHidden = false
-        callButton?.setImage(UIImage(named: "MakeCall.png"), for: .normal)
-        timer?.reset()
-        timer?.removeFromSuperview()
-        timer = nil
-        callStateLabel?.text = "Calling..."
-        dialPadView?.alpha = 1.0
-        dialPadView?.backgroundColor = UIColor.white
-        
-        //handleSpeaker()
-        resetCallButtons()
-    }
-    
-    func resetCallButtons() {
-        self.speakerButton?.setImage(UIImage(named: "Speaker.png"), for: .normal)
-        isSpeakerOn = false
-        muteButton?.setImage(UIImage(named: "Unmute.png"), for: .normal)
-        self.holdButton?.setImage(UIImage(named: "UnholdIcon.png"), for: .normal)
-
-    }
-    
-    func unhideActiveCallView() {
-        UIDevice.current.isProximityMonitoringEnabled = true
-        callerNameLabel?.isHidden = false
-        callStateLabel?.isHidden = false
-        activeCallImageView?.isHidden = false
-        muteButton?.isHidden = false
-        keypadButton?.isHidden = false
-        holdButton?.isHidden = false
-        dialPadView?.isHidden = true
-        userNameTextField?.isHidden = true
-        pad?.digitsTextField.isHidden = true
-        pad?.showDeleteButton = false
-        tabBarController?.tabBar.isHidden = true
-        callButton?.setImage(UIImage(named: "EndCall.png"), for: .normal)
-    }
-    
-    
-    /*
-     * Handle audio interruptions
-     * AVAudioSessionInterruptionTypeBegan
-     * AVAudioSessionInterruptionTypeEnded
-     */
-    
-    @objc func handleInterruption(_ notification: Notification)
-    {
-        
-        if self.incCall != nil || self.outCall != nil
-        {
-            guard let userInfo = notification.userInfo,
-                let interruptionTypeRawValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-                let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeRawValue) else {
-                    return
-            }
-            
-            switch interruptionType {
-                
-            case .began:
-                
-                self.isItGSMCall = true
-                Phone.sharedInstance.stopAudioDevice()
-                print("----------AVAudioSessionInterruptionTypeBegan-------------")
-                break
-                
-            case .ended:
-                
-                self.isItGSMCall = false
-                
-                // make sure to activate the session
-                let error: Error? = nil
-                try? AVAudioSession.sharedInstance().setActive(true)
-                if nil != error {
-                    print("AVAudioSession set active failed with error")
-                    Phone.sharedInstance.startAudioDevice()
-                    if incCall != nil && incCall?.state == Ongoing {
-                        incCall?.unhold()
-                    }
-                    if outCall != nil && outCall?.state == Ongoing {
-                        outCall?.unhold()
-                    }
-                }
-                print("----------AVAudioSessionInterruptionTypeEnded-------------")
-                break
-            }
-            
-        }
-    }
-    
-    @objc func handleRouteChange(_ notification: Notification)
-    {
-        
-    }
-    
-    @objc func handleMediaServerReset(_ notification: Notification) {
-        print("Media server has reset");
-        // rebuild the audio chain
-        Phone.sharedInstance.configureAudioSession()
-        Phone.sharedInstance.startAudioDevice()
-    }
-    
-    /*
-     * Will be called when app terminates
-     * End on going calls(If any)
-     */
-    
-    @objc func appWillTerminate() {
-        performEndCallAction(with: CallKitInstance.sharedInstance.callUUID ?? UUID() ,isFeedback: false)
-    }
-    
-    
-    // MARK: - JCDialPadDelegates
-    func dialPad(_ dialPad: JCDialPad, shouldInsertText text: String, forButtonPress button: JCPadButton) -> Bool {
-        if !(incCall != nil) && !(outCall != nil) {
-            userNameTextField.isEnabled = false
-            userNameTextField.text = ""
-        }
-        return true
-    }
-    
-    func dialPad(_ dialPad: JCDialPad, shouldInsertText text: String, forLongButtonPress button: JCPadButton) -> Bool {
-        if !(incCall != nil) && !(outCall != nil) {
-            userNameTextField.text = ""
-            userNameTextField.isEnabled = false
-        }
-        return true
-    }
-    
-    func getDtmfText(_ dtmfText: String, withAppendStirng appendText: String) {
-        if incCall == nil && outCall == nil {
-            if appendText == "" {
-                userNameTextField.isEnabled = true
-                userNameTextField.text = "SIP URI or Phone Number"
-            }
-        } else {
-            if (incCall != nil) {
-                incCall?.sendDigits(dtmfText)
-                userNameTextField.text = appendText
-            }
-            if (outCall != nil) {
-                outCall?.sendDigits(dtmfText)
-                userNameTextField.text = appendText
-            }
-        }
-    }
-    
-    // MARK: - Handling TextField
-    /**
-     * Hide keyboard after user press 'return' key
-     */
-    func textFieldShouldReturn(_ theTextField: UITextField) -> Bool {
-        if theTextField == userNameTextField {
-            if theTextField.text == "" {
-                theTextField.text = "SIP URI or Phone Number"
-            }
-            theTextField.resignFirstResponder()
-        }
-        return true
-    }
-    
-    /**
-     * Hide keyboard when text filed being clicked
-     */
-    @objc func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        // return NO to disallow editing.
-        let img: UIImage? = callButton.image(for: .normal)
-        let data1: NSData? = img!.pngData() as NSData?
-        if (data1?.isEqual(UIImage(named: "EndCall.png")!.pngData()))! {
-            return false
-        } else {
-            userNameTextField.text = ""
-            return true
-        }
-    }
-    
-    /**
-     *  Hide keyboard when user touches on UI
-     *
-     */
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let touch = touches.first {
-            // ...
-            if touch.phase == .began
-            {
-                userNameTextField.resignFirstResponder()
-                
-            }
-        }
-        super.touchesBegan(touches, with: event)
-    }
-    
 }

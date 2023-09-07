@@ -14,7 +14,6 @@ class CallHistoryViewController: UIViewController, UITableViewDelegate, UITableV
     @IBOutlet weak var noRecentCallsLabel: UILabel!
 
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         let plivoVC: PlivoCallController? = (tabBarController?.viewControllers?[2] as? PlivoCallController)
         Phone.sharedInstance.setDelegate(plivoVC!)
@@ -24,14 +23,12 @@ class CallHistoryViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         super.viewWillAppear(true)
         if !(CallInfo.getCallsInfoArray().count > 0) {
             callHistoryTableView.isHidden = true
             noRecentCallsLabel.isHidden = false
             view.bringSubviewToFront(noRecentCallsLabel)
-        }
-        else {
+        }else {
             callHistoryTableView.isHidden = false
             noRecentCallsLabel.isHidden = true
             view.bringSubviewToFront(callHistoryTableView)
