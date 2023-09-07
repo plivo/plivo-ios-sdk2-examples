@@ -11,7 +11,7 @@ Supports Pushkit and Callkit. Eliminates the need for persistent connections to 
 
 Compatible with iOS version 12 and above.
 
-Plivo iOS SDK supports IPv4 networks only. Users can make and receive calls when their device is connected to a network that uses IPv4 version of the protocol.
+Plivo iOS SDK supports both IPv4 and IPv6 networks. Users can make and receive calls when their device is connected to a network that uses IPv4/IPv6 version of the protocol.
 
 Handles network change internally.
 
@@ -41,7 +41,7 @@ It's easy to install the Voice framework if you manage your dependencies using C
 
 pod 'PlivoWebRTC', '1.1.6-beta'
 
-pod 'PlivoVoiceKit', '3.1.1-beta'
+pod 'PlivoVoiceKit', '3.1.6-beta'
 
 
 [SDK Reference](https://www.plivo.com/docs/sdk/client/ios/reference-v3/) - More documentation related to the Voice iOS SDK
