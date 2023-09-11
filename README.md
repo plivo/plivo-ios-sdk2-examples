@@ -5,15 +5,15 @@
 ![plivo-iOSsdk-2.0-example](ReadMeImages/app.png)
 
 
-The Plivo iOS SDK v3 allows you to make outgoing and receive incoming calls in your iOS application.
+The Plivo iOS SDK v3 empowers your iOS application to initiate outgoing and accept incoming calls effortlessly.
 
-Supports Pushkit and Callkit. Eliminates the need for persistent connections to recieve incoming calls.
+It seamlessly integrates with Pushkit and Callkit, removing the requirement for continuous connections to receive incoming calls.
 
-Compatible with iOS version 12 and above.
+Designed to be compatible with iOS versions 12 and newer, the Plivo iOS SDK caters to a wide user base.
 
-Plivo iOS SDK supports both IPv4 and IPv6 networks. Users can make and receive calls when their device is connected to a network that uses IPv4/IPv6 version of the protocol.
+Moreover, it offers support for both IPv4 and IPv6 networks, ensuring users can make and receive calls on devices connected to either version of the protocol.
 
-Handles network change internally.
+Furthermore, it efficiently manages network changes internally."
 
 To get started with the quickstart application follow these steps. Steps 1-3 will enable the application to make a call. The remaining steps 4-5 will enable the application to receive incoming calls in the form of push notifications using Apple’s VoIP Service.
 
