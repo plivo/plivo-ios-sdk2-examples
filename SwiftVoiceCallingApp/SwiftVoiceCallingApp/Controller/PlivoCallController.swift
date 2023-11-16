@@ -767,6 +767,12 @@ extension PlivoCallController:PlivoEndpointDelegate{
         }
     }
     
+    func speakingOnMute() {
+        print("User Spealing on mute speech recognition")
+    }
+    
+    
+    
     /**
      * onOutgoingCallrejected delegate implementation.
      */
