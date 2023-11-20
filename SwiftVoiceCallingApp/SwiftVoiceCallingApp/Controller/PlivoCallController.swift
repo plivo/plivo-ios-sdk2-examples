@@ -768,7 +768,8 @@ extension PlivoCallController:PlivoEndpointDelegate{
     }
     
     func speakingOnMute() {
-        print("User Speaking on mute")
+        print(kUSERSPEAKONMUTE)
+        UtilClass.makeToast(kUSERSPEAKONMUTE)
     }
     
     
