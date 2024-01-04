@@ -767,6 +767,13 @@ extension PlivoCallController:PlivoEndpointDelegate{
         }
     }
     
+    func speakingOnMute() {
+        print(kUSERSPEAKONMUTE)
+        UtilClass.makeToast(kUSERSPEAKONMUTE)
+    }
+    
+    
+    
     /**
      * onOutgoingCallrejected delegate implementation.
      */

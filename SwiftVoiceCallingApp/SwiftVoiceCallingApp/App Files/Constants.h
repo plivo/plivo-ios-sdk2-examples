@@ -35,6 +35,7 @@
 #define kREQUESTFAILED @"Request failed"
 #define kINCOMINGCALLREPORTFAILED @"Failed to report incoming call successfully"
 #define kSTARTACTIONFAILED @"StartCallAction transaction request failed"
+#define kUSERSPEAKONMUTE @"User Speaking on mute "
 #define kENDACTIONFAILED @"EndCallAction transaction request failed"
 //#define kENDPOINTURL @"@phone.test.plivo.com"
 #define kENDPOINTURL @"@phone.plivo.com"
