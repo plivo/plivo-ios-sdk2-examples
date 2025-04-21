@@ -155,7 +155,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, UITextViewDele
 }
 
 
-extension LoginViewController: PlivoEndpointDelegate{
+extension LoginViewController: @preconcurrency PlivoEndpointDelegate{
     /**
      * onLogin delegate implementation.
      */

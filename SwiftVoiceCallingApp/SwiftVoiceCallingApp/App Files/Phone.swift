@@ -4,7 +4,7 @@ import Alamofire
 
 class Phone {
     
-    static let sharedInstance = Phone()
+    nonisolated(unsafe) static let sharedInstance = Phone()
     var deviceToken: Data?
     var endpoint: PlivoEndpoint = PlivoEndpoint(["debug":true,"enableTracking":true,"enableQualityTracking": CallAndMediaMetrics.ALL])
     private var outCall: PlivoOutgoing?
@@ -12,13 +12,13 @@ class Phone {
     
     // To register with SIP Server
     
-    func login(withUserName userName: String, andPassword password: String) {
+    @MainActor func login(withUserName userName: String, andPassword password: String) {
         
         UtilClass.makeToastActivity()
         endpoint.login(userName, andPassword: password)
     }
     
-    func login(withUserName userName: String, andPassword password: String, deviceToken token: Data?) {
+    @MainActor func login(withUserName userName: String, andPassword password: String, deviceToken token: Data?) {
         
         UtilClass.makeToastActivity()
         
@@ -28,7 +28,7 @@ class Phone {
         
     }
     
-    func login(withAccessToken accessToken: String, deviceToken token: Data?) {
+    @MainActor func login(withAccessToken accessToken: String, deviceToken token: Data?) {
         UtilClass.makeToastActivity()
         
         if (kLOGINWITHTOKENGENERATOR != 0) {
@@ -39,7 +39,7 @@ class Phone {
         
     }
     
-    func login(withAccessToken accessToken: String) {
+    @MainActor func login(withAccessToken accessToken: String) {
         UtilClass.makeToastActivity()
         if (kLOGINWITHTOKENGENERATOR != 0) {
             loginWithTokenGenerator(deviceToken: nil)
@@ -49,7 +49,7 @@ class Phone {
         endpoint.loginWithAccessToken(accessToken)
     }
     
-    func loginWithTokenGenerator(deviceToken token: Data?) {
+    @MainActor func loginWithTokenGenerator(deviceToken token: Data?) {
         
         UtilClass.makeToastActivity()
         deviceToken = token
@@ -67,7 +67,7 @@ class Phone {
     }
     
     //receive and pass on (information or a message)
-    func loginForIncomingWithToken(withAccessToken accessToken: String, withDeviceToken deviceToken: Data?, withCertificateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
+    @MainActor func loginForIncomingWithToken(withAccessToken accessToken: String, withDeviceToken deviceToken: Data?, withCertificateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
         UtilClass.makeToastActivity()
         if (kLOGINWITHTOKENGENERATOR != 0) {
             self.pushInfo = pushInfo
@@ -78,7 +78,7 @@ class Phone {
     }
     
     //receive and pass on (information or a message)
-    func loginForIncomingWithUsername(withUserName username: String, withPassword password: String, withDeviceToken deviceToken: Data?, withCertifateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
+    @MainActor func loginForIncomingWithUsername(withUserName username: String, withPassword password: String, withDeviceToken deviceToken: Data?, withCertifateId certificateId: String, withNotificationInfo pushInfo: [AnyHashable: Any]) {
         UtilClass.makeToastActivity()
         endpoint.loginForIncomingWithUsername(withUserName: username, withPassword: password, withDeviceToken: deviceToken, withCertifateId: certificateId, withNotificationInfo: pushInfo)
     }

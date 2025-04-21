@@ -17,7 +17,7 @@ class CallKitInstance: NSObject {
     var callObserver: CXCallObserver?
     
     //Singleton instance
-    static let sharedInstance = CallKitInstance()
+    nonisolated(unsafe) static let sharedInstance = CallKitInstance()
 
     override init() {
         

@@ -11,7 +11,7 @@ import CallKit
 import AVFoundation
 import PlivoVoiceKit
 
-class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverDelegate, JCDialPadDelegate {
+class PlivoCallController: UIViewController, @preconcurrency CXProviderDelegate, @preconcurrency CXCallObserverDelegate, @preconcurrency JCDialPadDelegate {
     
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var callerNameLabel: UILabel!
@@ -534,7 +534,7 @@ class PlivoCallController: UIViewController, CXProviderDelegate, CXCallObserverD
 
 
 
-extension PlivoCallController:PlivoEndpointDelegate{
+extension PlivoCallController:@preconcurrency PlivoEndpointDelegate{
     
     func onPermissionDenied(_ error: Error) {
         print(error.localizedDescription)

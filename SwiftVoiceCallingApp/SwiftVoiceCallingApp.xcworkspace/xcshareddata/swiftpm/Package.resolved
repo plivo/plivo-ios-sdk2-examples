@@ -1,4 +1,5 @@
 {
+  "originHash" : "898853b13797e3c379be86d743916795e5af0061f087f50be11e1fc7f980e06c",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -7,6 +8,15 @@
       "state" : {
         "revision" : "78424be314842833c04bc3bef5b72e85fff99204",
         "version" : "5.6.4"
+      }
+    },
+    {
+      "identity" : "plivovoicekit-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/plivo/PlivoVoiceKit-ios",
+      "state" : {
+        "revision" : "3f4aeae5253231f3ab3e36f91b48bcf3b4aca36b",
+        "version" : "3.3.1-beta"
       }
     },
     {
@@ -19,5 +29,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

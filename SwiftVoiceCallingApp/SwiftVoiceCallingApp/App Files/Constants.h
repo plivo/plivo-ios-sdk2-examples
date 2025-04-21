@@ -1,6 +1,6 @@
 
-#define kUSERNAME  @""
-#define kPASSWORD @""
+#define kUSERNAME  @"testingBrowser439673173429374811805045"
+#define kPASSWORD @"12345"
 #define kACCESSTOKEN @""
 #define kLOGINWITHTOKENGENERATOR FALSE
 #define kAUTHENTICATIONSTATUS  @"AuthenticationStatus"

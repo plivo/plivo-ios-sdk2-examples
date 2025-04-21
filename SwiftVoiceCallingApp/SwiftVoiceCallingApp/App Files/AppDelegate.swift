@@ -12,9 +12,9 @@ import AVFoundation
 import Intents
 import CallKit
 
-@UIApplicationMain
+@main
 
-class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, @preconcurrency PKPushRegistryDelegate {
 
     var window: UIWindow?
     var viewController: ContactsViewController?

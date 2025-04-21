@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
-class UtilClass: NSObject
+@MainActor class UtilClass: NSObject
 {
     
     static let utilitySharedInstance = UtilClass()
@@ -104,7 +104,7 @@ class UtilClass: NSObject
      
      @param uiView - add activity indicator to this view
      */
-    func showActivityIndicator(uiView: UIView) {
+    @MainActor func showActivityIndicator(uiView: UIView) {
         container.frame = uiView.frame
         container.center = uiView.center
         container.backgroundColor = UIColorFromHex(rgbValue: 0xffffff, alpha: 0.3)
@@ -133,7 +133,7 @@ class UtilClass: NSObject
      
      @param uiView - remove activity indicator from this view
      */
-    func hideActivityIndicator() {
+    @MainActor func hideActivityIndicator() {
         
         activityIndicator.stopAnimating()
         container.removeFromSuperview()
